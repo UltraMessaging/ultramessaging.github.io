@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Asynchronous Message Delivery</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging JMS Configuration"
+href="umjms-config.html" />
+<link rel="NEXT" title="Message Selectors" href="messageselectors.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umjms-config.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="messageselectors.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ASYNC-MSG-DELIVERY" name="ASYNC-MSG-DELIVERY">6. Asynchronous
+Message Delivery</a></h1>
+
+<p>You can program asynchronous message delivery using the <tt
+class="LITERAL">MessageListener</tt> class. The application registers a callback handler
+to receive messages asynchronously.</p>
+
+<pre class="SCREEN">
+// Obtain a ConnectionFactory via lookup or direct instantiation
+ConnectionFactory factory = (ConnectionFactory)jndiContext.lookup("uJMSConnectionFactory");
+
+// Create a connection - assuming no username/password required for <b
+class="APPLICATION">UM</b>
+Connection connection = factory.createConnection();
+
+// Create a Session
+Session session = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+// set the exception listener callback
+connection.setExceptionListener(this);
+
+// Create a topic destination
+Destination destination = session.createTopic("TOPIC.1");
+
+// create the consumer 
+MessageConsumer msgConsumer = session.createConsumer(destination);
+
+// set the message listener callback
+msgConsumer.setMessageListener(this);
+
+// start the connection 
+connection.start();
+
+// The exception listener
+public void onException(JMSException e)
+{
+    // print the connection exception status 
+        System.err.println("Exception occurred: "+ e.getMessage());
+}
+
+// The message listener callback
+public void onMessage(Message msg)
+{
+    try
+    {
+        System.err.println("Received message: " + msg);
+    }
+    catch(Exception e)
+    {
+            System.err.println("Exception occurred: "+ e.getMessage());
+                System.exit(-1);
+        }
+}
+       
+</pre>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umjms-config.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="messageselectors.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging JMS Configuration</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Message Selectors</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

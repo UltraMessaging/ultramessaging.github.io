@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Designing Queuing Applications</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Enabling Queuing" href="enabling-queuing.html" />
+<link rel="NEXT" title="Fault Tolerance" href="ume-fault-tolerance.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="enabling-queuing.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="ume-fault-tolerance.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DESIGNING-QUEUING-APPLICATIONS"
+name="DESIGNING-QUEUING-APPLICATIONS">9. Designing Queuing Applications</a></h1>
+
+<p><b class="APPLICATION">UMQ</b> applications are much like <b
+class="APPLICATION">UMP</b> persistence applications, but with even fewer recovery
+concerns.</p>
+
+<ul>
+<li>
+<p>First, <b class="APPLICATION">UMQ</b> receivers typically have no concept of recovery.
+In queuing semantics, the individual receiver has no requirement to pick up where it left
+off. By default, the Queue assigns another receiver if the original receiver goes away.
+However, you can also configure a queue to avoid reassignment or to never reassign.</p>
+</li>
+
+<li>
+<p>Secondly, sources either submit messages to queues or they don't. Sources that fail
+before a queue can acknowledge the messages as stable should simply resend the messages
+once recovered. In this regard, the same recovery sequence for sources at a high level
+can be applied to <b class="APPLICATION">UMQ</b> sources. Thus recovery from failure for
+applications is fairly straightforward.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-REG-IDS" name="QUEUE-REG-IDS">9.1. Queue Registration
+IDs</a></h2>
+
+<p>Each context belonging to a <b class="APPLICATION">UMQ</b> source or receiver
+application registers with a queue. This registration uses a Registration ID, which is
+not used in the same manner as with <b class="APPLICATION">UMP</b> persistent stores
+(which register sources and receivers). <b class="APPLICATION">UMQ</b> Registration IDs
+identify individual contexts and not individual source and receiver objects. Also, <b
+class="APPLICATION">UMQ</b> Registration IDs can (and should) vary per invocation.
+Applications can set the use of specific Registration IDs with specific queues if they
+desire. But we recommend you let <b class="APPLICATION">UMQ</b> generate these
+Registration IDs or use <a
+href="designing-queuing-applications.html#QUEUE-SES-IDS"><i>Queue Session IDs</i></a> to
+generate/manage them.</p>
+
+<p><b class="APPLICATION">UMQ</b> directs the registration of contexts with queues
+internally. The following is a high level description of the registration sequence.</p>
+
+<ul>
+<li>
+<p>Context creates a source object with <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQQUEUENAME" target="doccontent"><tt
+class="LITERAL">umq_queue_name</tt></a> set to the desired Queue.</p>
+</li>
+
+<li>
+<p>The context resolves the Queue using Queue Information Records (QIR) and Queue Query
+Records (QQR).</p>
+</li>
+
+<li>
+<p>The context generates a Registration ID randomly or uses one provided by your
+application from the <tt class="LITERAL">lbm_umq_queue_entry_t</tt> for the context.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMQ</b> registers the context with the Queue by sending the
+Registration ID to be used to the Queue.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-SES-IDS" name="QUEUE-SES-IDS">9.2. Queue Session
+IDs</a></h2>
+
+<p>Like <b class="APPLICATION">UMP</b>, you can use Session IDs to manage context
+registration IDs and receiver assignment IDs. The Session ID is a 64-bit value that that
+identifies a receiving context and its set of receivers for a particular topic. A single
+Session ID allows queues to correctly identify all receivers for a particular
+application.</p>
+
+<p>With Session IDs, a receiver that fails can return with its original assignment ID and
+continue to receive queued messages, and receive them in the correct order. In this
+scenario, with option <tt class="LITERAL">message-reassignment-timeout</tt> (see <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>) set to 0 (never reassign), the queue continues to send
+queued messages to the same designated receiver in the designated order, even in the
+event of receiver failure and recovery.</p>
+
+<p>To set the queue Session ID, set option <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQSESSIONID" target="doccontent"><tt
+class="LITERAL">umq_session_id</tt></a> to a unique value. Do not replicate this value
+elsewhere, even for sending applications.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGE-IDS" name="MESSAGE-IDS">9.3. Message IDs</a></h2>
+
+<p><b class="APPLICATION">UMQ</b> assigns each message a unique Message ID (<tt
+class="LITERAL">lbm_umq_msgid_t</tt>), which is composed of the sending application's
+context Registration ID and a unique, incrementing stamp. These Message IDs must be
+unique for a given queue, however, the application can use them for a variety of
+processing purposes.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGE-LIFETIMES-REASSIGN"
+name="MESSAGE-LIFETIMES-REASSIGN">9.4. Message Lifetimes and Reassignment</a></h2>
+
+<p>Because receivers may be assigned messages and have failures before they can consume a
+message (or fail while consuming a message), queues use the following parameters to
+control how long a message should take to be consumed.</p>
+
+<ul>
+<li>
+<p>total lifetime</p>
+</li>
+
+<li>
+<p>reassignment timeout</p>
+</li>
+
+<li>
+<p>maximum reassignments</p>
+</li>
+</ul>
+
+<p>If the assigned receiver does not consume a message after the reassignment timeout
+expires, the queue reassigns the message to another receiver provided the total lifetime
+has not expired.</p>
+
+<p>A queue can reassign an unconsumed message repeatedly until either it reaches the
+maximum reassignments or the total lifetime expires. The queue marks reassigned messages
+as having been re-assigned. Receivers may use this re-assignment flag as a hint that they
+may want to treat the message differently.</p>
+
+<p>The lifetime begins when the queue first assigns the message. When the total lifetime
+expires, the queue either discards the message from the queue permanently or sends it to
+the <a href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead Letter Queue</i></a>, if
+configured.</p>
+
+<p>You can set a message lifetime in the following ways.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">For a Source</b> - To set a message lifetime default for a
+particular source, set <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQMSGTOTALLIFETIME"
+target="doccontent"><tt class="LITERAL">umq_msg_total_lifetime</tt></a> to the number of
+milliseconds after which the message should not be assigned. Set <tt
+class="LITERAL">message-reassignment-timeout</tt> and <tt
+class="LITERAL">message-max-reassignments</tt> in <a
+href="umestored-config.html#APP-SET-OPTIONS"><i>Options for an Application Set's
+ume-attributes Element</i></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">For a Source Sending to ULB Receivers</b> - Set the message
+lifetime default with <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGELIFETIME"
+ target="doccontent"><tt class="LITERAL">umq_ulb_application_set_message_lifetime</tt></a>. Set
+the reassignment timeout with <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGEREASSIGNMENTTIMEOUT"
+ target="doccontent"><tt
+class="LITERAL">umq_ulb_application_set_message_reassignment_timeout</tt></a>. Set the
+maximum reassignments with <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGEMAXREASSIGNMENTS"
+ target="doccontent"><tt
+class="LITERAL">umq_ulb_application_set_message_max_reassignments</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">For a Queue Topic</b> - Set the <tt
+class="LITERAL">umestored</tt> Queue Topic attribute, <tt
+class="LITERAL">message-total-lifetime</tt>, to the number of milliseconds after which
+the message should not be assigned. Set <tt
+class="LITERAL">message-reassignment-timeout</tt> and <tt
+class="LITERAL">message-max-reassignments</tt> in <a
+href="umestored-config.html#QTOPIC-OPTIONS"><i>Options for a Queue Topic's ume-attributes
+Element</i></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">For a particular message send</b> - Use an extended send call,
+<code class="FUNCTION">lbm_src_send_ex</code>, that includes a pointer to <a
+href="../API/structlbm__umq__msg__total__lifetime__info__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_umq_msg_total_lifetime_info_t</tt></a> in <tt
+class="LITERAL">lbm_src_send_ex_info_t</tt>. Set the <tt
+class="LITERAL">umq_msg_total_lifetime</tt> member to a <tt
+class="LITERAL">lbm_umq_msg_total_lifetime_info_t</tt> structure and set the <tt
+class="LITERAL">lbm_umq_msg_total_lifetime_info_t.umq_msg_total_lifetime</tt> to override
+the total lifetime configured via <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQMSGTOTALLIFETIME"
+target="doccontent"><tt class="LITERAL">umq_msg_total_lifetime</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">For MIM</b> - To set a message lifetime default for Multicast
+Immediate Messages (MIM), set the message lifetime option for the context, <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQMSGTOTALLIFETIME"
+target="doccontent"><tt class="LITERAL">umq_msg_total_lifetime</tt></a>, to the number of
+milliseconds after which the message should not be assigned.</p>
+</li>
+</ul>
+
+<p>A receiving application can pre-empt reassignment configurations by using <code
+class="FUNCTION">lbm_msg_umq_reassign()</code> for either <b class="APPLICATION">UMQ</b>
+or ULB receivers. This function takes an <tt class="LITERAL">lbm_msg_t</tt> and flags for
+arguments. With no flags set, the queue reassigns the message. With the
+LBM_MSG_UMQ_REASSIGN_FLAG_DISCARD flag set, the queue discards the message. The
+corresponding Java and .NET methods are <tt
+class="LITERAL">LBMMessage.reassign()</tt>.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="enabling-queuing.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ume-fault-tolerance.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Enabling Queuing</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Fault Tolerance</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

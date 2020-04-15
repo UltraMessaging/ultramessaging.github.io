@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="lost,NAK,naks_rcved,nak_pckets_rcved,nak_pckets_sent,message loss,NIC ring buffer,UDP socket buffer,UDP socket buffer," />
+    <title>Message Loss</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.11.html#3_7_8_1">Troubleshooting UM Applications</a> &gt; Message Loss</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_7_8_1">Message Loss</a></div>
+      <div class="Short_Description"><a name="3_7_8_2">UM can recover message loss automatically but any recurring loss situation should be investigated and resolved.</a></div>
+      <div class="Section_Title"><a name="3_7_8_4_2_2">Symptom</a></div>
+      <div class="Body"><a name="3_7_8_4_2_4">The receiving application monitoring statistic, </a><span class="Keyword">lost</span>, reports the number of datagrams detected as lost.</div>
+      <div class="Body"><a name="3_7_8_4_2_6">In addition, NAKing activity also indicates message loss, however, you could turn NAKing off. (If you are concerned about message loss, however, you should not turn it off.) Your source application monitoring statistics show values for </a><span class="Keyword">naks_rcved</span> or <span class="Keyword">nak_pckets_rcved</span>. Receiving application monitoring statistics show values for <span class="Keyword">naks_sent</span> or <span class="Keyword">nak_pckets_sent</span>. Refer to <span class="xref"><a href="javascript:WWHClickedPopup('GUID-A5236314-8998-420A-876C-97EB134F2283', 'GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html#3_5_1', '');">Monitoring UM Statistics, Logs and Daemons</a></span>.</div>
+      <div class="Section_Title"><a name="3_7_8_4_4_2">Cause</a></div>
+      <div class="Body"><a name="3_7_8_4_4_4">Message loss in source-paced transports (LBT-RM, LBT-RU) can occur due to the following.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_7_8_4_4_6_2">Slow or overloaded receiver applications drop packets because, for example, the CPU can't service network interrupts or UDP socket buffers.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_7_8_4_4_6_4">An overloaded network infrastructure drops packets because of, for example, switch buffer overflows or NIC ring buffer overflows.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_7_8_4_4_6_6">A network component fails.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_7_8_4_4_8">The following diagram depicts possible locations of message loss.</a></div>
+      <div class="Figure_Title">Figure  1. <a name="3_7_8_4_4_10_2">Buffers Where Message Loss Can Occur</a></div>
+      <div class="Figure"><a name="3_7_8_4_4_10-2"><img id="3_7_8_4_4_10_4" class="Default" src="images/GUID-48F225FF-E5FD-428A-B79D-6972C9543166-low.png" width="511" height="233" style="display: inline; float: none; left: 0pt; top: 0pt;" /></a></div>
+      <div class="Section_Title"><a name="3_7_8_4_6_2">Resolution</a></div>
+      <div class="Body"><a name="3_7_8_4_6_4">Select the appropriate command from the table below to diagnose UDP socket buffer or NIC ring buffer loss.</a></div>
+      <table class="Default" border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: 1.02pt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_6_2_10_2_2">Platform</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: 1pt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_6_2_10_2_4">Buffer</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: 1.43pt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_6_2_10_2_6">Command</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: 1.84pt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_6_2_10_2_8">Result</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_2_2">Linux</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_2_4">UDP socket buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_2_6">netstat -s</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_2_8">Look for the UDP field, packet receive errors</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_4_2">Linux</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_4_4">NIC ring buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_4_6">ifconfig eth0</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_4_8">Look for RX packets ... overruns</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_6_2">Solaris</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_6_4">UDP socket buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_6_6">kstat | grep udpInOverflows</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_6_8">Look for the UDP field, packet receive errors</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_8_2">Solaris</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_8_4">NIC ring buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_8_6">kstat -n bge0 | grep norcvbuf</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_8_8">Look for RX packets ... overruns</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_10_2">Network component</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_10_4">---</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_10_6">Refer to the components documentation.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_6_2_12_10_8">---</a></div>
+          </td>
+        </tr>
+      </table>
+      <div class="Body"><a name="3_7_8_4_6_8">Use the following table if you find loss with any of the above actions.</a></div>
+      <table class="Default" border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_10_2_8_2_2">If you find loss in …</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_10_2_8_2_4">And the loss …</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_8_4_6_10_2_8_2_6">Resolution</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_2_2">UDP socket buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_2_4">occurs in small bursts</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_2_6">Increase the UDP buffer size.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_4_2">UDP socket buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_4_4">Is constant</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_4_6">Escalate the issue to your UM development team.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_6_2">NIC ring buffer</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_6_4">---</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_6_6">Maximize the NIC's receive descriptors. If this doesn't reduce the loss, escalate the issue to your UM development team.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_8_2">A network component</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_8_4">---</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_8_4_6_10_2_10_8_6">Escalate the issue to your network team or UM development team.</a></div>
+          </td>
+        </tr>
+      </table>
+      <div class="Body"><a name="3_7_8_4_6_12">If you do not find loss in any buffers or network components, contact Informatica Support.</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

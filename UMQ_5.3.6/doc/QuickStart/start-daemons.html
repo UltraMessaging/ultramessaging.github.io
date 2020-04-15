@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Starting Ultra Messaging Daemons</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Quick Start Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging JMS Programming Quick Start"
+href="jms-programming-quick-start.html" />
+<link rel="NEXT" title="Next Steps" href="next-steps.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Quick Start Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="jms-programming-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="next-steps.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="START-DAEMONS" name="START-DAEMONS">7. Starting Ultra
+Messaging Daemons</a></h1>
+
+<p>Starting <b class="APPLICATION">UM</b> daemons is not really a quick start operation,
+but the information provided in this should provide a good overview of the type of
+activities required to start these important <b class="APPLICATION">UM</b>
+components.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="start-daemons.html#START-TNWGD"><i>Ultra Messaging Gateway</i></a></p>
+</li>
+
+<li>
+<p><a href="start-daemons.html#START-UMMD"><i>UMM Daemon</i></a></p>
+</li>
+
+<li>
+<p><a href="start-daemons.html#START-UMESTORED"><i>Persistent Store and Queue
+Daemon</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="START-TNWGD" name="START-TNWGD">7.1. Ultra Messaging
+Gateway</a></h2>
+
+<p>The UM Gateway bridges disjoint topic resolution domains by forwarding multicast
+and/or unicast topic resolution traffic across gateways. Before installing and starting a
+gateway daemon (<a href="../Gateway/runningthegateway.html" target="doccontent"><tt
+class="LITERAL">tnwgd</tt></a>) clear objectives and proper planning are very important.
+Approach this planning with the consideration that a gateway condenses your network into
+a single process. You must be clear about the traffic you expect to forward through a
+gateway. The following highlights some other specifics.</p>
+
+<ol type="1">
+<li>
+<p>Know your Topic Resolution Domains. See <a href="../Gateway/concepts.html#TR-DOMAIN"
+target="doccontent">Topic Resolution Domain</a>.</p>
+</li>
+
+<li>
+<p>Consider the size and quality of network paths into and out of your gateways.
+Obviously, gateways cannot efficiently forward message from a 1 GB path to a 100 MB
+path.</p>
+</li>
+
+<li>
+<p>Fully examine any use of Late Join, taking care to configure retransmission options
+correctly.</p>
+</li>
+
+<li>
+<p>All remote stores must be named stores.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="START-UMMD" name="START-UMMD">7.2. UMM Daemon</a></h2>
+
+<p>The UMM Daemon stores <b class="APPLICATION">UM</b> XML configuration information
+defined in the GUI as well as user and license information. It serves license and
+configuration information to <b class="APPLICATION">UM</b> applications. The UMM Daemon
+requires either a <span class="TRADEMARK">MySQL</span>&#8482; or <span
+class="TRADEMARK">Oracle</span>&reg; database installation. Informatica does not supply
+<span class="TRADEMARK">MySQL</span> or <span class="TRADEMARK">Oracle</span> nor any
+licensing to use them. For additional information about the steps in this process, see <a
+href="../UMM/umm-daemon.html" target="doccontent">UM Manager Daemon</a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UMM</b> GUI requires Java Version 1.6.x.</p>
+</blockquote>
+</div>
+
+<ol type="1">
+<li>
+<p>Install <span class="TRADEMARK">MySQL</span> or <span class="TRADEMARK">Oracle</span>
+according to the user documentation.</p>
+</li>
+
+<li>
+<p>Create a database. (You provide the UMM Daemon with the database name, username and
+password at start up. This user name and password should be kept secure.)</p>
+</li>
+
+<li>
+<p>Log into the database.</p>
+</li>
+
+<li>
+<p>From the database's command line or home page, execute the <tt
+class="FILENAME">/UMM/install_tables_oracle.sql</tt> or <tt class="FILENAME">source
+/UMM/install_tables_mysql.sql</tt> script. (This script installs the tables required by
+<b class="APPLICATION">UMM</b>.)</p>
+</li>
+
+<li>
+<p>From the database's command line or home page, load <tt
+class="FILENAME">/UMM/oracle_templates.txt</tt> or <tt
+class="FILENAME">/UMM/mysql_templates.txt</tt>. (This script loads the example
+configuration templates for <a href="../Config/lowestlatency.html" target="doccontent">low
+latency</a> and <a href="../Config/examples.html#HIGHESTTHROUGHPUT" target="doccontent">high
+throughput</a>. These templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">Templates</b> in the object tree in the left pane.</p>
+
+<ul>
+<li>
+<p>For <span class="TRADEMARK">Oracle</span>, load <tt
+class="FILENAME">/UMM/oracle_templates.txt</tt>.</p>
+</li>
+
+<li>
+<p>For <span class="TRADEMARK">MySQL</span>, run <tt class="FILENAME">LOAD DATA INFILE
+'mysql_templates.txt' INTO TABLE TEMPLATE;</tt>.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>From the database's command line or home page, load <tt
+class="FILENAME">/UMM/oracle_application_jms.txt</tt> or <tt
+class="FILENAME">/UMM/mysql_application_jms.txt</tt>. (This script loads the
+ConnectionFactories and Destinations required to run the example JMS applications. These
+templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">JMS/ConnectionFactory</b> and <b
+class="APPLICATION">JMS/Destination</b> in the object tree in the left pane.)</p>
+
+<ul>
+<li>
+<p>For <span class="TRADEMARK">Oracle</span>, load <tt
+class="FILENAME">/UMM/oracle_application_jms.txt</tt> into the <tt
+class="FILENAME">Application</tt> table.</p>
+</li>
+
+<li>
+<p>For <span class="TRADEMARK">MySQL</span>, run <tt class="FILENAME">LOAD DATA INFILE
+'mysql_application_jms.txt' INTO TABLE APPLICATION;</tt>.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Modify the <tt class="FILENAME">/UMM/umm.properties</tt> to indicate the database
+username, password and driver to reflect your configuration database.</p>
+</li>
+
+<li>
+<p>Edit the <tt class="LITERAL">ummd.bat</tt> or <tt class="LITERAL">ummd.sh</tt> file
+that starts UMM Daemon. The appropriate driver jar file name must be added to the
+classpath. Specify your certificate file or Java keystore information if using SSL
+certificates. The <tt class="LITERAL">ummd.bat</tt> or <tt class="LITERAL">ummd.sh</tt>
+provided with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMMD_1.6.0_02.jar -Xms512m -Xmx1024m umm.ummd.Server
+           
+</pre>
+</li>
+
+<li>
+<p>Start the UMM Daemon with <tt class="FILENAME">/UMM/ummd.bat</tt> or <tt
+class="FILENAME">/UMM/ummd.sh</tt>.</p>
+</li>
+
+<li>
+<p>Edit the <tt class="LITERAL">umm.bat</tt> or <tt class="LITERAL">umm.sh</tt> file that
+starts the <b class="APPLICATION">UMM</b> GUI. The appropriate driver jar file name must
+be added to the classpath. The <tt class="LITERAL">umm.bat</tt> or <tt
+class="LITERAL">umm.sh</tt> provided with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMM_1.jar; -Xms256m -Xmx1024m umm.gui.MainFrame
+           
+</pre>
+</li>
+
+<li>
+<p>Start the <b class="APPLICATION">UMM</b> GUI with <tt
+class="FILENAME">/UMM/umm.bat</tt> or <tt class="FILENAME">/UMM/umm.sh</tt>.</p>
+</li>
+
+<li>
+<p>Log into the <b class="APPLICATION">UMM</b> GUI with username, <tt
+class="LITERAL">default</tt> and password <tt class="LITERAL">default</tt>. Either change
+the default user's password or create new administrative user and delete the default
+user. See <a href="../UMM/umm-gui.html#UMMGUI-USERS" target="doccontent">Managing Users</a></p>
+</li>
+
+<li>
+<p>To enable your <b class="APPLICATION">UM</b> applications to be served configuration
+information by UMM Daemon, set the following environment variable for every
+application/user combination.</p>
+
+<pre class="SCREEN">
+<tt
+class="LITERAL">export LBM_UMM_INFO=&lt;application_name&#62;:&lt;user_name&#62;:&lt;password&#62;@&lt;ip&#62;:&lt;port&#62;</tt>
+           
+</pre>
+
+<p>For example:</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=lbmrcv:lbmrcv:default:default@10.29.3.95:21273
+           
+</pre>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="START-UMESTORED" name="START-UMESTORED">7.3. Persistent Store
+and Queue Daemon</a></h2>
+
+<p>The daemon, <tt class="LITERAL">umestored</tt>, provides persistent store and queue
+services. Follow the steps below to start <tt class="LITERAL">umestored</tt>.</p>
+
+<ol type="1">
+<li>
+<p>Create the cache and state directories. <tt class="LITERAL">$ mkdir umestored-cache ;
+mkdir umestored-state</tt></p>
+</li>
+
+<li>
+<p>Create a simple <tt class="LITERAL">umestored</tt> XML configuration file (see <a
+href="../UME/umestored-config.html" target="doccontent">Configuration Reference for
+Umestored</a>) or use a sample configuration, <a href="../UME/ume-example-config.xml"
+target="doccontent">ume-example-config.xml</a> or <a href="../UME/q-example-config.xml"
+target="doccontent">q-example-config.xml</a></p>
+</li>
+
+<li>
+<p>Start the daemon. <tt class="LITERAL">$ umestored config.xml</tt></p>
+
+<p>See also <a href="../UME/umestored-manpage.html" target="doccontent">Manpage for
+umestored</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="jms-programming-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="next-steps.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging JMS Programming Quick
+Start</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Next Steps</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

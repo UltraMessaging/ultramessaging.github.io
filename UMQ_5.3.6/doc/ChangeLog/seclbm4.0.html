@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.0 - May 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.6.5 - May 2010" href="seclbm3.6.5.html" />
+<link rel="NEXT" title="Release LBM 3.6.3 / UME 3.0.1 / UMQ 1.0 - April 2010"
+href="seclbm3.6.3-ume3.0.1-umq1.0.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.6.5.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.6.3-ume3.0.1-umq1.0.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.0" name="SECLBM4.0">36. Release LBM 4.0 - May
+2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.0" name="LBM4.0">36.1. LBM 4.0</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-NEW" name="LBM4.0-NEW">36.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">LBM</b> now supports Datagram Bypass Layer (DBL) transport
+acceleration in conjunction with DBL-enabled <a href="http://www.myri.com"
+target="doccontent"><span class="TRADEMARK">Myricom</span>&reg;</a> 10-Gigabit Ethernet NICs
+for Linux and <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;. DBL is a kernel-bypass technology that accelerates
+sending and receiving UDP traffic. See <a
+href="../Config/transportaccelerationoptions.html" target="doccontent">Transport Acceleration
+Options</a> for more information. <b class="APPLICATION">Note:</b> The initial valid
+version of the <span class="TRADEMARK">Myricom</span> DBL shared library is Version
+0.4.8. Do not download any version prior to this version.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-UPDATES" name="LBM4.0-UPDATES">36.1.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">29West</b> topic resolution has been enhanced to provide more
+flexibility. Three phases have been implemented.</p>
+
+<ul>
+<li>
+<p>Initial Phase - Period that allows you to resolve a topic aggressively. Can be used to
+resolve all known topics before message sending begins. This phase can be configured to
+run differently from the defaults or completely disabled.</p>
+</li>
+
+<li>
+<p>Sustaining Phase - Period that allows new receivers to resolve a topic after the
+Initial Phase. This phase is most like the existing topic resolution and can also be the
+primary period of topic resolution if you disable the Initial Phase. It can also be
+configured to run differently from the defaults or completely disabled.</p>
+</li>
+
+<li>
+<p>Quiescent Phase - The "steady state" period during which a topic is resolved and <b
+class="APPLICATION">LBM</b> uses no system resources for topic resolution.</p>
+</li>
+</ul>
+
+See <a href="../Design/architecture.html#TOPIC-RESOLUTION" target="doccontent">Topic
+Resolution</a> for more information. <br />
+<br />
+</li>
+
+<li>
+<p>Two changes have been made to the LBT-IPC transport.</p>
+
+<ul>
+<li>
+<p>Receiver pacing has been added to the LBT-IPC transport. When the IPC shared memory
+area is full, sources either block or return an error (EWOULDBLOCK). You configure source
+or receiver pacing with <a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now monitors receiver "health". If a receiver goes
+away, the source receives a disconnect event the next time the sending application sends
+a message. As a result, the LBT-IPC Shared Memory Layout now has a lock-free design and
+the configuration options, <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCCLIENTACTIVITYTIMEOUT"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_client_activity_timeout</tt></a> and
+<a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCACKNOWLEDGEMENTINTERVAL"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_acknowledgement_interval</tt></a>
+have been deprecated.</p>
+</li>
+</ul>
+
+See <a href="../Design/lbm-objects.html#TRANSPORT-LBT-IPC" target="doccontent">Transport
+LBT-IPC</a> for more information. <br />
+<br />
+</li>
+
+<li>
+<p>In the <b class="APPLICATION">C API</b>, the previously deprecated functions have been
+removed.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_init()
+lbm_event_queue_attr_init()
+lbm_rcv_topic_attr_init()
+lbm_src_topic_attr_init()
+lbm_wildcard_rcv_attr_init()
+lbm_context_attr_cleanup()
+lbm_event_queue_attr_cleanup()
+lbm_rcv_topic_attr_cleanup()
+lbm_src_topic_attr_cleanup()
+lbm_wildcard_topic_attr_cleanup()
+                    
+</pre>
+
+<br />
+<br />
+</li>
+
+<li>
+<p>In the <b class="APPLICATION">Java API</b>, the previously deprecated JAVA APIs have
+been removed.</p>
+
+<pre class="SCREEN">
+LBMSource:
+LBMSource(LBMContext lbmctx, LBMTopic lbmtopic, LBMSourceCallback cb, Object cbArg)
+LBMSource(LBMContext lbmctx, LBMTopic lbmtopic, LBMSourceCallback cb, Object cbArg, 
+             LBMEventQueue lbmevq)
+addSourceCallback(LBMSourceCallback cb)
+addSourceCallback(LBMSourceCallback cb, Object cbArg)
+removeSourceCallback(LBMSourceCallback cb)
+removeSourceCallback(LBMSourceCallback cb, Object cbArg)
+onSourceEvent(int event, byte [] eventData)
+send(byte [] data, int dataLength, LBMResponseCallback cb, LBMEventQueue lbmevq, int flags)
+send(byte [] data, int dataLength, LBMResponseCallback cb, int flags)
+
+LBMContext:
+setCallback(LBMImmediateMessageCallback cb, Object cbArg)
+setCallback(LBMImmediateMessageCallback cb, Object cbArg, LBMEventQueue lbmevq)
+createSource(LBMTopic lbmtopic, LBMSourceCallback cb, Object cbArg)
+createSource(LBMTopic lbmtopic, LBMSourceCallback cb, Object cbArg, LBMEventQueue lbmevq)
+
+LBMContextAttributes:
+setSourceNotifyCallback(LBMSourceNotification cb, Object cbArg)
+
+LBMEventQueue:
+size()
+
+LBMSourceCallback: (entire interface)
+                    
+</pre>
+
+The previously deprecated JAVA APIs have been undeprecated. 
+
+<pre class="SCREEN">
+LBMEventQueue:
+LBMEventQueue(LBMEventQueueCallback cb, Object cbArg)
+LBMEventQueue(LBMEventQueueAttributes lbmevqattr, LBMEventQueueCallback cb, Object cbArg)
+LBMContext:
+send(String target, String topic, byte [] data, int dataLength, LBMResponseCallback cb, 
+      Object cbArg, LBMEventQueue lbmevq, int flags)
+send(String target, String topic, byte [] data, int dataLength, LBMResponseCallback cb, 
+      Object cbArg, int flags)
+send(String topic, byte [] data, int dataLength, LBMResponseCallback cb, Object cbArg, 
+      LBMEventQueue lbmevq, int flags)
+send(String topic, byte [] data, int dataLength, LBMResponseCallback cb, Object cbArg, int flags)
+createReceiver(LBMTopic lbmtopic, LBMReceiverCallback cb, Object cbArg)
+createReceiver(LBMTopic lbmtopic, LBMReceiverCallback cb, Object cbArg, LBMEventQueue lbmevq)
+                    
+</pre>
+
+The following JAVA APIs have been deprecated. A null pointer check has also been added to
+<code class="FUNCTION">LBMEventQueue.addMonitor()</code>. 
+
+<pre class="SCREEN">
+LBMEventQueue.propertySize()
+LBMContext:
+createReceiver(LBMTopic lbmtopic)
+createReceiver(LBMTopic lbmtopic, LBMEventQueue lbmevq)
+createHotFailoverReceiver(LBMTopic lbmtopic, LBMEventQueue lbmevq)
+createHotFailoverReceiver(LBMTopic lbmtopic)
+                    
+</pre>
+
+The following JAVA APIs have been changed from public to protected. 
+
+<pre class="SCREEN">
+LBMReceiver(LBMContext lbmctx, LBMTopic lbmtopic)
+LBMReceiver(LBMContext lbmctx, LBMTopic lbmtopic, LBMEventQueue lbmevq)
+LBMReceiverBase(LBMContext lbmctx, LBMReceiverAttributes lbmrcvattr, LBMEventQueue lbmevq)
+LBMReceiverBase(LBMContext lbmctx, LBMReceiverAttributes lbmrcvattr)
+LBMHotFailoverReceiver(LBMContext lbmctx, LBMTopic lbmtopic)
+LBMHotFailoverReceiver(LBMContext lbmctx, LBMTopic lbmtopic, LBMEventQueue lbmevq)
+                    
+</pre>
+
+<br />
+<br />
+</li>
+
+<li>
+<p>In the <b class="APPLICATION">.NET API</b>, the previously deprecated .NET APIs have
+been removed.</p>
+
+<pre class="SCREEN">
+LBMSource:
+addSourceCallback(LBMSourceCallback cb)
+addSourceCallback(LBMSourceCallback cb, object cbArg)
+removeSourceCallback(LBMSourceCallback cb)
+removeSourceCallback(LBMSourceCallback cb, object cbArg)
+LBMSource(LBMContext lbmctx, LBMTopic lbmtopic, LBMSourceCallback cb, object cbArg)
+LBMSource(LBMContext lbmctx, LBMTopic lbmtopic, LBMSourceCallback cb, object cbArg, 
+             LBMEventQueue lbmevq)
+delegate void LBMSourceCallback(object cbArg, int evtype, byte[] eventData)
+
+LBMContext:
+createSource(LBMTopic lbmtopic, LBMSourceCallback cb, object cbArg)
+createSource(LBMTopic lbmtopic, LBMSourceCallback cb, object cbArg, LBMEventQueue lbmevq)
+
+LBMContextAttributes:
+setSourceNotifyCallback(LBMSourceNotification cb, object cbArg)
+                    
+</pre>
+
+The following .NET APIs have been deprecated. 
+
+<pre class="SCREEN">
+LBMContext:
+createReceiver(LBMTopic lbmtopic)
+createReceiver(LBMTopic lbmtopic, LBMEventQueue lbmevq)
+createHotFailoverReceiver(LBMTopic lbmtopic)
+createHotFailoverReceiver(LBMTopic lbmtopic, LBMEventQueue lbmevq)
+                    
+</pre>
+
+The following .NET APIs have been changed from public to protected. 
+
+<pre class="SCREEN">
+LBMReceiver(LBMContext lbmctx, LBMTopic lbmtopic)
+LBMReceiver(LBMContext lbmctx, LBMTopic lbmtopic, LBMEventQueue lbmevq)
+LBMHotFailoverReceiver(LBMContext lbmctx, LBMTopic lbmtopic)
+LBMHotFailoverReceiver(LBMContext lbmctx, LBMTopic lbmtopic, LBMEventQueue lbmevq)
+                       
+</pre>
+
+<br />
+<br />
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">const</tt> qualifier to <tt class="LITERAL">optval</tt>
+parameters of all <tt class="LITERAL">lbm_*_attr_setopt()</tt> API functions. Added <tt
+class="LITERAL">const</tt> qualifier to attributes pointer parameters of functions used
+to create <b class="APPLICATION">LBM</b> objects such as <tt
+class="LITERAL">lbm_context_create()</tt>, <tt class="LITERAL">lbm_src_create()</tt>, <tt
+class="LITERAL">lbm_rcv_create()</tt>, etc.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Configuration Change Required for LBM 3.5.3 / UME 2.2.4 or
+earlier:</b> Added the Configuration Option, <a
+href="../Config/resolveroperationoptions.html#CONTEXTDISABLEEXTENDEDTOPICRESOLUTIONMESSAGEOPTIONS"
+ target="doccontent"><tt
+class="LITERAL">disable_extended_topic_resolution_message_options</tt></a>, for backward
+compatibility. If you use <b class="APPLICATION">LBM</b> 3.5.3 / <b
+class="APPLICATION">UME</b> 2.2.4 or less, you should set this option to "1" to disable
+the internal topic resolution message options. Not disabling these message options
+produces warnings and deaf receivers. No action is required for <b
+class="APPLICATION">LBM</b> 3.6 / <b class="APPLICATION">UME</b> 3.0 and later.</p>
+</li>
+
+<li>
+<p>Added the Configuration Options, <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTMIMDELIVERYCONTROLACTIVITYCHECKINTERVAL"
+ target="doccontent"><tt class="LITERAL">mim_delivery_control_activity_check_interval</tt></a>
+and <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTMIMDELIVERYCONTROLACTIVITYTIMEOUT"
+ target="doccontent"><tt class="LITERAL">mim_delivery_control_activity_timeout</tt></a> to
+check for duplicate MIM messages forwarded through multiple Gateways.</p>
+</li>
+
+<li>
+<p>Added a new statistic in <a
+href="../API/structlbm__rcv__transport__stats__lbtrm__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_lbtrm_t</tt></a> structure for datagrams received
+out of order. The new statistic is available to the <a href="../API/index.html"
+target="doccontent">C API</a>, the <a href="../JavaAPI/html/index.html" target="doccontent">Java
+API</a> and the <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>. The
+statistic has also been added to the <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> <b class="APPLICATION">MIB</b> and the InterMapper probe files.
+In addition, all example applications support the statistic.</p>
+</li>
+
+<li>
+<p>Blocking sends from within a context-thread callback are no longer permitted and now
+return an LBM_EINVAL error. This restriction eliminates a possible deadlock. Non-blocking
+sends from a context-thread callback are still permitted, and any type of send is
+permitted outside a context-thread callback.</p>
+</li>
+
+<li>
+<p>Some API calls that were formerly never safe to call from within a context-thread
+callback (due to a deadlock condition) are now always safe to call from within a
+context-thread callback. These API calls include:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">lbm_request_delete()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_request_delete_ex()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_response_delete()</tt></p>
+</li>
+</ul>
+
+<p>Additionally, the following send-related API calls are now safe to call from within a
+context-thread callback provided you set the LBM_SRC_NONBLOCK flag.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">lbm_multicast_immediate_message()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_multicast_immediate_request()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_unicast_immediate_message()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_unicast_immediate_request()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_send_response()</tt></p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Added ability to set a <b class="APPLICATION">LBM</b> Configuration Option interface
+by name. When setting by name the configuration option's value must be wrapped in
+quotes.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-FIXES" name="LBM4.0-FIXES">36.1.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected the installation of 64 bit <b class="APPLICATION">LBM</b> packages. <b
+class="APPLICATION">LBM</b> now installs into <tt class="LITERAL">C:\Program Files</tt>
+instead of <tt class="LITERAL">C:\Program Files (x86)</tt>.</p>
+</li>
+
+<li>
+<p>All include files now reference other include files using <tt
+class="LITERAL">lbm/...</tt>. This allows your application Makefiles to specify just the
+parent directory, e.g. <tt class="LITERAL">/usr/include</tt>. You can copy the <tt
+class="LITERAL">include/lbm</tt> directory as a whole to your common or system include
+directory.</p>
+</li>
+
+<li>
+<p>Added a warning "Data received but no callback registered" when data is received and
+no callbacks are registered in the Java and .NET APIs.</p>
+</li>
+
+<li>
+<p>Fixed a bug that occurred when using <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> IO Completion Ports that could cause a context's <tt
+class="LITERAL">request_tcp_port</tt> to become permanently unresponsive to incoming TCP
+connection requests. This condition manifests itself in many ways, such as an inability
+to participate in <b class="APPLICATION">LBM</b> Request/Response, Late Join, or an
+inability to receive Unicast Immediate Messages. This condition occurs if the listening
+TCP socket created by <b class="APPLICATION">LBM</b> (e.g. by multiple incoming responses
+or UIMs) receives multiple TCP connection requests. See also <a
+href="seclbm3.5.3-ume2.2.3.html#UME2.2.3"><i>UME 2.2.3</i></a>.</p>
+</li>
+
+<li>
+<p>Changed type of <a href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUESIZEWARNING"
+target="doccontent"><tt class="LITERAL">queue_size_warning</tt></a> from <tt
+class="LITERAL">unsigned long</tt> to <tt class="LITERAL">size_t</tt>.</p>
+</li>
+
+<li>
+<p>Fixed an issue where uninitialized fields in an <tt class="LITERAL">lbm_msg_t</tt>
+passed a bad pointer to application code. This could sometimes result in exceptions in
+.NET and Java. The fields in question were only uninitialized in unrecoverable loss
+messages larger than the <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUESIZEWARNING" target="doccontent"><tt
+class="LITERAL">transport_datagram_max_size</tt></a> and delivered from hot failover
+receivers or immediate messages. This issue was introduced in <b
+class="APPLICATION">LBM</b> 3.6.</p>
+</li>
+
+<li>
+<p>Added the option, <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERUNICASTFORCEALIVE"
+target="doccontent"><tt class="LITERAL">resolver_unicast_force_alive</tt></a>, which allows an
+LBM Gateway to begin sending keepalive messages to a Unicast Topic Resolution daemon (<tt
+class="LITERAL">lbmrd</tt>). The <tt class="LITERAL">lbmrd</tt> can then begin sending
+topic resolution traffic to the LBM Gateway.</p>
+</li>
+
+<li>
+<p>Fixed an issue that caused unicast immediate messages sent from a Java application to
+return a fatal assert.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-KNOWNISSUES" name="LBM4.0-KNOWNISSUES">36.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using LBT-IPC, a seg fault can occur when sending messages larger than 65,535
+bytes when <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero). The
+seg fault occurs when fragments are lost. Setting <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt> avoids the seg fault by eliminating loss. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.6.5.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.6.3-ume3.0.1-umq1.0.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.6.5 - May 2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.6.3 / UME 3.0.1 / UMQ 1.0 -
+April 2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

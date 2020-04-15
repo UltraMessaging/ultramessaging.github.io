@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.3.2 / UMP 5.3.2 - November - 2012</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UMS 5.3.3 / UMP 5.3.3 / UMQ 5.3.3 - March - 2013"
+href="secums5.3.3-ump5.3.3-umq5.3.3.html" />
+<link rel="NEXT" title="Release UMS 5.3.1 / UMP 5.3.1 / UMQ 5.3.1 - September - 2012"
+href="secums5.3.1-ump5.3.1-umq5.3.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="secums5.3.3-ump5.3.3-umq5.3.3.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="secums5.3.1-ump5.3.1-umq5.3.1.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="HP-UMP5.3.2" name="HP-UMP5.3.2">6. Release UMS 5.3.2 / UMP
+5.3.2 - November - 2012</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.3.2" name="UMS5.3.2">6.1. UMS 5.3.2</a></h2>
+
+<p>No changes have been made to <b class="APPLICATION">UMS</b> for 5.3.2. This release
+accompanies the <b class="APPLICATION">UMP</b> 5.3.2 release which provides support for
+the <span class="TRADEMARK">HP NonStop</span>&reg; platform.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.3.2" name="UMP5.3.2">6.2. UMP 5.3.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.2-NEW" name="UMP5.3.2-NEW">6.2.1. New</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">Persistence Edition</b> is now available on the <span
+class="TRADEMARK">HP NonStop</span> platform. See <a
+href="../../DocIntro.html#HPNONSTOPPACKAGES" target="doccontent">HP NonStop® Package</a> for
+limitations.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.2-FIXES" name="UMP5.3.2-FIXES">6.2.2. Bug
+Fixes</a></h3>
+
+<p>No specific <b class="APPLICATION">UMP</b> problems were discovered.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.2-KNOWNISSUES" name="UMP5.3.2-KNOWNISSUES">6.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Creating multiple receivers on the same topic in the same context using the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> may result in a crash when
+calling <code class="FUNCTION">Dispose()</code> if the topic is a persistent data stream.
+It is recommended to either protect the calls to <code class="FUNCTION">Dispose()</code>
+to prevent concurrent calls or use a single receiver per topic and use application code
+to deliver messages to different callbacks. This will be fixed in a future release.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> stores sometimes fail to send message stability
+acknowledgements to sources for messages sent while the store was being reported
+unresponsive by the source. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>, may
+crash if you enable proxy sources and the daemon is configured with a very restrictive
+port range, ( <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_low</tt></a> - <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_high</tt></a>, <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_low</tt></a> - <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_high</tt></a>, etc.). Informatica
+recommends that you use a wide port range (at least 1000 ports) in your <b
+class="APPLICATION">UM</b> configuration file if you enable proxy sources for <tt
+class="LITERAL">umestored</tt>. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>,
+stops persisting messages to disk if the store has a loss condition which is not resolved
+prior to an EOS event. As a workaround, Informatica recommends that you enable <tt
+class="LITERAL">receiver</tt> <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a> <tt
+class="LITERAL">2500</tt> in the <b class="APPLICATION">UM</b> configuration file, not
+the <tt class="LITERAL">umestored</tt> XML configuration file. The value of 2500 assumes
+the default <tt class="LITERAL">*_nak_generation_interval</tt>. See <a
+href="../Config/grouprelated.html#PREVENTUNDETECTEDLOSS2" target="doccontent">Preventing
+Undetected Loss</a> for more information. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UMP</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. Informatica is
+working on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="secums5.3.3-ump5.3.3-umq5.3.3.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="secums5.3.1-ump5.3.1-umq5.3.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UMS 5.3.3 / UMP 5.3.3 / UMQ 5.3.3 -
+March - 2013</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UMS 5.3.1 / UMP 5.3.1 / UMQ 5.3.1 -
+September - 2012</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

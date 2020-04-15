@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Life Cycle of an Ultra Messaging JMS Application</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging JMS Overview" href="jms-overview.html" />
+<link rel="NEXT" title="JNDI Administered Objects" href="jndi-lookup.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="jms-overview.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="jndi-lookup.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="LIFE-CYCLE" name="LIFE-CYCLE">3. Life Cycle of an Ultra
+Messaging JMS Application</a></h1>
+
+<p>Using the Ultra Messaging JMS API, you can write end-to-end messaging applications
+with the programming model shown in <a
+href="jms-overview.html#PROGRAMMINGARCHITECTURE"><i>Ultra Messaging JMS Programming
+Architecture</i></a>. This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="life-cycle.html#PRODUCER-APP"><i>Producer Application</i></a></p>
+</li>
+
+<li>
+<p><a href="life-cycle.html#CONSUMER-APP"><i>Consumer Application</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PRODUCER-APP" name="PRODUCER-APP">3.1. Producer
+Application</a></h2>
+
+<p>Producer applications take the following actions.</p>
+
+<ol type="1">
+<li>
+<p>Look-up <tt class="LITERAL">ConnectionFactory</tt>. The Ultra Messaging JMS
+implementation supports JNDI lookup of a <tt class="LITERAL">ConnectionFactory</tt>.</p>
+</li>
+
+<li>
+<p>Create a physical connection. The <tt class="LITERAL">ConnectionFactory</tt> creates
+the <tt class="LITERAL">Connection</tt>.</p>
+</li>
+
+<li>
+<p>Create logical session(s) of a <tt class="LITERAL">Connection</tt>. Sessions are
+light-weight connections that can multiplex over a single physical <tt
+class="LITERAL">Connection</tt>. Sessions provide the following.</p>
+
+<ol type="a">
+<li>
+<p>Concurrent use of the physical <tt class="LITERAL">Connection</tt> across multiple
+threads (one session per thread) and thus are resource efficient.</p>
+</li>
+
+<li>
+<p>Delineation of work between multiple producers.</p>
+</li>
+
+<li>
+<p>A factory of producers.</p>
+</li>
+</ol>
+</li>
+
+<li>
+<p>Create a <tt class="LITERAL">Destination</tt>. You can create the destination
+programmatically or via JNDI lookup. The destination consists of a Topic or Queue
+name.</p>
+</li>
+
+<li>
+<p>Create a producer of a session and provide the destination.</p>
+</li>
+
+<li>
+<p>Create Messages. For each Message, set the business data and set the associated
+routing properties.</p>
+</li>
+
+<li>
+<p>Send Messages to the <tt class="LITERAL">Destination</tt> address using the
+producer.</p>
+</li>
+
+<li>
+<p>Close Objects by destroying the Message, <tt class="LITERAL">Destination</tt>(s),
+producer, session(s), and <tt class="LITERAL">Connection</tt>.</p>
+</li>
+</ol>
+
+<p>The following simple JMS producer example application demonstrates how to program the
+above actions.</p>
+
+<pre class="SCREEN">
+// Obtain a ConnectionFactory via lookup or direct instantiation
+ConnectionFactory factory = (ConnectionFactory)jndiContext.lookup("uJMSConnectionFactory");
+ 
+// Create a connection - assuming no username/password required for <b
+class="APPLICATION">UM</b>
+Connection connection = factory.createConnection();
+
+// Create a session
+Session session = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+// Create a topic destination
+Destination destination = session.createTopic("TOPIC.1");
+
+// Create a producer
+MessageProducer msgProducer = session.createProducer(null);
+
+// create a bytes message
+BytesMessage msg = session.createBytesMessage();
+
+byte[] buffer = {1,2,3,4,5};
+
+msg.writeBytes(buffer);
+
+// Publish the message
+msgProducer.send(destination, msg);
+
+// close the connection
+connection.close();
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONSUMER-APP" name="CONSUMER-APP">3.2. Consumer
+Application</a></h2>
+
+<p>Consumer applications normally take the following actions.</p>
+
+<ol type="1">
+<li>
+<p>Look up <tt class="LITERAL">ConnectionFactory</tt>. The Ultra Messaging JMS
+implementation supports JNDI lookup of a <tt class="LITERAL">ConnectionFactory</tt>.</p>
+</li>
+
+<li>
+<p>Create a physical connection. The <tt class="LITERAL">ConnectionFactory</tt> creates
+the <tt class="LITERAL">Connection</tt>.</p>
+</li>
+
+<li>
+<p>Create logical session(s) of a <tt class="LITERAL">Connection</tt>. Sessions are
+light-weight connections that can multiplex over a single physical <tt
+class="LITERAL">Connection</tt>. Sessions provide the following.</p>
+
+<ol type="a">
+<li>
+<p>Concurrent use of the physical <tt class="LITERAL">Connection</tt> across multiple
+threads (one session per thread) and thus are resource efficient</p>
+</li>
+
+<li>
+<p>Delineation of work between multiple consumers.</p>
+</li>
+
+<li>
+<p>A factory of consumers.</p>
+</li>
+</ol>
+</li>
+
+<li>
+<p>Create a <tt class="LITERAL">Destination</tt>. You can create the destination, which
+consists of a Topic/Queue name, programmatically or via JNDI/<b
+class="APPLICATION">UMM</b> lookup. The <b class="APPLICATION">UMM</b> repository
+contains a Wildcard designation for a <tt class="LITERAL">Destination</tt>.</p>
+</li>
+
+<li>
+<p>Create a consumer of a session, providing the <tt class="LITERAL">Destination</tt>
+created. If the messages are read asynchronously, register the listener call-back
+function and exception with the consumer.</p>
+</li>
+
+<li>
+<p>Read Messages from the <tt class="LITERAL">Destination</tt> Address. For each
+destination address (absolute or wildcard), the read could be synchronous, the consumer
+could register a listener call-back function to asynchronously receive messages, or the
+consumer could also register a listener call-back exception function to asynchronously
+receive exceptions, business or technical.</p>
+</li>
+
+<li>
+<p>Process messages to access data and properties.</p>
+</li>
+
+<li>
+<p>Close Objects by destroying Message; <tt class="LITERAL">Destination</tt>(s),
+consumer, session(s), <tt class="LITERAL">Connection</tt>.</p>
+</li>
+</ol>
+
+<p>The following simple JMS consumer example application demonstrates how to program the
+above actions.</p>
+
+<pre class="SCREEN">
+// Obtain a ConnectionFactory via lookup or direct instantiation
+ ConnectionFactory factory = (ConnectionFactory)jndiContext.lookup("uJMSConnectionFactory");
+
+// Create a connection - assuming no username/password required for <b
+class="APPLICATION">UM</b>
+Connection connection = factory.createConnection();
+
+// Create a session
+Session session = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+// Create a topic destination
+Destination destination = session.createTopic("TOPIC.1");
+
+// create the consumer 
+MessageConsumer msgConsumer = session.createConsumer(destination);
+
+// start the connection 
+connection.start();
+
+// read messages 
+while(true)
+{
+    // receive the message 
+        msg = msgConsumer.receive();
+    if (msg == null)
+        break;
+}
+
+// close the connection 
+connection.close();
+           
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="jms-overview.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="jndi-lookup.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging JMS Overview</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">JNDI Administered Objects</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

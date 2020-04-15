@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.5.ea3 / UME 2.2ea1 - May 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.6.ea1 / UME 3.0ea1 - July 2009"
+href="seclbm3.6ea1-ume3.0ea1.html" />
+<link rel="NEXT" title="Release LBM 3.5.ea2 - April 2009" href="seclbm3.5ea2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.6ea1-ume3.0ea1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.5ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.5EA3" name="SECLBM3.5EA3">48. Release LBM 3.5.ea3 /
+UME 2.2ea1 - May 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.5EA3" name="LBM3.5EA3">48.1. LBM 3.5ea3</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5EA3-NEW" name="LBM3.5EA3-NEW">48.1.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">New Monitoring Statistics:</b> Added monitoring statistics for
+the LBT-IPC transport. These statistics are available to the <a href="../API/index.html"
+target="doccontent">C API</a>, the <a href="../JavaAPI/html/index.html" target="doccontent">Java
+API</a> and the <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>. The new
+statistics have also been added to the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b class="APPLICATION">MIB</b> and the
+InterMapper probe files. In addition, all example applications support LBT-IPC transport
+statistics.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5EA3-UPDATES" name="LBM3.5EA3-UPDATES">48.1.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Changed the internal management of LBT-IPC shared resources. <b
+class="APPLICATION">LBM</b> can now support thousands of LBT-IPC transport sessions and
+hundreds of receiving contexts.</p>
+
+<p>As a result, <b class="APPLICATION">LBM</b> 3.5ea2 users must clean up old IPC
+resources before installing <b class="APPLICATION">LBM</b> 3.5ea3. Perform the following
+actions to properly update to <b class="APPLICATION">LBM</b> 3.5ea3.</p>
+
+<ol type="1">
+<li>
+<p>Use the <tt class="LITERAL"><b class="APPLICATION">lbtipc_resource_manager
+-reclaim</b></tt> option to reclaim any orphaned IPC resources.</p>
+</li>
+
+<li>
+<p>Use the <tt class="LITERAL"><b class="APPLICATION">lbtipc_resource_manager
+-delete</b></tt> option to delete the IPC resources database.</p>
+</li>
+
+<li>
+<p>Install <b class="APPLICATION">LBM</b> 3.5ea3.</p>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5EA3-FIXES" name="LBM3.5EA3-FIXES">48.1.3. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected <b class="APPLICATION">LBM</b> socket resource leakage resulting when a
+socket did not connect to the sender. The socket delete was not completing.</p>
+</li>
+
+<li>
+<p>Modified <tt class="LITERAL">lbmmrcv.cs</tt> to only register one immediate callback.
+The previous implementation registered one callback for each receiver, which caused a
+single immediate message to be callbacked as many times as there were receivers. Since
+the callback executes a <tt class="LITERAL">dispose()</tt> on the message, it caused a
+core dump after the first callback was made.</p>
+</li>
+
+<li>
+<p>Corrected a problem with LBT-IPC that caused an infinite loop when subsequent
+receivers joined an LBT-IPC transport session after the first receiver joined. The
+problem could happen if the subsequent receivers joined the transport as much as 17
+minutes later than the first.</p>
+</li>
+
+<li>
+<p>Corrected a seg fault that occurred when the maximum number of LBT-IPC transport
+sessions was exceeded.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the way an LBT-IPC receiver handles keepalive messages from
+an IPC source. This problem caused the following assertion, "WARNING: failed assertion
+[(MUL_SQN_GT(sqn, ctlr-&#62;stream_high_sqn))] at line 626 in
+../../../../src/lib/lbm/lbmrcvdc.c".</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5EA3-KNOWNISSUES" name="LBM3.5EA3-KNOWNISSUES">48.1.4.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. 29West
+is investigating this issue.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.2EA1" name="UME2.2EA1">48.2. UME 2.2ea1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME2.2EA1-FIXES" name="UME2.2EA1-FIXES">48.2.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem with the Java and .NET versions of <tt class="LITERAL">umesrc</tt>
+that resulted in the STORE flag being issued instead of the STABLE flag when a quorum of
+stores is achieved. This problem only occurred when using a Quorum/Consensus UME store
+configuration.</p>
+</li>
+
+<li>
+<p>In the Java API, changed UME confirmed delivery behavior for receivers to be more in
+line with C and .NET APIs. The Java API now requires an application to call <tt
+class="LITERAL">LBMMessage.dispose()</tt> when it has finished with an LBMMessage object.
+Previously this had not been required.</p>
+</li>
+
+<li>
+<p>In the Java API, fixed a bug which caused <tt
+class="LITERAL">LBMMessage.isFragment()</tt> to always return false.</p>
+</li>
+
+<li>
+<p>In the Java API, fixed several small UME source-side memory leaks that occurred when
+using the newly-supported Embedded Mode without an Event Queue. These problems did not
+affect Sequential Mode with or without an Event Queue nor Embedded Mode with an Event
+Queue.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.6ea1-ume3.0ea1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.5ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.6.ea1 / UME 3.0ea1 - July
+2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.5.ea2 - April 2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

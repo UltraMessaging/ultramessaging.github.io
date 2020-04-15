@@ -1,0 +1,810 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Interrelated Configuration Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="PREVIOUS" title="Configure New Port Defaults" href="newports.html" />
+<link rel="NEXT" title="Common Tasks" href="commontasks.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="newports.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 2. Example Configuration
+Scenarios</td>
+<td width="10%" align="right" valign="bottom"><a href="commontasks.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="GROUPRELATED" name="GROUPRELATED">2.8. Interrelated
+Configuration Options</a></h1>
+
+<p>Some <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b>
+configuration options are related in ways that might not be immediately apparent.
+Changing the value for one option without adjusting its related option can cause problems
+such as NAK storms, tail loss, etc. This section identifies these relationships and
+recommends a best practice for setting the interrelated options.</p>
+
+<p>The following sections discuss configuration option relationships.</p>
+
+<ul>
+<li>
+<p><a href="grouprelated.html#PREVENTNAKSTORMS"><i>Preventing NAK Storms with NAK
+Interval Options</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTTAILLOSS"><i>Preventing Tail Loss With TSNI and NAK
+Interval Options</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTIPCRCVRDEAFNESS"><i>Preventing IPC Receiver Deafness
+With Keepalive Options</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTLBTRMRUSESSIONTIMEOUTS"><i>Preventing Erroneous
+LBT-RM/LBT-RU Session Timeouts</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTMULTICASTADDRESSREVERSAL"><i>Preventing Errors Due
+to Bad Multicast Address Ranges</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTSTORETIMEOUTS"><i>Preventing Store or Queue
+Timeouts</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTULBTIMEOUTS"><i>Preventing ULB Timeouts</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTLBMRDTIMEOUTS"><i>Preventing Unicast Resolver Daemon
+Timeouts</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTUNDETECTEDLOSS"><i>Preventing Undetected Late Join
+Loss</i></a></p>
+</li>
+
+<li>
+<p><a href="grouprelated.html#PREVENTUNDETECTEDLOSS2"><i>Preventing Undetected
+Loss</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTNAKSTORMS" name="PREVENTNAKSTORMS">2.8.1. Preventing
+NAK Storms with NAK Interval Options</a></h2>
+
+<p>The NAK generation interval should be sufficiently longer than the NAK backoff
+interval so that the source, after receiving the first NAK from a receiver, has time to
+retransmit the missing datagram and prevent a NAK storm from all receivers. LBTRM, LBTRU,
+and MIM all use NAK generation and backoff intervals. The NAK behavior for all transports
+is the same.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKBACKOFFINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtrm_nak_backoff_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtrm_nak_generation_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKBACKOFFINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtru_nak_backoff_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtru_nak_generation_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKBACKOFFINTERVAL"
+ target="_top"><tt class="LITERAL">mim_nak_backoff_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">mim_nak_generation_interval</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendation:</p>
+
+<ul>
+<li>
+<p>Set the NAK generation interval to at least 2x the NAK backoff interval.</p>
+</li>
+</ul>
+
+<p>For more, see also <a href="../Config/transportlbt-rmreliabilityoptions.html"
+target="_top">Transport LBT-RM Reliability Options</a>, <a
+href="../Config/transportlbt-rureliabilityoptions.html" target="_top">Transport LBT-RU
+Reliability Options</a>, or <a
+href="../Config/multicastimmediatemessagingreliabilityoptions.html"
+target="_top">Multicast Immediate Messaging Reliability Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid NAK storms, set NAK generation interval to at least 2x the          |
+# | NAK backoff interval.                                                        |
+# +------------------------------------------------------------------------------+
+#
+receiver transport_lbtrm_nak_backoff_interval       200
+receiver transport_lbtrm_nak_generation_interval  10000
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTTAILLOSS" name="PREVENTTAILLOSS">2.8.2. Preventing Tail
+Loss With TSNI and NAK Interval Options</a></h2>
+
+<p>Tail loss describes a situation where the last few messages sent by a publisher before
+it exits are not received by a subscriber. A TSNI active threshold that is too small
+relative to the TSNI and/or NAK generation interval may cause tail loss, especially with
+ordered delivery.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOACTIVETHRESHOLD"
+target="_top"><tt
+class="LITERAL">transport_topic_sequence_number_info_active_threshold</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"
+target="_top"><tt
+class="LITERAL">transport_topic_sequence_number_info_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtrm_nak_generation_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtru_nak_generation_interval</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendation:</p>
+
+<ul>
+<li>
+<p>set the TSNI active threshold to at least 4x the topic sequence number info interval
+(TSNI) plus the NAK generation interval.</p>
+</li>
+</ul>
+
+<p>For more, see <a
+href="../Config/transportlbt-rmreliabilityoptions.html#TRANSPORTLBT-RMRELIABILITYOPTIONS"
+target="_top">Transport LBT-RM Reliability Options</a> or <a
+href="../Config/transportlbt-rureliabilityoptions.html#TRANSPORTLBT-RURELIABILITYOPTIONS"
+target="_top">Transport LBT-RU Reliability Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +-------------------------------------------------------------------------------+
+# | To avoid tail loss, set transport_topic_sequence_number_info_active_threshold |
+# | to at least the sum of 4x the topic sequence number interval plus the NAK     |
+# | generation interval.                                                          |
+# | NOTE: resolver_active_threshold is in seconds.                                |
+# +-------------------------------------------------------------------------------+
+#
+source   transport_topic_sequence_number_info_interval          2000
+receiver transport_lbtrm_nak_generation_interval               10000
+source   transport_topic_sequence_number_info_active_threshold    60
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTIPCRCVRDEAFNESS" name="PREVENTIPCRCVRDEAFNESS">2.8.3.
+Preventing IPC Receiver Deafness With Keepalive Options</a></h2>
+
+<p>With an LBT-IPC transport, an activity timeout that is too small relative to the
+session message interval may cause receiver deafness. If a timeout is too short, the
+keepalive messages might not be received in time to prevent the receiver from being
+deleted or disconnecting because the source appears to be gone.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtipc_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCSMINTERVAL"
+target="_top"><tt class="LITERAL">transport_lbtipc_sm_interval</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>set the activity timeout to at least 2x the session message interval</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/transportlbt-ipcoperationoptions.html"
+target="_top">Transport LBT-IPC Operation Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid receiver deafness:                                                  |
+# | - set client activity timeout to at least 2x the acknowledgement interval.   |
+# | - set activity timeout to at least 2x the session message interval.          |
+# +------------------------------------------------------------------------------+
+#
+receiver transport_lbtipc_activity_timeout          60000 
+source   transport_lbtipc_sm_interval               10000
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTLBTRMRUSESSIONTIMEOUTS"
+name="PREVENTLBTRMRUSESSIONTIMEOUTS">2.8.4. Preventing Erroneous LBT-RM/LBT-RU Session
+Timeouts</a></h2>
+
+<p>An LBT-RM or LBT-RU receiver-side quiescent timeout may delete a transport session
+that a source is still active on. This can happen if the timeout is too short relative to
+the source's interval between session messages (which serve as a session keepalive).</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtrm_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtrm_sm_maximum_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtru_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUSMMAXIMUMINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtru_sm_maximum_interval</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>set the receiver LBT-RM or LBT-RU activity timeout to at least 3x the source session
+message maximum interval</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/transportlbt-rmoperationoptions.html"
+target="_top">Transport LBT-RM Operation Options</a> or <a
+href="../Config/transportlbt-ruoperationoptions.html" target="_top">Transport LBT-RU
+Operation Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid erroneous session timeouts, set receiver transport activity         |
+# | timeout to at least 3x the source session message maximum interval.          |
+# +------------------------------------------------------------------------------+
+#
+receiver transport_lbtrm_activity_timeout       60000  
+source   transport_lbtrm_sm_maximum_interval    10000 
+receiver transport_lbtru_activity_timeout       60000 
+source   transport_lbtru_sm_maximum_interval    10000
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTMULTICASTADDRESSREVERSAL"
+name="PREVENTMULTICASTADDRESSREVERSAL">2.8.5. Preventing Errors Due to Bad Multicast
+Address Ranges</a></h2>
+
+<p>Sometimes it is easy to accidentally reverse the low and high values for LBT-RM
+multicast addresses, which actually creates a very large range. Aside from excluding
+intended addresses, this can cause error conditions.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMMULTICASTADDRESSLOW"
+ target="_top"><tt class="LITERAL">transport_lbtrm_multicast_address_low</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMMULTICASTADDRESSHIGH"
+ target="_top"><tt class="LITERAL">transport_lbtrm_multicast_address_high</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>ensure that the intended low and high values for LBT-RM multicast addresses are not
+reversed</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/transportlbt-rmnetworkoptions.html"
+target="_top">Transport LBT-RM Network Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid incorrect LBT-RM multicast address ranges, ensure that you have not |
+# | reversed the low and high values.                                            |
+# +------------------------------------------------------------------------------+
+#
+context  transport_lbtrm_multicast_address_low  224.10.10.10
+context  transport_lbtrm_multicast_address_high 224.10.10.14
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTSTORETIMEOUTS" name="PREVENTSTORETIMEOUTS">2.8.6.
+Preventing Store or Queue Timeouts</a></h2>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> These interrelations apply only to the Ultra Messaging Persistence or
+Ultra Messaging Queuing Edition.</p>
+</blockquote>
+</div>
+
+<p>A store or queue may be erroneously declared unresponsive if its activity timeout
+expires before it has had adequate opportunity to verify it is still active via activity
+check intervals.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">ume_store_activity_timeout</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">ume_store_check_interval</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_queue_activity_timeout</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_queue_check_interval</tt></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>set the store or queue activity timeout to at least 5x the activity check interval</p>
+</li>
+</ul>
+
+<p>For more, see the <b class="APPLICATION">UM</b> Configuration Guide, 4.29. Ultra
+Messaging Persistence Options and/or (if using <b class="APPLICATION">UM</b> Queuing
+Edition), the <b class="APPLICATION">UM</b> Configuration Guide, 4.30. Ultra Messaging
+Queuing Options.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid erroneous store or queue activity timeouts, set the activity        |
+# | timeout to at least 5x the activity check interval.                          |
+# +------------------------------------------------------------------------------+
+#
+source ume_store_activity_timeout               3000   
+source ume_store_check_interval                  500 
+context umq_queue_activity_timeout              3000 
+context umq_queue_check_interval                 500
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTULBTIMEOUTS" name="PREVENTULBTIMEOUTS">2.8.7.
+Preventing ULB Timeouts</a></h2>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> These interrelations apply only to the Ultra Messaging Queuing
+Edition.</p>
+</blockquote>
+</div>
+
+<p>A ULB source or receiver may be erroneously declared unresponsive if its activity
+timeout expires before it has had adequate opportunities to attempt to re-register via
+activity check intervals if the source appears to be inactive. It is also possible for
+sources to attempt to reassign messages that have already been processed.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">umq_ulb_source_activity_timeout</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_ulb_source_check_interval</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_ulb_application_set_message_reassignment_timeout</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_ulb_application_set_receiver_activity_timeout</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umq_ulb_check_interval</tt></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>set the ULB source activity timeout to at least 5x the ULB source activity check
+interval</p>
+</li>
+
+<li>
+<p>set the ULB application set message reassignnment timeout to at least 5x the ULB check
+interval</p>
+</li>
+
+<li>
+<p>set the ULB receiver activity timeout to at least 5x the ULB check interval</p>
+</li>
+</ul>
+
+<p>For more (if using <b class="APPLICATION">UM</b> Queuing Edition), see the <b
+class="APPLICATION">UM</b> Configuration Guide, 4.30. Ultra Messaging Queuing
+Options.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid erroneous ULB source, receiver or application set message activity  |
+# | timeouts, set the activity timeout to at least 5x the activity check         |
+# | interval.                                                                    |
+# +------------------------------------------------------------------------------+
+#
+receiver umq_ulb_source_activity_timeout                    10000   
+receiver umq_ulb_source_check_interval                       1000 
+source umq_ulb_application_set_message_reassignment_timeout 50000 
+source umq_ulb_application_set_receiver_activity_timeout    10000
+source umq_ulb_check_interval                                1000
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTLBMRDTIMEOUTS" name="PREVENTLBMRDTIMEOUTS">2.8.8.
+Preventing Unicast Resolver Daemon Timeouts</a></h2>
+
+<p>A unicast resolver daemon may be erroneously declared inactive if its activity timeout
+expires before it has had adequate opportunity to verify that it is still alive.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERUNICASTACTIVITYTIMEOUT"
+target="_top"><tt class="LITERAL">resolver_unicast_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERUNICASTCHECKINTERVAL"
+target="_top"><tt class="LITERAL">resolver_unicast_check_interval</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>Set the unicast resolver daemon activity timeout to at least 5x the activity check
+interval. Or, if activity notification is not desired, set both options to 0.</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/resolveroperationoptions.html" target="_top">Resolver
+Operation Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid erroneous unicast resolver daemon timeouts, set the activity        |
+# | timeout to at least 5x the activity check interval.                          |
+# +------------------------------------------------------------------------------+
+#
+context  resolver_unicast_activity_timeout       1000 
+context  resolver_unicast_check_interval          200
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTUNDETECTEDLOSS" name="PREVENTUNDETECTEDLOSS">2.8.9.
+Preventing Undetected Late Join Loss</a></h2>
+
+<p>If during a Late Join operation, a transport times out while a receiver is requesting
+retransmission of missing messages, this can cause lost messages to go undetected and
+likely become unrecoverable.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTGENERATIONINTERVAL"
+target="_top"><tt class="LITERAL">retransmit_request_generation_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transporttcpoperationoptions.html#RECEIVERTRANSPORTTCPACTIVITYMETHOD"
+target="_top"><tt class="LITERAL">transport_tcp_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtrm_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtru_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtipc_activity_timeout</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>set the Late Join retransmit request interval to a value less than its transport's
+activity timeout value</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/latejoinoptions.html" target="_top">Late join
+Options</a> and also the applicable Transport LBT-RU Operation Options section.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid a transport inactivity timeout while requesting Late Join           |
+# | retransmissions, set the Late Join retransmit request interval to a value    |
+# | less than its transport's activity timeout.                                  |
+# +------------------------------------------------------------------------------+
+#
+receiver retransmit_request_generation_interval 10000 
+receiver transport_lbtrm_activity_timeout       60000
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PREVENTUNDETECTEDLOSS2" name="PREVENTUNDETECTEDLOSS2">2.8.10.
+Preventing Undetected Loss</a></h2>
+
+<p>It is possible that an unrecoverable loss due to unsatisfied NAKs or a transport
+activity timeout may go unreported if the delivery controller loss check is disabled or
+has too long an interval. For UMP stores, the loss check interval must be enabled. Two
+options (three, if using LBT-RM) are interrelated and must be set according to the
+guidelines below.</p>
+
+<p>Interrelated Options:</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="_top"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtrm_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="_top"><tt class="LITERAL">transport_lbtrm_nak_generation_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUACTIVITYTIMEOUT"
+ target="_top"><tt class="LITERAL">transport_lbtru_activity_timeout</tt></a></p>
+</li>
+</ul>
+
+<p>Recommendations:</p>
+
+<ul>
+<li>
+<p>For LBT-RM, set the transport activity timeout to value greater than the sum of the
+delivery control loss check interval and the NAK generation interval. Also, set the NAK
+generation interval to at least 4x the delivery control loss check interval.</p>
+</li>
+
+<li>
+<p>for LBT-RU, set the transport activity timeout to value greater than the delivery
+control loss check interval</p>
+</li>
+
+<li>
+<p>for UMP, always enable and set accordingly the delivery control loss check interval
+when configuring a store</p>
+</li>
+</ul>
+
+<p>For more, see <a href="../Config/deliverycontroloptions.html" target="_top">Delivery
+Control Options</a>.</p>
+
+<p>Example:</p>
+
+<pre class="SCREEN">
+#
+# +------------------------------------------------------------------------------+
+# | To avoid undetected or unreported loss, set NAK generation to 4x the delivery|
+# | control check interval, and ensure that these two combined are less than the |
+# | transport activity timeout                                                   |
+# +------------------------------------------------------------------------------+
+#
+receiver delivery_control_loss_check_interval     2500 
+receiver transport_lbtrm_activity_timeout        60000 
+receiver transport_lbtrm_nak_generation_interval 10000
+</pre>
+
+<br />
+<br />
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="newports.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="commontasks.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Configure New Port Defaults</td>
+<td width="34%" align="center" valign="top"><a href="examples.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Common Tasks</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

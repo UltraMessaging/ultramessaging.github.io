@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Architectures</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Concepts" href="umeconcepts.html" />
+<link rel="NEXT" title="Operational View" href="ume-ops-operational-view.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umeconcepts.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="ume-ops-operational-view.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ARCHITECTURES" name="ARCHITECTURES">3. Architectures</a></h1>
+
+<p>The same <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> API may be used for stream-based messaging or persistent
+messaging and queuing . Similarly, the <tt class="LITERAL">umestored</tt> daemon can be
+configured as a persistent store or queue, providing consistent and efficient operation
+across persistent and queuing messaging systems.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PERSISTENCE-ARCH" name="PERSISTENCE-ARCH">3.1. Persistence
+Architecture</a></h2>
+
+<p>As shown in the diagram, <b class="APPLICATION">UMP</b> provides messaging
+functionality as well as persistent operation. See <a
+href="architectures.html#UMEARCH"><i>UMP Persistence Architecture</i></a> for an overview
+of <b class="APPLICATION">UMP</b> architecture.</p>
+
+<div class="FIGURE"><a id="UMEARCH" name="UMEARCH"></a>
+<p><b>Figure 1. UMP Persistence Architecture</b></p>
+
+<p><img src="UME_Persist_Arch.png" align="CENTER" /></p>
+</div>
+
+<p>The highlights of this architecture are:</p>
+
+<ul>
+<li>
+<p>Sources communicate with stores</p>
+</li>
+
+<li>
+<p>Receivers communicate with stores</p>
+</li>
+
+<li>
+<p>Sources communicate with receivers</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The persistent store does not lie in the middle of the data path between
+source and receivers. Along with other enhancements, this feature, called <b
+class="APPLICATION"><span class="TRADEMARK">Parallel Persistence</span>&reg;</b>, gives
+<b class="APPLICATION">UMP</b> a significant performance edge over any other persistent
+messaging product.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The persistent store is not supported on the <span class="TRADEMARK">HP
+NonStop</span>&reg; platform.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="STORE-ARCH" name="STORE-ARCH">3.2. Persistent Store
+Architecture</a></h2>
+
+<p>The <tt class="LITERAL">umestored</tt> daemon runs the <b class="APPLICATION">UMP</b>
+persistent store feature. You can configure multiple stores per daemon using the <tt
+class="LITERAL">&lt;store&#62;</tt> element in the <tt class="LITERAL">umestored</tt> XML
+configuration file. See <a href="umestored-config.html"><i>Configuration Reference for
+Umestored</i></a>. Individual stores can use separate disk cache and disk state
+directories and be configured to persist messages for multiple sources (topics), which
+are referred to as, source repositories. <b class="APPLICATION">UMP</b> provides each <tt
+class="LITERAL">umestored</tt> daemon with a Web Monitor for statistics monitoring. See
+<a href="ume-store-web-monitor.html"><i>Ultra Messaging Web Monitor</i></a>.</p>
+
+<div class="FIGURE"><a id="UMPSTOREARCHITECTURE" name="UMPSTOREARCHITECTURE"></a>
+<p><b>Figure 2. Store Architecture</b></p>
+
+<p><img src="UMP_Store_Architecture.png" align="CENTER" /></p>
+</div>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="architectures.html#SOURCE-REPOSITORIES"><i>Source Repositories</i></a></p>
+</li>
+
+<li>
+<p><a href="architectures.html#STORE-FAULT-TOLERANCE"><i>Persistent Store Fault
+Tolerance</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCE-REPOSITORIES" name="SOURCE-REPOSITORIES">3.2.1. Source
+Repositories</a></h3>
+
+<p>Within a store, you configure repositories for individual topics and each can have
+their own s et of <tt class="LITERAL">&lt;topic&#62;</tt> level options that affect the
+repository's type, size, liveness behavior and much more. If you have multiple sources
+sending on the same topic, <b class="APPLICATION">UMP</b> creates a separate repository
+for each source. <b class="APPLICATION">UMP</b> uses the repository options configured
+for the topic to apply to each source's repository. If you specify 48MB for the size of
+the repository and have 10 sources sending on the topic, the persistent store requires
+480MB of storage for that topic.</p>
+
+<p>A repository can be configured as one of the following types.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">no cache</tt> - the repository does not retain any data, only
+state information</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">memory</tt> - the repository maintain both state and data only in
+memory</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">disk</tt> - the repository maintains state and data on disk, but
+also uses a memory cache.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">reduced-fd</tt> - the repository maintains state and data on disk,
+also uses a memory cache but uses significantly fewer File Descriptors. Normally a store
+uses two File Descriptors per topic in addition to normal UM file descriptors for
+transports and other objects. The reduced-fd repository type uses 5 File Descriptors for
+the entire store, regardless of the number of topics, in addition to normal UM file
+descriptors for transports and other objects. Use of this repository type may impact
+performance.</p>
+</li>
+</ul>
+
+<p>You can configure any combination of repository types within a single store
+configuration.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you run a store with all <tt class="LITERAL">disk</tt> or <tt
+class="LITERAL">reduced-fd</tt>type repositories, then restart the store with memory type
+repositories and do not clear out the <tt class="LITERAL">disk-cache-directory</tt> and
+<tt class="LITERAL">disk-state-directory</tt>, the memory repositories revert
+automatically to disk repositories.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> With <b class="APPLICATION">UMP</b> Version 5.3, the <b
+class="APPLICATION">UMP</b> store daemon has Standard C++ Library dependencies for Unix
+packages. The <tt class="LITERAL">libstdc++</tt> must also be included in
+LD_LIBRARY_PATH. See <a href="../../DocIntro.html#CODE" target="doccontent">Section 3. Code</a>
+for more infromation.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="STORE-FAULT-TOLERANCE" name="STORE-FAULT-TOLERANCE">3.2.2.
+Persistent Store Fault Tolerance</a></h3>
+
+<p>Sources and receivers register with a store and use individual repositories within the
+store. Sources can use redundant repositories configured in multiple stores in either a
+Round Robin or Quorum/Consensus arrangement for fault tolerance. Stores and repositories
+have no indication of these arrangements.</p>
+
+<p>The following diagram depicts an example Quorum/Consensus configuration of stores and
+repositories. These stores could also be run by a single <tt
+class="LITERAL">umestored</tt> daemon or one daemon for each store.</p>
+
+<div class="FIGURE"><a id="UMPEXAMPLESTORECONFIG" name="UMPEXAMPLESTORECONFIG"></a>
+<p><b>Figure 3. Example Store Configuration</b></p>
+
+<p><img src="UMP_ExampleStoreConfig.png" align="CENTER" /></p>
+</div>
+
+<p>See <a href="ume-fault-tolerance.html#STORE-CONFIGURATION-CONSIDERATIONS"><i>Store
+Configuration Considerations</i></a> and also <a
+href="umestored-config.html#UMESTORED-STORES-ELEMENT"><i>Stores Element</i></a> for more
+about store configuration.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUING-ARCH" name="QUEUING-ARCH">3.3. Queuing
+Architecture</a></h2>
+
+<p>The architecture of Queues follows a lot of the same tenets as the <b
+class="APPLICATION">UMP</b> persistence architecture. Source and receiver applications
+can create sources, listen on topics and do normal operations typical of <b
+class="APPLICATION">UM</b> applications. Receivers require no special configuration to
+receive messages from a queue.</p>
+
+<p>The central components to any queuing deployment are:</p>
+
+<ul>
+<li>
+<p>the source applications</p>
+</li>
+
+<li>
+<p>the receiving applications</p>
+</li>
+
+<li>
+<p>the <tt class="LITERAL">umestored</tt> daemon, which provides queue instances</p>
+</li>
+</ul>
+
+<p>The <tt class="LITERAL">umestored</tt> daemon provides separate Queue instances. Just
+as <tt class="LITERAL">umestored</tt> may contain individual <b
+class="APPLICATION">UMP</b> stores, it may also contain individual queue instances as
+well.</p>
+
+<div class="FIGURE"><a id="QUEUEARCH" name="QUEUEARCH"></a>
+<p><b>Figure 4. Queuing Architecture</b></p>
+
+<p><img src="UME_Queue_Arch.png" align="CENTER" /></p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umeconcepts.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ume-ops-operational-view.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Concepts</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Operational View</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

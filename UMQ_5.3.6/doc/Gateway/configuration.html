@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>UM Gateway Configuration</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="The UM Gateway" href="index.html" />
+<link rel="PREVIOUS" title="tnwgd" href="tnwgd.html" />
+<link rel="NEXT" title="UM Gateway Examples" href="use-cases.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The UM Gateway</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="tnwgd.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="use-cases.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="CONFIGURATION" name="CONFIGURATION">4. UM Gateway
+Configuration</a></h1>
+
+<p>The UM Gateway configuration is controlled via an XML configuration file. The DTD for
+the UM Gateway configuration file is described in the <a href="tnwgd-dtd-doc/index.html"
+target="doccontent">DTD reference</a>.</p>
+
+<p>Several example UM Gateway configuration files, along with detailed explanations, can
+be found in <a href="use-cases.html"><i>UM Gateway Examples</i></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Before designing any UM Gateway implementations based on configurations
+or examples other than those presented in this document, please contact your technical
+support representative.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMXMLCONFIG" name="UMXMLCONFIG">4.1. Using <b
+class="APPLICATION">UM</b> XML Configuration Files with the UM Gateway</a></h2>
+
+<p>With the <tt class="LITERAL">&lt;lbm-config&#62;</tt> element, you can import
+configurations from either a plain text or XML <b class="APPLICATION">UM</b>configuration
+file. However, using XML configuration files provides the following advantages over plain
+text <b class="APPLICATION">UM</b> configuration files.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">UM</b> attributes can be applied per topic and/or per
+context.</p>
+</li>
+
+<li>
+<p>Attributes applied to all portals on a particular gateway can be inherited from an <b
+class="APPLICATION">UM</b> XML template, instead of being set for each individual
+portal.</p>
+</li>
+</ul>
+
+<p>See <a href="../Config/xmlconfigurationfiles.html#XML-CONFIG" target="doccontent">XML
+Configuration Files</a> for more information about <b class="APPLICATION">UM</b> XML
+configuration.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> You should use <b class="APPLICATION">UM</b> XML templates to set options
+for individual portals because the UM Gateway processes <b class="APPLICATION">UM</b> XML
+configuration files in the <tt class="LITERAL">&lt;daemon&#62;</tt> element and not
+within each portal's configuration as with plain text <b class="APPLICATION">UM</b>
+configuration files.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Each gateway endpoint must have its <tt
+class="LITERAL">request_tcp_interface</tt> option set when the gateway starts, therefore,
+you must set it in each <tt class="LITERAL">&lt;endpoint&#62;</tt> element of the UM
+Gateway XML configuration file and not in an <b class="APPLICATION">UM</b> XML
+configuration file, which is implemented when the gateway creates <b
+class="APPLICATION">UM</b> objects such as proxy sources and receivers,</p>
+
+<pre class="SCREEN">
+&lt;endpoint&#62;
+    &lt;name&#62;Endpoint-1&lt;/name&#62;
+    &lt;domain-id&#62;1&lt;/domain-id&#62;
+    &lt;lbm-attributes&#62;
+        &lt;option name="request_tcp_interface" scope="context" value="10.29.3.0/24" /&#62;
+    &lt;/lbm-attributes&#62;
+&lt;/endpoint&#62;
+           
+</pre>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SETTINGINDIVIDUALENDPOINTOPTIONS"
+name="SETTINGINDIVIDUALENDPOINTOPTIONS">4.1.1. Setting Individual Endpoint
+Options</a></h3>
+
+<p>When setting endpoint options, name the context of each endpoint in the gateway's XML
+configuration file.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+    &lt;endpoint&#62;
+        &lt;name&#62;Endpoint_1&lt;/name&#62;
+        &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;source-context-name&#62;endpt_1&lt;/source-context-name&#62;
+        &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+        &lt;/lbm-attributes&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+        &lt;name&#62;Endpoint_2&lt;/name&#62;
+        &lt;domain-id&#62;2&lt;/domain-id&#62;
+        &lt;receiver-context-name&#62;endpt_2&lt;/source-context-name&#62;
+        &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+        &lt;/lbm-attributes&#62;
+    &lt;/endpoint&#62;
+&lt;/portals&#62;
+       
+</pre>
+
+<p>Then assign configuration templates to those contexts in the <b
+class="APPLICATION">UM</b> XML configuration file.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="global"&#62;
+    &lt;contexts&#62;
+        &lt;context name="endpoint_1" template="endpt-1-options"&#62;
+            &lt;sources /&#62;
+        &lt;/context&#62;
+        &lt;context name="endpoint_2" template="endpt-2-options"&#62;
+            &lt;sources /&#62;
+        &lt;/context&#62;
+    &lt;/contexts&#62;
+&lt;/application&#62;
+       
+</pre>
+
+<p>You specify the unique options for each of this gateway's two endpoints in the <b
+class="APPLICATION">UM</b> XML configuration &lt;templates&#62; section used for <tt
+class="LITERAL">endpt-1-options</tt> and <tt class="LITERAL">endpt-2-options</tt>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="COMMONUSESCASES" name="COMMONUSESCASES">4.1.2. UM Gateway and
+<b class="APPLICATION">UM</b> XML Configuration Use Cases</a></h3>
+
+<p>One advantage of using <b class="APPLICATION">UM</b> XML configuration files with the
+UM Gateway is the ability to assign unique <b class="APPLICATION">UM</b> attributes to
+the topics and contexts used for the proxy sources and proxy receivers the gateway
+creates. Plain text <b class="APPLICATION">UM</b> configuration files cannot assign <b
+class="APPLICATION">UM</b> attributes to the proxy sources and receivers based on topic.
+The following example shows how to assign a different LBTRM multicast address to a source
+based on its topic.</p>
+
+<p>Create a new <b class="APPLICATION">UM</b> XML configuration template for the desired
+topic name.</p>
+
+<pre class="SCREEN">
+&lt;template name="custom-topic-template"&#62;
+     &lt;options type="source"&#62;
+           &lt;option name="transport_lbtrm_multicast_address" default-value="#.#.#.#"/&#62;
+     &lt;/options&#62;
+&lt;/template&#62;
+           
+</pre>
+
+<p>Then include this template in the <tt class="LITERAL">&lt;application&#62;</tt>
+element associated with the gateway.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="global-options"&#62;
+     &lt;contexts&#62;
+           &lt;context&#62;
+                &lt;sources template="source-options"&#62;
+                     &lt;topic topicname="custom_topic_name" template="custom-topic-template" /&#62;
+                &lt;/sources&#62;
+           &lt;/context&#62;
+     &lt;/contexts&#62;
+&lt;/application&#62;
+           
+</pre>
+
+<p>This assigns the specified <b class="APPLICATION">UM</b> options to sources created on
+a particular topic.</p>
+
+<p>It is also possible to assign <b class="APPLICATION">UM</b> attributes directly in the
+&lt;application&#62; tag. For example, the following specifies that a particular topic
+should use LBTRU transport and a unicast resolver address.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="tnwgd-common"&#62;
+    &lt;contexts&#62;
+        &lt;context&#62;
+            &lt;sources template="source-template"&#62;
+                &lt;topic topicname="LBTRU_TOPIC"&#62;
+                    &lt;options type="source"&#62;
+                        &lt;option name="transport" default-value="lbtru" /&#62;
+                        &lt;option name="resolver_unicast_address" default-value="#.#.#.#" /&#62;
+                    &lt;/options&#62;
+                &lt;/topic&#62;
+            &lt;/sources&#62;
+        &lt;/context&#62;
+    &lt;/contexts&#62;
+&lt;/application&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SAMPLECONFIGURATION" name="SAMPLECONFIGURATION">4.1.2.1.
+Sample Configuration</a></h4>
+
+<p>The following sample configuration incorporates many of the examples mentioned above.
+The gateway applies options to all <b class="APPLICATION">UM</b> objects created. The <b
+class="APPLICATION">UM</b> XML configuration file overwrites these options for two
+specific topics. The first topic, LBTRM_TOPIC, uses a different template to change its
+transport from TCP to LBTRM, and to set an additional property. The second topic,
+LBTRU_TOPIC, also changes its transport from TCP to a new value. However, its new
+attributes are applied directly in its associated topic tag, instead of referencing a
+template. In addition, this sample configuration assigns all sources and receivers
+associated with the context <tt class="LITERAL">endpt_1</tt> the <tt
+class="LITERAL">rm-source</tt> template.</p>
+
+<p><b class="APPLICATION">UM XML Configuration File</b></p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;um-configuration version="1.0"&#62;
+&lt;templates&#62;
+&lt;template name="tnwgd-common"&#62;
+    &lt;options type="source"&#62;
+        &lt;option name="transport" default-value="tcp" /&#62;
+    &lt;/options&#62;
+    &lt;options type="context"&#62;
+        &lt;option name="request_tcp_interface" default-value="#.#.#.#/#" /&#62;
+        &lt;option name="transport_tcp_port_low" default-value="#" /&#62;
+        &lt;option name="transport_tcp_port_high" default-value="#" /&#62;
+        &lt;option name="resolver_multicast_address" default-value="#.#.#.#"/&#62;
+    &lt;/options&#62;
+&lt;/template&#62;
+&lt;template name="rm-source"&#62;
+    &lt;options type="source"&#62;
+        &lt;option name="transport" default-value="lbtrm" /&#62;
+        &lt;option name="transport_lbtrm_multicast_address" default-value="#.#.#.#"/&#62;
+    &lt;/options&#62;
+&lt;/template&#62;
+&lt;/templates&#62;
+&lt;applications&#62;
+    &lt;application name="tnwgd" template="tnwgd-common"&#62;
+        &lt;contexts&#62;
+            &lt;context&#62;
+                &lt;sources template="rm-source"&#62;
+                    &lt;topic topicname="LBTRM_TOPIC" template="rm-source" /&#62;
+                    &lt;topic topicname="LBTRU_TOPIC"&#62;
+                        &lt;options type="source"&#62;
+                            &lt;option name="transport" default-value="lbtru" /&#62;
+                            &lt;option name="resolver_unicast_address" default-value="#.#.#.#" /&#62;
+                        &lt;/options&#62;
+                    &lt;/topic&#62;
+                &lt;/sources&#62;
+            &lt;/context&#62;
+            &lt;context name="endpt_1" template="rm-source"&#62;
+                &lt;sources template="rm-source"/&#62;
+            &lt;/context&#62;
+        &lt;/contexts&#62;
+    &lt;/application&#62;
+&lt;/applications&#62;
+&lt;/um-configuration&#62; 
+               
+</pre>
+
+<p><b class="APPLICATION">Gateway XML Configuration File</b></p>
+
+<p>This gateway uses the above XML file, called <tt
+class="LITERAL">sample-config.xml</tt>, to set its <b class="APPLICATION">UM</b> options.
+It has three endpoints, one of which has the context <tt
+class="LITERAL">endpt_1</tt>.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;tnw-gateway version="1.0"&#62;
+    &lt;daemon&#62;
+        &lt;log type="console"/&#62;
+        &lt;xml-config&#62;sample-config.xml&lt;/xml-config&#62;
+    &lt;/daemon&#62;
+    &lt;portals&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_1&lt;/name&#62;
+         &lt;domain-id&#62;1&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="context_name" scope="context" value="endpt_1" /&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_2&lt;/name&#62;
+         &lt;domain-id&#62;2&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_3&lt;/name&#62;
+         &lt;domain-id&#62;3&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+    &lt;/portals&#62;
+&lt;/tnw-gateway&#62; 
+               
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="tnwgd.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="use-cases.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">tnwgd</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">UM Gateway Examples</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

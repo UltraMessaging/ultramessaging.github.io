@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>JNDI Administered Objects</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Life Cycle of an Ultra Messaging JMS Application"
+href="life-cycle.html" />
+<link rel="NEXT" title="Ultra Messaging JMS Configuration" href="umjms-config.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="life-cycle.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umjms-config.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="JNDI-LOOKUP" name="JNDI-LOOKUP">4. JNDI Administered
+Objects</a></h1>
+
+<p>JMS administered objects encapsulate specific behavior so you can write producer and
+consumer applications without the use of specific constructions. Your applications can
+use JNDI to look up <tt class="LITERAL">LBMConnectionFactory</tt> and <tt
+class="LITERAL">Destination</tt> objects. The <tt
+class="LITERAL">LBMConnectionFactory</tt> encapsulates all of the <b
+class="APPLICATION">UM</b> configuration properties for the selected JNDI object and also
+creates and initializes the <b class="APPLICATION">UM</b> Context.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="JNDI-LOOKUP-CODE" name="JNDI-LOOKUP-CODE">4.1. Look Up
+Administered Objects Using JNDI</a></h2>
+
+<p>The code below shows the typical steps to create an initial context and look up a <tt
+class="LITERAL">ConnectionFactory</tt> and a <tt class="LITERAL">Destination</tt> using
+JNDI. The JNDI repository used depends on the values used for <tt
+class="LITERAL">providerContextFactory</tt> and <tt class="LITERAL">providerUrl</tt> and
+would typically need to specify a <tt class="LITERAL">userName</tt> and <tt
+class="LITERAL">password</tt>.</p>
+
+<pre class="SCREEN">
+// Import of Sun's JMS interface
+import javax.jms.*;
+
+// Imports for JNDI
+import javax.naming.*;
+import javax.naming.directory.*;
+
+// Create the Context
+InitialContext jndiContext = new InitialContext();
+// Lookup the objects
+ConnectionFactory cf = (ConnectionFactory)jndiContext.lookup("uJMSConnectionFactory");
+Destination d = (Destination)jndiContext.lookup("TOPIC1");
+           
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="life-cycle.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umjms-config.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Life Cycle of an Ultra Messaging JMS
+Application</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Ultra Messaging JMS Configuration</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,2382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Operational View</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Architectures" href="architectures.html" />
+<link rel="NEXT" title="Enabling Persistence" href="tutorial.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="architectures.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="tutorial.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UME-OPS-OPERATIONAL-VIEW" name="UME-OPS-OPERATIONAL-VIEW">4.
+Operational View</a></h1>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="ume-ops-operational-view.html#PERSISTENCE-OPS"><i>Persistence
+Operations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#UMP-RPPOPS"><i>Receiver-paced Persistence
+Operations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#QUEUING-OPS"><i>Queuing Operations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#ULB-OPS"><i>Ultra Load Balancing
+Operations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ
+Events</i></a></p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If your application is running with the <b class="APPLICATION">UM</b>
+configuration option, <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPBINDREQUESTPORT"
+target="doccontent"><tt class="LITERAL">request_tcp_bind_request_port</tt></a> set to zero,
+request port binding has been turned off, which also disables <b
+class="APPLICATION">UMP</b> .</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PERSISTENCE-OPS" name="PERSISTENCE-OPS">4.1. Persistence
+Operations</a></h2>
+
+<p>Sources, receivers, and stores in <b class="APPLICATION">UMP</b> interact in very
+controlled ways. This section illustrates the flow of network traffic between the
+components during three modes of operation and also provides a reference of <b
+class="APPLICATION">UMP</b> Events.</p>
+
+<ul>
+<li>
+<p><a
+href="ume-ops-operational-view.html#UME-OPS-REGISTRATION"><i>Registration</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#UME-OPS-NORMAL-OPERATION"><i>Normal
+Operation</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#UME-OPS-RECEIVER-RECOVERY"><i>Receiver
+Recovery</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-REGISTRATION" name="UME-OPS-REGISTRATION">4.1.1.
+Registration</a></h3>
+
+<p><a href="ume-ops-operational-view.html#UMEMESSAGESREGISTRATION">Figure 5</a>
+illustrates network flow during the Registration process.</p>
+
+<div class="FIGURE"><a id="UMEMESSAGESREGISTRATION" name="UMEMESSAGESREGISTRATION"></a>
+<p><b>Figure 5. UMP Registration</b></p>
+
+<p><img src="UMEMessagesRegistration.png" align="CENTER" /></p>
+</div>
+
+<p>Sources and receivers unicast registrations to the store. The store unicasts responses
+back to the sources and receivers. Registrations are on a per topic per source basis.
+Stores use RegIDs to identify sources and receivers. After registration, receivers may
+handle recovery, sources may send data, and receivers may send acknowledgements</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-NORMAL-OPERATION"
+name="UME-OPS-NORMAL-OPERATION">4.1.2. Normal Operation</a></h3>
+
+<p><a href="ume-ops-operational-view.html#UMEMESSAGESDATA-ACK">Figure 6</a> illustrates
+the normal operation of data reception and acknowledgement and also shows how <b
+class="APPLICATION">UMP</b> attains <b class="APPLICATION"><span
+class="TRADEMARK">Parallel Persistence</span>&reg;</b>. The source sends message data to
+receivers and stores in parallel.</p>
+
+<div class="FIGURE"><a id="UMEMESSAGESDATA-ACK" name="UMEMESSAGESDATA-ACK"></a>
+<p><b>Figure 6. UMP Normal Operation</b></p>
+
+<p><img src="UMEMessagesData-ACK.png" align="CENTER" /></p>
+</div>
+
+<ol type="1">
+<li>
+<p>Sources transmit data to receivers and stores at the same time over <b
+class="APPLICATION">UM</b> multicast or unicast transport protocols.</p>
+</li>
+
+<li>
+<p>As the store receives and persists messages, the store unicasts acknowledgements,
+(message stability control messages), to the source letting it know of successful
+reception and storage.</p>
+</li>
+
+<li>
+<p>As receivers process and consume messages they unicast acknowledgments to the store
+letting the store know of successful consumption of data.</p>
+</li>
+
+<li>
+<p>If the source desires delivery confirmation, the receiver unicasts acknowledgements
+directly to the source letting the source know of message consumption as well.</p>
+</li>
+</ol>
+
+<p>Normal operation and recovery can proceed at the same time. In addition, as a receiver
+consumes retransmitted messages, the receiver sends normal acknowledgements for
+consumption and confirmed delivery (if requested by the source).</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> A store can be configured with different storage limits for each
+repository. If the repository reaches this limit, the repository releases the oldest
+message in order to persist a new message. This behavior occurs for a memory repository
+as well as a disk repository. If a repository releases a message that one or more
+receivers have not consumed (sent a consumption notification), the repository logs a
+single warning message in the store log file per receiver per registration.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UME-FLIGHT-SIZE" name="UME-FLIGHT-SIZE">4.1.2.1. <b
+class="APPLICATION">UMP</b> Flight Size</a></h4>
+
+<p><b class="APPLICATION">UMP</b> supports a flight size mechanism that tracks messages
+in flight from a particular source and responds when a send would exceed the configured
+flight size ( <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE"
+target="doccontent"><tt class="LITERAL">ume_flight_size</tt></a> and/or <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBYTES"
+target="doccontent"><tt class="LITERAL">ume_flight_size_bytes</tt></a>). You can configure <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"
+target="doccontent"><tt class="LITERAL">ume_flight_size_behavior</tt></a> to either:</p>
+
+<ul>
+<li>
+<p>block any sends that would exceed the flight size or,</p>
+</li>
+
+<li>
+<p>allow the sends while notifying your application.</p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">UMP</b> considers a sent message in flight until the following
+two conditions are met.</p>
+
+<ol type="1">
+<li>
+<p>The source receives the configured number of stability acknowledgements from the
+store(s).</p>
+</li>
+
+<li>
+<p>The source has received the configured number of delivery confirmation notifications.
+(See <a href="../Config/config.html#SOURCEUMERETENTIONUNIQUECONFIRMATIONS"
+target="doccontent"><tt class="LITERAL">ume_retention_unique_confirmations</tt></a>.)</p>
+</li>
+</ol>
+
+<p>If configuring both <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE"
+target="doccontent"><tt class="LITERAL">ume_flight_size</tt></a> and <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"
+target="doccontent"><tt class="LITERAL">ume_flight_size_behavior</tt></a>, <b
+class="APPLICATION">UMP</b> uses the smaller of the two flight sizes on a per send
+basis.</p>
+
+<div class="INFORMALTABLE"><a id="AEN613" name="AEN613"></a>
+<table border="1" class="CALSTABLE">
+<col width="120" />
+<col width="192" />
+<col width="288" />
+<thead>
+<tr>
+<th>ume_flight_size</th>
+<th>ume_flight_size_bytes</th>
+<th>Result</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Exceeded</td>
+<td>Exceeded</td>
+<td>ume_flight_size_behavior executes</td>
+</tr>
+
+<tr>
+<td>Exceeded</td>
+<td>Not Exceeded</td>
+<td>ume_flight_size_behavior executes</td>
+</tr>
+
+<tr>
+<td>Not Exceeded</td>
+<td>Exceeded</td>
+<td>ume_flight_size_behavior executes</td>
+</tr>
+
+<tr>
+<td>Not Exceeded</td>
+<td>Not Exceeded</td>
+<td>No flight size sending restriction</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>When using stores in a Quorum/Consensus configuration, <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intragroup</a> and <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intergroup</a> stability settings affect whether <b
+class="APPLICATION">UMP</b> considers a messages in flight. Consider a case with three
+stores in a single QC group, and two receivers. Given the default configuration, until a
+source receives a stability notification from two of the three stores, <b
+class="APPLICATION">UMP</b> considers a given message in-flight. In addition, if you set
+<a href="../Config/config.html#SOURCEUMERETENTIONUNIQUECONFIRMATIONS" target="doccontent"><tt
+class="LITERAL">ume_retention_unique_confirmations</tt></a> to 2, that same message would
+be considered in flight until the source receives two stability notifications AND two
+delivery confirmation notifications. See also <a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UMP</b> flight size mechanism operates on a
+per message basis, not a per fragment basis.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UMP</b> flight size bytes mechanism operates
+with only payload data. <b class="APPLICATION">UM</b> or network overhead is not included
+in the byte count.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="UME-FLIGHT-SIZE-BLOCK" name="UME-FLIGHT-SIZE-BLOCK">4.1.2.1.1.
+Blocking Message Sends That Exceed the Flight Size</a></h5>
+
+<p>By default, when a source sends a message that exceeds it's flight size, the call to
+send blocks. For example, suppose the flight size is set to 1. The first send completes
+but before the source receives a stability notification or delivery confirmation, it
+initiates a second call to send. If the source uses a blocking send, the send call blocks
+until the first message stabilizes. If the source uses a non-blocking send, the send
+returns an LBM_EWOULD_BLOCK.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="UME-FLIGHT-SIZE-NOTIFY"
+name="UME-FLIGHT-SIZE-NOTIFY">4.1.2.1.2. Notification of Message Sends That Exceed the
+Flight Size</a></h5>
+
+<p>Alternatively, <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"
+target="doccontent"><tt class="LITERAL">ume_flight_size_behavior</tt></a> can be set to notify
+your application when a message send surpasses the flight size. A send that exceeds the
+configured flight size succeeds and also triggers a flight size notification, indicating
+that the flight size has been surpassed. Once the number of in-flight messages falls
+below the configured flight size, another flight size notification source event is
+triggered, this time, informing the application that the number of in-flight messages is
+below the source's flight size.</p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-RECEIVER-RECOVERY"
+name="UME-OPS-RECEIVER-RECOVERY">4.1.3. Receiver Recovery</a></h3>
+
+<p><a href="ume-ops-operational-view.html#UMEMESSAGESRECOVERY">Figure 7</a> illustrates
+receiver recovery.</p>
+
+<div class="FIGURE"><a id="UMEMESSAGESRECOVERY" name="UMEMESSAGESRECOVERY"></a>
+<p><b>Figure 7. UMP Messages Recovery</b></p>
+
+<p><img src="UMEMessagesRecovery.png" align="CENTER" /></p>
+</div>
+
+<p>Receivers unicast retransmission requests. If the store has the message, it unicasts
+the retransmission to the receiver. If it does not have the message and is configured to
+forward the request to the source (See <tt
+class="LITERAL">retransmission-request-forwarding</tt> in <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>), it unicasts the retransmission request to the source. If
+the source has the message, it unicasts the retransmission directly to the receiver.</p>
+
+<p><b class="APPLICATION">UM</b> sends retransmissions from a thread separate from the
+main context thread so as not to impede live message data processing. The <tt
+class="LITERAL">&lt;store&#62;</tt> configuration option, <tt
+class="LITERAL">retransmission-request-processing-rate</tt>, sets the store's capacity to
+process retransmission requests. The retransmission thread processes requests off a
+retransmission queue which is set at 4 times the size of <tt
+class="LITERAL">retransmission-request-processing-rate</tt>. The following <b
+class="APPLICATION">UM</b> Web Monitor statistics record retransmission activity. See <b
+class="APPLICATION">UM</b> Web Monitor <a
+href="ume-store-web-monitor.html#STORE-PAGE"><i>Store Page</i></a>.</p>
+
+<ul>
+<li>
+<p>Retransmission requests received rate</p>
+</li>
+
+<li>
+<p>Retransmission requests served rate</p>
+</li>
+
+<li>
+<p>Retransmission requests dropped rate</p>
+</li>
+
+<li>
+<p>Total retransmission requests dropped since store startup</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP-RPPOPS" name="UMP-RPPOPS">4.2. Receiver-paced Persistence
+Operations</a></h2>
+
+<p>Receiver-paced Persistence (RPP) refers to different message retention behavior for
+designated receivers. You enable RPP with <b class="APPLICATION">UM</b> configuration
+options. No special API calls are needed. RPP differs from <b
+class="APPLICATION">UMP</b>'s default source-paced persistence in the following ways.</p>
+
+<ul>
+<li>
+<p>The repository must be configured to allow RPP and sources and receivers must be
+configured to request RPP behavior during registration.</p>
+</li>
+
+<li>
+<p>Sources can modify specific repository configuration options that pertain to RPP.</p>
+</li>
+
+<li>
+<p>The repository retains RPP messages until all RPP receivers acknowledge consumption.
+The repository maintains an accurate count of all RPP receivers.</p>
+</li>
+
+<li>
+<p>Late Joining receivers cannot receive all previously sent topic messages, only those
+unconsumed by all RPP receivers. Late Joining receivers can always start at the current
+message retained by the repository, defined as the earliest message not consumed by all
+RPP receivers.</p>
+</li>
+
+<li>
+<p>Sources must also configure their flight size in bytes, and optionally, in message
+count. By using a total bytes flight size, the store can keep track of exactly how must
+space it has available and not send stability acknowledgements if new messages would
+exceed the available space, which would endanger the receipt of all messages by all RPP
+receivers. See <a href="ume-ops-operational-view.html#UME-FLIGHT-SIZE"><i>UMP Flight
+Size</i></a>.</p>
+</li>
+</ul>
+
+<p>In addition, a disk write delay interval for the repository, available for
+Source-paced Persistence as well, improves performance by preventing unnecessary disk
+activity.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="ume-ops-operational-view.html#RPP-REGISTRATION"><i>RPP
+Registration</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#UMP-RPPOPS-NORMAL-OPERATION"><i>RPP Normal
+Operations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#RPP-MESSAGE-RECOVERY"><i>RPP Message
+Recovery</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#RPP-DEREGISTRATION"><i>RPP
+Deregistration</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#IMPLEMENTING-RPP"><i>Implementing
+RPP</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#EXAMPLE-RPP-CONFIG"><i>Example RPP
+Configuration Files</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#RPP-CROSS-FEATURE"><i>RPP Cross Feature
+Functionality</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RPP-REGISTRATION" name="RPP-REGISTRATION">4.2.1. RPP
+Registration</a></h3>
+
+<p>If a source sets <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERECEIVERPACEDPERSISTENCE"
+target="doccontent">ume_receiver_paced_persistence</a>, its topic becomes a RPP topic. When the
+source registers with the store, the source's repository also becomes a RPP repository.
+Receivers registering with a store on the RPP topic become RPP receivers.</p>
+
+<div class="FIGURE"><a id="RPPREGISTRATION" name="RPPREGISTRATION"></a>
+<p><b>Figure 8. RPP Registration</b></p>
+
+<p><img src="UMP_RPP_Registration.png" align="CENTER" /></p>
+</div>
+
+<p>A source registration request includes the following.</p>
+
+<ul>
+<li>
+<p>Designation of a RPP topic (LBMC_UME_PREG_FLAG_REGISTER flag)</p>
+</li>
+
+<li>
+<p>Reconfigured repository configuration option values. Possible options are the 3
+repository size options, <tt class="LITERAL">repository-allow-ack-on-reception</tt>, <tt
+class="LITERAL">repository-disk-write-delay</tt> and <tt
+class="LITERAL">source-flight-size-bytes-maximum</tt>.</p>
+</li>
+
+<li>
+<p>Re-registration must request same configuration options or the store rejects the
+request.</p>
+</li>
+</ul>
+
+<p>Receiver registration request includes its designation as a RPP receiver
+(LBMC_UME_PREG_FLAG_REGISTER flag).</p>
+
+<p>The repository's registration response to both a source and a receiver acknowledges
+RPP mode.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RPPLATEREGISTERINGRECEIVER"
+name="RPPLATEREGISTERINGRECEIVER">4.2.1.1. Late Registering Receiver</a></h4>
+
+<p>Late joining receivers that register after the first RPP topic message has been sent
+cannot receive any messages sent prior to their registration, except for messages not yet
+consumed by all RPP receivers. This behavior also applies to the very first receiver of a
+RPP group that registers after the source sends the first message. Any messages published
+prior to RPP receiver registration are not available for recovery.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RPPEARLYEXITINGRECEIVER"
+name="RPPEARLYEXITINGRECEIVER">4.2.1.2. Early Exiting Receiver</a></h4>
+
+<p>Should a registered receiver's activity timer expire and be declared by the repository
+to be inactive, the repository retains all messages published since the receiver's last
+acknowledged message (or initial sequence number if no messages were acknowledged) until
+its receiver state lifetime expires and the repository deletes the receiver state
+information. Deleting receiver state removes all knowledge of the receiver from the
+repository. As a result, the repository also deletes all messages being held solely for
+this receiver.</p>
+
+<p>Should an early exiting receiver reregister (or otherwise become active) before the
+expiration of its state lifetime, that receiver can recover all messages retained for
+that receiver.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RPPCOMPATIBILITYMATRIX" name="RPPCOMPATIBILITYMATRIX">4.2.1.3.
+UMP Version RPP Compatibility Matrix</a></h4>
+
+<p>The following table indicates the result of registration requests across <b
+class="APPLICATION">UMP</b> versions.</p>
+
+<div class="INFORMALTABLE"><a id="AEN769" name="AEN769"></a>
+<table border="1" class="CALSTABLE">
+<col width="168" />
+<col width="168" />
+<col width="168" />
+<col width="168" />
+<thead>
+<tr>
+<th>Version/Object</th>
+<th>Pre-ver. 5.3 Store</th>
+<th>Ver. 5.3 RPP Store</th>
+<th>Ver. 5.3 Non-RPP Store</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Pre 5.3 Source</td>
+<td>Granted</td>
+<td>Rejected *</td>
+<td>Granted *</td>
+</tr>
+
+<tr>
+<td>5.3 RPP Source</td>
+<td>Granted - Source Error</td>
+<td>Granted *</td>
+<td>Rejected *</td>
+</tr>
+
+<tr>
+<td>5.3 Non-RPP Source</td>
+<td>Granted</td>
+<td>Rejected *</td>
+<td>Granted *</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Pre 5.3 Receiver</td>
+<td>Granted</td>
+<td>Rejected</td>
+<td>Granted</td>
+</tr>
+
+<tr>
+<td>5.3 RPP Receiver</td>
+<td>Granted - Receiver Error</td>
+<td>Granted</td>
+<td>Rejected</td>
+</tr>
+
+<tr>
+<td>5.3 Non-RPP Receiver</td>
+<td>Granted</td>
+<td>Rejected</td>
+<td>Granted</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Granted - Source Error</b> indicates that the store granted the
+registration but the source detected that RPP behavior was not acknowledged by the
+store.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Granted - Receiver Error</b> indicates that the store granted
+the registration but the receiver detected that RPP behavior was not acknowledged by the
+store.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">*</b> Refers only to the re-registration of a source with an
+existing source repository because the source determines the repository's behavior for
+new registrations.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP-RPPOPS-NORMAL-OPERATION"
+name="UMP-RPPOPS-NORMAL-OPERATION">4.2.2. RPP Normal Operations</a></h3>
+
+<p>Since all RPP receivers must receive all messages, message overruns at the store or
+receiver must be prevented by regulating the sending pace of the source. The store uses
+the source's flight size (bytes) to regulate the source's speed, by withholding stability
+acknowledgements if the repository does not have at least one flight size available.</p>
+
+<ol type="1">
+<li>
+<p>Sources transmit data to receivers and store repositories at the same time over <b
+class="APPLICATION">UM</b> multicast or unicast transport protocols.</p>
+</li>
+
+<li>
+<p>When a disk repository receives a message, it holds the message in memory cache before
+it writes the message to disk. The repository sends a stability notification to the
+source after it writes the message to disk. Memory repositories send the stability notice
+upon reception. See also Acknowledge on Reception and Receiver Acknowledgement and Flight
+Size below.</p>
+
+<div class="FIGURE"><a id="RPPSTABILITYACK" name="RPPSTABILITYACK"></a>
+<p><b>Figure 9. RPP Stability Acknowledgement</b></p>
+
+<p><img src="UMP_RPP_Stability.png" align="CENTER" /></p>
+</div>
+</li>
+
+<li>
+<p>If the source desires delivery confirmation, receivers unicast acknowledgements
+directly to the source letting the source know of message consumption as well.</p>
+</li>
+</ol>
+
+<p>The following also affect when a repository sends a stability acknowledgement to the
+source.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Acknowledge on Reception</b> - If you configure the repository
+for <tt class="LITERAL">repository-allow-ack-on-reception</tt> and the source also sets
+<a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYACKONRECEPTION"
+target="doccontent"><tt class="LITERAL">ume_repository_ack_on_reception</tt></a>, the
+repository sends a stability acknowledgement to the source immediately upon reception. If
+the disk write has not already been initiated, <b class="APPLICATION">UMP</b> does not
+write the message to disk.</p>
+
+<div class="FIGURE"><a id="RPPACKRECEPTION" name="RPPACKRECEPTION"></a>
+<p><b>Figure 10. RPP Acknowledge on Reception</b></p>
+
+<p><img src="UMP_RPP_AckReception.png" align="CENTER" /></p>
+</div>
+</li>
+
+<li>
+<p><b class="APPLICATION">Receiver Acknowledgement</b> - If a repository receives
+acknowledgements from all receivers before writing the message to disk, it immediately
+sends a stability acknowledgement to the source. If the disk write has not already been
+initiated, <b class="APPLICATION">UMP</b> does not write the message to disk.</p>
+
+<div class="FIGURE"><a id="RPPRECVACK" name="RPPRECVACK"></a>
+<p><b>Figure 11. RPP Receiver Acknowledgement</b></p>
+
+<p><img src="UMP_RPP_RecvAck.png" align="CENTER" /></p>
+</div>
+</li>
+
+<li>
+<p><b class="APPLICATION">Write Delay</b> - The repository option,
+repository-disk-write-delay, allows the repository to hold messages in memory cache
+longer before persisting them to disk. This delay increases the probability that all RPP
+receivers acknowledge message consumption, eliminating the need to persist the message to
+disk.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Flight size</b> - A disk repository only sends stability
+acknowledgement to the source if its memory cache has at least one flight size (in both
+messages and bytes) available. A memory repository also sends stability acknowledgement
+if it has at least one flight size (in both messages and bytes) available. A lack of
+available space in the repository blocks the source until the repository reclaims the
+necessary storage space and sends a stability acknowledgement.</p>
+</li>
+</ul>
+
+<p>For memory store repositories, the behaviors Acknowledge on Reception, Receiver
+Acknowledgement and Write Delay do not apply.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RPP-MESSAGE-RECOVERY" name="RPP-MESSAGE-RECOVERY">4.2.3. RPP
+Message Recovery</a></h3>
+
+<p>An RPP source repository retains messages until all RPP receivers acknowledge receipt
+of the message. Therefore an RPP receiver can only recover messages that have not been
+consumed by all RPP receivers. It is important to note that an RPP receiver joining after
+other RPP receivers have already joined and after messages have already been sent can
+only be guaranteed to recover messages sent subsequent to its joining.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RPP-DEREGISTRATION" name="RPP-DEREGISTRATION">4.2.4. RPP
+Deregistration</a></h3>
+
+<p>You can deregister either sources or receivers using deregistration APIs, (<code
+class="FUNCTION">lbm_src_ume_deregistration()</code>, <code
+class="FUNCTION">lbm_rcv_ume_deregistration()</code> and <code
+class="FUNCTION">lbm_wrcv_ume_deregistration()</code>). <b class="APPLICATION">UM</b>
+deletes the state of deregistered objects. If you deregister a RPP receiver, <b
+class="APPLICATION">UMP</b> automatically updates the number of receiver acknowledgements
+required to maintain RPP behavior. The store issues Deregistration Successful events for
+every source or receiver that deregisters. See <a
+href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ
+Events</i></a>.</p>
+
+<p>Applications should be cautious about using the deregistration APIs to deregister RPP
+sources or receivers. These APIs can be disruptive to RPP.</p>
+
+<ul>
+<li>
+<p><code class="FUNCTION">lbm_src_ume_deregistration()</code> also deletes any persisted
+RPP messages in the source's repository. A source application should only use <code
+class="FUNCTION">lbm_src_ume_deregistration()</code> if it uses delivery confirmation
+from the receiver and it knows all messages have been delivered. The source is blocked
+after deregistering and and must restart in order to register again with the RPP
+store.</p>
+</li>
+
+<li>
+<p>Deregistering an RPP receiver with <code
+class="FUNCTION">lbm_rcv_ume_deregistration()</code> removes the receiver from the list
+of RPP receivers maintained by the repository. It is no longer part of the persistence
+operation, but is a valid <b class="APPLICATION">UM</b> receiver, able to receive
+messages, but unable to acknowledge message consumption to the repository. Any messages
+not yet confirmed for that receiver are unrecoverable. The receiver must restart in order
+to register again with the RPP repository.</p>
+</li>
+
+<li>
+<p>Deregistering an RPP wildcard receiver with <code
+class="FUNCTION">lbm_wrcv_ume_deregistration()</code> deregisters all individual topic
+receivers receiving messages on topics that match the wildcard pattern. Individual topic
+receivers can still receive messages after deregistering, but cannot acknowledge message
+consumption. The wildcard receiver must restart in order to register again with the RPP
+store.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="IMPLEMENTING-RPP" name="IMPLEMENTING-RPP">4.2.5. Implementing
+RPP</a></h3>
+
+<p>Follow the procedure below to configure Receiver-paced Persistence.</p>
+
+<ol type="1">
+<li>
+<p>Set <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERECEIVERPACEDPERSISTENCE"
+target="doccontent"><tt class="LITERAL">ume_receiver_paced_persistence</tt></a> for sources and
+receivers in a <b class="APPLICATION">UM</b> configuration file. If only certain sources
+or receivers in a context are RPP, use <code class="FUNCTION">lbm_*setopt()</code>l in
+the source or receiver application or use <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b class="APPLICATION">Manager</b> to
+specify RPP in an <b class="APPLICATION">UM</b> XML configuration file.</p>
+</li>
+
+<li>
+<p>Set <tt class="LITERAL">repository-allow-receiver-paced-persistence</tt> = 1 for the
+repository in the <tt class="LITERAL">umestored</tt> XML configuration file.</p>
+</li>
+
+<li>
+<p>Coordinate <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBYTES"
+target="doccontent"><tt class="LITERAL">ume_flight_size_bytes</tt></a> between the repository
+and the source. Set the maximum flight size with the repository option, <tt
+class="LITERAL">source-flight-size-bytes-maximum</tt>. Sources can reconfigure the
+repository's <tt class="LITERAL">source-flight-size-bytes-maximum</tt> to a value less
+than or equal to the maximum.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Optional.</b> Coordinate the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYACKONRECEPTION"
+target="doccontent"><tt class="LITERAL">ume_repository_ack_on_reception</tt></a> between the
+repository and the source. If the repository has <tt
+class="LITERAL">repository-allow-ack-on-reception</tt> enabled (1), the source can choose
+to keep it enabled or turn it off ( <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYACKONRECEPTION"
+target="doccontent"><tt class="LITERAL">ume_repository_ack_on_reception</tt></a> = 0). If the
+repository has <tt class="LITERAL">repository-allow-ack-on-reception</tt> disabled (0),
+the source cannot turn it on.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Optional.</b> If the repository is a disk repository
+(repository-type = <tt class="LITERAL">disk</tt> or <tt class="LITERAL">reduced-fd</tt>),
+set the maximum write delay with the repository option, <tt
+class="LITERAL">repository-disk-write-delay</tt>. Sources can reconfigure the
+repository's <tt class="LITERAL">repository-disk-write-delay</tt> to a value less than or
+equal to the maximum configured for the repository with <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEWRITEDELAY"
+target="doccontent"><tt class="LITERAL">ume_write_delay</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Optional.</b> Coordinate repository size options between the
+source and repository. If you wish to use the repository's values, you do not need to
+configure source configuration values. The repository sets a maximum for these three
+options. The source can reconfigure the repository's options with values less than or
+equal to the maximum configured for the repository using the following <b
+class="APPLICATION">UM</b> configuration options.</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYSIZETHRESHOLD"
+target="doccontent"><tt class="LITERAL">ume_repository_size_threshold</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYSIZELIMIT"
+target="doccontent"><tt class="LITERAL">ume_repository_size_limit</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYDISKFILESIZELIMIT"
+ target="doccontent"><tt class="LITERAL">ume_repository_disk_file_size_limit</tt></a></p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="EXAMPLE-RPP-CONFIG" name="EXAMPLE-RPP-CONFIG">4.2.6. Example
+RPP Configuration Files</a></h3>
+
+<p>The sample configuration files shown below show how a store configuration file
+establishes certain RPP option values and the source can reconfigure them via a <b
+class="APPLICATION">UM</b> configuration file. Although only two files appear below, this
+configuration represents two, single-store quorum/consensus groups and one <b
+class="APPLICATION">UM</b> context. A second <tt class="LITERAL">umestored</tt>
+configuration file would be required for the store <tt class="LITERAL">store1rpp</tt>
+containing options and values identical to <tt class="LITERAL">store0rpp</tt>.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="EXAMPLE-RPP-CONFIG-UM" name="EXAMPLE-RPP-CONFIG-UM">4.2.6.1.
+UM Configuration File</a></h4>
+
+<p>The following example <b class="APPLICATION">UM</b> configuration file contains RPP
+options in the <tt class="LITERAL">##Persistence Options###</tt> section.</p>
+
+<ul>
+<li>
+<p>The source uses the same repository size values as the store. In this case, you do not
+need to specify these option values again in the source's <b class="APPLICATION">UM</b>
+Configuration File. They appear in this file for the sake of completeness.</p>
+</li>
+
+<li>
+<p>The source reconfigures ume_flight_size_bytes to 1,000,000 bytes, which is less than
+the repository's 4 MB default. (The source can reconfigure this option to a value less
+than or equal to the repository's configured value.)</p>
+</li>
+
+<li>
+<p>The source reconfigures ume_write_delay from the default of 0 ms to 1000 ms or 1
+second.</p>
+</li>
+
+<li>
+<p>The option, ume_session_id 5353, is commented out because this file specifies RegIDs
+2929 and 2930, respectively, for the stores in the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTORENAME"
+target="doccontent"><tt class="LITERAL">ume_store_name</tt></a> option. The option, <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMESESSIONID"
+target="doccontent"><tt class="LITERAL">ume_session_id</tt></a>, appears in this file as a
+reminder that you can use either RegIDs or Session IDs, but not both.</p>
+</li>
+</ul>
+
+<pre class="PROGRAMLISTING">
+#Sample UM Configuration File, UMP Version 5.3
+#Major Options
+source transport lbtrm
+# in order and reassembled
+receiver ordered_delivery 1
+#Multicast Resolver Network Options
+context resolver_multicast_address 225.8.17.29
+context resolver_multicast_interface 10.29.3.0/24
+# Transport LBT-RM Netowrk Options
+source transport_lbtrm_multicast_address 225.8.17.30
+context transport_lbtrm_multicast_address_low 225.12.17.10
+context transport_lbtrm_multicast_address_high 225.12.17.14
+#Transport LBT-RM Operation Options
+context transport_lbtrm_data_rate_limit 10000000
+context transport_lbtrm_retransmit_rate_limit 5000000
+# Transport LBT-RM Reliability Options
+receiver transport_lbtrm_nak_initial_backoff_interval 40000
+receiver transport_lbtrm_nak_initial_backoff_interval 500
+receiver transport_lbtrm_nak_generation_interval 10000
+##Turn off NAKs
+receiver transport_lbtrm_send_naks 0
+#Request Network Options
+context request_tcp_port_low 55000
+context request_tcp_port_high 55500
+
+## Persistence Options ###
+source ume_store_group 0:1
+source ume_store_name store0rpp:2929:0
+source ume_store_group 1:1
+source ume_store_name store1rpp:2930:1
+source ume_store_behavior qc
+source ume_flight_size 500
+source ume_flight_size_bytes 1000000
+source ume_receiver-paced-persistence 1
+source ume_repository_size_threshold 104857600
+source ume_repository_size_limit 209715200
+source ume_repository_disk_file_size_limit 1073741824
+source ume_repository_ack_on_reception 1
+source ume_write_delay 1000
+receiver ume_receiver-paced-persistence 1
+receiver ume_explicit_ack_only 1
+source ume_proxy_source 1
+#source ume_session_id 535353
+context ume_source_liveness_timeout 4000
+context ume_receiver_liveness_interval 1000
+source ume_confirmed_delivery_notification 1
+                   
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="EXAMPLE-RPP-CONFIG-UMESTORED"
+name="EXAMPLE-RPP-CONFIG-UMESTORED">4.2.6.2. umestored Configuration File</a></h4>
+
+<p>The following example store configuration file contains RPP options in the ABC* topic
+section.</p>
+
+<ul>
+<li>
+<p>The store has raised the <tt class="LITERAL">repository-size-limit</tt> from the
+default of 48 MB to 200 MB, the <tt class="LITERAL">repository-size-threshold</tt> from
+the default of 0 to 100 MB, and the <tt
+class="LITERAL">repository-disk-file-size-limit</tt> from the default of 100MB to 1
+GB.</p>
+</li>
+
+<li>
+<p>The store does not specify a <tt
+class="LITERAL">source-flight-size-bytes-maximum</tt>, using the default of 4 MB.</p>
+</li>
+</ul>
+
+<pre class="PROGRAMLISTING">
+&lt;?xml version="1.0"?&#62;
+&lt;ume-store version="1.2"&#62;
+  &lt;daemon&#62;
+    &lt;log&#62;/configs/stores/umestored1/umestored.log&lt;/log&#62;
+    &lt;lbm-license-file&#62;/bin/umq_exp_license.txt&lt;/lbm-license-file&#62; 
+    &lt;lbm-license-file&#62;/bin/lbm_ume_umq_udx_rdma_license.txt&lt;/lbm-license-file&#62; 
+    &lt;lbm-config&#62;/configs/lbm_4_store.cfg&lt;/lbm-config&#62;
+    &lt;pidfile&#62;/configs/stores/umestored1/umestored.pid&lt;/pidfile&#62;
+    &lt;web-monitor&#62;*:15404&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;stores&#62;
+    &lt;store name="rpp-ump-test-store-1" port="14667"&#62;
+      &lt;ume-attributes&#62;
+        &lt;option type="store" name="disk-cache-directory" value="/stores/store1/cache"/&#62;
+        &lt;option type="store" name="disk-state-directory" value="/stores/store1/state"/&#62;  
+        &lt;option type="store" name="allow-proxy-source" value="0" /&#62;
+        &lt;option type="store" name="context-name" value="store1rpp"/&#62;
+      &lt;/ume-attributes&#62;
+      &lt;topics&#62;
+        &lt;topic pattern="ABC*" type="PCRE"&#62;
+          &lt;ume-attributes&#62;
+             &lt;option type="store" name="repository-allow-receiver-paced-persistence" value="1"/&#62;
+             &lt;option type="store" name="repository-type" value="disk"/&#62;
+             &lt;option type="store" name="repository-size-threshold" value="104857600"/&#62;
+             &lt;option type="store" name="repository-size-limit" value="209715200"/&#62;
+             &lt;option type="store" name="repository-disk-file-size-limit" value="1073741824"/&#62;
+             &lt;option type="store" name="repository-allow-ack-on-reception" value="1"/&#62;
+             &lt;option type="store" name="repository-disk-write-delay" value="1000"/&#62; 
+             &lt;option type="store" name="receiver-new-registration-rollback" value="0"/&#62;
+             &lt;option type="store" name="source-activity-timeout" value="120000"/&#62;
+             &lt;option type="store" name="receiver-activity-timeout" value="30000"/&#62;
+             &lt;option type="store" name="retransmission-request-forwarding" value="0"/&#62;
+          &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+  &lt;/stores&#62;
+&lt;/ume-store&#62;
+                   
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RPP-CROSS-FEATURE" name="RPP-CROSS-FEATURE">4.2.7. RPP Cross
+Feature Functionality</a></h3>
+
+<p></p>
+
+<div class="INFORMALTABLE"><a id="AEN1001" name="AEN1001"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="96" />
+<col width="216" />
+<thead>
+<tr>
+<th><b class="APPLICATION">UM</b> Feature</th>
+<th>Supported</th>
+<th>Notes</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><b class="APPLICATION">UMP</b> Proxy Sources</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UM</b> Gateway</td>
+<td>No</td>
+<td>Source-paced Persistence and Receiver-paced Persistence are currently not supported
+over a <b class="APPLICATION">UM</b> Gateway.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UM</b> Transports</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Multi-Transport Threads</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Off-Transport Recovery</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Late Join</td>
+<td>Yes</td>
+<td>With the new store option, Acknowledge on Reception, sources may not retain
+sufficient sent messages to provide an effective Late Join capability.</td>
+</tr>
+
+<tr>
+<td>HF</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>HFX</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Wildcard Receivers</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Message Batching</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Ordered Delivery</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Request/Response</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Multicast Immediate Messaging (MIM)</td>
+<td>No</td>
+<td>MIM messages are not persisted and have no impact on RPP.</td>
+</tr>
+
+<tr>
+<td>Source Side Filtering</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Self-Describing Messaging (SDM)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Pre-Defined Messaging (PDM)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UM</b> Spectrum</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Monitoring/Statistics</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Acceleration - DBL</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Acceleration - UD</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Implicit/Explicit Acknowledgements</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Registration ID/Session Management</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Fault Tolerance - Round Robin</td>
+<td>No</td>
+<td>If a RPP source attempts to register to a source repository configured for Round
+Robin fault tolerance, lbm_src_create() returns an error.</td>
+</tr>
+
+<tr>
+<td>Fault Tolerance - Quorum Consensus</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UM</b> SNMP Agent</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Manager</b></td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Cache</b></td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Desktop Services</b></td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUING-OPS" name="QUEUING-OPS">4.3. Queuing
+Operations</a></h2>
+
+<p>The communication between source and receiver applications and <b
+class="APPLICATION">UMQ</b> instances follow many of the same patterns as the
+communication within <b class="APPLICATION">UMP</b> persistence applications. However to
+reduce the configuration of queue sources and receivers, some Queue-specific activities
+such as registration or queue resolution operate automatically and become active when the
+following two conditions occur.</p>
+
+<ol type="1">
+<li>
+<p>The <b class="APPLICATION">UM</b> Configuration file contains the option, <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQQUEUENAME"
+target="doccontent">umq_queue_name</a>.</p>
+</li>
+
+<li>
+<p>A <tt class="LITERAL">umestored</tt> is running configured for queuing. A queue
+specification contains not only queue information, but also the application sets
+receiving queue messages along with the topics being sent to the queue.</p>
+</li>
+</ol>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="ume-ops-operational-view.html#Q-REGISTRATION-ASSIGNMENT"><i>Registration and
+Assignment</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#MESSAGE-PATHS"><i>Message Paths</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#QUEUE-FEEDBACK"><i>Queue Feedback</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#QUEUE-FLIGHT-SIZE"><i>UMQ Flight
+Size</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#TOPICS-QUEUES"><i>Topics and Queues</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#QUEUE-RES"><i>Queue Resolution</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="Q-REGISTRATION-ASSIGNMENT"
+name="Q-REGISTRATION-ASSIGNMENT">4.3.1. Registration and Assignment</a></h3>
+
+<p>Source and receiver applications in a queuing operation use the same registration and
+registration response behaviors as sources and receivers in a persistence operation. (See
+<a href="ume-ops-operational-view.html#UMEMESSAGESREGISTRATION"><i>UMP
+Registration</i></a>.) The contents of the actual messages for registration and
+registration response for queues are slightly different, but the message paths are
+essentially the same.</p>
+
+<p>After a receiver registers with a Queue, the Queue issues an Assignment ID, which
+identifies the receiver. The Queue assigns this ID to all messages queued for the
+receiver's topic. The Assignment feature implements the OAOO delivery feature. The Queue
+assigns messages to a receiver after any one of the following events.</p>
+
+<ul>
+<li>
+<p>A message arrives at the Queue. (If no receiver interested in the topic has
+registered, the Queue holds the message until a receiver interested in the message's
+topic registers with the Queue.)</p>
+</li>
+
+<li>
+<p>A receiver registers with the Queue. (Obviously, the Queue must possess messages for
+the receiver's topic.)</p>
+</li>
+
+<li>
+<p>The Queue receives a Consumption Report from a receiver.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-REG" name="SOURCE-REG">4.3.1.1. Source Application
+Registration</a></h4>
+
+<p>At a high level, the following registration activity occurs before a source
+application submits messages to a queue topic.</p>
+
+<ol type="1">
+<li>
+<p><a href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQQUEUENAME"
+target="doccontent">umq_queue_name</a> must be set for queue <span class="emphasis"><i
+class="EMPHASIS">Q1</i></span>.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">umestored</tt> must be started and configured for queue <span
+class="emphasis"><i class="EMPHASIS">Q1</i></span> and topic <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span>.</p>
+</li>
+
+<li>
+<p>The source application creates a source object for topic <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span>.</p>
+</li>
+
+<li>
+<p>The source application's context automatically registers with <span
+class="emphasis"><i class="EMPHASIS">Q1</i></span> if not already registered.</p>
+</li>
+
+<li>
+<p>The Queue sends a <tt class="LITERAL">Queue Registration Complete</tt> context event
+to the source application.</p>
+</li>
+
+<li>
+<p>The source object automatically registers as <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span> with <span class="emphasis"><i
+class="EMPHASIS">Q1</i></span>.</p>
+</li>
+
+<li>
+<p>The Queue sends a <tt class="LITERAL">Queue Registration Complete</tt> source event to
+the source application.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-REG" name="RECEIVER-REG">4.3.1.2. Receiver
+Application Registration</a></h4>
+
+<p>At a high level, the following registration activity occurs before a receiver
+application can receive queue topic messages.</p>
+
+<ol type="1">
+<li>
+<p><tt class="LITERAL">umestored</tt> must be started and configured for queue <span
+class="emphasis"><i class="EMPHASIS">Q1</i></span> and topic <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span>.</p>
+</li>
+
+<li>
+<p>The receiver application creates a receiver object for topic <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span>.</p>
+</li>
+
+<li>
+<p>The receiver discovers through topic resolution that <span class="emphasis"><i
+class="EMPHASIS">Q1</i></span> has messages for topic <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span>. (Topic advertisements in a queuing operation
+contain the queue name.)</p>
+</li>
+
+<li>
+<p>The receiver application's context automatically registers with <span
+class="emphasis"><i class="EMPHASIS">Q1</i></span> if not already registered.</p>
+</li>
+
+<li>
+<p>The Queue sends a <tt class="LITERAL">Queue Context Registration Complete</tt> message
+to the receiver application after the receiver application's context registers.</p>
+</li>
+
+<li>
+<p>The receiver object automatically registers as <span class="emphasis"><i
+class="EMPHASIS">SubjectA</i></span> with <span class="emphasis"><i
+class="EMPHASIS">Q1</i></span> If not using <b class="APPLICATION">UMQ</b> Sessions IDs,
+the receiver includes its <tt class="LITERAL">Assignment ID</tt> with the registration
+request.</p>
+</li>
+
+<li>
+<p>The Queue sends a <tt class="LITERAL">Queue Receiver Registration Complete</tt>
+message to the receiver application. If using <b class="APPLICATION">UMQ</b> Sessions
+IDs, the Queue includes the receiver's <tt class="LITERAL">Assignment ID</tt> with the
+registration complete message.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MESSAGE-PATHS" name="MESSAGE-PATHS">4.3.2. Message
+Paths</a></h3>
+
+<p>Depending on the data dissemination model in use, the messaging paths between sources,
+receivers, and queue instances may vary quite a bit.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SQD" name="SQD">4.3.2.1. Serial Queue Dissemination
+(SQD)</a></h4>
+
+<p>The Serial Queue Dissemination (SQD) model (<a
+href="ume-ops-operational-view.html#SQD-DIAGRAM"><i>Serial Queue Dissemination
+(SQD)</i></a>) uses direct serial unicast from the queue to the individual receivers.
+Receivers only receive the messages they are assigned to process. The term <span
+class="emphasis"><i class="EMPHASIS">serial</i></span> indicates that the queue sends
+each message via unicast only to the message's assigned receivers (one in each
+application set). This dissemination model creates less work for receivers than either
+PQD or SD, which require receivers to decipher control information to determine the
+messages they must consume.</p>
+
+<div class="FIGURE"><a id="SQD-DIAGRAM" name="SQD-DIAGRAM"></a>
+<p><b>Figure 12. Serial Queue Dissemination (SQD)</b></p>
+
+<p><img src="UMQ-SQD-multi-appsets.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="PQD" name="PQD">4.3.2.2. Parallel Queue Dissemination
+(PQD)</a></h4>
+
+<p>The Parallel Queue Dissemination (PQD) model (<a
+href="ume-ops-operational-view.html#PQD-DIAGRAM"><i>Parallel Queue Dissemination
+(PQD)</i></a>) uses normal <b class="APPLICATION">UM</b> transport sessions to
+disseminate messages. In fact, the queue uses individual <b class="APPLICATION">UM</b>
+topics to send messages to all receivers. In addition, the Queue sends control
+information (Receiver Control Record - RCR) over a specific topic, configured with the
+<tt class="LITERAL">control-topic-name</tt> Queue option in the Queue's XML configuration
+file. (See <a href="umestored-config.html#UMESTORED-QUEUE-ELEMENT"><i>Queue
+Element</i></a>. Receivers listen to all data and control information and deliver all
+their assigned messages to the application, ignoring all other messages.</p>
+
+<div class="FIGURE"><a id="PQD-DIAGRAM" name="PQD-DIAGRAM"></a>
+<p><b>Figure 13. Parallel Queue Dissemination (PQD)</b></p>
+
+<p><img src="UMQ-PQD.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SD" name="SD">4.3.2.3. Source Dissemination (SD)</a></h4>
+
+<p>The <a href="ume-ops-operational-view.html#SD-DIAGRAM"><i>Source Dissemination
+(SD)</i></a> model also uses normal <b class="APPLICATION">UM</b> transport sessions from
+source application to send message data to the receivers. The queue sends control
+information (Receiver Control Record - RCR) as in the PQD model that instructs receivers
+via assignments what to process and what to ignore. However, the queue does not send data
+messages on topics.</p>
+
+<div class="FIGURE"><a id="SD-DIAGRAM" name="SD-DIAGRAM"></a>
+<p><b>Figure 14. Source Dissemination (SD)</b></p>
+
+<p><img src="UMQ-SD.png" align="CENTER" /></p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUE-FEEDBACK" name="QUEUE-FEEDBACK">4.3.3. Queue
+Feedback</a></h3>
+
+<p>Receiver applications as well as queue instances provide various forms of feedback.
+Queue instances send Stability Acknowledgements directly back to <b
+class="APPLICATION">UMQ</b> source applications to indicate successful submission of
+messages to the queue. Receiver applications signal message consumption by sending
+Consumption Reports back to the queue instances. See <a
+href="ume-ops-operational-view.html#QUEUE-FEEDBACK-DIAGRAM"><i>Queue
+Feedback</i></a>.</p>
+
+<div class="FIGURE"><a id="QUEUE-FEEDBACK-DIAGRAM" name="QUEUE-FEEDBACK-DIAGRAM"></a>
+<p><b>Figure 15. Queue Feedback</b></p>
+
+<p><img src="UMQ-Feedback.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUE-FLIGHT-SIZE" name="QUEUE-FLIGHT-SIZE">4.3.4. <b
+class="APPLICATION">UMQ</b> Flight Size</a></h3>
+
+<p><b class="APPLICATION">UMQ</b> supports a flight size mechanism similar to <a
+href="ume-ops-operational-view.html#UME-FLIGHT-SIZE"><i>UMP Flight Size</i></a> that
+tracks messages in flight from a particular source and responds when a send would exceed
+the configured flight size (<a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZE"
+target="doccontent">umq_flight_size</a>). You can configure <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZEBEHAVIOR"
+target="doccontent">umq_flight_size_behavior</a> to either:</p>
+
+<ul>
+<li>
+<p>block any sends that would exceed the flight size or,</p>
+</li>
+
+<li>
+<p>allow the sends while notifying your application.</p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">UMQ</b> considers a sent message in-flight until the source
+receives the configured number of stability acknowledgements from the queue(s). (No
+delivery confirmation exists in <b class="APPLICATION">UMQ</b>.) As with <b
+class="APPLICATION">UMP</b> Quorum/Consensus, <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intragroup</a> and <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intergroup</a> stability settings affect whether <b
+class="APPLICATION">UMQ</b> considers a messages in flight.</p>
+
+<p><b class="APPLICATION">UMQ</b> also supports a flight size mechanism for Multicast
+Immediate Messages (MIM). You configure MIM flight size with the context scope
+configuration options, <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQFLIGHTSIZE"
+target="doccontent">(context) umq_flight_size</a> and <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQFLIGHTSIZEBEHAVIOR"
+target="doccontent">(context) umq_flight_size_behavior</a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> A source can be configured to publish via <b class="APPLICATION">UMP</b>
+and <b class="APPLICATION">UMQ</b>. In either of these cases, flight sizes and behaviors
+can be configured differently with the appropriate configuration options. If a source
+publishes via both <b class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> and
+the flight size behaviors for each are set to block, a send that exceeds <b
+class="APPLICATION">either</b> flight size will block.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TOPICS-QUEUES" name="TOPICS-QUEUES">4.3.5. Topics and
+Queues</a></h3>
+
+<p>Sources send messages on topics and receivers listen on topics for messages.
+Similarly, <b class="APPLICATION">UMQ</b> source applications submit messages to queues
+with each message being sent on a specific topic. <b class="APPLICATION">UMQ</b> receiver
+applications listen on topics for messages. This means that Application Sets and the
+once-and-only-once (OAOO) behavior are on a per topic basis. A potentially helpful
+analogy is a queue may be the name of a mailbox and a topic may be the subject of an
+individual letter.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUE-RES" name="QUEUE-RES">4.3.6. Queue Resolution</a></h3>
+
+<p>Unlike <b class="APPLICATION">UMP</b> persistent messaging, queues use a queue
+resolution mechanism built upon <b class="APPLICATION">UM</b> topic resolution for
+service location. A <b class="APPLICATION">UMQ</b> source application does not have to
+know the IP address and TCP port for each queue instance. Instead, all it requires is the
+name of the queue. This provides some flexibility in deployment for moving queue
+instances around and requires much less static information to be maintained for
+configuration of sources and receivers.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUEBROWSER" name="QUEUEBROWSER">4.3.7. Queue
+Browser</a></h3>
+
+<p><b class="APPLICATION">UMQ</b> supports the JMS Queue Browser specification with the
+following <a href="../API/index.html" target="doccontent">C API</a> and <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> calls.</p>
+
+<div class="INFORMALTABLE"><a id="AEN1349" name="AEN1349"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="264" />
+<col width="264" />
+<thead>
+<tr>
+<th>Action</th>
+<th>C API</th>
+<th>Java API</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Retrieve a list of topics and application sets from a running queue daemon.</td>
+<td><code class="FUNCTION">lbm_ctx_umq_queue_topic_list()</code></td>
+<td><code class="FUNCTION">LBMContext.queueTopicList()</code></td>
+</tr>
+
+<tr>
+<td>Retrieve a list of currently-enqueued message IDs from a running queue daemon.</td>
+<td><code class="FUNCTION">lbm_rcv_umq_queue_msg_list()</code></td>
+<td><code class="FUNCTION">LBMReceiver.queueMessageList()</code></td>
+</tr>
+
+<tr>
+<td>Retrieve specific messages by message ID from a running queue daemon.</td>
+<td><code class="FUNCTION">lbm_rcv_umq_queue_msg_retrieve()</code></td>
+<td><code class="FUNCTION">LBMReceiver.queueMessageRetrieve()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The following <b class="APPLICATION">UM</b> configuration options apply to Queue
+Browsing.</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/ultramessagingjmsoptions.html#CONNECTIONFACTORYCREATEQUEUEBROWSERCONTEXT"
+target="doccontent"><tt class="LITERAL">create_queue_browser_context</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/ultramessagingjmsoptions.html#CONNECTIONFACTORYQUEUEBROWSERCREATIONDELAY"
+target="doccontent"><tt class="LITERAL">queue_browser_creation_delay</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingjmsoptions.html#CONNECTIONFACTORYQUEUEBROWSERTIMEOUT"
+target="doccontent"><tt class="LITERAL">queue_browser_timeout</tt></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUEUEBROWSERAUTH" name="QUEUEBROWSERAUTH">4.3.7.1. Queue
+Browser Authentication</a></h4>
+
+<p><b class="APPLICATION">UM</b> queues can authenticate <b class="APPLICATION">UM</b>
+applications using the Ultra Messaging JMS Queue Browser feature. <b
+class="APPLICATION">UM</b> applications can also authenticate the queue.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Ultra Messaging JMS users do not need to configure authentication for a
+Queue Browser. <b class="APPLICATION">UMQ</b> uses a internal default user, <tt
+class="LITERAL">jmsuser</tt>, for JMS applications which requires no configuration.</p>
+</blockquote>
+</div>
+
+<p>The use of any of the queue browser APIs mentioned in <a
+href="ume-ops-operational-view.html#QUEUEBROWSER"><i>Queue Browser</i></a>, initiates
+authentication automatically between your application and the queue. You can require
+authentication between your application and the queue, ensuring that authentication must
+be successful before queue browsing can occur.</p>
+
+<p>You require authentication by setting the <b class="APPLICATION">UM</b> Configuration
+option, <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQREQUIREQUEUEAUTHENTICATION"
+target="doccontent"><tt class="LITERAL">umq_require_queue_authentication</tt></a>, to the
+default setting of <b class="APPLICATION">1</b> (authentication required). In addition,
+set the queue (<tt class="LITERAL">umestored</tt>) configuration option, <tt
+class="LITERAL">require-client-authentication</tt> to the default value of <b
+class="APPLICATION">1</b>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN1413" name="AEN1413"></a>
+<table border="1" class="CALSTABLE">
+<col width="288" />
+<col width="288" />
+<thead>
+<tr>
+<th>If you set ...</th>
+<th>Then,</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">umq_require_queue_authentication</tt> = 1 and <tt
+class="LITERAL">require-client-authentication</tt> = 0</td>
+<td>Authentication fails. (Possible error code, Core-5990-1) Your application does not
+respond to browsing command responses sent by the queue.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">umq_require_queue_authentication</tt> = 0 and <tt
+class="LITERAL">require-client-authentication</tt> = 1</td>
+<td>Authentication fails. (Possible error code, CoreApi-5688-4135) Your application may
+send queue browsing commands to the queue, but the queue responds with an authentication
+failure.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">umq_require_queue_authentication</tt> = 0 and <tt
+class="LITERAL">require-client-authentication</tt> = 0</td>
+<td>Authentication can either succeed or fail without effect. Queue Browsing occurs.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUEUEBROWSERAUTHCREDENTIALS"
+name="QUEUEBROWSERAUTHCREDENTIALS">4.3.7.2. Setting Queue Browser Authentication
+Credentials</a></h4>
+
+<p>Perform the following two tasks to set the Queue Browser authentication
+credentials.</p>
+
+<ol type="1">
+<li>
+<p>Use the C API <code class="FUNCTION">lbm_auth_set_credentials()</code> or the Java API
+<code class="FUNCTION">LBMAuthUserInfo()</code> in your application to create users and
+passwords in your application. A Credential callback provides a way for you to supply
+alternate credentials in the event of authentication failure.</p>
+</li>
+
+<li>
+<p>Generate a <tt class="FILENAME">password.xml</tt> file that contains the usernames and
+passwords used by your application. Place <tt class="FILENAME">password.xml</tt> in the
+directory configured in the <tt class="LITERAL">umestored</tt> XML configuration file
+with the option, <tt class="LITERAL">lbm-password-file</tt>. See <a
+href="umestored-config.html#UMESTORED-DAEMON-TAGS"><i>Daemon Element</i></a>. The queue
+accesses this file during authentication to verify usernames and passwords. You can
+generate <tt class="LITERAL">password.xml</tt> in one of the two following ways.</p>
+
+<ul>
+<li>
+<p>Use the <code class="FUNCTION">lbm_authstorage_*()</code> API calls in an auxiliary
+application to create <tt class="FILENAME">password.xml</tt>. This application can import
+any existing user credentials (i.e. from LDAP). (No Java equivalent exists for these
+functions.)</p>
+</li>
+
+<li>
+<p>Use the <b class="APPLICATION">UMQ</b> utility, <tt
+class="FILENAME">/bin/lbmpwdgen</tt> to generate <tt class="FILENAME">password.xml</tt>.
+Usage information appears within the file. (This utility uses <code
+class="FUNCTION">lbm_authstorage_*()</code> API calls.)</p>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>A sample <tt class="FILENAME">password.xml</tt> appears below. Notice that you can
+also create and assign user roles. In the sample you may also notice that <tt
+class="FILENAME">/bin/lbmpwdgen</tt> creates an anonymous user (<tt
+class="LITERAL">&lt;user name=""&#62;</tt>). <b class="APPLICATION">UMQ</b> requires this
+user when authentication has not been enabled. You should not delete or edit this
+user.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;?xml version="1.0"?&#62;
+&lt;um-configuration version="1.0"&#62;
+  &lt;users&#62;
+    &lt;user name="userSmith"&#62;
+      &lt;verifier&#62;69A4aAE70US3NiuZr/TvAbSWztu5na5TbFo8bdHxU5.ILdMu8rLd5ragE3p4Qcuz/nXxAj6kGnwIF2JrKdCf704U/Lxs7jvK.b2uyOQoqKG&lt;/verifier&#62;
+        &lt;salt&#62;3BmRWUznvzy0n2&lt;/salt&#62;
+        &lt;roles&#62;
+          &lt;role name="admin"&#62;&lt;/role&#62;
+          &lt;role name="normal"&#62;&lt;/role&#62;
+        &lt;/roles&#62;
+    &lt;/user&#62;
+    &lt;user name=""&#62;
+      &lt;verifier/&#62;
+      &lt;salt/&#62;
+      &lt;roles&#62;
+        &lt;role name="admin"/&#62;
+      &lt;/roles&#62;
+    &lt;/user&#62;
+  &lt;/users&#62;
+  &lt;roles&#62;
+    &lt;role name="admin"&#62;
+      &lt;action&#62;MSG_LIST&lt;/action&#62;
+      &lt;action&#62;MSG_RETRIEVE&lt;/action&#62;
+      &lt;action&#62;TOPIC_LIST&lt;/action&#62;
+     &lt;/role&#62;
+    &lt;role name="normal"&#62;
+      &lt;action&#62;TOPIC_LIST&lt;/action&#62;
+    &lt;/role&#62;
+  &lt;/roles&#62;
+&lt;/um-configuration&#62;
+           
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ULB-OPS" name="ULB-OPS">4.4. Ultra Load Balancing
+Operations</a></h2>
+
+<p>ULB, while similar in some ways to <b class="APPLICATION">UMQ</b>, differs in some
+other ways. This section provides some details on how ULB works, and some comparisons
+with <b class="APPLICATION">UMQ</b>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ULB-OPS-PSD" name="ULB-OPS-PSD">4.4.1. Parallel Source
+Dissemination (PSD)</a></h3>
+
+<p>ULB supports the Parallel Source Dissemination (PSD) dissemination model. In the
+figure below, note that the ULB PSD model operates in a very similar way to the <b
+class="APPLICATION">UMQ</b> <a
+href="ume-ops-operational-view.html#PQD-DIAGRAM"><i>Parallel Queue Dissemination
+(PQD)</i></a> model.</p>
+
+<div class="FIGURE"><a id="ULB-PSD-DIAGRAM" name="ULB-PSD-DIAGRAM"></a>
+<p><b>Figure 16. ULB Parallel Source Dissemination (PSD)</b></p>
+
+<p><img src="ULB-PSD.png" align="CENTER" /></p>
+</div>
+
+<p>The key difference between ULB's PSD model and <b class="APPLICATION">UMQ</b>'s is
+that with ULB, the source sends both the data and the assignment/control information on
+the same transport session. ULB has no need for a control channel, as with <b
+class="APPLICATION">UMQ</b>.</p>
+
+<p>ULB receivers, as with <b class="APPLICATION">UMQ</b>, send unicast Consumption
+Reports back to the source.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ULB-OPS-FAIRNESS" name="ULB-OPS-FAIRNESS">4.4.2. Source
+Fairness</a></h3>
+
+<p>ULB differs from <b class="APPLICATION">UMQ</b> somewhat in source "fairness". While
+<b class="APPLICATION">UMQ</b> decouples sources from receivers with a queue -- and
+therefore avoids receiver overload -- ULB does not use a queue or other middleware, so
+sources could conceivably combine to overload a receiver, because of the real-time nature
+of low-latency load balancing.</p>
+
+<p>Therefore, ULB governs fairness between sources by using a) receiver feedback
+information and b) receiver portion size, in concert with c) source configuration option
+<a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETLOADFACTORBEHAVIOR"
+ target="doccontent">umq_ulb_application_set_load_factor_behavior</a>. For more, see <a
+href="ume-ops-operational-view.html#QUEUE-FEEDBACK"><i>Queue Feedback</i></a> and <a
+href="umeconcepts.html#RECEIVER-PORTION-SIZE"><i>Receiver Portion Size</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ULB-FLIGHT-SIZE" name="ULB-FLIGHT-SIZE">4.4.3. Ultra Load
+Balancing Flight Size</a></h3>
+
+<p>ULB supports a flight size mechanism similar to <a
+href="ume-ops-operational-view.html#UME-FLIGHT-SIZE"><i>UMP Flight Size</i></a> and <a
+href="ume-ops-operational-view.html#QUEUE-FLIGHT-SIZE"><i>UMQ Flight Size</i></a> that
+tracks messages in flight from a particular source and responds when a send would exceed
+the configured flight size (<a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBFLIGHTSIZE"
+target="doccontent">umq_ulb_flight_size</a>). You can configure <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBFLIGHTSIZEBEHAVIOR"
+target="doccontent">umq_ulb_flight_size_behavior</a> to either:</p>
+
+<ul>
+<li>
+<p>block any sends that would exceed the flight size or,</p>
+</li>
+
+<li>
+<p>allow the sends while notifying your application.</p>
+</li>
+</ul>
+
+<p>ULB considers a message in-flight until the source receives the MSG_COMPLETE
+notification from all application sets. See also <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBEVENTS"
+target="doccontent">umq_ulb_events</a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INDEXED-ULB" name="INDEXED-ULB">4.4.4. Indexed Ultra Load
+Balancing (ULB)</a></h3>
+
+<p>Indexed Ultra Load Balancing (ULB) is similar to <a
+href="umeconcepts.html#INDEXED-QUEUING"><i>Indexed Queuing</i></a>. The source and
+receiver APIs are exactly the same with only minor differences (e.g., receiver event
+types remain the same as for indexed queueing, but have a flag set indicating that the
+source of the event was a ULB source). There are two important differences to note:</p>
+
+<ul>
+<li>
+<p>Assignment of indices is done at the source, on a per-source basis, with no global
+coordination of index assignments, so multiple sources sending on the same index may
+happen to assign the index to different receivers.</p>
+</li>
+
+<li>
+<p>The advanced <tt class="LITERAL">allow/deny</tt> configuration rules and configuration
+option inheritance available via the <tt class="LITERAL">umestored's</tt> <a
+href="umestored-config.html#INDEX-RULES-ELEMENT"><i>Index Rules Element</i></a> for
+indexed queueing are not available for indexed ULB.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME-OPS-UME-EVENTS" name="UME-OPS-UME-EVENTS">4.5. <b
+class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> Events</a></h2>
+
+<p>The <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> API
+provides a number of events, callbacks, messages, functions, and settings. The API
+reference (<a href="../API/index.html" target="doccontent">C API</a>, <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> or <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>) can be used to see the
+true extent of the API. In order to design successful applications, though, a high level
+understanding of the events and callbacks is essential.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Events</b> - Source events occur on a per source basis.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Callbacks</b> - Source and receiver callbacks called directly
+from <b class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> internal operation
+and usually demands a return value be filled in and/or are informational in nature.
+Typically, applications do very little processing in callbacks.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Messages</b> - Messages to receivers can simply contain <b
+class="APPLICATION">UMP</b> or <b class="APPLICATION">UMQ</b> information or have impact
+on operation.</p>
+</li>
+</ul>
+
+<p>Some specific languages, such as C, Java, or C# may have specific nuances for the
+various events and callbacks. But, by and large, an application should plan on having
+access to the items listed in the following sections. For details for a particular
+language, consult the <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> API documentation (<a href="../API/index.html" target="doccontent">C
+API</a>, <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a> or <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>).</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-SOURCE-EVENTS" name="UME-OPS-SOURCE-EVENTS">4.5.1.
+Source Events</a></h3>
+
+<p>The following events and callbacks are available for source applications.</p>
+
+<div class="INFORMALTABLE"><a id="AEN1560" name="AEN1560"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">Store Registration Success</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has successfully registered with a single store. Event
+contains flags to show if the source is "old" (i.e. a re-registration) as well as the
+sequence number that the source should use as its initial sequence number when sending,
+and the store information</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Complete</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has completed registration with the required store(s). This
+indicates the source may send as it desires. Event contains the consensus sequence
+number.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Error</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has received an error from the store indicating the requested
+registration was not granted. Event contains an error message to indicate what
+happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Registration Complete</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has completed registration with the Queue. This indicates the
+source may send as it desires. Event contains the Registration ID or Session ID.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Registration Error</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has received an error from the Queue indicating the requested
+registration was not granted. Event contains an error message to indicate what
+happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Message Stable</tt></td>
+<td>Source Event</td>
+<td>Delivered once a message is stable at a single store. Event contains the message
+sequence number and indicates if the the message meets Intergroup and/or Intragroup
+stability requirements. Also includes the store information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Message Stability ACK</tt></td>
+<td>Source Event</td>
+<td>Stability acknowledgement sent to the source application by the Queue when a message
+sent by the source is stable. If the Queue is configured to persist data to disk, the
+message is stable once it has been written to the file. Otherwise, the Queue acknowledges
+the message upon receipt.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Message ID Information</tt></td>
+<td>Source Event</td>
+<td>The Queue assigns a unique ID to every message in order to assign the message to a
+receiver. This assignment enforces OAOO delivery. The Queue includes assignment
+information in the control information sent to receivers in a Parallel Queue
+Dissemination (PQD) or Source Dissemination (SD) model.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Delivery Confirmation</tt></td>
+<td>Source Event</td>
+<td>Delivered once a message has been confirmed as delivered and processed by a receiving
+application. Event contains the message sequence number as well as indications whether
+the message has met the unique confirmations requirement. Also contains the receiver's
+Registration ID or Session ID.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Unresponsive</tt></td>
+<td>Source Event</td>
+<td>Delivered once a store is seen to be unresponsive due to failure or network
+disconnect. Event contains a message with more details suitable for logging. Sources
+using the unresponsive store as their only store (not in Round-Robin or Quorum/Consensus)
+will be prevented from sending until the store recovers.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Message Reclaimed</tt></td>
+<td>Source Event</td>
+<td>Delivered once a message has passed through retention and is about to be released
+from memory or disk. Event contains the message sequence number. (Reclaim refers to
+storage space reclamation.)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Forced Reclaim</tt></td>
+<td>Callback</td>
+<td>Indicates a message is being forcibly released because the memory size limit ( <a
+href="../Config/latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZELIMIT"
+target="doccontent">retransmit_retention_size_limit</a>) has been exceeded. Event contains the
+message sequence number.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Flight Size Notification</tt></td>
+<td>Callback</td>
+<td>Indicates that the number of in-flight messages for a source has exceeded or fallen
+below the configured flight size limit for a source. The event indicates if the flight
+size has been exceeded (OVER) by a new message send or that a message recently stabilized
+has reduced the number of in flight messages to less than the flight size limit (UNDER).
+Notification also indicates if the event is for <b class="APPLICATION">UMP</b>, <b
+class="APPLICATION">UMQ</b> or ULB.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Source Registration Success</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has successfully registered with a single store as a RPP
+source. The event contains either the RegID or Session ID, the sequence number of the
+last message stored for the source and store information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Source Registration Failure</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source has received an error from the store indicating the requested
+registration was not granted. Event contains an error message to indicate what
+happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Source Deregistration Success</tt></td>
+<td>Source Event</td>
+<td>Delivered once a source successfully deregisters from an individual store. The event
+contains either the RegID or Session ID, the sequence number of the last message stored
+for the source and store information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Source Deregistration Complete</tt></td>
+<td>Source Event</td>
+<td>Delivered once UMP receives a successful deregistration event from all stores.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-RECEIVER-EVENTS" name="UME-OPS-RECEIVER-EVENTS">4.5.2.
+Receiver Events</a></h3>
+
+<p>The following callbacks and messages are available for receiver applications</p>
+
+<div class="INFORMALTABLE"><a id="AEN1659" name="AEN1659"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">Store Registration Success</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has successfully registered with a single store. Message
+contains flags to show if the receiver is "old" (i.e. Not a new registration) as well as
+the sequence number that the receiver should use as its low sequence number, and the
+store information. In addition, the event contains the source's Registration ID or
+Session ID and the receiver's Registration ID or Session ID.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Complete</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has completed registration with the store(s) required. This
+indicates the receiver may now receive data. Message contains the consensus sequence
+number.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Receiver Registration Success</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has successfully registered with a single store as a RPP
+receiver. Message contains either the RegID or Session ID, the sequence number of the
+last message stored for the source and store information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Receiver Registration Failure</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has received an error from the store indicating the
+requested registration was not granted. Event contains an error message to indicate what
+happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Receiver Deregistration Success</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver successfully deregisters from an individual store. The
+message contains either the RegID or Session ID for the receiver and the source, the
+sequence number of the last message stored for the source and store information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">RPP Receiver Deregistration Complete</tt></td>
+<td>Message</td>
+<td>Delivered once UMP receives a successful deregistration event from all stores.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Registration Complete</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has completed registration with the Queue. Message contains
+assignment information.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Error</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has received an error from the store indicating the
+requested registration was not granted. Message contains an error message to indicate
+what happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Registration Error</tt></td>
+<td>Message</td>
+<td>Delivered once a receiver has received an error from the Queue indicating the
+requested registration was not granted. Message contains an error message to indicate
+what happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Change</tt></td>
+<td>Message</td>
+<td>Delivered once a change in store information is received from the source. The extent
+of the change is included in a message suitable for logging.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Deregistration Complete</tt></td>
+<td>Message</td>
+<td>Event delivered to a <b class="APPLICATION">UMQ</b> receiving application by the
+Queue when a receiver deregisters from a Queue by calling <code
+class="FUNCTION">lbm_rcv_umq_deregister()</code>. All messages must be delivered to the
+application before the Queue sends the deregistration event. Deregistered receivers
+cannot be assigned any new messages.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Retransmission</tt></td>
+<td>Message</td>
+<td>Retransmissions from recovery come in as normal messages with a flag indicating their
+status as a retransmission.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Registration Function</tt></td>
+<td>Callback</td>
+<td>Called once a receiver receives store information from a source and <b
+class="APPLICATION">UMP</b> desires to know the RegID to use for the receiver. Callback
+passes the source RegID, the store information, and the source transport name. The return
+value is the RegID that <b class="APPLICATION">UMP</b> should request to use from the
+store.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Store Recovery Sequence Number Function</tt></td>
+<td>Callback</td>
+<td>Called once registration is about to complete and the low sequence number must be
+determined. Callback passes the highest sequence number seen from the source and the
+consensus sequence number from the stores or sequence number from the store if using
+round-robin.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Index Assignment Eligibility Start Complete</tt></td>
+<td>Message</td>
+<td>Event delivered to a <b class="APPLICATION">UMQ</b> receiving application by the
+Queue when a receiver becomes eligible for new index assignments from a Queue as a result
+of calling the <code class="FUNCTION">lbm_rcv_umq_index_start_assignment()</code>
+function.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Index Assignment Eligibility Stop Complete</tt></td>
+<td>Message</td>
+<td>Event delivered to a <b class="APPLICATION">UMQ</b> receiving application by the
+Queue when a receiver becomes ineligible for new index assignments from a Queue as a
+result of calling the <code class="FUNCTION">lbm_rcv_umq_index_stop_assignment()</code>
+function. After this event is delivered, a receiver no longer receives new index
+assignments from the Queue. Existing index assignments remain in place.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Index Assigned</tt></td>
+<td>Message</td>
+<td>Event delivered to a <b class="APPLICATION">UMQ</b> receiving application by the
+Queue when the Queue assigns a receiver a new index. After this event is delivered, the
+receiver begins receiving messages on the new index.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Index Released</tt></td>
+<td>Message</td>
+<td>Event delivered to a <b class="APPLICATION">UMQ</b> receiving application by the
+Queue when the Queue removes one of the receiver's existing index assignments. This
+usually occurs after the receiver calls <code
+class="FUNCTION">lbm_rcv_umq_index_release()</code>. As a result, the receiver no longer
+receives any messages for the removed index.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-OPS-CONTEXT-EVENTS" name="UME-OPS-CONTEXT-EVENTS">4.5.3.
+Context Events</a></h3>
+
+<p>The following events are available for the context of source and receiver
+applications.</p>
+
+<div class="INFORMALTABLE"><a id="AEN1771" name="AEN1771"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">Queue Registration Complete</tt></td>
+<td>Context Event</td>
+<td>Delivered once a source or receiver application's context has completed registration
+with the Queue. A context only needs to register once with a Queue. Event contains the
+Registration ID or Session ID.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Queue Registration Error</tt></td>
+<td>Context Event</td>
+<td>Delivered once a source or receiver application has received an error from the Queue
+indicating the requested registration was not granted. Event contains an error message
+indicating what happened.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Instance List Notification</tt></td>
+<td>Context Event</td>
+<td>Delivered once a queue instance has changed. Event holds information string.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">Flight Size Notification</tt></td>
+<td>Context Event</td>
+<td>Indicates that the number of in-flight Multicast Immediate Messages has exceeded or
+fallen below the configured flight size limit. The event indicates if the flight size has
+been exceeded (OVER) by a new message send or that a message recently stabilized has
+reduced the number of in flight messages to less than the flight size limit (UNDER).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="architectures.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="tutorial.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Architectures</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Enabling Persistence</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

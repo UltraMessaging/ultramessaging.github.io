@@ -1,0 +1,1242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Informatica Migration Guide for TIBCO Rendezvous</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="ARTICLE" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="ARTICLE">
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2">Informatica Migration Guide for <span
+class="TRADEMARK">TIBCO</span>&reg; <b class="APPLICATION"><span
+class="TRADEMARK">Rendezvous</span>&reg;</b></a></h1>
+
+<p class="COPYRIGHT">Copyright &copy; 2010 - 2014 Informatica</p>
+
+<p class="PUBDATE">July 2010<br />
+</p>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="migration.html">Single HTML</a> / <a href="migration.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="#INTRODUCTION">Introduction</a></dt>
+
+<dt>2. <a href="#APPLICATIONCHANGESNOTES">Application Changes and Notes</a></dt>
+</dl>
+</div>
+
+<blockquote class="ABSTRACT">
+<div class="ABSTRACT"><a id="AEN11" name="AEN11"></a>
+<p>To assist <a href="http://www.29West.Com/" target="doccontent"><b
+class="APPLICATION">29West</b></a> customers and potential customers migrating to our
+high performance messaging products, we provide this guide to help you convert to
+Informatica messaging solutions <span class="TRADEMARK">Latency Busters</span>&reg; <b
+class="APPLICATION">Messaging</b> (<b class="APPLICATION">UMS</b>), <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">for the Enterprise</b> (<b class="APPLICATION">UMP</b>), or <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Queuing Edition</b> (<b class="APPLICATION">UMQ</b>) from <span
+class="TRADEMARK">TIBCO</span>&reg; <b class="APPLICATION"><span
+class="TRADEMARK">Rendezvous</span>&reg;</b>.</p>
+</div>
+</blockquote>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="INTRODUCTION" name="INTRODUCTION">1. Introduction</a></h2>
+
+<p>This migration guide is intended for an audience of application developers and system
+architects. It targets both existing applications and new applications, and details
+design choices you should consider early in the migration process, even if you decide not
+to pursue them.</p>
+
+<p>Some other Informatica resources intended to supplement this Migration Guide:</p>
+
+<ul>
+<li>
+<p><a href="https://communities.informatica.com/infakb/kbexternal/default.aspx/"
+target="doccontent">Knowledge Base</a> - use your Informatica Knowledgebase login to access the
+KB</p>
+</li>
+
+<li>
+<p>Product Documentation - see your <a href="../../readme.html" target="doccontent">install
+directory</a></p>
+</li>
+
+<li>
+<p>On-site Systems Engineer - contact your Sales representative to request an on-site
+consultation</p>
+</li>
+
+<li>
+<p>Support - go to <a href="http://29west.com/support"
+target="doccontent">http://29west.com/support</a></p>
+</li>
+</ul>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="APPLICATIONCHANGESNOTES" name="APPLICATIONCHANGESNOTES">2.
+Application Changes and Notes</a></h2>
+
+<p>The Informatica architecture differs from daemon-based solutions like Rendezvous in
+order to provide the highest possible performance. As such you might expect to use it
+differently.</p>
+
+<p>Informatica offers a simple, straightforward API to ease new application development.
+For existing applications, in certain situations, you may sometimes have a choice between
+making few changes to your application with little or no performance gain, vs. making
+bigger changes with a larger performance gain.</p>
+
+<p>To help you understand these issues, each migration topic listed below offers a
+discussion of the performance improvement or functional difference. Some topics include a
+table with implementation instructions and references for further information. Note that
+some items require no action because they are defaults.</p>
+
+<p>The list of topics (we recommend that you read them in order):</p>
+
+<ul>
+<li>
+<p><a href="#A29WESTMESSAGINGHOWITDIFFERS"><i>Ultra Messaging: How It Differs from
+Rendezvous</i></a></p>
+</li>
+
+<li>
+<p><a href="#ABSTRACTIONLAYER"><i>Abstraction Layer</i></a></p>
+</li>
+
+<li>
+<p><a href="#LONGLIVEDSUBJECTS"><i>Long Lived Subjects</i></a></p>
+</li>
+
+<li>
+<p><a href="#SHORTLIVEDSUBJECTS"><i>Short Lived Subjects</i></a></p>
+</li>
+
+<li>
+<p><a href="#REQUESTRESPONSE"><i>Request/Response</i></a></p>
+</li>
+
+<li>
+<p><a href="#WILDCARDTOPICS"><i>Wildcard Topics</i></a></p>
+</li>
+
+<li>
+<p><a href="#TOPICSTRANSPORTSESSIONS"><i>Topics and Transport Sessions</i></a></p>
+</li>
+
+<li>
+<p><a href="#MULTICASTACROSSWAN"><i>Multicast Across a WAN</i></a></p>
+</li>
+
+<li>
+<p><a href="#FAILOVER"><i>Failover</i></a></p>
+</li>
+
+<li>
+<p><a href="#THREADING"><i>Threading</i></a></p>
+</li>
+
+<li>
+<p><a href="#PERSISTENTMESSAGING"><i>Persistent Messaging</i></a></p>
+</li>
+
+<li>
+<p><a href="#QUEUING"><i>Queuing</i></a></p>
+</li>
+
+<li>
+<p><a href="#MISCELLANEOUS"><i>Miscellaneous</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="A29WESTMESSAGINGHOWITDIFFERS"
+name="A29WESTMESSAGINGHOWITDIFFERS">2.1. Ultra Messaging: How It Differs from
+Rendezvous</a></h3>
+
+<p>Before reading further, there are some essential terminology differences between
+daemon-based designs like Rendezvous and the .nothing in the middle. design of Ultra
+Messaging that you should understand.</p>
+
+<p>Rendezvous applications send from publishers to subscribers and include a subject
+within each message payload to describe the destination for the response. Daemons called
+RVDs route messages from publishers to subscribers using configuration files to define
+the routes. Data transport is via reliable multicast for network hops between daemons,
+and TCP between daemons and applications. Rendezvous requires additional routing daemons
+called RVRDs to deliver messages to subscribers across a WAN.</p>
+
+<p>Ultra Messaging applications send from sources to receivers based on shared interest
+in a topic that is not embedded within the message. Topics are arbitrary strings that
+facilitate the joining of receivers to sources via a real-time multicast topic resolution
+process. Standard network hardware routes messages from sources to receivers using
+Informatica configuration options (and, optionally, multicast groups) to define the
+routes. Data transport is via UDP reliable multicast (LBT-RM), UDP reliable unicast
+(LBT-RU), TCP, or inter-process communication on a single host (LBT-IPC). Informatica
+sends messages unicast or multicast over a WAN with no additional hardware and provides
+the UM Gateway for circumstances where multicast traffic cannot cross LAN boundaries.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="ABSTRACTIONLAYER" name="ABSTRACTIONLAYER">2.2. Abstraction
+Layer</a></h3>
+
+<p>One big advantage of a customer-written messaging abstraction layer is the ability to
+hide any details related to the underlying messaging API that do not concern the
+application itself.</p>
+
+<p>For example, to closely mimic Rendezvous behavior by allowing an application to
+publish to a topic without an explicit Ultra Messaging source create API call, you could
+implement the following.</p>
+
+<ol type="1">
+<li>
+<p>Write a "pre_allocate_topic()" function which returns a handle for later use. Inside
+"pre_allocate_topic()", create the Ultra Messaging source (if not already created) via
+the <b class="APPLICATION">lbm_src_create()</b> API call and save the <b
+class="APPLICATION">lbm_src_t</b> pointer returned from that call for later use. Then
+create the handle, and save it with the <b class="APPLICATION">lbm_src_t</b> pointer for
+later retrieval.</p>
+</li>
+
+<li>
+<p>Write a .publish(). function which accepts the handle returned from the pre-allocate
+call. Inside .publish()., use the handle supplied on input to retrieve the <b
+class="APPLICATION">lbm_src_t</b> pointer, and pass that pointer on the <b
+class="APPLICATION">lbm_src_send()</b> API call.</p>
+</li>
+</ol>
+
+<p>Another method for migrating from Rendezvous to Ultra Messaging is to make Ultra
+Messaging features optional in your abstraction layer, by supplying defaults for them and
+setting them to .off. initially, to be turned on whenever it suits your needs. This
+provides advantages to both existing and new applications.</p>
+
+<ul>
+<li>
+<p>Existing applications may continue unchanged for a time (or forever, if you
+prefer).</p>
+</li>
+
+<li>
+<p>Existing applications can implement Ultra Messaging features in stages, when it makes
+sense for the application.</p>
+</li>
+
+<li>
+<p>New applications gain Informatica advantages sooner by using these features from the
+beginning, or phasing them in more aggressively.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="LONGLIVEDSUBJECTS" name="LONGLIVEDSUBJECTS">2.3. Long Lived
+Subjects</a></h3>
+
+<p>To gain the biggest payback in low latency and high efficiency, your message streams
+should normally use standard UM sources with Topic Resolution. These streams could have
+some or all of the following characteristics.</p>
+
+<ul>
+<li>
+<p>exist for long periods of time</p>
+</li>
+
+<li>
+<p>send a high volume of messages</p>
+</li>
+
+<li>
+<p>require the lowest latency</p>
+</li>
+</ul>
+
+<p>Other streams may benefit more from the recommendations in the <a
+href="#SHORTLIVEDSUBJECTS"><i>Short Lived Subjects</i></a> section.</p>
+
+<p>The most important concepts to understand up front with Long-Lived Subjects are <a
+href="#TOPICRESOLUTION"><i>Topic Resolution</i></a> and <a href="#HEADLOSS"><i>Head
+Loss</i></a>.</p>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="TOPICRESOLUTION" name="TOPICRESOLUTION">2.3.1. Topic
+Resolution</a></h4>
+
+<p>Topic Resolution is the process of dynamically discovering topics, and then joining
+together all sources and receivers for those topics. Sources send topic advertisements,
+and receivers send topic queries, to all members of a Topic Resolution multicast group.
+Sources can also respond to topic queries with topic advertisements. Topic advertisements
+contain transport session information to enable the receiver to join the transport
+session.</p>
+
+<p>If your network does not allow multicast, you can use unicast topic resolution with <b
+class="APPLICATION">lbmrd</b>, the UM Resolver Daemon.</p>
+
+<p>To illustrate how Topic Resolution works, see the following simple example, and assume
+all of the following.</p>
+
+<ul>
+<li>
+<p>use of multicast for both Topic Resolution and data transport</p>
+</li>
+
+<li>
+<p>receivers sending queries but no sources advertising</p>
+</li>
+
+<li>
+<p>a single transport session with one source application and one receiver
+application</p>
+</li>
+
+<li>
+<p>configuration options <b class="APPLICATION">resolver_multicast_address</b> and <b
+class="APPLICATION">resolver_multicast_port</b> set to their default values of <b
+class="APPLICATION">224.9.10.11</b> and <b class="APPLICATION">12965</b> respectively</p>
+</li>
+</ul>
+
+<p>The Topic Resolution steps for this scenario are shown below.</p>
+
+<ol type="1">
+<li>
+<p>Receiver application starts, calls <b class="APPLICATION">lbm_rcv_topic_lookup()</b>
+API to start sending topic queries on multicast group 224.9.10.11 (by default, querying
+receivers send one query every 100 ms)</p>
+</li>
+
+<li>
+<p>Twenty seconds later, source application starts, calls <b
+class="APPLICATION">lbm_src_topic_alloc()</b> API to create the topic object and send a
+topic advertisement (in response to the topic query it received) on 224.9.10.11</p>
+</li>
+
+<li>
+<p>Receiver contexts listening on 224.9.10.11 receive topic advertisements, and store
+them for later lookup in the context-wide resolver cache</p>
+</li>
+
+<li>
+<p>Source starts sending messages</p>
+</li>
+
+<li>
+<p>Receiver calls <b class="APPLICATION">lbm_rcv_create()</b> API to:</p>
+
+<ul>
+<li>
+<p>create the receiver object on the topic</p>
+</li>
+
+<li>
+<p>find the topic in the resolver cache</p>
+</li>
+
+<li>
+<p>join the topic's multicast group</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>After a short delay for routers and switches to add the receiver-side transport IP to
+the proper routing tables, receiver joins source data stream and begins receiving
+messages (by default, now that a source is discovered, receiver stops sending
+queries)</p>
+</li>
+
+<li>
+<p>Receiver continues to send topic queries every 100 milliseconds (by default) for
+re-transmitted topics and new topics just starting up</p>
+</li>
+</ol>
+
+<p>This is just one example of multicast topic resolution. For more details on other
+scenarios, including sources sending advertisements instead of receivers sending queries,
+late starting receivers, late starting sources, and repair of network problems, see <a
+href="../../doc/Design/archictecture.html#TOPIC-RESOLUTION-SCENARIOS" target="doccontent">Topic
+Resolution Scenarios</a> in the UM Concepts Guide.</p>
+
+<p>The only transport session types that do not participate in Topic Resolution are MIM
+and UIM (Multicast and Unicast Immediate Messaging). These transports embed the topic
+string within the message, like Rendezvous.</p>
+
+<p>Note that wildcard receivers do not send topic queries by default. This is because
+every wildcard topic must be queried at every interval, even those that are already
+connected to sources. You may configure wildcard receivers to query, but we don.t
+recommend it, because of potentially high resource consumption.</p>
+
+<p>You may turn off either topic advertisements or queries with configuration options;
+see <a href="../../doc/Config/resolveroperationoptions.html" target="doccontent">Resolver
+Operation Options</a> in the Configuration Guide. However, either advertisements or
+queries must be on for Topic Resolution to work. If Topic Resolution is not suitable for
+your application environment, you should use Multicast Immediate Messaging.</p>
+
+<p>Topic Resolution is configurable to allow accommodating a large volume of topics or to
+address loss, especially loss caused by socket buffers that are too small. See table at
+the end of this section for more.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="HEADLOSS" name="HEADLOSS">2.3.2. Head Loss</a></h4>
+
+<p>Because the Topic Resolution process can typically take a few milliseconds to
+complete, Ultra Messaging sources that begin sending immediately can cause Head Loss, or
+unrecoverable loss of the initial messages in the stream. Head Loss may occur with
+multicast Topic Resolution for the following reasons.</p>
+
+<ul>
+<li>
+<p>Source sends messages before receiver has fully resolved the topic and fully joined
+the sender's transport session (see step 6 in the above scenario). This is the most
+common form of head loss.</p>
+</li>
+
+<li>
+<p>Source sends a sudden burst of messages on a multicast address that network hardware
+has not yet "plumbed," resulting in the first messages being dropped while the switches
+and routers propagate multicast routing tables. This loss can happen even if the receiver
+had time to fully resolve the topic and fully join the multicast group.</p>
+</li>
+</ul>
+
+<p>There are a variety of ways to address head loss. We recommend these in order of
+preference:</p>
+
+<ul>
+<li>
+<p>Source Pre-Creation - This is simply the practice of creating sources well ahead of
+when they are needed, such as during an application initialization step. For new
+applications, this might be easier than for existing applications.</p>
+</li>
+
+<li>
+<p>Late Join - The source must be configured to use Late Join (for receivers, Late Join
+is on by default). After sending messages, the source retains them in a Late Join buffer,
+up to the size limit of the buffer. At the receiver, Late Join processing uses
+information in the topic advertisement to request missing messages (via TCP). The source
+send the requested messages from its Late Join retention buffer, if they are found there.
+Note that Late Join introduces some initial latency and requires additional configuration
+and memory usage on the sending side. Since this extra memory is on a per-topic basis, it
+might not scale well with many thousands of topics.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="SUBLONGLIVED" name="SUBLONGLIVED">2.3.3. Suggested Action
+Items</a></h4>
+
+<p>This table shows some specific action items you can take, and specific configuration
+options you can set, to implement some of the ideas mentioned above.</p>
+
+<div class="INFORMALTABLE"><a id="AEN202" name="AEN202"></a>
+<table border="1" class="CALSTABLE">
+<col width="168" />
+<col width="600" />
+<tbody>
+<tr>
+<td>
+<p>To implement source pre-creation:</p>
+</td>
+<td>Create sources well ahead of when they are needed, i.e., during application
+setup</td>
+</tr>
+
+<tr>
+<td rowspan="3">To implement Late Join:</td>
+<td>
+<p>Configure both source and receiver as appropriate:</p>
+
+<p><b class="APPLICATION">source late_join 1</b></p>
+
+<p><b class="APPLICATION">receiver late_join 1</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>Configure source Late Join buffer size (initial) with (for example):</p>
+
+<p><b class="APPLICATION">source retransmit_retention_size_threshold 20000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>Configure source Late Join buffer size (max) with (for example):</p>
+
+<p><b class="APPLICATION">source retransmit_retention_size_limit 30000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td rowspan="3">To configure Topic Resolution for more traffic</td>
+<td>
+<p>Configure both source and receiver with (for example):</p>
+
+<p><b class="APPLICATION">context resolver_maximum_advertisements 5000</b></p>
+
+<p><b class="APPLICATION">context resolver_active_source_interval 500</b></p>
+
+<p><b class="APPLICATION">context context resolver_maximum_queries 1000</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>If using multicast topic resolution:</p>
+
+<p><b class="APPLICATION">context resolver_multicast_receiver_socket_buffer
+2000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>If using unicast topic resolution:</p>
+
+<p><b class="APPLICATION">context resolver_unicast_receiver_socket_buffer 2000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td rowspan="2">
+<p>Also see:</p>
+</td>
+<td>
+<p>See <a href="../../doc/Design/archictecture.html#TOPIC-RESOLUTION" target="doccontent">Topic
+Resolution</a> in Concepts Guide and <a
+href="../../doc/Config/resolveroperationoptions.html" target="doccontent">Resolver Operation
+Options</a> and <a href="../../doc/Config/multicastresolvernetworkoptions.html"
+target="doccontent">Multicast Resolver Network Options</a> in Configuration Guide</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>See <a href="../../doc/Design/lbm-features.html#USING-LATE-JOIN" target="doccontent">Using
+Late Join</a> in Concepts Guide and <a href="../../doc/Config/latejoinoptions.html"
+target="doccontent">Late Join Options</a> in Configuration Guide</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="SHORTLIVEDSUBJECTS" name="SHORTLIVEDSUBJECTS">2.4. Short Lived
+Subjects</a></h3>
+
+<p>Some topics might not be ideal for normal UM sources and Topic Resolution because they
+only live for a short time or require the ability to begin sending immediately.</p>
+
+<p>Therefore, these subjects might be best implemented using either Late Join, Multicast
+Immediate Messaging (MIM), or Unicast Immediate Messaging (UIM).</p>
+
+<p>Refer to the Late Join discussion in <a href="#LONGLIVEDSUBJECTS"><i>Long Lived
+Subjects</i></a>.</p>
+
+<p>Multicast Immediate Messaging (MIM) is an alternative to the normal source-based UM
+model, and offers advantages for short-lived topics and applications that must send the
+first message on a topic immediately. MIM embeds the topic within the message and
+bypasses topic resolution by sending messages to all receivers in a pre-configured
+multicast group, allowing your application design to stay closer to a Rendezvous-like
+model. This extra information in the message payload, and the extra processing to filter
+out unwanted messages, does cause MIM to consume more network bandwidth and more CPU
+utilization at both source and receiver.</p>
+
+<p>Both MIM and UIM transports cause UM to create a temporary transport session and then
+delete it automatically after a period of inactivity (defined by <b
+class="APPLICATION">mim_src_deletion_timeout</b>). Topics are sent to a single multicast
+address, and all sending and receiving applications must use that same multicast address,
+therefore, all filtering happens in UM, leading to higher latency on a per-message basis,
+compared to a source-based sender (e.g., LBT-RM).</p>
+
+<p>Using MIM involves both configuration options and APIs.</p>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="SUBSHORTLIVED" name="SUBSHORTLIVED">2.4.1. Suggested Action
+Items</a></h4>
+
+<p>This table shows some specific action items you can take, and specific configuration
+options you can set, to implement some of the ideas mentioned above.</p>
+
+<div class="INFORMALTABLE"><a id="AEN275" name="AEN275"></a>
+<table border="1" class="CALSTABLE">
+<col width="168" />
+<col width="600" />
+<tbody>
+<tr>
+<td rowspan="3">To implement Late Join:</td>
+<td>
+<p>Configure both source and receiver as appropriate:</p>
+
+<p><b class="APPLICATION">source late_join 1</b></p>
+
+<p><b class="APPLICATION">receiver late_join 1</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>Configure source Late Join buffer size (initial) with (for example):</p>
+
+<p><b class="APPLICATION">source retransmit_retention_size_threshold 20000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>Configure source Late Join buffer size (max) with (for example):</p>
+
+<p><b class="APPLICATION">source retransmit_retention_size_limit 30000000</b></p>
+</td>
+</tr>
+
+<tr>
+<td rowspan="2">To implement MIM:</td>
+<td>
+<p>Set in source configuration file:</p>
+
+<p><b class="APPLICATION">source transport lbt-rm</b></p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>Implement MIM APIs such as:</p>
+
+<p><b class="APPLICATION">lbm_multicast_immediate_message()</b></p>
+</td>
+</tr>
+
+<tr>
+<td rowspan="2">
+<p>Also see:</p>
+</td>
+<td>
+<p>See <a href="../../doc/Design/lbm-features.html#USING-LATE-JOIN" target="doccontent">Using
+Late Join</a> in Concepts Guide and <a href="../../doc/Config/latejoinoptions.html"
+target="doccontent">Late Join Options</a> in Configuration Guide</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<p>See <a href="../../doc/Design/lbm-features.html#MULTICAST-IMMEDIATE-MESSAGING"
+target="doccontent">Multicast Immediate Messaging</a> in Concepts Guide and <a
+href="../../doc/API/lbm_8h.html#24e5bff3a70e571bb12024af67b47cbb"
+target="doccontent">lbm_multicast_immediate_message()</a> in API Guide and <a
+href="../../doc/Config/multicastimmediatemessagingnetworkoptions.html" target="doccontent">MIM
+Network Options</a>, <a
+href="../../doc/Config/multicastimmediatemessagingreliabilityoptions.html"
+target="doccontent">Reliability Options</a>, and <a
+href="../../doc/Config/multicastimmediatemessagingoperationoptions.html"
+target="doccontent">Operation Options</a> in Configuration Guide</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="REQUESTRESPONSE" name="REQUESTRESPONSE">2.5.
+Request/Response</a></h3>
+
+<p>There are several ways to implement the Request/Response use case with Ultra
+Messaging, and the built-in feature as described in Request/Response Model in the Ultra
+Messaging Concepts Guide is only one such way. While that method does offer the best
+performance, it usually requires more application changes. If you desire a more
+Rendezvous-like model, and are willing to trade performance for ease in migration, please
+contact Support for more details.</p>
+
+<p>The key Request/Response differences between Rendezvous and UM are shown below in
+functional groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN328" name="AEN328"></a>
+<table border="1" class="CALSTABLE">
+<col width="384" />
+<col width="384" />
+<thead>
+<tr>
+<th>Rendezvous</th>
+<th>Ultra Messaging</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Defines hard-coded messaging routes between senders and receivers in RVD
+configuration files.</td>
+<td>Discovers messaging routes in real-time with Topic Resolution.</td>
+</tr>
+
+<tr>
+<td>Uses short-lived subjects for responses. Request application normally stops listening
+after it receives the response.</td>
+<td>Optimized for both short-lived and long-lived topics. Common interest in a topic
+defines an implicit connection between sources and receivers that exists for the life of
+that topic. Responses do not use topics.</td>
+</tr>
+
+<tr>
+<td>Response information (address and subject) explicitly embedded within message body by
+request application, where it must be extracted by response application.</td>
+<td>Return address implicitly encoded in the request message header with known location
+and length. Requests and responses matched up internally by UM APIs.</td>
+</tr>
+
+<tr>
+<td>Sends requests unicast or multicast depending on RVD configuration options.</td>
+<td>Sends requests via any supported protocol. UIM and MIM are analogous to RV unicast or
+multicast.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WILDCARDTOPICS" name="WILDCARDTOPICS">2.6. Wildcard
+Topics</a></h3>
+
+<p>Rendezvous wildcards use a limited design that allows multiple levels in a subject
+name, delineated by a period ("."). You can match an entire level using an asterisk
+("*"), or all levels from that point to the end of the subject name using a right arrow
+("&#62;"). Rendezvous wildcard expressions are case sensitive.</p>
+
+<p>See the following table of example Rendezvous patterns and topics with matching
+results.</p>
+
+<div class="INFORMALTABLE"><a id="AEN353" name="AEN353"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="576" />
+<thead>
+<tr>
+<th>RV wildcard pattern</th>
+<th>Matching results with sample text strings</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>hey.*</td>
+<td>Matches "hey.you" and "hey.kid" but not "HEY", "hey", "say.hey", or
+"hey.kid.look"</td>
+</tr>
+
+<tr>
+<td>hey.&#62;</td>
+<td>Matches "hey.you" and "hey.kid" and "hey.kid.look" but not "HEY", "hey", or
+"say.hey"</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Informatica wildcards implement a powerful and common type of regular expression,
+called PCRE (Perl-Compatible Regular Expression). This section provides some examples and
+sample code to get you started. For more details, see this <a
+href="http://perldoc.perl.org/perlre.html" target="doccontent">PCRE tutorial</a> (or <a
+href="http://www.regular-expressions.info/tutorialcnt.html" target="doccontent">this
+one</a>).</p>
+
+<p>See the samples in the table below:</p>
+
+<div class="INFORMALTABLE"><a id="AEN372" name="AEN372"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="576" />
+<thead>
+<tr>
+<th>PCRE string</th>
+<th>Matching results with sample text strings</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>hey\.</td>
+<td>Matches "hey.you", "hey.kid", and "hey.kid.look", but not "hey", or "say.hey"</td>
+</tr>
+
+<tr>
+<td>\.hey&#62;</td>
+<td>Matches "say.hey", but not "hey.you", "hey.kid", "hey", or "hey.kid.look"</td>
+</tr>
+
+<tr>
+<td>hey\..*\.look</td>
+<td>Matches "hey.kid.look" and "hey.you.there.look.out" but not "hey.look"</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Wildcard topics with Topic Resolution can sometimes cause excessive network traffic
+and CPU consumption at the receiver. If you use wildcards, we recommend one of the
+following mitigation techniques:</p>
+
+<ul>
+<li>
+<p>Ensure that wildcard Topic Resolution queries are turned off (.off. is the default)
+and set sources to always advertise</p>
+</li>
+
+<li>
+<p>Consider using <a href="../../doc/API/lbmht_8h-source.html"
+target="doccontent">hypertopics</a>, a basic hierarchical system where like topics can be
+grouped by some initial set of characters</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="TOPICSTRANSPORTSESSIONS" name="TOPICSTRANSPORTSESSIONS">2.7.
+Topics and Transport Sessions</a></h3>
+
+<p>Sources send messages to topics, but ultimately those messages must be sent out across
+the network to the proper receivers. The transport session is the name for the UM
+construct that provides that functionality layer.</p>
+
+<p>A transport session is defined in different ways depending on the protocol.</p>
+
+<p>For LBT-RM, a transport session is composed of three segments:</p>
+
+<ol type="1">
+<li>
+<p>source context</p>
+</li>
+
+<li>
+<p>multicast group destination</p>
+</li>
+
+<li>
+<p>outgoing port</p>
+</li>
+</ol>
+
+<p>For LBT-RU and TCP, a transport session is composed of two segments:</p>
+
+<ol type="1">
+<li>
+<p>source context</p>
+</li>
+
+<li>
+<p>listening port for incoming connections (for LBT-RU, implicit connections)</p>
+</li>
+</ol>
+
+<p>The way that you map your topics to transports helps you to control performance and
+balance the CPU and network load in your applications.</p>
+
+<p>Please note that when a receiver subscribes to any single topic on a given transport
+session, the receiver's context receives all topics on that transport session even though
+some of them must be filtered out by UM due to lack of receiver application interest.
+This is a key point that has performance and design implications.</p>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="SUGGESTIONSMAPPINGTOPICS"
+name="SUGGESTIONSMAPPINGTOPICS">2.7.1. Suggestions for Mapping Topics to
+Transports</a></h4>
+
+<p>To keep your design closer to Rendezvous, or to minimize initial complexity, you can
+assign all topics in a single context to a single transport session. This can even be a
+viable permanent design if your overall messaging load is not too heavy, or if all topics
+have roughly equal performance needs. To dedicate a group of topics to a transport
+session, use the same source context, multicast group destination, and outgoing port.</p>
+
+<p>However, we recommend that you break out your topics to specific transport sessions,
+especially if your application mix has:</p>
+
+<ul>
+<li>
+<p>Distinct groups of topics that tend to be delivered to the same applications</p>
+</li>
+
+<li>
+<p>Prioritized topics that require the lowest possible latency, or consume high
+bandwidth, etc.</p>
+</li>
+</ul>
+
+<p>For example, if some group of receivers R always subscribe to topics A and B, while
+another group of receivers Q never do, you may want to group topics A and B onto a single
+dedicated transport session for R.</p>
+
+<p>Likewise, if topics X and Y are more latency-sensitive than other topics, you may want
+to group topics X and Y onto a single dedicated transport. Note that the number of
+receivers is not a factor in this decision.</p>
+
+<p>Using multiple transport sessions offers additional benefits by providing more
+per-transport resources:</p>
+
+<ul>
+<li>
+<p>Transmission windows - for more granular management of timers and events</p>
+</li>
+
+<li>
+<p>Socket buffers - may be tuned per transport for best efficiency and throughput</p>
+</li>
+
+<li>
+<p>Session message traffic - heartbeat messages sent by UM for less-active sources</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="KERNELOVERHEADMULTIPLERECEIVERS"
+name="KERNELOVERHEADMULTIPLERECEIVERS">2.7.2. Kernel Overhead with Multiple Receivers on
+a Single Host</a></h4>
+
+<p>One more point to remember: with two or more receiving applications on a single host
+receiving from the same multicast transport session, the kernel must duplicate every
+message for every receiver because of the nature of multicast groups. The more receivers
+you have on a host, and the higher the bandwidth for that transport, the more likely this
+is to lead to kernel overload, ultimately leading to potential data loss. Consider
+dedicating more transport sessions to the host and re-mapping topics to transports
+accordingly, or moving a subset of the receiver applications to another host.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MULTICASTACROSSWAN" name="MULTICASTACROSSWAN">2.8. Multicast
+Across a WAN</a></h3>
+
+<p>With Ultra Messaging, you don't need a daemon to send multicast over a WAN, except in
+the case where the network does not allow it. In that case, you can use a UM Gateway to
+convert multicast to unicast UDP or TCP. For more, see the <a href="../../doc/Gateway/"
+target="doccontent">UM Gateway</a> documentation.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="FAILOVER" name="FAILOVER">2.9. Failover</a></h3>
+
+<p>Informatica implements hot-failover with the concept of multiple redundant sources and
+a single receiver. To use hot-failover, follow these steps.</p>
+
+<ol type="1">
+<li>
+<p>Deploy multiple UM source applications via the <b
+class="APPLICATION">lbm_hf_src_*()</b> family of API calls</p>
+</li>
+
+<li>
+<p>(optional) Run each source on a separate host for best resiliency</p>
+</li>
+
+<li>
+<p>Ensure each source sends the exact same messages</p>
+</li>
+
+<li>
+<p>Deploy a single hot-failover receiver application via the <b
+class="APPLICATION">lbm_hf_rcv_*()</b> family of API calls to filter out duplicate
+messages and deliver only the first copy of any given message to the application</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="THREADING" name="THREADING">2.10. Threading</a></h3>
+
+<p>Rendezvous and UM create and use threads in very different ways. Generally speaking,
+Informatica messaging applications should need fewer threads than Rendezvous
+applications, leading to less thread contention.</p>
+
+<p>Informatica applications generally use two threads per context: the UM or application
+thread for processing messages, and the context thread (one per context) to handle many
+internal tasks, including:</p>
+
+<ul>
+<li>
+<p>Topic resolution</p>
+</li>
+
+<li>
+<p>Rate controller</p>
+</li>
+
+<li>
+<p>Timer management</p>
+</li>
+
+<li>
+<p>Transport management (such as packet/datagram retransmissions)</p>
+</li>
+</ul>
+
+<p>Some receiver applications, however, may use just the context thread if they can meet
+the required conditions (see <a
+href="../../doc/Design/lbm-objects.html#EVENT-QUEUE-OBJECT" target="doccontent">Event Queue
+Objects</a> discussion about context thread callbacks).</p>
+
+<p>The operational_mode configuration option determines the method used to create and
+terminate the context thread:</p>
+
+<ul>
+<li>
+<p>automatically, when using <b class="APPLICATION">operational_mode embedded</b>, a.k.a.
+"embedded mode"</p>
+</li>
+
+<li>
+<p>manually by the application, and "donated" to UM, when using <b
+class="APPLICATION">operational_mode sequential</b>, a.k.a. "sequential mode"</p>
+</li>
+</ul>
+
+<p>To leverage threading parallelism even more, you can use Event Queues. The Event Queue
+design reduces bottlenecks by moving some critical-path functions from the context thread
+to an Event Queue thread, allowing more design freedom, functionality, and scalability,
+especially in the following areas.</p>
+
+<ul>
+<li>
+<p>more freedom in creating/deleting UM objects (some objects cannot be created in the
+context thread)</p>
+</li>
+
+<li>
+<p>more freedom in callbacks regarding blocking and processing time</p>
+</li>
+
+<li>
+<p>fewer timing concerns with callbacks, such as interrupting critical sections of
+code</p>
+</li>
+</ul>
+
+<p>See <a href="../../doc/Design/lbm-objects.html#EVENT-QUEUE-OBJECT" target="doccontent">Event
+Queue Objects</a> in the Design Guide for more.</p>
+
+<p>Informatica offers many ways to customize your Ultra Messaging applications to use
+threads for maximum efficiency and lowest latency:</p>
+
+<ul>
+<li>
+<p>use Event Queues to manage UM events for you, and free your application thread from
+timing and API constraints, especially on multi-processor or multi-core machines</p>
+</li>
+
+<li>
+<p>use sequential mode and a "donated" context thread to allow your application to set
+the priority you need for the context thread</p>
+</li>
+
+<li>
+<p>set processor affinity for a receive context thread to the CPU core that services NIC
+interrupts to get the lowest latency (this may limit throughput, however)</p>
+</li>
+</ul>
+
+<p>Any latency outliers you may encounter might be due to thread scheduling. Also, note
+that a real-time operating system can make latency more deterministic, but not
+necessarily lower.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="PERSISTENTMESSAGING" name="PERSISTENTMESSAGING">2.11.
+Persistent Messaging</a></h3>
+
+<p>Ultra Messaging Persistence Edition (UMP) is Informatica's persistence messaging
+enterprise platform. UMP leverages the common UM API to provide persistence to all UM
+sources and receivers, and uses a unique design called Parallel Persistence to allow the
+fastest possible persistence capability, even during failover processing. UMP is a
+superset of UMS.</p>
+
+<p>To implement Parallel Persistence, configure at least one UMP store. For production,
+you should also consider your strategy for the following:</p>
+
+<ul>
+<li>
+<p>Failover - either round-robin (one single store operating at a time) or
+quorum/consensus (multiple stores in use concurrently)</p>
+</li>
+
+<li>
+<p>Registration IDs - tags that uniquely identifies a source or receiver to a particular
+store, for persistence and recovery</p>
+</li>
+
+<li>
+<p>Delivery confirmations - the minimum number of unique confirmations from different
+receivers before a message is released, set by the source</p>
+</li>
+</ul>
+
+<p>All UM sources and receivers in the UMP topic name space automatically gain the
+advantage of persistence.</p>
+
+<p>For more, please see the <a href="../../doc/UME/umeconcepts.html" target="doccontent">UMP
+Concepts</a> section and other relevant sections of the UMP Guide.</p>
+
+<p>Also, you can realize some level of load balancing by breaking out topics evenly
+across transport sessions. For more, see <a href="#TOPICSTRANSPORTSESSIONS"><i>Topics and
+Transport Sessions</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="QUEUING" name="QUEUING">2.12. Queuing</a></h3>
+
+<p>Ultra Messaging Queuing Edition (UMQ) is Informatica's queuing enterprise platform.
+Sources can submit messages asynchronously to a queue, while receivers can later retrieve
+them in a separate asynchronous manner. UMQ is a superset of UMP.</p>
+
+<p>To implement queuing for a source, set source configuration option umq_queue_name. All
+other Queuing options are set in the UMQ configuration file. For production, you should
+consider your strategy for the following:</p>
+
+<ul>
+<li>
+<p>Failover - quorum/consensus (multiple queues in use concurrently)</p>
+</li>
+
+<li>
+<p>Registration IDs - tags that uniquely identifies a source or receiver to a particular
+store, for persistence and recovery</p>
+</li>
+</ul>
+
+<p>For more, please see the <a href="../../doc/UME/designing-queuing-applications.html"
+target="doccontent">Designing Queuing Applications</a> section and other relevant sections of
+the UMQ Guide.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MISCELLANEOUS" name="MISCELLANEOUS">2.13.
+Miscellaneous</a></h3>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="STARTERCONFIGFILES" name="STARTERCONFIGFILES">2.13.1. Starter
+Configuration Files</a></h4>
+
+<p>Informatica provides a variety of starter configuration files, for example, see <a
+href="../../doc/Config/Examples/LowestLatency.cfg" target="doccontent">LowestLatency.cfg</a>.
+Other files are available in the <a href="../../doc/Config/Examples/"
+target="doccontent">Examples</a> directory. For more, see <a
+href="../../doc/Config/examples.html" target="doccontent">Example Configuration Scenarios</a>
+in the Configuration Guide.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="AUTOMATICMONITORING" name="AUTOMATICMONITORING">2.13.2.
+Automatic Monitoring</a></h4>
+
+<p>This feature allows monitoring applications to easily gain access to various levels of
+statistics, from context to transport to source and receiver. To monitor all transports
+within a context, set configuration option <b class="APPLICATION">context
+monitor_interval</b>. To monitor all Event Queues in a context, set <b
+class="APPLICATION">event_queue monitor_interval</b>. See <a
+href="../../doc/Config/automaticmonitoringoptions.html" target="doccontent">Automatic
+Monitoring Options</a> in the Configuration Guide for more.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="EVENTQUEUEGROWTH" name="EVENTQUEUEGROWTH">2.13.3. Event Queue
+Growth</a></h4>
+
+<p>Use configuration option <b class="APPLICATION">event_queue queue_size_warning</b> to
+receive notifications when the event queue size is larger than a given threshold. See <a
+href="../../doc/Config/eventqueueoptions.html" target="doccontent">Event Queue Options</a> in
+the Configuration Guide for more.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="SELFDESCRIBINGMESSAGING"
+name="SELFDESCRIBINGMESSAGING">2.13.4. Self Describing Messaging</a></h4>
+
+<p>Self Describing Messaging (SDM) is useful for cross platform messaging, particularly
+endian-ness conflicts, because it codifies all data in character format with meta-data to
+describe each field. Also, SDM simplifies messaging application maintenance, since
+receiver-side code doesn.t have to change when the format of the message changes.</p>
+
+<p>For best performance, we recommend that you turn off the name tree wherever possible
+(see <a href="../../doc/API/lbmsdm_8h.html#_details" target="doccontent">API documentation for
+lbmsdm.h</a>). Please note that turning off the name tree requires the implementation of
+one or more of the following design approaches in your applications.</p>
+
+<ul>
+<li>
+<p>Use an iterator - spin through all the fields of a received message sequentially using
+an iterator instead of accessing randomly by name</p>
+</li>
+
+<li>
+<p>Manage field names manually - ensure field name uniqueness in source application</p>
+</li>
+
+<li>
+<p>Use indexes - immediately after adding a field at the source, save the index value
+locally for re-use when building subsequent messages</p>
+</li>
+</ul>
+
+<p>Note that you must turn off the name tree explicitly in order to gain the maximum
+performance advantage.</p>
+
+<p>For more, see <a href="../../doc/Design/lbm-features.html#SELF-DESCRIBING-MESSAGING"
+target="doccontent">Self Describing Messaging</a> in the Concepts Guide.</p>
+</div>
+</div>
+</div>
+</div>
+
+<hr />
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

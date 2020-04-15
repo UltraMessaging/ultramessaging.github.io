@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html> <head>
+<meta http-equiv='CONTENT-TYPE' content='text/html; charset=UTF-8' />
+<link rel='StyleSheet' href='DTDDocStyle.css' type='text/css' media='screen' />
+<title>UM Gateway</title>
+	<script type="text/javascript" src="../../Search/highlight.js"></script>
+</head><body>
+<p class='DTDSource'><b><code>tnwgd.dtd</code></b>: <a href='tnwgd.dtd.html'>Elements</a> - Entities - <a href='tnwgd.dtd.org.html'>Source</a> | <a href='intro.html'>Intro</a> - <a href='elementsIndex.html'>Index</a><br /><a href='index.html' target='_top'>FRAMES</a>&nbsp;/&nbsp;<a href='tnwgd.dtd.org.html' target='_top'>NO FRAMES</a></p><pre id='dtd_source'><span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">     Configuration for the UM Gateway Daemon.</span>
+<span class="dtd_comment">     </span><span class="dtd_dtddoc_tag">@title</span><span class="dtd_comment"> UM Gateway</span>
+<span class="dtd_comment">     </span><span class="dtd_dtddoc_tag">@root</span><span class="dtd_comment"> tnw-gateway</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_comment">&lt;!-- The root element of the UM gateway configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">tnw-gateway</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">daemon</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">portals</span><span class="dtd_plain">)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- </span><span class="dtd_dtddoc_tag">@attr version</span><span class="dtd_comment"> UM Gateway DTD version used. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">tnw-gateway</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">version</span><span class="dtd_plain"> (1.0) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the global daemon configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">daemon</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">log</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">uid</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">gid</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pidfile</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">lbm-license-file</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topicmap</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">patternmap</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">monitor</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">web-monitor</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">propagation-delay</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">xml-config</span><span class="dtd_plain">?)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Indicates the file where log messages are sent. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">log</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr type</span><span class="dtd_comment"> Type of logging. For syslog and console, the filename is ignored.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">log</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">type</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">file</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">syslog</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">console</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;console&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pathname for daemon process ID (PID) file. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pidfile</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pidfile</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- User ID (UID) for daemon process (if run as root) --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">uid</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Group ID (GID) for daemon process (if run as root) --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">gid</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the LBM license file. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">lbm-license-file</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">lbm-license-file</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Determines characteristics of the internal topic maps. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topicmap</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr hash-function</span><span class="dtd_comment"> Topic map hash function to use.</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr size</span><span class="dtd_comment"> Number of entries in the topic map.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topicmap</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">hash-function</span><span class="dtd_plain"> ( </span><span class="dtd_attribute_name">classic</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">djb2</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">sdbm</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">murmur2</span><span class="dtd_plain"> ) </span><span class="dtd_attribute_value">&quot;murmur2&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">size</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;131111&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Determines characteristics of the internal pattern maps. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">patternmap</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr hash-function</span><span class="dtd_comment"> Pattern map hash function to use.</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr size</span><span class="dtd_comment"> Number of entries in the pattern map.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">patternmap</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">hash-function</span><span class="dtd_plain"> ( </span><span class="dtd_attribute_name">classic</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">djb2</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">sdbm</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">murmur2</span><span class="dtd_plain"> ) </span><span class="dtd_attribute_value">&quot;murmur2&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">size</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;131111&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Portal definitions. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">portals</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">endpoint</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">peer</span><span class="dtd_plain">)+</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Endpoint portal definition. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">endpoint</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">name</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">domain-id</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">cost</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">lbm-config</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">lbm-attributes</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">acl</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-resolution</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">late-join</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-purge</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-interest-generate</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-domain-activity</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-purge</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-interest-generate</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-domain-activity</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">source-context-name</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">receiver-context-name</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">sqn-window</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">context-query</span><span class="dtd_plain">? )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Peer portal definition. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">peer</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">name</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">cost</span><span class="dtd_plain">?, (</span><span class="dtd_attribute_name">tcp</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">single-tcp</span><span class="dtd_plain">), </span><span class="dtd_attribute_name">max-queue</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">max-datagram</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">batching</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">lbm-config</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">lbm-attributes</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">acl</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-purge</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-interest-generate</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-domain-activity</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-purge</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-interest-generate</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-domain-activity</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">topic-use-check</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-use-check</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">source-context-name</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">receiver-context-name</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">sqn-window</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">context-query</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">gateway-keepalive</span><span class="dtd_plain">? )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Portal name. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">name</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">name</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Portal domain ID. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">domain-id</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Portal cost. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">cost</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- TCP configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">tcp</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">interface</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">listen-port</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">receive-buffer</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">send-buffer</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">keepalive</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">nodelay</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">companion</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- TCP interface specification. May be specified in dotted-decimal or CIDR format. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">interface</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Port on which to listen for connections from the companion peer portal.</span>
+<span class="dtd_comment">     Companion peer portal must specify this port as it's companion port. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">listen-port</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Size of TCP receive buffer. If not specified, the system default size is used. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">receive-buffer</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Size of TCP send buffer. If not specified, the system default size is used. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">send-buffer</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Enable TCP keepalive. Disabled by default.  --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">keepalive</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Enable TCP nodelay. Disabled by default. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">nodelay</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Description of companion peer portal. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">companion</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">address</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">port</span><span class="dtd_plain">)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr reconnect-interval</span><span class="dtd_comment"> Time interval, in milliseconds, to wait before reconnecting to the companion portal.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">companion</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">reconnect-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;5000&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Companion peer portal address. Specified in dotted-decimal format. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">address</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Port to connect to on companion peer portal.</span>
+<span class="dtd_comment">     Companion peer portal must specify this port as it's listen-port. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">port</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Single TCP configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">single-tcp</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">interface</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">receive-buffer</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">send-buffer</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">keepalive</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">nodelay</span><span class="dtd_plain">?, (</span><span class="dtd_attribute_name">initiator</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">acceptor</span><span class="dtd_plain"> ) )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Single-TCP initiator configuration --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">initiator</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">address</span><span class="dtd_plain">, </span><span class="dtd_attribute_name">port</span><span class="dtd_plain">)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr reconnect-interval</span><span class="dtd_comment"> Time interval, in milliseconds, to wait before reconnecting to the companion portal.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">initiator</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">reconnect-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;5000&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Single-TCP acceptor configuration --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">acceptor</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">listen-port</span><span class="dtd_plain">)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Maximum queue size. If not specified, it defaults to 1000000 bytes. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">max-queue</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Maximum peer datagram size. If not specified, it defaults to 65535 bytes. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">max-datagram</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Peer batching configuration. Batching applies to data messages only: control messages     are sent immediately (flushing any batched data messages). --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">batching</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">min-length</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">batch-interval</span><span class="dtd_plain">?)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- The minimum length of a set of batched messages. When the total length of the batched messages</span>
+<span class="dtd_comment">     reaches or exceeds this value, the batch is sent. If not specified, it defaults to 8192 bytes. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">min-length</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- The maximum interval (in milliseconds) between when the first message of an batch is queued until the batch is sent.</span>
+<span class="dtd_comment">     A message will not stay in the queue longer than this value before being sent in the worse case.</span>
+<span class="dtd_comment">     If not specified, it defaults to200 milliseconds. The minimum allowed value</span>
+<span class="dtd_comment">     is 3 milliseconds. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">batch-interval</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- LBM configuration filename. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">lbm-config</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">lbm-config</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Set of LBM attributes to apply. Will override any defaults or attribute values in lbm-config. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">lbm-attributes</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">option</span><span class="dtd_plain">+)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- An individual LBM option. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">option</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr scope</span><span class="dtd_comment"> Option scope</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr name</span><span class="dtd_comment"> Option name</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> Option value</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">option</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">scope</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">receiver</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">context</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">source</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">wildcard_receiver</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">event_queue</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">name</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies ACL for filtering, consisting of Access Control Entries (ACEs). --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">acl</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">inbound</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">outbound</span><span class="dtd_plain">?)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Inbound ACLs. Determines what a portal allows to be forwarded from its topic</span>
+<span class="dtd_comment">     resolution domain to other portals. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">inbound</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">ace</span><span class="dtd_plain">+)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Outbound ACLs. Determines what a portal allows to be forwarded to its topic</span>
+<span class="dtd_comment">     resolution domain from other portals. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">outbound</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">ace</span><span class="dtd_plain">+)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Access control entry (ACE). --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">ace</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">topic</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">pcre-pattern</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">regex-pattern</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">transport</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">source-ip</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">multicast-group</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">udp-source-port</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">udp-destination-port</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">tcp-source-port</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">xport-id</span><span class="dtd_plain">)+ </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr match</span><span class="dtd_comment"> Action on matching this ACE</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">ace</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">match</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">accept</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">reject</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a topic ACE. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">          and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">          into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">          as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a PCRE topic pattern ACE. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pcre-pattern</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">          and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">          into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">          as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pcre-pattern</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a REGEX topic pattern ACE. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">regex-pattern</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">          and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">          into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">          as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">regex-pattern</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a transport-type ACE. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">transport</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> Transport type value. Allowable values are &quot;tcp&quot;, &quot;lbt-rm&quot;,</span>
+<span class="dtd_comment">            &quot;lbtrm&quot;, &quot;lbt-ru&quot;, &quot;lbtru&quot;, &quot;lbt-ipc&quot;, and &quot;lbtipc&quot;.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the transport type and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The transport type must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The transport type must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">transport</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">tcp</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbt-rm</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbtrm</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbt-ru</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbtru</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbt-ipc</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbtipc</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a source IP ACE. Applies only to TCP, LBT-RM, and LBT-RU transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">source-ip</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> Source IP address as a dotted-decimal value.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the source IP address and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The source IP address must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">source-ip</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a multicast group ACE. Applies only to LBT-RM transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">multicast-group</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> Multicast group as a dotted-decimal value.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the multicast group and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The multicast group must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">multicast-group</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a UDP source port ACE. Applies only to LBT-RM and LBT-RU transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">udp-source-port</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> UDP source port.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the UDP source port and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP source port must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">udp-source-port</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a UDP destination port ACE. Applies only to LBT-RM transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">udp-destination-port</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> UDP destination port.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the UDP destination port and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The UDP destination port must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">udp-destination-port</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a TCP source port ACE. Applies only to TCP transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">tcp-source-port</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> TCP source port.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the TCP source port and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The TCP source port must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">tcp-source-port</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies a Xport ID ACE. Applies only to LBT-IPC transports. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xport-id</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr value</span><span class="dtd_comment"> Xport ID.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr comparison</span><span class="dtd_comment"> Relation between the Xport ID and the specified</span>
+<span class="dtd_comment">            value which must be true for this ACE to match. Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;eq&quot;, &quot;equal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID must be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;ne&quot;, &quot;notequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID must not be equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;lt&quot;, &quot;lessthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID be less than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;lessthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID must be less than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;gt&quot;, &quot;greaterthan&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID be greater than the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;le&quot;, &quot;greaterthanequal&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;The Xport ID must be greater than or equal to the specified value.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xport-id</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">value</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">comparison</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">eq</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">equal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ne</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">notequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">le</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lessthanequal</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">gt</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthan</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">ge</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">greaterthanequal</span><span class="dtd_plain">) </span><span class="dtd_keyword">#REQUIRED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic resolution configurations. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-resolution</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">topic-use-query</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">pattern-use-query</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">initial-request</span><span class="dtd_plain">? )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic use query option. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-use-query</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">rate-limit</span><span class="dtd_plain">? ) </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> The maximum time, in milliseconds, to wait for a topic use response.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr max</span><span class="dtd_comment"> Maximum number of topic use queries to send for a given topic.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> The interval, in milliseconds, between periodic topic use queries</span>
+<span class="dtd_comment">            being sent for each topic the portal has interest in.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-use-query</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;3000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">max</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;5&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pattern use query option. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-use-query</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">rate-limit</span><span class="dtd_plain">? ) </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> The maximum time, in milliseconds, to wait for a pattern use response.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr max</span><span class="dtd_comment"> Maximum number of pattern use queries to send for a given pattern.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> The interval, in milliseconds, between periodic pattern use queries</span>
+<span class="dtd_comment">            being sent for each pattern the portal has interest in.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-use-query</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;3000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">max</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;5&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Rate Limit option. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">rate-limit</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr bps</span><span class="dtd_comment"> The limit in Bits per Second that data will be sent on the network.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr objects-per-second</span><span class="dtd_comment"> The limit in Objects per Second that data will be sent on the network.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">rate-limit</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">bps</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;500000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">objects-per-second</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;500&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Initial topic resolution request option. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">initial-request</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> The interval at which the initial topic resolution requests are sent.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr duration</span><span class="dtd_comment"> The minimum duration for which the initial topic resolution requests are sent.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">initial-request</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;1000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">duration</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;10&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Late join configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">late-join</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr provide</span><span class="dtd_comment"> Determines whether sources created on a portal should provide late join to receivers.</span>
+<span class="dtd_comment">            Allowable values are:</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;source&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;Provide late join only if the original source provides late join.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;always&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;Always provide late join, even if the original source does not.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;never&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;Never provide late join, even if the original source does.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">            The LBM configuration specified for the portal determines the late join configuration.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr forward</span><span class="dtd_comment"> If late join (retransmission) requests to a source on the portal are unable to be filled</span>
+<span class="dtd_comment">            locally, should the requests be forwarded to the original source?</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;yes&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;Yes, forward retransmission requests if they cannot be filled locally.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;no&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;No, retransmission requests should never be forwarded.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">            This only applies to sources created on the portal with late join support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">late-join</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">provide</span><span class="dtd_plain"> ( </span><span class="dtd_attribute_name">source</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">always</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">never</span><span class="dtd_plain"> ) </span><span class="dtd_attribute_value">&quot;source&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">forward</span><span class="dtd_plain"> ( </span><span class="dtd_attribute_name">yes</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">no</span><span class="dtd_plain"> ) </span><span class="dtd_attribute_value">&quot;yes&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic purge configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-purge</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which receiver topics are checked to determine if they can be purged.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-purge</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;60000&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic interest generation configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-interest-generate</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which topic interest is generated.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr max-topics</span><span class="dtd_comment"> Maximum topics for which interest is generated at one time.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr interval</span><span class="dtd_comment"> Interval (in milliseconds) between groups of topics.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-interest-generate</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">max-topics</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;20&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;200&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic domain activity configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-domain-activity</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> Minimum time (in seconds) domain interest for a topic must be unrefreshed before interest is removed for that domain.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-domain-activity</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;900&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pattern purge configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-purge</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which receiver patterns are checked to determine if they can be purged.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-purge</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;60000&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pattern interest generation configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-interest-generate</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which pattern interest is generated.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr max-patterns</span><span class="dtd_comment"> Maximum patterns for which interest is generated at one time.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr interval</span><span class="dtd_comment"> Interval (in milliseconds) between groups of patterns.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-interest-generate</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">max-patterns</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;20&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;200&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pattern domain activity configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-domain-activity</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> Minimum time (in seconds) domain interest for a pattern must be unrefreshed before interest is removed for that domain.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-domain-activity</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;900&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Topic use check configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-use-check</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which source topics are checked to determine if there is no more interest.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">topic-use-check</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Pattern use check configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-use-check</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which source patterns are checked to determine if there is no more interest.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">pattern-use-check</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Monitoring configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">monitor</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">transport-module</span><span class="dtd_plain">?, </span><span class="dtd_attribute_name">format-module</span><span class="dtd_plain">?)</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr interval</span><span class="dtd_comment"> Monitoring interval, in seconds. Zero disables monitoring.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">monitor</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;0&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Monitoring transport configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">transport-module</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr module</span><span class="dtd_comment"> Transport module to use. Default is &quot;lbm&quot;.</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr options</span><span class="dtd_comment"> Option string to be passed to the transport module.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">transport-module</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">module</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">lbm</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">lbmsnmp</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">udp</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;lbm&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">options</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#IMPLIED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Monitoring format configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">format-module</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr module</span><span class="dtd_comment"> Format module to use. Default is &quot;csv&quot;.</span>
+<span class="dtd_comment">    </span><span class="dtd_dtddoc_tag">@attr options</span><span class="dtd_comment"> Option string to be passed to the format module.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">format-module</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">module</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">csv</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;csv&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">options</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_keyword">#IMPLIED</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Web monitor configuration. Specify as interface:port. Interface may be specified as '*'. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">web-monitor</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">web-monitor</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Propagation delay configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">propagation-delay</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr delta</span><span class="dtd_comment"> Specifies the difference, in milliseconds, between the shortest and longest</span>
+<span class="dtd_comment">            propagation delays in the network. The default is zero.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">propagation-delay</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">delta</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;0&quot;</span><span class="dtd_plain"> </span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the LBM XML configuration file. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml-config</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml-config</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the portal source context name. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">source-context-name</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">source-context-name</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the portal receiver context name. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">receiver-context-name</span><span class="dtd_plain"> ( </span><span class="dtd_keyword">#PCDATA</span><span class="dtd_plain"> )</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr xml:space</span><span class="dtd_comment"> How whitespace is to be handled. &quot;default&quot; trims leading</span>
+<span class="dtd_comment">            and trailing whitespace, and compress multiple whitespace characters</span>
+<span class="dtd_comment">            into a single character. &quot;preserve&quot; preserves the whitespace exactly</span>
+<span class="dtd_comment">            as read.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">receiver-context-name</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">xml:space</span><span class="dtd_plain"> (</span><span class="dtd_attribute_name">default</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">preserve</span><span class="dtd_plain">) </span><span class="dtd_attribute_value">&quot;default&quot;</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Specifies the configuration of sequence number windows. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">sqn-window</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr size</span><span class="dtd_comment"> Determines the maximum number of topic (fragment) sequence numbers</span>
+<span class="dtd_comment">            that will be maintained, for any given source, for duplicate detection.</span>
+<span class="dtd_comment">            Must be a multiple of 8.            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr increment</span><span class="dtd_comment"> Determines the minimum increment, in topic (fragment) sequence numbers,</span>
+<span class="dtd_comment">            by which the sequence number window is moved when the window size is exceeded.</span>
+<span class="dtd_comment">            Must be a multiple of 8, an even divisor of the window size, and less the window size.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">sqn-window</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">size</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;16384&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">increment</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;2048&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Context query generation configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">context-query</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr periodic-interval</span><span class="dtd_comment"> Interval (in milliseconds) at which context queries are generated.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr max-contexts</span><span class="dtd_comment"> Maximum number of contexts for which queries are generated at one time.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr interval</span><span class="dtd_comment"> Interval (in milliseconds) between groups of context queries.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> Minimum time (in seconds) a context query must be unanswered before it is removed for the portal.</span>
+<span class="dtd_comment">            Before changing the value of this option, please contact Informatica Support.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">context-query</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">periodic-interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;300000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">max-contexts</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;20&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;200&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;900&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!-- Gateway keepalive configuration. --&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ELEMENT</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">gateway-keepalive</span><span class="dtd_plain"> </span><span class="dtd_keyword">EMPTY</span><span class="dtd_tag_symbols">&gt;</span>
+<span class="dtd_comment">&lt;!--</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr idle</span><span class="dtd_comment"> If gateway keepalives should be sent only when the link is idle.</span>
+<span class="dtd_comment">            &lt;dl&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;yes&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;Yes, only send keepalives if no traffic has been sent or received in the last interval.&lt;/dd&gt;</span>
+<span class="dtd_comment">              &lt;dt&gt;&quot;no&quot;&lt;/dt&gt;</span>
+<span class="dtd_comment">              &lt;dd&gt;No, send a keepalive every interval.&lt;/dd&gt;</span>
+<span class="dtd_comment">            &lt;/dl&gt;</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr interval</span><span class="dtd_comment"> Minimum interval, in milliseconds, between keepalives. When &lt;tt&gt;idle&lt;/tt&gt; is &quot;no&quot;,</span>
+<span class="dtd_comment">            a keepalive is sent every &lt;tt&gt;interval&lt;/tt&gt; milliseconds. When &lt;tt&gt;idle&lt;/tt&gt; is &quot;yes&quot;,</span>
+<span class="dtd_comment">            if the portal has not sent anything to the companion, or received anything from the companion, in</span>
+<span class="dtd_comment">            &lt;tt&gt;interval&lt;/tt&gt; milliseconds, a keepalive message is sent. A value of zero disables keepalives.</span>
+<span class="dtd_comment">      </span><span class="dtd_dtddoc_tag">@attr timeout</span><span class="dtd_comment"> Maximum time, in milliseconds, a peer can receive nothing from the companion</span>
+<span class="dtd_comment">            before determining the connection is dead and disconnecting.</span>
+<span class="dtd_comment">--&gt;</span>
+<span class="dtd_tag_symbols">&lt;!</span><span class="dtd_tag_name">ATTLIST</span><span class="dtd_plain"> </span><span class="dtd_attribute_name">gateway-keepalive</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">idle</span><span class="dtd_plain"> ( </span><span class="dtd_attribute_name">yes</span><span class="dtd_plain"> | </span><span class="dtd_attribute_name">no</span><span class="dtd_plain"> ) </span><span class="dtd_attribute_value">&quot;yes&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">interval</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;5000&quot;</span>
+<span class="dtd_plain">          </span><span class="dtd_attribute_name">timeout</span><span class="dtd_plain"> </span><span class="dtd_keyword">CDATA</span><span class="dtd_plain"> </span><span class="dtd_attribute_value">&quot;15000&quot;</span>
+<span class="dtd_tag_symbols">&gt;</span>
+</pre>
+</body>
+<script type="text/javascript">highlight();</script></html>

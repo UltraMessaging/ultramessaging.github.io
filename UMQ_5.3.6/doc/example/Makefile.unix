@@ -1,0 +1,314 @@
+# Generic cross-platform Makefile for LBM examples.
+#  For Windows, see the accompanying file `Makefile.nmake'.
+
+.SUFFIXES:
+
+# Instructions:
+#
+#       The user is responsible for setting PATH and LD_LIBRARY_PATH
+#       appropriately.
+#
+# Sample usage:
+# 
+#       make -f Makefile.unix TARGET_PLATFORM=<platform>
+#
+# where <platform> is one of:
+#
+#       AIX-5-powerpc64
+#       Darwin-9.8.0-x86_64
+#       Linux-glibc-2.3-x86_64
+#       Linux-glibc-2.5-x86_64
+#       Linux-glibc-2.3-i686
+#       Linux-glibc-2.3-ia64
+#       HP-UX-B.11.31-LP64-ia64
+#       SunOS-5.10-amd64
+#       SunOS-5.10-i386
+#       SunOS-5.10-sparc
+#       SunOS-5.10-sparcv9
+#
+# For example:
+# 
+#       make -f Makefile.unix clean
+#       make -f Makefile.unix TARGET_PLATFORM=Linux-2.4-glibc-2.3-x86_64
+#
+#
+# Additionally, if the directory containing this make file and example source
+#  files is not located under the installed "doc" directory, the following
+#  variables need to be set.
+
+LBM_INCLUDE_DIRS    =  ../../$(TARGET_PLATFORM)/include       # Default
+LBM_LIB_DIRS        =  ../../$(TARGET_PLATFORM)/lib           # Default
+
+
+# The following values represent the compiler flags the distributed 
+#  tools are compiled with in-house.  Feel free to modify/delete
+#  them at your convenience/peril.
+#
+# (NOTE:  This Makefile is specifically written to be used with the GNU
+#  version of `make' (`gmake') and the GNU compiler (`gcc').  Use with any
+#  other tools may require changes to the following variables.
+
+
+MAKE                              =  make
+
+
+CC                                =  gcc
+
+
+##                                    -Wall                 
+GEN_CFLAGS                        = -Wno-long-long        \
+                                    -fno-strict-aliasing  \
+                                    -D_REENTRANT          \
+                                    -g  -O2
+
+
+AIX-5-powerpc64.flgs             =  -maix64         \
+                                    -DAIX           \
+                                    -DAIX64         \
+                                    -D_THREAD_SAFE  \
+                                    -D_BSD=44
+
+Darwin-9.8.0-x86_64.flgs         =  -m64
+
+Linux-glibc-2.3-i686.flgs    = -m32 
+
+Linux-glibc-2.3-x86_64.flgs  =
+
+Linux-glibc-2.3-ia64.flgs =
+
+Linux-glibc-2.5-x86_64.flgs  =
+
+HP-UX-B.11.31-LP64-ia64.flgs = -mlp64
+
+
+##                                    -DSOLARIS    
+##                                    -DSOLARIS64  
+SunOS-5.10-amd64.flgs            =  -m64
+
+
+SunOS-5.10-i386.flgs             =  -DSOLARIS
+
+
+SunOS-5.10-sparc.flgs            =  -DSOLARIS
+
+SunOS-5.10-sparcv9.flgs          =  -m64          \
+                                    -DSOLARIS     \
+                                    -DSOLARIS64
+
+
+
+# The following values represent the libraries the distributed tools
+#  are linked with in-house.  You may need to modify this Makefile or
+#  add the appropriate variable to your environment if `gcc' cannot
+#  find one or more of these libraries.  It is not recommended that
+#  you modify any of these values.
+
+
+GEN_LIBS            =  -lpthread -lcrypto -lssl
+
+AIX_LIBS            =  -lnsl \
+					   -lm
+
+LINUX_LIBS          =  -lrt \
+                       -lnsl
+
+
+SUN_LIBS            =  -lsocket \
+                       -lnsl \
+                       -lm \
+                       -lrt 
+
+
+
+# Values for the LBM libraries and include files.  Do not modify.
+
+
+LBM_LIBS            =  -llbm -llbmsdm -llbmutl
+
+
+
+# The example source files.  Do not modify.
+
+
+EXAMPLE_SRC         =  lbmhtrcv.c lbmhfrcv.c lbmhfrcvq.c              \
+                       lbmhfsrc.c lbmimsg.c lbmireq.c                 \
+                       lbmmon.c lbmmoncache.c                         \
+                       lbmmondata.c lbmmonudp.c lbmmrcv.c lbmmrcvq.c  \
+                       lbmmreq.c lbmmsrc.c lbmpong.c lbmprice.c       \
+                       lbmrcv.c lbmrcvq.c lbmreq.c lbmresp.c          \
+                       lbmresping.c lbmrespq.c lbmspike.c lbmsrc.c    \
+                       lbmstrm.c lbmwrcv.c lbmwrcvq.c lbmtrreq.c      \
+                       umercv.c umesrc.c umeblock.c                   \
+                       umqrcv.c umqsrc.c lbmhfxrcv.c
+
+EXAMPLE_INC         =  monmodopts.h replgetopt.h verifymsg.h
+
+OTHER_SRC           =  getopt.c verifymsg.c
+
+EXAMPLE_EXE         =  $(EXAMPLE_SRC:.c=)
+
+
+
+# Targets.  Do not modify.
+
+
+
+all:  $(TARGET_PLATFORM)
+	@if [ -z "$(TARGET_PLATFORM)" ]; then $(MAKE) -f Makefile.unix unspecified; fi
+
+
+unspecified:
+	@echo
+	@echo 'Error: "TARGET_PLATFORM" not specified'
+	@echo
+	@echo 'See initial comment block in "Makefile.unix" for instructions.'
+	@echo
+
+
+AIX-5-powerpc64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(AIX_LIBS)" examples 
+
+
+Darwin-9.8.0-x86_64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" examples
+
+
+Linux-glibc-2.3-i686:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(LINUX_LIBS)" examples 
+
+
+Linux-glibc-2.3-x86_64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(LINUX_LIBS)" examples 
+
+Linux-glibc-2.3-ia64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(LINUX_LIBS)" examples 
+
+Linux-glibc-2.5-x86_64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(LINUX_LIBS)" examples 
+
+HP-UX-B.11.31-LP64-ia64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(LINUX_LIBS)" examples 
+
+SunOS-5.10-amd64:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(SUN_LIBS)" examples 
+
+
+SunOS-5.10-i386:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(SUN_LIBS)" examples 
+
+
+SunOS-5.10-sparc:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(SUN_LIBS)" examples 
+
+
+SunOS-5.10-sparcv9:
+	@$(MAKE) -f Makefile.unix CFLAGS="$($(TARGET_PLATFORM).flgs)" EXTRA_LIBS="$(SUN_LIBS)" examples
+
+
+examples:  $(EXAMPLE_EXE)
+
+
+lbmhfrcv:  lbmhfrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmhfrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmhfxrcv:  lbmhfxrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmhfxrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmhtrcv:  lbmhtrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmhtrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmhfrcvq:  lbmhfrcvq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmhfrcvq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmhfsrc:  lbmhfsrc.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmhfsrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmimsg:  lbmimsg.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmimsg.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmireq:  lbmireq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmireq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmon:  lbmmon.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmon.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmoncache:  lbmmoncache.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmoncache.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmondata:  lbmmondata.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmondata.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmonudp:  lbmmonudp.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmonudp.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmrcv:  lbmmrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmrcvq:  lbmmrcvq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmrcvq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmreq:  lbmmreq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmreq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmmsrc:  lbmmsrc.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmmsrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmpong:  lbmpong.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmpong.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmtrreq:  lbmtrreq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmtrreq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmprice:  lbmprice.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmprice.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmrcv:  lbmrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmrcvq:  lbmrcvq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmrcvq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmreq:  lbmreq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmreq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmresp:  lbmresp.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmresp.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmresping:  lbmresping.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmresping.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmrespq:  lbmrespq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmrespq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmspike:  lbmspike.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmspike.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmsrc:  lbmsrc.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmsrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmstrm:  lbmstrm.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmstrm.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmwrcv:  lbmwrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmwrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+lbmwrcvq:  lbmwrcvq.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) lbmwrcvq.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+umercv:  umercv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) umercv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+umesrc:  umesrc.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) umesrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+umeblock:  umeblock.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) umeblock.c umeblocksrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+umqrcv:  umqrcv.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) umqrcv.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+umqsrc:  umqsrc.c $(OTHER_SRC) $(EXAMPLE_INC)
+	$(CC) umqsrc.c $(OTHER_SRC) -o  $@  $(GEN_CFLAGS) $(CFLAGS) -I$(LBM_INCLUDE_DIRS) -L$(LBM_LIB_DIRS) $(LBM_LIBS) $(GEN_LIBS) $(EXTRA_LIBS)
+
+clean:
+	@rm -rf $(EXAMPLE_EXE) *.o *.core a.out *.dSYM

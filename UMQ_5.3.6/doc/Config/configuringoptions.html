@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Configuring Ultra Messaging Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="NEXT" title="Plain Text Configuration Files"
+href="plaintextconfigurationfiles.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="CHAPTER" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="plaintextconfigurationfiles.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="CHAPTER">
+<h1><a id="CONFIGURINGOPTIONS" name="CONFIGURINGOPTIONS"></a>Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</h1>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1.1. <a href="configuringoptions.html#MAINOVERVIEW">Overview</a></dt>
+
+<dt>1.2. <a href="plaintextconfigurationfiles.html">Plain Text Configuration
+Files</a></dt>
+
+<dt>1.3. <a href="xmlconfigurationfiles.html">XML Configuration Files</a></dt>
+
+<dt>1.4. <a href="configurationfilerestrictions.html">Configuration File
+Restrictions</a></dt>
+
+<dt>1.5. <a href="attributesobjects.html">Attributes Objects</a></dt>
+
+<dt>1.6. <a href="modifyingcurrentattributes.html">Modifying Current Attributes</a></dt>
+
+<dt>1.7. <a href="retrievingcurrentoptionvalues.html">Retrieving Current Option
+Values</a></dt>
+</dl>
+</div>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> (UM)
+offers configuration options that let you set a variety of operational parameters for
+customization to your needs. These options can reside in configuration files, or can be
+set individually using function calls. Option values can be assigned to objects upon or
+after object creation. Within an object, the implemented option values are referred to as
+attributes.</p>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MAINOVERVIEW" name="MAINOVERVIEW">1.1. Overview</a></h1>
+
+<p><b class="APPLICATION">UM</b> uses intelligent default values for each of its
+configuration options, enabling it to run reasonably well "out of the box." However,
+expect to customize Ultra Messaging options to optimize your operating environment. To
+provide maximum flexibility, <b class="APPLICATION">UM</b> offers several ways to
+configure option default and customized value value assignments.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ASSIGNMENTMETHODS" name="ASSIGNMENTMETHODS">1.1.1. Assignment
+Methods</a></h2>
+
+<p><b class="APPLICATION">UM</b> provides four basic methods for using configuration
+options to set attributes:</p>
+
+<ul>
+<li>
+<p>XML configuration files - customized defaults used during object creation</p>
+</li>
+
+<li>
+<p>plain text configuration files - a different manner of customized defaults, also used
+during object creation</p>
+</li>
+
+<li>
+<p>attributes objects - application-specific option values used during object
+creation</p>
+</li>
+
+<li>
+<p>function calls (setopt) - used after object creation</p>
+</li>
+</ul>
+
+<p><a href="configuringoptions.html#FIGATTR">Figure 1-1</a> shows the different ways
+option values are stored and assigned before, during, and after primitive object creation
+(primitive objects being sources, receivers, wildcard receivers, event queues, contexts,
+or HFX objects). The ultimate result is a primitive object created with the desired
+values residing in current attributes.</p>
+
+<div class="FIGURE"><a id="FIGATTR" name="FIGATTR"></a>
+<p><b>Figure 1-1. Attributes value assignment methods</b></p>
+
+<p><img src="intro/Attr_Config_and_XML.png" align="CENTER" /></p>
+</div>
+
+<p>The <span class="emphasis"><i class="EMPHASIS">initial default attributes</i></span>
+is the set of factory defaults residing in <b class="APPLICATION">UM</b>. The <span
+class="emphasis"><i class="EMPHASIS">current default attributes</i></span> are derived
+from the initial default attributes, but modified by option setting in the <span
+class="emphasis"><i class="EMPHASIS">plain text configuration file</i></span>. This is
+the starting point for all created primitive objects.</p>
+
+<p>An instantiated primitive object has its attribute settings held in <span
+class="emphasis"><i class="EMPHASIS">current attributes</i></span>, which are influenced
+by the <span class="emphasis"><i class="EMPHASIS">current default attributes</i></span>,
+the <span class="emphasis"><i class="EMPHASIS">XML config table</i></span>, and, if
+applicable, any settings stored in a <span class="emphasis"><i class="EMPHASIS">custom
+attributes objects</i></span>.</p>
+
+<p>An <span class="emphasis"><i class="EMPHASIS">XML configuration file</i></span> can
+pass its setting to an object being created in two ways: by directly populating <b
+class="APPLICATION">UM</b>'s <span class="emphasis"><i class="EMPHASIS">XML config
+table</i></span>, or by creating a <span class="emphasis"><i class="EMPHASIS">custom
+attributes object</i></span> with its settings.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ASSIGNMENTFLOW" name="ASSIGNMENTFLOW">1.1.2. Assignment
+Flow</a></h2>
+
+<p>The above diagram implies, but does not fully explain, the flow of attribute value
+assignment that <b class="APPLICATION">UM</b> performs when an application creates a
+primitive object. This flow is described below, and is important in understanding how and
+when default values are overridden:</p>
+
+<ol type="1">
+<li>
+<p>If applicable, copy plain text configuration file values to current default
+attributes.</p>
+</li>
+
+<li>
+<p>Start creating object.</p>
+</li>
+
+<li>
+<p>Custom attributes object(s) created/populated (if applicable).</p>
+</li>
+
+<li>
+<p>If <tt class="LITERAL">lbm_*_create()</tt> has a NULL attr, copy <span
+class="emphasis"><i class="EMPHASIS">current default attributes</i></span> into <span
+class="emphasis"><i class="EMPHASIS">current attributes</i></span>. Otherwise, copy <span
+class="emphasis"><i class="EMPHASIS">custom attributes object</i></span> values into
+<span class="emphasis"><i class="EMPHASIS">current attributes</i></span>.</p>
+</li>
+
+<li>
+<p>Read applicable options from the <span class="emphasis"><i class="EMPHASIS">XML config
+table</i></span> into the <span class="emphasis"><i class="EMPHASIS">current
+attributes</i></span>. Do not overwrite options set with <tt
+class="LITERAL">lbm_config()</tt>, or <tt class="LITERAL">lbm_*_attr_setopt()</tt>, which
+were tagged when modified.</p>
+</li>
+
+<li>
+<p>Finish object creation.</p>
+</li>
+
+<li>
+<p><span class="emphasis"><i class="EMPHASIS">current attributes</i></span> can be
+changed further (only certain options) via <tt class="LITERAL">lbm_*_setopt()</tt>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DEFINITIONS" name="DEFINITIONS">1.1.3. Definitions</a></h2>
+
+<p>Before discussing how <b class="APPLICATION">UM</b> options can be set, some
+terminology is in order.</p>
+
+<ul>
+<li>
+<p><span class="bold"><b class="EMPHASIS">Option</b></span> - A single configuration item
+that controls some aspect of <b class="APPLICATION">UM</b> operation. An option typically
+resides in a configuration file, but can also be assigned a value via a function call. We
+use options to assign values to an object's attributes.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Attribute</b></span> - An operational
+characteristic of an object. An attribute's value is set by an option, hence, there is a
+one-to-one correspondence between options and attributes. (Note: This use of the term
+"attribute" is unrelated to, and not to be confused with, "attribute" in XML syntax. In
+this document, we refer to the latter as "XML attribute".)</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">XML attribute</b></span> - See above. In XML
+syntax, XML attributes are parameters for XML elements.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Custom attributes object</b></span> A <b
+class="APPLICATION">UM</b> object that contains custom attribute values (set by options)
+for a specific <b class="APPLICATION">UM</b> object. Separate (and multiple) sets of
+attributes can exist for each application, though only one can be used when creating a
+primitive object.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Initial default attributes</b></span> - The
+default attributes values built into <b class="APPLICATION">UM</b>. <b
+class="APPLICATION">UM</b> and your applications use these if you have not set any
+options for the attributes.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Primitive object</b></span> - Specifically, an
+object that is a source, receiver, wildcard receiver, event queue, context, or HFX
+object.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Configuration file</b></span> - This comes in
+two types: XML and plain text. Configuration files contain assigned values for options,
+but the different types are read/copied at different times during the creation of an
+object.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">XML config table</b></span> - Contains option
+values that are read from the XML configuration file.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Current default attributes</b></span> - The
+attributes values used to create an object in the absence of custom attributes
+values.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Current attributes</b></span> - The attribute
+values for an instantiated <b class="APPLICATION">UM</b> object that control the current
+operation of that object.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Scope</b></span> - The type of object to which
+an option can apply. Possible scopes are context, source, receiver, wildcard_receiver,
+event_queue, and hfx.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WHICHMETHODTOUSE" name="WHICHMETHODTOUSE">1.1.4. Which Method
+Should I Use?</a></h2>
+
+<p>For the four basic assignment methods listed above, following are some scenarios where
+specific methods are selected.</p>
+
+<ul>
+<li>
+<p>To <span class="bold"><b class="EMPHASIS">change a default option value</b></span> and
+apply it to all objects you create, call <code class="FUNCTION">lbm_config()</code> for
+one or more configuration files. For example, to use LBT-RM rather than TCP for all
+sources, create a plain text configuration file containing</p>
+
+<pre class="SCREEN">
+source transport LBTRM
+</pre>
+
+<p>and pass its file name to <code class="FUNCTION">lbm_config()</code>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <a href="../API/index.html" target="_top">C API</a> offers functions
+<code class="FUNCTION">lbm_*_attr_create_default()</code> to change a current default
+value back to the initial (factory) default value. No such corresponding method exists
+for the Java or .NET APIs.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>To <span class="bold"><b class="EMPHASIS">customize specific options before an object
+is created</b></span> for a specific object instance, use a custom attributes object.
+Also, you can assign XML data to the XML config table directly from your application via
+<code class="FUNCTION">lbm_config_xml_string()</code>.</p>
+</li>
+
+<li>
+<p>To <span class="bold"><b class="EMPHASIS">create sets of custom values</b></span> to
+be used when creating primitive objects, call <code
+class="FUNCTION">lbm_config_xml_file()</code> and specify an XML configuration file. This
+is useful for setting specific default options on a per-topic or per-context basis, which
+cannot be done with a plain text configuration file. For an example where a sending
+application uses specific options and values, create an XML configuration file with the
+application's name (optional) that specifies those options and values. Then pass the XML
+file name and application name to <code
+class="FUNCTION">lbm_config_xml_file()</code>.</p>
+</li>
+
+<li>
+<p>To change an option <span class="bold"><b class="EMPHASIS">after an object is
+created</b></span>, modify the current attributes for the object. (Note that many options
+cannot be changed after an object has been created.)</p>
+</li>
+</ul>
+
+<p>These methods can be used in combination. <a
+href="configuringoptions.html#FIGATTR">Figure 1-1</a> illustrates the relationships
+between attributes and the various <b class="APPLICATION">UM</b> API function calls that
+affect them.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIGURATIONFILES" name="CONFIGURATIONFILES">1.1.5.
+Configuration Files</a></h2>
+
+<p>There are two types of <b class="APPLICATION">UM</b> Configuration files:</p>
+
+<ul>
+<li>
+<p><a href="plaintextconfigurationfiles.html"><i>Plain Text Configuration
+Files</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html"><i>XML Configuration Files</i></a></p>
+</li>
+</ul>
+
+<p>You can read Configuration files either by function call, or automatically upon
+application launch by specifying a file name in an environment variable. See <a
+href="configuringoptions.html#FIGATTR">Figure 1-1</a> and <a
+href="configuringoptions.html#ASSIGNMENTFLOW"><i>Assignment Flow</i></a> for details on
+how these options replace or override default values.</p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="plaintextconfigurationfiles.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Configuration Guide</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Plain Text Configuration Files</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+<area shape="rect" href="$structlbm__rcv__transport__stats__lbtrdma__t__stct.html" title="Structure that holds datagram statistics for receiver LBT&#45;RDMA transports." alt="" coords="5,5,261,32">
+<area shape="rect" href="$structlbm__rcv__transport__stats__lbtru__t__stct.html" title="Structure that holds datagram statistics for receiver LBT&#45;RU transports." alt="" coords="285,5,523,32">
+<area shape="rect" href="$structlbm__rcv__transport__stats__lbtipc__t__stct.html" title="Structure that holds datagram statistics for receiver LBT&#45;IPC transports." alt="" coords="547,5,789,32">
+<area shape="rect" href="$structlbm__rcv__transport__stats__lbtrm__t__stct.html" title="Structure that holds datagram statistics for receiver LBT&#45;RM transports." alt="" coords="813,5,1053,32">
+<area shape="rect" href="$structlbm__rcv__transport__stats__daemon__t__stct.html" title="Structure that holds statistics for receiver daemon mode transport (deprecated)." alt="" coords="1077,5,1336,32">
+<area shape="rect" href="$structlbm__rcv__transport__stats__tcp__t__stct.html" title="Structure that holds datagram statistics for receiver TCP transports." alt="" coords="1360,5,1589,32">

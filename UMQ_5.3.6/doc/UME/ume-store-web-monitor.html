@@ -1,0 +1,909 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Web Monitor</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Configuration Reference for Umestored"
+href="umestored-config.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umestored-config.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom">&nbsp;</td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UME-STORE-WEB-MONITOR" name="UME-STORE-WEB-MONITOR">13. <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Web
+Monitor</a></h1>
+
+<p>The built-in web monitor (configured in the umestored XML configuration file) is a
+rich source of information about the health of a <b class="APPLICATION">UM</b> stores and
+queues. This section contains a page-by-page guide to reading and interpreting the output
+of a <b class="APPLICATION">UM</b> web monitor, with just a couple example sources and
+one receiver using a single store. This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="ume-store-web-monitor.html#UME-WEB-MONITOR-INDEX-PAGE"><i>Ultra Messaging Web
+Monitor Index Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#PERSISTENT-STORES-PAGE"><i>Persistent Stores
+Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#STORE-PAGE"><i>Store Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#SOURCE-PAGE"><i>Source Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#RECEIVER-PAGE"><i>Receiver Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#QUEUE-PAGE"><i>Queue Page</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-store-web-monitor.html#QUEUE-TOPIC-PAGE"><i>Queue Topic Page</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME-WEB-MONITOR-INDEX-PAGE"
+name="UME-WEB-MONITOR-INDEX-PAGE">13.1. <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Web Monitor Index Page</a></h2>
+
+<p>The web monitor's index page tells what build of <b class="APPLICATION">UM</b> is
+running.</p>
+
+<div class="FIGURE"><a id="UMEWEBMONITORINDEX" name="UMEWEBMONITORINDEX"></a>
+<p><b>Figure 24. UM Web Monitor Index Page</b></p>
+
+<p><img src="UME.WebMonitor.Index.png" align="CENTER" /></p>
+</div>
+
+<p>Click on the link, Stores, to see the <a
+href="ume-store-web-monitor.html#PERSISTENT-STORES-PAGE"><i>Persistent Stores
+Page</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PERSISTENT-STORES-PAGE" name="PERSISTENT-STORES-PAGE">13.2.
+Persistent Stores Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORSTORES" name="UMEWEBMONITORSTORES"></a>
+<p><b>Figure 25. Persistent Stores Page</b></p>
+
+<p><img src="UME.WebMonitor.Stores.png" align="CENTER" /></p>
+</div>
+
+<p>This page shows all the stores configured under the <tt class="LITERAL">umestored</tt>
+process. If you had 5 stores configured, they would be numbered Store 0 through Store 4.
+Our example has only one store configured, <tt class="LITERAL">ume-test-store</tt>. Click
+on the link, ume-test-store, to see the <a
+href="ume-store-web-monitor.html#STORE-PAGE"><i>Store Page</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="STORE-PAGE" name="STORE-PAGE">13.3. Store Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORSTOREPAGE" name="UMEWEBMONITORSTOREPAGE"></a>
+<p><b>Figure 26. Persistent Stores Page</b></p>
+
+<p><img src="UME.WebMonitor.Store.Page.png" align="CENTER" /></p>
+</div>
+
+<p>This page shows the following information about the store.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5114" name="AEN5114"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Interface</td>
+<td>This store is listening on all interfaces (0.0.0.0) on port 41394</td>
+</tr>
+
+<tr>
+<td>Cache Dir</td>
+<td>Pathname for disk store message cache directory. This would be configured as a store
+attribute in the store's XML configuration file. <tt class="LITERAL">&lt;option
+type="store" name="disk-cache-directory" value="cache/" /&#62;</tt> </td>
+</tr>
+
+<tr>
+<td>State Dir</td>
+<td>Pathname for disk store state directory. This would be configured as a store
+attribute in the store's XML configuration file. <tt class="LITERAL">&lt;option
+type="store" name="disk-state-directory" value="state/" /&#62;</tt></td>
+</tr>
+
+<tr>
+<td>Configured Retransmission Request Processing Rate</td>
+<td>Current value for the store's <tt
+class="LITERAL">retransmission-request-processing-rate</tt> setting.</td>
+</tr>
+
+<tr>
+<td>Retransmission Request Received Rate</td>
+<td>Number of retransmission requests received per second.</td>
+</tr>
+
+<tr>
+<td>Retransmission Request Service Rate</td>
+<td>Number of retransmission requests serviced per second.</td>
+</tr>
+
+<tr>
+<td>Retransmission Request Drop Rate</td>
+<td>Number of retransmission requests dropped per second. Requests are dropped if the
+rate of retransmission requests exceeds the configured retransmission request rate.</td>
+</tr>
+
+<tr>
+<td>Retransmission Request Total Dropped</td>
+<td>The number of retransmission requests since the time the store was started.</td>
+</tr>
+
+<tr>
+<td>Patterns</td>
+<td>Specifies the wildcard pattern used to select topics for which a store will provide
+persistence services. This would be configured as a topic attribute in the store's XML
+configuration file. <tt class="LITERAL">&lt;topic pattern="test*"
+type="PCRE"&#62;</tt></td>
+</tr>
+
+<tr>
+<td>Topics</td>
+<td>Displays the topic name and Registration IDs of the two sources publishing on the
+topic, 2369562861 and 3131255877.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>You can review information about the sources publishing on the topic by clicking on
+Registration ID displayed. The <a href="ume-store-web-monitor.html#SOURCE-PAGE"><i>Source
+Page</i></a> appears.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCE-PAGE" name="SOURCE-PAGE">13.4. Source Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORSOURCEPAGE" name="UMEWEBMONITORSOURCEPAGE"></a>
+<p><b>Figure 27. UM Web Monitor Source Page</b></p>
+
+<p><img src="UME.WebMonitor.Source.Page.png" align="CENTER" /></p>
+</div>
+
+<p>The following table explains the information found in the title of the Source
+Page.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5168" name="AEN5168"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<thead>
+<tr>
+<th>Source Page Title</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>2504558780</td>
+<td>The source's registration ID.</td>
+</tr>
+
+<tr>
+<td>10.29.3.42.14392</td>
+<td>The IP address and port of the source's <b class="APPLICATION">UM</b> configuration
+option, <tt class="LITERAL">request_tcp_port</tt>.</td>
+</tr>
+
+<tr>
+<td>3958260924</td>
+<td>The source's transport session index.</td>
+</tr>
+
+<tr>
+<td>1161732811</td>
+<td>The source's topic index within the transport session, 3958260924.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The transport session and topic indices are useful for debugging purposes when
+combined with a Wireshark capture, but are otherwise not relevant here. The following
+table provides descriptions of the items in the source page.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5190" name="AEN5190"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Source Page Item</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Topic</td>
+<td><b class="APPLICATION">test</b> is the source's topic string.</td>
+</tr>
+
+<tr>
+<td>Last Activity</td>
+<td><b class="APPLICATION">09:19:39.501350</b> is the timestamp when the store last heard
+from the source, including keepalives sent by <b class="APPLICATION">UM</b> </td>
+</tr>
+
+<tr>
+<td>Repository</td>
+<td><b class="APPLICATION">disk</b> is the type of repository.</td>
+</tr>
+
+<tr>
+<td>Receiver Paced Persistence</td>
+<td>Setting for Receiver-paced Persistence (RPP), which is a repository option both the
+repositrory and source must enable. A value of 0 means RPP is not enabled and the
+repository is using the default Source-paced Resistence. A value of 1 means RPP is
+enabled.</td>
+</tr>
+
+<tr>
+<td>Message Map: 104</td>
+<td><b class="APPLICATION">104</b> is the total number of message fragments the store has
+for this source, both on disk and in memory. These are <b
+class="APPLICATION">UM</b>-level fragments, not IP-level fragments. <b
+class="APPLICATION">UM</b> messages are fragmented into roughly 8 kilobyte chunks for
+UDP-based protocols (LBT-RM and LBT-RU) and into roughly 64 kilobyte chunks for LBT-TCP.
+The majority of application messages tend to be well under the fragment boundaries, so
+the value after "Message Map" could be used as a rough estimate of the number of messages
+in the store from this particular source. It's at least a strict upper bound.</td>
+</tr>
+
+<tr>
+<td rowspan="4">Window: [0, 0, 67]</td>
+<td>The first <b class="APPLICATION">0</b> is the <b class="APPLICATION">trailing
+sequence number</b>, which is the oldest sequence number in the store for this source. In
+most cases, this starts at 0 and stays there for a while, but especially with <b
+class="APPLICATION">UME</b> 2.0 where stores can come and go, that may not be the case.
+It would also move if you, for example, hit a disk file size limit and had to throw out
+some old messages.</td>
+</tr>
+
+<tr>
+<td>The second <b class="APPLICATION">0</b> is the <b class="APPLICATION">trailing
+sequence number</b> for messages <b class="APPLICATION">in memory</b>, so it is the
+oldest sequence number still in memory. Typically, you might have more sequence numbers
+on disk than you do in memory, or possibly the same number.</td>
+</tr>
+
+<tr>
+<td>The third number, <b class="APPLICATION">67</b>, is the <b
+class="APPLICATION">leading sequence number</b>, which is the highest sequence number in
+the store.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="emphasis"><i
+class="EMPHASIS">NOTE:</i></span></b> For a memory store, the first and second values
+would always be the same (the oldest sequence number in memory is the oldest in the
+store), so only two values are displayed; the trailing sequence number and the leading
+sequence number. These are sequence numbers of message fragments; there's usually just
+one fragment per message, but there could be more than one.</td>
+</tr>
+
+<tr>
+<td rowspan="4">Memory: 7176 / 52428800 / 104857600</td>
+<td>First number, <b class="APPLICATION">7176</b>, is the number of bytes of messages
+(which includes headers and a bit of store overhead) in memory.</td>
+</tr>
+
+<tr>
+<td>The second number, <b class="APPLICATION">52428800</b>, is the <tt
+class="LITERAL">repository-size-threshold</tt> topic option found in the store's XML
+configuration file.</td>
+</tr>
+
+<tr>
+<td>The third number, <b class="APPLICATION">104857600</b>, is the <tt
+class="LITERAL">repository-size-limit</tt> setting.</td>
+</tr>
+
+<tr>
+<td>You would expect the number of bytes in memory to be under the threshold most of the
+time, but it could spike above it before going back down if the store is really busy
+momentarily. It should never go above the limit.</td>
+</tr>
+
+<tr>
+<td>Age Threshold: 0</td>
+<td><b class="APPLICATION">0</b> is the <tt class="LITERAL">repository-age-threshold</tt>
+setting.</td>
+</tr>
+
+<tr>
+<td rowspan="4">Sync: [c2f, c2f, c2f]</td>
+<td>Pertains to <b class="APPLICATION">disk</b> or <b class="APPLICATION">reduced-fd</b>
+repositories only. Sync format is: <tt class="LITERAL">sync_complete_sqn</tt>, <tt
+class="LITERAL">sync_sqn</tt>, <tt class="LITERAL">contig_sqn</tt> </td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">sync_complete_sqn, c2f</b> Most recent sequence number that
+the Operating System has confirmed persisting to disk.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">sync_sqn, c2f</b> Most recent sequence number for which the
+store has initiated persisting to disk, but the Operating System has not confirmed
+completion of persistence.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">contig_sqn, c2f</b> Most recent sequence number that along
+with the trail_sqn, creates a range of sequence numbers with no sequence number gaps. For
+example, if <tt class="LITERAL">trail_sqn = 0</tt> and the store has persisted all eleven
+messages with sequence numbers 0 through 10, <tt class="LITERAL">contig_sqn</tt> would
+equal 10. <tt class="LITERAL">contig_sqn</tt> would also be 10 if a receiver declared
+message sequence number 7 unrecoverably lost. contig_sqn would be 6 if message sequence
+number 7 was not persisted, but not declared lost.</td>
+</tr>
+
+<tr>
+<td rowspan="3">In progress: 0 / 0</td>
+<td>Pertains to <b class="APPLICATION">disk</b> or <b class="APPLICATION">reduced-fd</b>
+repositories only. In progress format is: <tt class="LITERAL">num_ios_pending</tt> / <tt
+class="LITERAL">num_read_ios_pending</tt></td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">num_ios_pending, 0</b> Number of disk writes the store has
+submitted to the Operation System. A disk write refers to the store persisting a message
+to disk.</td>
+</tr>
+
+<tr>
+<td>The <b class="APPLICATION">num_read_ios_pending, 0</b> Number of disk reads that the
+store has submitted to the Operating System. A disk read, for example, results from an
+application retransmission request.</td>
+</tr>
+
+<tr>
+<td rowspan="4">Offsets: 0 / 190320 / 4294967296</td>
+<td>Pertains to <b class="APPLICATION">disk</b> or <b class="APPLICATION">reduced-fd</b>
+repositories only. Offsets format is: <tt class="LITERAL">start_offset</tt>, <tt
+class="LITERAL">offset</tt>, <tt class="LITERAL">max_offset</tt> </td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">start_offset, 0</b> The relative location of the first
+message, <tt class="LITERAL">trail_sqn</tt>, in the disk. <tt
+class="LITERAL">start_offset</tt> is 0 for a <b class="APPLICATION">reduced-fd</b>
+repository.</td>
+</tr>
+
+<tr>
+<td>The <b class="APPLICATION">offset, 190320</b> The relative location of where the
+message, <tt class="LITERAL">contig_sqn</tt> plus one will be written. <tt
+class="LITERAL">offset</tt> represents the size of the repository on disk for a <b
+class="APPLICATION">reduced-fd</b> repository.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">max_offset, 4294967296</b> The maximum size of the cache file.
+<tt class="LITERAL">max_offset</tt> is the maximum repository size on disk for a <b
+class="APPLICATION">reduced-fd</b> repository.</td>
+</tr>
+
+<tr>
+<td rowspan="4">Active ULBs: 0 high 0</td>
+<td><b class="APPLICATION">ULB</b> stands for <b class="APPLICATION">Unrecoverable Loss
+Burst</b>. A little extra work is required to keep cache files consistent when the store
+gets an unrecoverable loss burst, because unrecoverable loss bursts are delivered all at
+once for lots of messages, rather than one at a time like normal unrecoverable loss
+messages.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Active ULB</b> is the number of unrecoverable loss burst
+events the store is dealing with at the moment. It'll go to zero after the ULB has been
+resolved.</td>
+</tr>
+
+<tr>
+<td>The <b class="APPLICATION">high</b> number (<b class="APPLICATION">0</b>) is the
+highest sequence number reported among any unrecoverable loss burst event, and is not
+reset after the ULB is handled; it increments throughout the process life of the
+store.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="emphasis"><i
+class="EMPHASIS">WARNING:</i></span></b> If you see any number other than 0 here, the
+store is losing large numbers of messages, and they are likely not being persisted.</td>
+</tr>
+
+<tr>
+<td rowspan="2">Loss: 0 ULBs 0</td>
+<td>These values are counters for number of unrecoverable loss messages (<b
+class="APPLICATION">Loss</b>) and for number of unrecoverable burst loss messages (<b
+class="APPLICATION">ULB</b>). These start at 0 when the store starts up and aren't reset
+until the store exits. They don't include any loss events that were persisted to disk
+from a previous run, only new loss events since the store started. There are cases with
+<b class="APPLICATION">UME</b> 2.0 where one individual store could legitimately report
+some unrecoverable loss, or maybe even unrecoverable loss bursts.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION"><span class="emphasis"><i
+class="EMPHASIS">WARNING:</i></span></b> If you see <b class="APPLICATION">any</b> number
+other than <b class="APPLICATION">0</b> for either of these counters, you should
+investigate.</td>
+</tr>
+
+<tr>
+<td rowspan="3">Drops: 0 / 0</td>
+<td>If the store is nearing the <tt class="LITERAL">repository-size-limit</tt> and gets
+another message, the store will intentionally <b class="APPLICATION">drop</b> a message.
+A drop requires a bit of work on the store's part.</td>
+</tr>
+
+<tr>
+<td>The first <b class="APPLICATION">0</b> is the number of <b class="APPLICATION">active
+drops</b>, which are drops that are currently being worked on.</td>
+</tr>
+
+<tr>
+<td>The second <b class="APPLICATION">0</b> is the total number of drops that have
+happened for this store since it was started. Some people want a low <tt
+class="LITERAL">repository-size-limit</tt> and therefore lots of intentional drops can
+occur. Some don't want to drop any message the whole day - so the interpretation of the
+values is up to you.</td>
+</tr>
+
+<tr>
+<td rowspan="3">LBM Stats</td>
+<td>These represent transport-level statistics for the underlying receivers in the store
+for the source. The example shown is for a TCP source, so not too many stats are
+available (stats for a TCP source are less important from a monitoring perspective).</td>
+</tr>
+
+<tr>
+<td>Statistics for an LBT-RM or LBT-RU source, however, show number of NAKs sent, which
+is important. Ideally, the number of NAKs sent should be 0. A few NAKs from a store
+throughout the day is not an emergency. It can be, however, an early warning sign of more
+severe problems, and should be taken seriously.</td>
+</tr>
+
+<tr>
+<td>If you see a non-zero number of NAKs here, take a look at the overall network load
+the store's machine is attempting to handle, particularly in very busy periods and
+spikes; it may be too much.</td>
+</tr>
+
+<tr>
+<td>Receivers</td>
+<td>Registration IDs for the receivers listening on the source's topic. You can review
+information about the receivers listening on the topic by clicking on Registration ID.
+The <a href="ume-store-web-monitor.html#RECEIVER-PAGE"><i>Receiver Page</i></a>
+appears.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVER-PAGE" name="RECEIVER-PAGE">13.5. Receiver
+Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORRECEIVERPAGE"
+name="UMEWEBMONITORRECEIVERPAGE"></a>
+<p><b>Figure 28. UM Web Monitor Receiver Page</b></p>
+
+<p><img src="UME.WebMonitor.Receiver.Page.png" align="CENTER" /></p>
+</div>
+
+<p>The following table explains the information found in the title of the Receiver
+Page.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5378" name="AEN5378"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<thead>
+<tr>
+<th>Receiver Page Title</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>2504558781</td>
+<td>The receiver's registration ID.</td>
+</tr>
+
+<tr>
+<td>10.29.3.42.14393</td>
+<td>The IP address and port of the source's <b class="APPLICATION">UM</b> configuration
+option, <tt class="LITERAL">request_tcp_port</tt>.</td>
+</tr>
+
+<tr>
+<td>1510613393</td>
+<td>The receiver's transport session index.</td>
+</tr>
+
+<tr>
+<td>1161732811</td>
+<td>The source's topic index within the transport session, 1510613393.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The receiver page shows the following information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5400" name="AEN5400"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Receiver Page Item</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Topic</td>
+<td>The topic that the receiver is listening on.</td>
+</tr>
+
+<tr>
+<td>Last Activity</td>
+<td><b class="APPLICATION">09:09:35.981110</b> is the timestamp of when the store last
+heard from the receiver, including keepalives sent by <b class="APPLICATION">UM</b>.</td>
+</tr>
+
+<tr>
+<td>Source RegID</td>
+<td>Registration ID of the source publishing on the topic. Click on the Registration ID
+link to display the Source Page.</td>
+</tr>
+
+<tr>
+<td>Source Session ID</td>
+<td>The Session ID of the Source sending messages on the topic.</td>
+</tr>
+
+<tr>
+<td>ACK</td>
+<td><b class="APPLICATION">c93</b> is the last message sequence number the receiver
+acknowledged.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-PAGE" name="QUEUE-PAGE">13.6. Queue Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORQUEUEPAGE" name="UMEWEBMONITORQUEUEPAGE"></a>
+<p><b>Figure 29. Queue Page</b></p>
+
+<p><img src="UME.WebMonitor.Queue.Page.png" align="CENTER" /></p>
+</div>
+
+<p>This page shows the following information about <tt class="LITERAL">Queue 0</tt>,
+which is named <b class="APPLICATION">Queue 1</b>. The queue name is an attribute of the
+Queue Element in the Queue's XML configuration file. <tt class="LITERAL">&lt;queue
+name="Queue 1" port="4567" group-index="0"&#62;</tt></p>
+
+<div class="INFORMALTABLE"><a id="AEN5438" name="AEN5438"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Interface</td>
+<td>This queue is listening on all interfaces (0.0.0.0) on port 4567</td>
+</tr>
+
+<tr>
+<td>Queue ID</td>
+<td>Identification given to this queue by <b class="APPLICATION">UMQ</b> .</td>
+</tr>
+
+<tr>
+<td>Sending Threads</td>
+<td>Number of threads configured for this queue to send control and data messages. This
+would be configured as a Queue Element option in the queue's XML configuration file. <tt
+class="LITERAL">&lt;option type="queue" name="sending-threads" value="1/" /&#62;</tt>
+</td>
+</tr>
+
+<tr>
+<td>Sending Threads(s) Queue Size</td>
+<td>The number of messages waiting to be sent to receivers in the pool of sending
+threads. This could be data and control messages for Parallel Queue Dissemination (PQD),
+data messages only for Serial Queue Dissemination (SQD) or control messages only for
+Source Dissemination (SD).</td>
+</tr>
+
+<tr>
+<td>Registered Contexts</td>
+<td>Number of application contexts registered with this queue.</td>
+</tr>
+
+<tr>
+<td rowspan="3">Retransmit Requests</td>
+<td><b class="APPLICATION">Message Requests:</b> Number of requests for data message
+retransmission.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Queue RCR Requests:</b> Number of requests for the
+retransmission of control information.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Dropped Requests:</b> Number of retransmission requests
+dropped by <b class="APPLICATION">Queue 1</b>.</td>
+</tr>
+
+<tr>
+<td>Patterns</td>
+<td>Specifies the wildcard patterns used to select topics for which a queue will accept
+data messages. This would be configured as a topic attribute in the queue's XML
+configuration file. <tt class="LITERAL">&lt;topic pattern="." type="PCRE"&#62;</tt></td>
+</tr>
+
+<tr>
+<td>Topics</td>
+<td>Displays the RCR Index (<b class="APPLICATION">697157a5</b>) and topic name (<b
+class="APPLICATION">a.b</b>) of the topic(s) configured for this queue.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>You can review information about the Queue's topics and application sets by clicking
+on the topic's RCR Index, <b class="APPLICATION">697157a5</b>). The <a
+href="ume-store-web-monitor.html#QUEUE-TOPIC-PAGE"><i>Queue Topic Page</i></a>
+appears.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-TOPIC-PAGE" name="QUEUE-TOPIC-PAGE">13.7. Queue Topic
+Page</a></h2>
+
+<div class="FIGURE"><a id="UMEWEBMONITORQTOPICPAGE" name="UMEWEBMONITORQTOPICPAGE"></a>
+<p><b>Figure 30. Queue Topic Page</b></p>
+
+<p><img src="UME.WebMonitor.QTopic.Page.png" align="CENTER" /></p>
+</div>
+
+<p>This page shows the following information about the queue topic, <b
+class="APPLICATION">a.b</b>. This topic's RCR Index is <b
+class="APPLICATION">697157a5</b>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5497" name="AEN5497"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Queue</td>
+<td>The Queue Name for which this topic is configured. It is also a link back to the
+Queue Page for this queue.</td>
+</tr>
+
+<tr>
+<td>Application Sets</td>
+<td><b class="APPLICATION">Queue 1</b> has <b class="APPLICATION">2</b> Application Sets
+configured.</td>
+</tr>
+
+<tr>
+<td>Consumed Messages</td>
+<td>Total number of messages consumed by all Application Sets.</td>
+</tr>
+
+<tr>
+<td>Reassignments</td>
+<td>Number of messages that have been reassigned.</td>
+</tr>
+
+<tr>
+<td>Topic RCR Requests</td>
+<td>Number of requests for the retransmission of control information regarding this
+topic.</td>
+</tr>
+
+<tr>
+<td>Saved RCRs</td>
+<td>Number of Receiver Control Records save due to retransmissions. You configure how
+long the queue saves RCRs a Queue Element attribute in the queue's XML configuration
+file. <tt class="LITERAL">&lt;option type="queue" name="rcr-save-timeout"
+value="30000"/&#62;</tt>.</td>
+</tr>
+
+<tr>
+<td rowspan="7">Application Set</td>
+<td><b class="APPLICATION">Set 2</b> is the name of this Application Set.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Enqueued Messages:</b> Number of messages currently held in <b
+class="APPLICATION">Queue 1</b> for <b class="APPLICATION">Set 2</b>.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Currently Assigned:</b> Number of messages currently assigned
+to a receiver in this Application Set.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Currently Reassigning:</b> Number of messages waiting to be
+reassigned to receivers.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Consumed Messages:</b> Number of messages consumed by
+receivers in this Application Set.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Reassignments:</b> Number of messages that have been
+reassigned to another receiver in this Application Set.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Discarded Messages:</b> Number of messages assigned to
+receivers in this Application Set that have been discarded.</td>
+</tr>
+
+<tr>
+<td rowspan="8">Receivers</td>
+<td>Number of receivers (<b class="APPLICATION">1</b>) configured for this Application
+Set. Specific information for each receiver appears in the table below this item.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">ID:</b> The Assignment ID given to this receiver by the
+queue.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Address:</b> The address and port of the receiver.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Portion:</b> This receiver's portion size that you configure
+as a Receiver Type attribute in the queue's XML configuration file. <tt
+class="LITERAL">&lt;option type="queue" name="portion" value="1"/&#62;</tt>.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Priority:</b> This receiver's priority that you configure as a
+Receiver Type attribute in the queue's XML configuration file. <tt
+class="LITERAL">&lt;option type="queue" name="priority" value="1"/&#62;</tt>.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Outstanding:</b> Number of assigned messages for which the
+queue has not yet received Consumption Reports.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Last Active:</b> A timestamp indicating the last activity for
+the receiver.</td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">Consumed:</b> Total messages consumed by this receiver. The
+total for this column should match the Consumed Messages value for the Application
+Set.</td>
+</tr>
+
+<tr>
+<td>Assigned</td>
+<td>The number of messages currently assigned to all receivers for the Application Set.
+For each assigned message, the Message ID and Assignment ID for the receiver assigned the
+message appears. In addition, the <b class="APPLICATION">Reassign</b> and <b
+class="APPLICATION">Discard</b> links allow you to reassign or discard the individual
+message.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umestored-config.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Configuration Reference for Umestored</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport LBT-RM Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-RM Reliability Options"
+href="transportlbt-rmreliabilityoptions.html" />
+<link rel="NEXT" title="Transport LBT-RU Network Options"
+href="transportlbt-runetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="transportlbt-rmreliabilityoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="transportlbt-runetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTLBT-RMOPERATIONOPTIONS"
+name="TRANSPORTLBT-RMOPERATIONOPTIONS">4.10. Transport LBT-RM Operation Options</a></h1>
+
+<p><span class="bold"><b class="EMPHASIS">Scenario Timeline: LBT-RM Source Stops
+Sending</b></span></p>
+
+<p>Reliable multicast protocols like LBT-RM rely on sequence numbers and the arrival of
+data after a loss as evidence that the loss happened. What would happen if the last
+packet sent by a source was lost? How would receivers learn of the loss if no further
+messages were sent?</p>
+
+<p>LBT-RM generates session messages when the sources on a transport session stop
+sending. These messages contain the expected last sequence number for the session so that
+receivers can detect loss even when sources aren't sending. Session messages also help to
+maintain state in multicast routers and switches that require regular traffic to prevent
+the reclamation of unused forwarding entries.</p>
+
+<p>The following timeline illustrates the case where an LBT-RM source stops sending.</p>
+
+<div class="FIGURE"><a id="FIGLBT-RM-SM" name="FIGLBT-RM-SM"></a>
+<p><b>Figure 4-8. An LBT-RM source stops sending</b></p>
+
+<p><img src="reference/LBT-RM-SM.png" align="CENTER" /></p>
+</div>
+
+<p>No session messages are generated as long as the interval between <code
+class="FUNCTION">lbm_src_send()</code> calls that generate writes to LBT-RM is less than
+<a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL"><code
+class="PARAMETER">transport_lbtrm_sm_minimum_interval</code></a>. The interval between
+session messages starts at <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL"><code
+class="PARAMETER">transport_lbtrm_sm_minimum_interval</code></a> and doubles till it
+reaches <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL"><code
+class="PARAMETER">transport_lbtrm_sm_maximum_interval</code></a>.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Scenario Timeline: Receiver Detects End of
+LBT-RM Session</b></span></p>
+
+<p>The absence of activity on a transport session is the only indication receivers get
+that a source is gone or no longer available through any network path. LBT-RM receivers
+reset a session activity timer for each data message or session message that arrives. If
+the activity timer ever expires, all receivers on the transport session receive an <code
+class="FUNCTION">LBM_MSG_EOS</code> event. This is illustrated in the following
+timeline:</p>
+
+<div class="FIGURE"><a id="FIGLBT-RM-ACTIVITY" name="FIGLBT-RM-ACTIVITY"></a>
+<p><b>Figure 4-9. A receiver detects the end of an LBT-RM session</b></p>
+
+<p><img src="reference/LBT-RM-Activity.png" align="CENTER" /></p>
+</div>
+
+<p>The activity timer is controlled with the <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"><code
+class="PARAMETER">transport_lbtrm_activity_timeout</code></a> option.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+name="RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT">4.10.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_activity_timeout (receiver)</span></span></a></h2>
+
+<p>For LBT-RM sessions only. The maximum time that an LBT-RM session may be quiescent
+before it is deleted and an EOS event is delivered for all topics using this transport
+session. This option affects the transport session underlying the receiver rather than
+the receiver itself. The transport session uses the value from the first receiver created
+on the session and ignores subsequent receivers. Refer to <a
+href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver Configuration
+and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7733" name="AEN7733"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60000 (60
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRMCOALESCETHRESHOLD"
+name="SOURCETRANSPORTLBTRMCOALESCETHRESHOLD">4.10.2. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_coalesce_threshold (source)</span></span></a></h2>
+
+<p>The threshold of the maximum number of individual messages that are copied into a
+single buffer before being sent to the LBT-RM source internals. When used with small
+messages, this allows LBT-RM to use less memory at the expense of an additional copy
+operation of the data before being sent. The default value is also the maximum allowable
+value for Solaris and AIX. For Linux and <span class="TRADEMARK">Microsoft</span>&reg;
+<span class="TRADEMARK">Windows</span>&reg;, the maximum allowable value is 1023. This
+option affects the transport session underlying the source rather than the source itself.
+The transport session uses the value from the first source created on the session and
+ignores subsequent sources. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7773" name="AEN7773"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of individual messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">15</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRMDATARATELIMIT"
+name="CONTEXTTRANSPORTLBTRMDATARATELIMIT">4.10.3. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_data_rate_limit (context)</span></span></a></h2>
+
+<p>Maximum aggregate transmission rate of all LBT-RM sessions' original data plus
+retransmissions for this particular context.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7810" name="AEN7810"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000000 (10
+Mbps)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRMDATAGRAMMAXSIZE"
+name="CONTEXTTRANSPORTLBTRMDATAGRAMMAXSIZE">4.10.4. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated for a LBT-RM transport session. The
+default value is 8192, the minimum is 500 bytes, and the maximum is 65535.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7847" name="AEN7847"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8192</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRMPREACTIVITYTIMEOUT"
+name="RECEIVERTRANSPORTLBTRMPREACTIVITYTIMEOUT">4.10.5. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_preactivity_timeout
+(receiver)</span></span></a></h2>
+
+<p>Use this option only if the receiver subscribes to a pre-<b
+class="APPLICATION">LBM</b> 3.3 source or if you have turned off <a
+href="majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL">TSNI</a> messages
+in your post-<b class="APPLICATION">LBM</b> 3.3 implementation. Set it high enough so the
+source starts sending data messages before the timeout expires. This timeout begins when
+the receiver receives a topic advertisement. Pre-<b class="APPLICATION">LBM</b> 3.3
+sources do not send <a
+href="majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL">TSNI</a> messages
+which in effect inform receivers that the source is alive even though it has not started
+sending data. Session messages provide the same information but do not begin until after
+the source has started sending data. This option provides an additional <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT">activity
+timeout</a> for the receiver that does not rely on TSNI or sessions messages. The default
+value of 0 (zero) essentially disables this option, giving precedence to the receiver's
+standard <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT">activity
+timeout</a>. This option affects the transport session underlying the receiver rather
+than the receiver itself. The transport session uses the value from the first receiver
+created on the session and ignores subsequent receivers. Refer to <a
+href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver Configuration
+and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7899" name="AEN7899"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4.1/UME 2.1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRMRATEINTERVAL"
+name="CONTEXTTRANSPORTLBTRMRATEINTERVAL">4.10.6. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_rate_interval (context)</span></span></a></h2>
+
+<p>Period that LBT-RM rate limiter runs. Reducing period reduces burst intensity, but
+also increases CPU load.</p>
+
+<div class="INFORMALTABLE"><a id="AEN7943" name="AEN7943"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">100</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN7971" name="AEN7971"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">"10" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">10</code></td>
+<td>LBT-RM rate limiter runs every 10 milliseconds.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"20" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">20</code></td>
+<td>LBT-RM rate limiter runs every 20 milliseconds.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"50" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">50</code></td>
+<td>LBT-RM rate limiter runs every 50 milliseconds.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"100" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">100</code></td>
+<td>LBT-RM rate limiter runs every 100 milliseconds. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRMRETRANSMITRATELIMIT"
+name="CONTEXTTRANSPORTLBTRMRETRANSMITRATELIMIT">4.10.7. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_retransmit_rate_limit
+(context)</span></span></a></h2>
+
+<p>Maximum aggregate transmission rate of all LBT-RM sessions' retransmissions for this
+particular context. This should always be less than the value used for original data.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8016" name="AEN8016"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5000000 (5
+Mbps)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL"
+name="SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL">4.10.8. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_sm_maximum_interval (source)</span></span></a></h2>
+
+<p>The maximum interval between LBT-RM session messages. In lieu of data being sent,
+LBT-RM sends session messages to inform receivers of sequence numbers and to let
+receivers know that the sender is still transmitting. This option affects the transport
+session underlying the source rather than the source itself. The transport session uses
+the value from the first source created on the session and ignores subsequent sources.
+Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8057" name="AEN8057"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL"
+name="SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL">4.10.9. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_sm_minimum_interval (source)</span></span></a></h2>
+
+<p>The minimum interval between LBT-RM session messages. In lieu of data being sent,
+LBT-RM sends session messages to inform receivers of sequence numbers and to let
+receivers know that the sender is still transmitting. This option affects the transport
+session underlying the source rather than the source itself. The transport session uses
+the value from the first source created on the session and ignores subsequent sources.
+Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8098" name="AEN8098"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 (0.2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRMTGSZ"
+name="SOURCETRANSPORTLBTRMTGSZ">4.10.10. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_tgsz (source)</span></span></a></h2>
+
+<p>The transmission group size used for this Topic when LBT-RM is used. This value must
+be greater than 0 and must be a power of 2 no greater than 32K. This option affects the
+transport session underlying the source rather than the source itself. The transport
+session uses the value from the first source created on the session and ignores
+subsequent sources. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8136" name="AEN8136"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>packets</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a
+href="transportlbt-rmreliabilityoptions.html" accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="transportlbt-runetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-RM Reliability Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport LBT-RU Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

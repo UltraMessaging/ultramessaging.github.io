@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Programming Quick Start</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Quick Start Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Binary Quick Start"
+href="lbm-binary-quick-start.html" />
+<link rel="NEXT" title="Unicast-Only Operation" href="unicast-only.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Quick Start Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lbm-binary-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="unicast-only.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="LBM-PROGRAMMING-QUICK-START"
+name="LBM-PROGRAMMING-QUICK-START">3. <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Programming Quick Start</a></h1>
+
+<p>The C programs below contain the minimum code and supporting material. Their purpose
+is to verify that the user's build and run-time environments are set up correctly. They
+also give a basic introduction to the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> API.</p>
+
+<p>We also have equivalent Java and C# programs available in source form. See <a
+href="MinSrc.java" target="doccontent">MinSrc.java</a> and <a href="MinRcv.java"
+target="doccontent">MinRcv.java</a> or <a href="MinSrc.cs" target="doccontent">MinSrc.cs</a> and <a
+href="MinRcv.cs" target="doccontent">MinRcv.cs</a> We also have an example of how application
+callbacks are coded in C++ programs. See <a href="minrcv.cpp"
+target="doccontent">minrcv.cpp</a> (Most browsers let you right-click on the link and use the
+<span class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation.)</p>
+
+<p>Note that these programs do not allow the user to override any of the default
+configuration values. As a result, operation is fixed according to the normal LBM
+defaults; for example TCP is the transport protocol, topic resolution is performed using
+multicast, etc. See the <a href="../Config/index.html" target="doccontent">Ultra Messaging
+Configuration Guide</a>.</p>
+
+<p>The <a href="../example/index.html" target="doccontent">Ultra Messaging Examples page</a>
+provides a much richer set of source files that use a wide variety of features. However,
+those programs double as performance testing tools, so they tend to be more complex than
+just demonstrating the features. We recommend to first build and run these minimal
+examples.</p>
+
+<p>This source code example is provided by Informatica for educational and evaluation
+purposes only.</p>
+
+<p>Error handling in these programs is primitive. A production program would want to have
+better error handling, but for the purposes of a minimal example, it would just be a
+distraction. Also, a production program would want to support a configuration file to
+override default values on options.</p>
+
+<p>When building on Windows, the following notes are applicable.</p>
+
+<ol type="1">
+<li>
+<p>Make sure the preprocessor variable "WIN32" is defined. From Visual Studio 6,
+navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">C/C++</kbd>", "<kbd
+class="USERINPUT">Category:General</kbd>", "<kbd class="USERINPUT">Preprocessor
+definitions:</kbd>".</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">C:\Program
+Files\29West\&lt;VERS&#62;\Win2k-i386\include\lbm</tt> as an additional include directory
+(where "&lt;VERS&#62;" is the appropriate version identifier). From Visual Studio 6,
+navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">C/C++</kbd>", "<kbd
+class="USERINPUT">Category:Preprocessor</kbd>", "<kbd class="USERINPUT">Additional
+include directories:</kbd>"</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">lbm.lib</tt> and <tt class="FILENAME">wsock32.lib</tt> as
+Object/library modules. From Visual Studio 6, navigate: "<kbd
+class="USERINPUT">Project</kbd>"-&#62;"<kbd class="USERINPUT">Settings...</kbd>", "<kbd
+class="USERINPUT">Link</kbd>", "<kbd class="USERINPUT">Category:General</kbd>", "<kbd
+class="USERINPUT">Object/library modules:</kbd>"</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">C:\Program Files\29West\<tt
+class="REPLACEABLE"><i>VERS</i></tt>\Win2k-i386\lib</tt> as an additional library path
+(where <tt class="REPLACEABLE"><i>VERS</i></tt> is the appropriate version identifier).
+From Visual Studio 6, navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">Link</kbd>", "<kbd
+class="USERINPUT">Category:Input</kbd>", "<kbd class="USERINPUT">Additional library
+path:</kbd>"</p>
+</li>
+
+<li>
+<p>The install procedure should already have added the LBM <tt class="FILENAME">bin</tt>
+directory to the Windows PATH. This is necessary so that <tt
+class="FILENAME">lbm.dll</tt> can be found when a program is run. To modify the Windows
+PATH from Windows XP, navigate: "<kbd class="USERINPUT">right-click My
+Computer</kbd>"-&#62;"<kbd class="USERINPUT">properties</kbd>", "<kbd
+class="USERINPUT">Advanced</kbd>", "<kbd class="USERINPUT">Environment variables</kbd>",
+"<kbd class="USERINPUT">System variables:Path</kbd>", "<kbd
+class="USERINPUT">Edit</kbd>"</p>
+</li>
+</ol>
+
+<p>When building on Unix, the following notes are applicable.</p>
+
+<ol type="1">
+<li>
+<p>Sample build command:</p>
+
+<pre class="SCREEN">
+cc -I$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/include
+   -L$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/lib -llbm -lm -o min_src min_src.c
+</pre>
+
+(This should be all one line.) <br />
+<br />
+</li>
+
+<li>
+<p>The appropriate library search path should be updated to include the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <tt
+class="FILENAME">lib/</tt> directory. For example, on Linux:</p>
+
+<pre class="SCREEN">
+LD_LIBRARY_PATH="$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH
+</pre>
+
+(For other flavors of Unix, see <a href="http://bhami.com/rosetta.html"
+target="doccontent">http://bhami.com/rosetta.html</a>.) Alternatively, the shared library can
+be copied from the LBM <tt class="FILENAME">lib/</tt> directory to a directory which is
+already in the library search path. <br />
+<br />
+</li>
+</ol>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMAL-LBM-SOURCE-IMPLEMENTATION"
+name="MINIMAL-LBM-SOURCE-IMPLEMENTATION">3.1. Minimal <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Source Implementation</a></h2>
+
+<p>This is a source code listing of a minimal source (sender) program. You may find it
+helpful to <a href="minsrc.c" target="doccontent">download the source code</a> (most browsers
+let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation). We also have
+equivalent Java and C# programs available in source form. See <a href="MinSrc.java"
+target="doccontent">MinSrc.java</a> and <a href="MinSrc.cs" target="doccontent">MinSrc.cs</a>.</p>
+
+<pre class="PROGRAMLISTING">
+/*file: minsrc.c - minimal source (sender) program.
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+
+#include &lt;stdio.h&gt;
+
+#if defined(_MSC_VER)
+/* Windows-only includes */
+#include &lt;winsock2.h&gt;
+#define SLEEP(s) Sleep((s)*1000)
+#else
+/* Unix-only includes */
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#define SLEEP(s) sleep(s)
+#endif
+
+#include &lt;lbm/lbm.h&gt;
+
+main()
+{
+    lbm_context_t *ctx;    /* pointer to context object */
+    lbm_topic_t *topic;    /* pointer to topic object */
+    lbm_src_t *src;        /* pointer to source (sender) object */
+    int err;               /* return status of lbm functions (true=error) */
+
+#if defined(_MSC_VER)
+    /* windows-specific code */
+    WSADATA wsadata;
+    int wsStat = WSAStartup(MAKEWORD(2,2), &amp;wsadata);
+    if (wsStat != 0)
+    {
+        printf("line %d: wsStat=%d\n",__LINE__,wsStat);
+        exit(1);
+    }
+#endif
+
+    err = lbm_context_create(&amp;ctx, NULL, NULL, NULL);   <a id="MINSRC.C-CONTEXT-CO"
+name="MINSRC.C-CONTEXT-CO"><img src="./imagelib/callouts/1.png" hspace="0" vspace="0"
+border="0" alt="(1)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_src_topic_alloc(&amp;topic, ctx, "Greeting", NULL);   <a
+id="MINSRC.C-TOPIC-CO" name="MINSRC.C-TOPIC-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_src_create(&amp;src, ctx, topic, NULL, NULL, NULL);   <a
+id="MINSRC.C-SRC-CO" name="MINSRC.C-SRC-CO"><img src="./imagelib/callouts/3.png"
+hspace="0" vspace="0" border="0" alt="(3)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    SLEEP(3);   <a id="MINSRC.C-SLEEP1-CO" name="MINSRC.C-SLEEP1-CO"><img
+src="./imagelib/callouts/4.png" hspace="0" vspace="0" border="0" alt="(4)" /></a>
+
+    err = lbm_src_send(src, "Hello!", 6, LBM_MSG_FLUSH | LBM_SRC_BLOCK);   <a
+id="MINSRC.C-SEND-CO" name="MINSRC.C-SEND-CO"><img src="./imagelib/callouts/5.png"
+hspace="0" vspace="0" border="0" alt="(5)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    /* Finished all sending to this topic, delete the source object. */
+    SLEEP(2);   <a id="MINSRC.C-SLEEP2-CO" name="MINSRC.C-SLEEP2-CO"><img
+src="./imagelib/callouts/6.png" hspace="0" vspace="0" border="0" alt="(6)" /></a>
+    lbm_src_delete(src);
+
+    /* Do not need to delete the topic object - LBM keeps track of topic
+     * objects and deletes them as-needed.  */
+
+    /* Finished with all LBM functions, delete the context object. */
+    lbm_context_delete(ctx);
+
+#if defined(_MSC_VER)
+    WSACleanup();
+#endif
+}  /* main */
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-CONTEXT-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a context object. A context is an environment in which LBM functions. Note
+that the first parameter is a pointer to a pointer variable; lbm_context_create writes
+the pointer to the context object into "ctx". Also, by passing NULL to the context
+attribute parameter, the default option values are used. For most applications only a
+single context is required regardless of how many sources and receivers are created.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-TOPIC-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Allocate a topic object. A topic object is little more than a string (the topic
+name). During operation, LBM keeps some state information in the topic object as well.
+The topic is bound to the containing context, and will also be bound to a source object.
+Note that the first parameter is a pointer to a pointer variable; lbm_src_topic_alloc
+writes the pointer to the topic object into "topic". Also, by passing NULL to the source
+topic attribute, the default option values are used. The string "Greeting" is the topic
+string.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-SRC-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create the source object. A source object is used to send messages. It must be bound
+to a topic. Note that the first parameter is a pointer to a pointer variable;
+lbm_src_create writes the pointer to the source object to into "src". Use of the third
+and fourth parameters is optional but recommended in a production program - some source
+events can be important to the application. The last parameter is an optional event queue
+(not used in this example).</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-SLEEP1-CO"><img
+src="./imagelib/callouts/4.png" hspace="0" vspace="0" border="0" alt="(4)" /></a></dt>
+
+</td><td valign=top>
+<dd>Need to wait for receivers to find us before first send. There are other ways to
+accomplish this, but sleep is easy. See
+https://communities.informatica.com/infakb/faq/5/Pages/80061.aspx for details.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-SEND-CO"><img
+src="./imagelib/callouts/5.png" hspace="0" vspace="0" border="0" alt="(5)" /></a></dt>
+
+</td><td valign=top>
+<dd>Send a message to the "Greeting" topic. The flags make sure the call to lbm_src_send
+doesn't return until the message is sent.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINSRC.C-SLEEP2-CO"><img
+src="./imagelib/callouts/6.png" hspace="0" vspace="0" border="0" alt="(6)" /></a></dt>
+
+</td><td valign=top>
+<dd>For some transport types (mostly UDP-based), a short delay before deleting the source
+is advisable. Even though the message is sent, there may have been packet loss, and some
+transports need a bit of time to request re-transmission. Also, if the above lbm_src_send
+call didn't include the flush, some time might also be needed to empty the batching
+buffer.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMAL-LBM-RECEIVER-IMPLEMENTATION"
+name="MINIMAL-LBM-RECEIVER-IMPLEMENTATION">3.2. Minimal <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Receiver Implementation</a></h2>
+
+<p>This is a source code listing of a minimal receiver program. You may find it helpful
+to <a href="minrcv.c" target="doccontent">download the source code</a> (most browsers let you
+right-click on the link and use the <span class="emphasis"><i class="EMPHASIS">save link
+target</i></span> function, or some variation). We also have equivalent Java, C#, and C++
+programs available in source form. See <a href="MinRcv.java"
+target="doccontent">MinRcv.java</a> <a href="MinRcv.cs" target="doccontent">MinRcv.cs</a> and <a
+href="minrcv.cpp" target="doccontent">minrcv.cpp</a>.</p>
+
+<pre class="PROGRAMLISTING">
+/*file: minrcv.c - minimal receiver program.
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+
+#include &lt;stdio.h&gt;
+
+#if defined(_MSC_VER)
+/* Windows-only includes */
+#include &lt;winsock2.h&gt;
+#define SLEEP(s) Sleep((s)*1000)
+#else
+/* Unix-only includes */
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#define SLEEP(s) sleep(s)
+#endif
+
+#include &lt;lbm/lbm.h&gt;
+
+/*
+ * A global variable is used to communicate from the receiver callback to
+ * the main application thread.
+ */
+int msgs_rcvd = 0;
+
+int app_rcv_callback(lbm_rcv_t *rcv, lbm_msg_t *msg, void *clientd)   <a
+id="MINRCV.C-CALLBACK-CO" name="MINRCV.C-CALLBACK-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a>
+{
+    /* There are several different events that can cause the receiver callback
+     * to be called.  Decode the event that caused this.  */
+    switch (msg-&gt;type)
+    {
+    case LBM_MSG_DATA:    /* a received message */
+        printf("Received %d bytes on topic %s: '%.*s'\n",   <a id="MINRCV.C-PRINTF-CO"
+name="MINRCV.C-PRINTF-CO"><img src="./imagelib/callouts/2.png" hspace="0" vspace="0"
+border="0" alt="(2)" /></a>
+               msg-&gt;len, msg-&gt;topic_name, msg-&gt;len, msg-&gt;data);
+
+        /* Tell main thread that we've received our message. */
+        ++ msgs_rcvd;
+        break;
+
+    case LBM_MSG_BOS:
+    printf("[%s][%s], Beginning of Transport Session\n", msg-&gt;topic_name, msg-&gt;source);
+    break;
+
+    case LBM_MSG_EOS:
+    printf("[%s][%s], End of Transport Session\n", msg-&gt;topic_name, msg-&gt;source);
+    break;
+    
+    default:    /* unexpected receiver event */
+        printf("Received lbm_msg_t type %x [%s][%s]\n", msg-&gt;type, msg-&gt;topic_name, msg-&gt;source);
+        break;
+    }  /* switch msg-&gt;type */
+
+    return 0;
+}  /* app_rcv_callback */
+
+
+main()
+{
+    lbm_context_t *ctx;    /* pointer to context object */
+    lbm_topic_t *topic;    /* pointer to topic object */
+    lbm_rcv_t *rcv;        /* pointer to receiver object */
+    int err;               /* return status of lbm functions (true=error) */
+
+#if defined(_MSC_VER)
+    /* windows-specific code */
+    WSADATA wsadata;
+    int wsStat = WSAStartup(MAKEWORD(2,2), &amp;wsadata);
+    if (wsStat != 0)
+    {
+        printf("line %d: wsStat=%d\n",__LINE__,wsStat);
+        exit(1);
+    }
+#endif
+
+    err = lbm_context_create(&amp;ctx, NULL, NULL, NULL);   <a id="MINRCV.C-CONTEXT-CO"
+name="MINRCV.C-CONTEXT-CO"><img src="./imagelib/callouts/3.png" hspace="0" vspace="0"
+border="0" alt="(3)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_rcv_topic_lookup(&amp;topic, ctx, "Greeting", NULL);   <a
+id="MINRCV.C-TOPIC-CO" name="MINRCV.C-TOPIC-CO"><img src="./imagelib/callouts/4.png"
+hspace="0" vspace="0" border="0" alt="(4)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_rcv_create(&amp;rcv, ctx, topic, app_rcv_callback, NULL, NULL);   <a
+id="MINRCV.C-RCV-CO" name="MINRCV.C-RCV-CO"><img src="./imagelib/callouts/5.png"
+hspace="0" vspace="0" border="0" alt="(5)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    while (msgs_rcvd == 0)
+        SLEEP(1);
+
+    /* Finished all receiving from this topic, delete the receiver object. */
+    lbm_rcv_delete(rcv);
+
+    /* Do not need to delete the topic object - LBM keeps track of topic
+     * objects and deletes them as-needed.  */
+
+    /* Finished with all LBM functions, delete the context object. */
+    lbm_context_delete(ctx);
+
+#if defined(_MSC_VER)
+    WSACleanup();
+#endif
+}  /* main */
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="lbm-programming-quick-start.html#MINRCV.C-CALLBACK-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>LBM passes received messages to the application by means of a callback. I.e. the LBM
+context thread reads the network socket, performs its higher-level protocol functions,
+and then calls an application-level function that was set up during initialization. This
+callback function has some severe limitations placed upon it. It must execute very
+quickly; any potentially blocking calls it might make will interfere with the proper
+execution of the LBM context thread. One common desire is for the receive function to
+send an LBM message (via lbm_src_send), however this has the potential to produce a
+deadlock condition. If it is desired for the receive callback function to call LBM or
+other potentially blocking functions, it is strongly advised to make use of an event
+queue, which causes the callback to be executed from an application thread. See the
+example tool lbmrcvq.c for an example of using a receiver event queue.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINRCV.C-PRINTF-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Note - printf can block, which is normally a bad idea for a callback (unless an event
+queue is being used). However, for this minimal application, only one message is
+expected.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINRCV.C-CONTEXT-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a context object. A context is an environment in which LBM functions. Note
+that the first parameter is a pointer to a pointer variable; lbm_context_create writes
+the pointer to the context object into "ctx". Also, by passing NULL to the context
+attribute parameter, the default option values are used. For most applications only a
+single context is required regardless of how many sources and receivers are created.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINRCV.C-TOPIC-CO"><img
+src="./imagelib/callouts/4.png" hspace="0" vspace="0" border="0" alt="(4)" /></a></dt>
+
+</td><td valign=top>
+<dd>Lookup a topic object. A topic object is little more than a string (the topic name).
+During operation, LBM keeps some state information in the topic object as well. The topic
+is bound to the containing context, and will also be bound to a receiver object. Note
+that the first parameter is a pointer to a pointer variable; lbm_rcv_topic_lookup writes
+the pointer to the topic object into "topic". Also, by passing NULL to the source topic
+attribute, the default option values are used. The string "Greeting" is the topic
+string.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="lbm-programming-quick-start.html#MINRCV.C-RCV-CO"><img
+src="./imagelib/callouts/5.png" hspace="0" vspace="0" border="0" alt="(5)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create the receiver object and bind it to a topic. Note that the first parameter is a
+pointer to a pointer variable; lbm_rcv_create writes the pointer to the source object to
+into "rcv". The second and third parameters are the function and application data
+pointers. When a message is received, the function is called with the data pointer passed
+in as its last parameter. The last parameter is an optional event queue (not used in this
+example).</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lbm-binary-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="unicast-only.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Binary Quick Start</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Unicast-Only Operation</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

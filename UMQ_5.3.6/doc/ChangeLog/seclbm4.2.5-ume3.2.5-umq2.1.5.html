@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.2.5 / UME 3.2.5 / UMQ 2.1.5 - June 2011</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 4.2.6 / UME 3.2.6 / UMQ 2.1.6 - June 2011"
+href="seclbm4.2.6-ume3.2.6-umq2.1.6.html" />
+<link rel="NEXT" title="Release LBM 4.2.4 / UME 3.2.4 / UMQ 2.1.4 - May 2011"
+href="seclbm4.2.4-ume3.2.4-umq2.1.4.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm4.2.6-ume3.2.6-umq2.1.6.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="seclbm4.2.4-ume3.2.4-umq2.1.4.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.2.5-UME3.2.5-UMQ2.1.5"
+name="SECLBM4.2.5-UME3.2.5-UMQ2.1.5">22. Release LBM 4.2.5 / UME 3.2.5 / UMQ 2.1.5 - June
+2011</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.2.5" name="LBM4.2.5">22.1. LBM 4.2.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2.5-UPDATES" name="LBM4.2.5-UPDATES">22.1.1. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added support for intentional gaps in Hot Failover message streams. See <a
+href="../Design/lbm-features.html#HF-Intentional-Gap" target="doccontent">Hot Failover
+Intentional Gap Support</a>. Also added support for Hot Failover optional messages that
+HF receivers can be configured to receiver or not receive. See <a
+href="../Design/lbm-features.html#Optional-HF-Messages" target="doccontent">Hot Failover
+Optional Messages</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2.5-FIXES" name="LBM4.2.5-FIXES">22.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem that could cause a crash of an <span class="emphasis"><i
+class="EMPHASIS">initiator</i></span> UM Gateway configured with a single-TCP peer
+connection if the <span class="emphasis"><i class="EMPHASIS">acceptor</i></span> gateway
+was not yet running.</p>
+</li>
+
+<li>
+<p>The configuration option <a
+href="../Config/deliverycontroloptions.html#CONTEXTDELIVERYCONTROLMAXIMUMTOTALMAPENTRIES"
+target="doccontent"><tt class="LITERAL">delivery_control_maximum_total_map_entries</tt></a> was
+not being applied on a per thread basis when <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> was set as intended. This option is now
+applied correctly on a per thread basis.</p>
+</li>
+
+<li>
+<p>When setting the configuration options <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a> and <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> together, the loss check timer started on
+the incorrect thread and subsequently produced the Fatal Assert <tt
+class="LITERAL">orderrec-&#62;msg!=NULL or crash</tt>. This timer is now scheduled on the
+correct thread.</p>
+</li>
+
+<li>
+<p>Corrected a cross-version problem that could cause a fatal assert when an application
+deletes a <b class="APPLICATION">UMS</b> 4.X receiver that has received data from a <b
+class="APPLICATION">UMS</b> 3.X source.</p>
+</li>
+
+<li>
+<p>Added defensive measures in the UM Gateway to guard against the delayed delivery (tens
+of seconds) of internal events after they have been enqueued, possibly due to CPU
+starvation.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway which could result in a deadlock when using a
+single-TCP peer connection (either acceptor or initiator).</p>
+</li>
+
+<li>
+<p>Corrected a format specifier in a debug log statement for LBT-RU sources which could
+lead to a segfault.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway that prevented a topic matching a pattern from
+being immediately forwarded. This only occurred when there were at least 3 topic
+resolution domains, the source was accessible only via a peer connection from one domain,
+and wildcard receivers specifying overlapping but different patterns existed in the other
+two domains.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2.5-KNOWNISSUES" name="LBM4.2.5-KNOWNISSUES">22.1.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using the UM Gateway Informatica recommends that you <b class="APPLICATION">do
+not</b> enable the Multi-Transport Threads feature. Informatica does not support nor test
+the operation of Multi-Transport Threads across the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or queues (<b class="APPLICATION">UMQ</b>).</p>
+</li>
+
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Sending LBT-IPC messages larger than 65,535 bytes is not supported when <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero) unless you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt>.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">UMS</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">UMS</b> may leave a monitoring thread running after
+context deletion. This situation produces the following error: <tt class="LITERAL">VMA
+ERROR : epoll_wait_call:36:epoll_wait_call() epfd 48 not found</tt>. Informatica is
+investigating this problem.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support responses that exceed the maximum datagram
+size.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bt applications using
+the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a 32-bit
+application using LBT-IPC. It can only interact with a 64-bit application. Likewise, a
+32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support queuing at this time, only streaming and
+persistence. This will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support a four gateway "full-mesh" configuration
+(i.e., all gateways connected).</p>
+</li>
+
+<li>
+<p>If using LBT-RDMA across the UM Gateway and you exit the gateway with <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>, you may see a segfault. Informatica is
+aware of this and has not observed any ill effects from this segfault.</p>
+</li>
+
+<li>
+<p>Informatica recommends against configuring UM Gateways in a ring of peer portals - use
+configurations utilizing gateway endpoints (parallel paths) to break the ring.</p>
+</li>
+
+<li>
+<p>Informatica recommends not stopping and restarting UM Gateways within the transport's
+activity timeout period (<tt class="LITERAL">transport_*_activity_timeout</tt> defaults
+to 60 seconds for LBTRU and LBTRM).</p>
+</li>
+
+<li>
+<p>When using the UM Gateway on <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;, single-TCP acceptor peer portals and TCP peer
+portals do not work. This issue will be corrected in a future release. Please contact us
+at <a href="http://29west.com/support" target="doccontent">http://29west.com/support</a> for
+more information.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.2.5" name="UME3.2.5">22.2. UME 3.2.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.2.5-FIXES" name="UME3.2.5-FIXES">22.2.1. Bug
+Fixes</a></h3>
+
+<p>No specific <b class="APPLICATION">UMP</b> problems were discovered.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.2.5-KNOWNISSUES" name="UME3.2.5-KNOWNISSUES">22.2.2.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UMP</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ2.1.5" name="UMQ2.1.5">22.3. UMQ 2.1.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ2.1.5-FIXES" name="UMQ2.1.5-FIXES">22.3.1. Bug
+Fixes</a></h3>
+
+<p>No specific <b class="APPLICATION">UMQ</b> problems were discovered.</p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm4.2.6-ume3.2.6-umq2.1.6.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.2.4-ume3.2.4-umq2.1.4.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 4.2.6 / UME 3.2.6 / UMQ 2.1.6 -
+June 2011</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.2.4 / UME 3.2.4 / UMQ 2.1.4 -
+May 2011</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

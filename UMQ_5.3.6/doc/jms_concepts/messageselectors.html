@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Message Selectors</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Asynchronous Message Delivery"
+href="async-msg-delivery.html" />
+<link rel="NEXT" title="Session IDs" href="sessionids.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="async-msg-delivery.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sessionids.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MESSAGESELECTORS" name="MESSAGESELECTORS">7. Message
+Selectors</a></h1>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="messageselectors.html#MESSAGESELPUBSUB"><i>Publish/Subscribe</i></a></p>
+</li>
+
+<li>
+<p><a href="messageselectors.html#MESSAGESELP2P"><i>Point-To-Point</i></a></p>
+</li>
+
+<li>
+<p><a href="messageselectors.html#MESSAGESELNATIVE"><i>Native Applications</i></a></p>
+</li>
+</ul>
+
+<p>Message Selection provides a way to filter messages at the consumer side utilizing
+message properties. A message selector is an SQL92-compliant expression that guides a
+consumer to reject the message if it is not a match.</p>
+
+<p>At the time of consumer creation, an application passes the message selector string to
+JMS. As messages arrive, the consumer compares their header and properties information to
+the message selector and rejects messages that evaluate false. For example, a message
+selector <tt class="LITERAL">"MyProp &#62; 5"</tt> allows consumers to receive messages
+whose JMS message header field <tt class="LITERAL">MyProp</tt> value is greater than
+5.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGESELPUBSUB" name="MESSAGESELPUBSUB">7.1.
+Publish/Subscribe</a></h2>
+
+<p>In the publish/subscribe scenario, you can have many consumers subscribed to the same
+topic, but use message selectors to filter out selected consumers, and hence, selected
+receiving clients and applications. In this scenario, each consumer decides whether or
+not to discard the message.</p>
+
+<div class="FIGURE"><a id="MESSAGESELPUBSUB-DIAGRAM" name="MESSAGESELPUBSUB-DIAGRAM"></a>
+<p><b>Figure 8. Message selectors, publish/subscribe</b></p>
+
+<p><img src="MessageSelPubSub.png" align="CENTER" /></p>
+</div>
+
+<p>For example, to create a topic subscriber with a message selector for consuming
+messages with one property greater than 5 and another property equal to 3:</p>
+
+<pre class="SCREEN">
+// Create a selector to receive only messages with MyProp1 greater than 5 and MyProp2 equal to 3.
+String selector = "MyProp1 &#62; 5 AND MyProp2 = 3";
+
+// Create a topic subscriber using the selector.
+TopicSubscriber topicSubscriber = topicSession.createSubscriber(queue, selector);
+   
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGESELP2P" name="MESSAGESELP2P">7.2.
+Point-To-Point</a></h2>
+
+<p>In the point-to-point scenario, you can employ message selectors at the queue to
+determine which of multiple consumers to send messages to. To ensure once-and-only-once
+delivery, the queue typically ensures that only the consumer assigned per message
+selector consumes a given message.</p>
+
+<div class="FIGURE"><a id="MESSAGESELP2P-DIAGRAM" name="MESSAGESELP2P-DIAGRAM"></a>
+<p><b>Figure 9. Message selectors, point-to-point</b></p>
+
+<p><img src="MessageSelP2P.png" align="CENTER" /></p>
+</div>
+
+<p>For example, to create a queue receiver with a message selector for consuming messages
+with one property greater than 5 and another property equal to 3:</p>
+
+<pre class="SCREEN">
+// Create a selector to receive only text messages with MyProp greater than 5.
+String selector = "MyProp1 &#62; 5 AND MyProp2 = 3";
+
+// Create a queue receiver using the selector.
+QueueReceiver queueReceiver = queueSession.createReceiver(queue, selector);
+   
+</pre>
+
+<p>If a consumer is not available for a particular filtered message, the queue skips and
+retains this message, and then continues processing subsequent messages.</p>
+
+<p>When you configure a queuing application to use application sets, the message
+selectors can target individual consumers in an application set. Application sets
+essentially split consumers into logical queues so that the desired once-and-only-once
+message delivery behavior applies to all consumers inside them. A consumer in one
+application set can receive the same message as a consumer in another. Message selectors
+in different application sets let the queue assign messages to selected consumers within
+the same application set.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGESELNATIVE" name="MESSAGESELNATIVE">7.3. Native
+Applications</a></h2>
+
+<p>You can use message selectors at the native provider level (i.e., <b
+class="APPLICATION">UM</b> sources or receivers written in C, Java, or .NET). Message
+selectors can work in the native application scenarios listed below.</p>
+
+<p><span class="bold"><b class="EMPHASIS">JMS Producer to UM Receiver</b></span> - Set
+option <a href="../Config/majoroptions.html#RECEIVERMESSAGESELECTOR" target="doccontent"><tt
+class="LITERAL">message_selector</tt></a> to the desired message selector string when
+creating the consumer. This string must follow SQL92 syntax as described in the JMS
+Specification, for example <tt class="LITERAL">"MyProp1 = 6 AND MyProp2 &lt; 7"</tt>. See
+also <a href="../Config/ultramessagingjmsoptions.html" target="doccontent">Ultra Messaging JMS
+Options</a>.</p>
+
+<p><span class="bold"><b class="EMPHASIS">UM Source to JMS Consumer</b></span> - Set
+message properties so that the name matches that used by the JMS consumer's message
+selector.</p>
+
+<p><span class="bold"><b class="EMPHASIS">UM Source to UM Receiver</b></span> - You can
+use the message selector feature outside of the JMS environment by setting message
+properties at the <b class="APPLICATION">UM</b> source, and the <a
+href="../Config/majoroptions.html#RECEIVERMESSAGESELECTOR" target="doccontent"><tt
+class="LITERAL">message_selector</tt></a> option at the <b class="APPLICATION">UM</b>
+receiver.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> For a <b class="APPLICATION">UM</b> receiver, used with <b
+class="APPLICATION">UMP</b>, and with an event queue or if retaining/promoting messages
+outside of the receiver callback function, we recommended you enable either explicit
+ACK'ing (<a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEEXPLICITACKONLY"
+target="doccontent"><tt class="LITERAL">ume_explicit_ack_only</tt></a>), or ACK batching (<a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEUSEACKBATCHING"
+target="doccontent"><tt class="LITERAL">ume_use_ack_batching</tt></a>). This prevents
+undesired/unwarranted ACKs for messages still waiting to be processed.</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="async-msg-delivery.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sessionids.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Asynchronous Message Delivery</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Session IDs</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.4.1 / UME 2.1.1 - February 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.5.ea2 - April 2009" href="seclbm3.5ea2.html" />
+<link rel="NEXT" title="Release LBM 3.4 / UME 2.1 - February 2009"
+href="seclbm3.4-ume2.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.5ea2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.4-ume2.1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.4.1-UME2.1.1" name="SECLBM3.4.1-UME2.1.1">50. Release
+LBM 3.4.1 / UME 2.1.1 - February 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.4.1" name="LBM3.4.1">50.1. LBM 3.4.1</a></h2>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Known Issue:</b> When using Event Queues with the Java API on
+Mac OS X kernel 9.4, core dumps have occurred. Mac OS X kernel versions prior to 9.4 have
+not produced this behavior. 29West is investigating this issue.</p>
+</li>
+
+<li>
+<p>Fixed an issue with <tt class="LITERAL">lbm_src_sendv()</tt> that resulted in the
+sending of a message twice if you specified an <tt class="LITERAL">iovec</tt> of length
+1.</p>
+</li>
+
+<li>
+<p>Fixed a race condition in the handling of the semaphore associated with an LBM event
+queue that would sometimes cause the following harmless, but annoying log message:
+"WARNING: failed assertion [ev!=NULL]...".</p>
+</li>
+
+<li>
+<p>Added version information to LBM Windows DLLs. You can use <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; File
+Explorer to view a DLL's version number, description and other information.</p>
+</li>
+
+<li>
+<p>Changed <tt class="LITERAL">lbmmon_rctl_destroy()</tt> to also destroy the thread
+created to receive monitor packets in addition to destroying the monitor receive
+controller. Not destroying this thread lead to invalid memory access if monitor packets
+were received after the receive controller was destroyed.</p>
+</li>
+
+<li>
+<p>Added new <b class="APPLICATION">LBM</b> Configuration Option, <a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMPREACTIVITYTIMEOUT"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_preactivity_timeout</code></a>
+which can prevent headloss from pre-LBM 3.3 sources that do not start sending data
+messages before the receiver's <a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_activity_timeout</code></a>
+expires. The preactivity timeout begins when the receiver receives a topic
+advertisement.</p>
+</li>
+
+<li>
+<p>Fixed various Java and .NET SDM <tt class="LITERAL">get_len()</tt> methods to check
+for a null field type before attempting to determine the length of the object. Also added
+new Java and .NET constructors for array fields that enable non-null arrays to be created
+with 0 elements. This matches the behavior of the C API.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused an LBM receiver using a TCP transport to segfault when the
+<a href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><code class="PARAMETER">delivery_control_loss_check_interval</code></a> was
+set to a non-zero value.</p>
+</li>
+
+<li>
+<p>Changed the .NET example application, <tt class="LITERAL">lbmresp.cs</tt>, so it does
+not crash when compiled with optimization on 64-bit machines. The application's
+functionality was not changed.</p>
+</li>
+
+<li>
+<p>Changed .NET to call <tt class="LITERAL">RaiseException</tt> during a Fatal Assert
+which allows you to use your own exception handler. Previously, .NET called <tt
+class="LITERAL">abort</tt> which would not invoke your exception handler.</p>
+</li>
+
+<li>
+<p>Added internal support for the AIX call <tt class="LITERAL">read_real_time()</tt> when
+timestamping event queue entries. This provides better performance than the default <tt
+class="LITERAL">gettimeofday()</tt> and applies to only AIX.</p>
+</li>
+
+<li>
+<p>Corrected the <tt class="LITERAL">LBM*Attributes.getValue()</tt> calls in .NET to use
+a platform-specific <tt class="LITERAL">size_t</tt> type when getting attribute values.
+Attribute calls now operate correctly on both 32-bit and 64-bit .NET platforms.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.1.1" name="UME2.1.1">50.2. UME 2.1.1</a></h2>
+
+<ul>
+<li>
+<p>No <b class="APPLICATION">UME</b> specific problems were found.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.5ea2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.4-ume2.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.5.ea2 - April 2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.4 / UME 2.1 - February 2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

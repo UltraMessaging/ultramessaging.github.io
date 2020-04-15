@@ -1,0 +1,1570 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Using the UMM GUI</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Manager" href="ummanager.html" />
+<link rel="NEXT" title="Using the UMM API" href="umm-api.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Manager Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="ummanager.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umm-api.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMM-GUI" name="UMM-GUI">3. Using the UMM GUI</a></h1>
+
+<p>You can use the <b class="APPLICATION">UMM</b> GUI to create XML format configuration
+files if you do not want to create them manually with an XML editor. <b
+class="APPLICATION">UMM</b> stores any configuration information you create with the <b
+class="APPLICATION">UMM</b> GUI in the <b class="APPLICATION">UMM</b> configuration
+database. Normally, <b class="APPLICATION">UM</b> applications contact the UMM Daemon to
+obtain their configuration information. However, the GUI also offers a method to dump the
+XML data to a file which could be loaded by an <b class="APPLICATION">UM</b> application
+without involving the daemon.</p>
+
+<p>See <a href="../QuickStart/start-daemons.html#START-UMMD" target="doccontent">UMM Daemon</a>
+for information about starting the <b class="APPLICATION">UMM</b> daemon and GUI.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umm-gui.html#GETTINGSTARTEDUMMD"><i>Using</i> UMM With a UM
+Application</a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#GETTINGSTARTEDUMMDJMS"><i>Using</i> UMM With a JMS
+Application</a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-MENUS"><i>UMM Menus</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration
+Templates</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-ORDER"><i>Using the Order Attribute</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-APPS"><i>Creating Application Configurations</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-JMS"><i>Creating JMS Configurations</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-USERS"><i>Managing Users</i></a></p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> You can copy and paste a manually created <b class="APPLICATION">UM</b>
+XML configuration file in the <b class="APPLICATION">XML View</b> pane and then edit and
+store this configuration file using the <b class="APPLICATION">UMM</b> GUI.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="GETTINGSTARTEDUMMD" name="GETTINGSTARTEDUMMD">3.1. Using <b
+class="APPLICATION">UMM</b> With a UM Application</a></h2>
+
+<p>The following procedure describes a general approach to using <b
+class="APPLICATION">UMM</b> to serve license and configuration values to your
+applications. This procedure contains general guidelines for configuring <b
+class="APPLICATION">UM</b> for the application <tt class="LITERAL">SENDAPP</tt>.</p>
+
+<ol type="1">
+<li>
+<p>Start the UMM Daemon and the <b class="APPLICATION">UMM</b> GUI. See <a
+href="../QuickStart/start-daemons.html#START-UMMD" target="doccontent">UMM Daemon</a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The UMM Daemon verifies the license file specified in its XML
+configuration file and then serves it to applications that you configure with the <b
+class="APPLICATION">UMM</b> GUI. This provides a centralized method to manage your <b
+class="APPLICATION">UM</b> license. See <a href="umm-daemon.html"><i>UM Manager
+Daemon</i></a>.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Create any desired templates to hold configuration option values shared by multiple
+applications or primitive <b class="APPLICATION">UM</b> objects (context, source,
+receiver, wildcard receiver or event queue). See <a
+href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration Templates</i></a>.</p>
+
+<p>You can create and apply multiple templates to applications and primitive <b
+class="APPLICATION">UM</b> objects, however, if the same option appears in multiple
+templates, the option value in the last template overrides the option value in the
+previous template. See <a href="umm-gui.html#UMMGUI-APPS-TEMPLATES"><i>Applying
+Templates</i></a>.</p>
+</li>
+
+<li>
+<p>Create an application for your <b class="APPLICATION">UM</b> application and apply any
+relevant templates created in the previous step. Just for this example, name the
+application, <tt class="LITERAL">SENDAPP</tt>. See <a
+href="umm-gui.html#UMMGUI-APPS"><i>Creating Application Configurations</i></a>.</p>
+</li>
+
+<li>
+<p>For the <tt class="LITERAL">SENDAPP</tt> application, configure the application's
+default context by applying any relevant templates and setting context option values.</p>
+</li>
+
+<li>
+<p>Since our example application, <tt class="LITERAL">SENDAPP</tt> is a sending
+application, also configure its Source options. See <a
+href="umm-gui.html#UMMGUI-APPS-SRC"><i>Configuring Sources</i></a>. (If this was a
+receiving application, you would configure Receiver or Wildcard Receiver options.)</p>
+</li>
+
+<li>
+<p>If your application creates multiple contexts, repeat the previous two steps for each
+context.</p>
+</li>
+
+<li>
+<p>Configure the default Event Queue for <tt class="LITERAL">SENDAPP</tt>, applying any
+relevant template and setting option values.</p>
+</li>
+
+<li>
+<p>Assign user <tt class="LITERAL">Admin</tt> to <tt class="LITERAL">SENDAPP</tt> and
+give it the password, <tt class="LITERAL">secret</tt>. See <a
+href="umm-gui.html#UMMGUI-USERS"><i>Managing Users</i></a>.</p>
+</li>
+
+<li>
+<p>Set the following environment variable on the machine where <tt
+class="LITERAL">SENDAPP</tt> runs. See also <a
+href="umm-daemon.html#UMM-ENVIRON-VAR"><i>Connecting Your Applications to the UMM
+Daemon</i></a>.</p>
+
+<p>Set LBM_UMM_INFO to <tt
+class="LITERAL">SENDAPP:Admin:secret@10.29.3.95:21273</tt>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> UMM Daemon runs on a machine at <tt
+class="LITERAL">10.29.3.95:21273</tt>.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Start <tt class="LITERAL">SENDAPP</tt>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="GETTINGSTARTEDUMMDJMS" name="GETTINGSTARTEDUMMDJMS">3.2. Using
+<b class="APPLICATION">UMM</b> With a JMS Application</a></h2>
+
+<p>The following procedure describes a general approach to using <b
+class="APPLICATION">UMM</b> to serve license and configuration values to a JMS
+application. This procedure contains general guidelines for configuring <b
+class="APPLICATION">UM</b> for the application <tt class="LITERAL">UM_PRODUCER</tt>.</p>
+
+<ol type="1">
+<li>
+<p>Start the UMM Daemon and the <b class="APPLICATION">UMM</b> GUI. See <a
+href="../QuickStart/start-daemons.html#START-UMMD" target="doccontent">UMM Daemon</a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The UMM Daemon verifies the license file specified in its XML
+configuration file and then serves it to applications that you configure with the <b
+class="APPLICATION">UMM</b> GUI. This provides a centralized method to manage your <b
+class="APPLICATION">UM</b> license. See <a href="umm-daemon.html"><i>UM Manager
+Daemon</i></a>.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Create any desired templates to hold configuration option values shared by multiple
+ConnectionFactories. For example you could create separate templates for using LBTRM or
+LBTRU as transports. See <a href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating
+Configuration Templates</i></a>.</p>
+
+<p>You can create and apply multiple templates to applications and primitive <b
+class="APPLICATION">UM</b> objects, however, if the same option appears in multiple
+templates, the option value in the last template overrides the option value in the
+previous template. See <a href="umm-gui.html#UMMGUI-APPS-TEMPLATES"><i>Applying
+Templates</i></a>.</p>
+</li>
+
+<li>
+<p>Create a ConnectionFactory and apply any relevant templates created in the previous
+step. Just for this example, name the ConnectionFactory, <tt
+class="LITERAL">uJMSConnectionFactory</tt>. See <a
+href="umm-gui.html#UMMGUI-JMS-CONNFAC"><i>Configuring ConnectionFactories</i></a>.</p>
+</li>
+
+<li>
+<p>For the <tt class="LITERAL">uJMSConnectionFactory</tt> ConnectionFactory, configure
+options that are common to all the producers and consumers created by the applications
+using this ConnectionFactory. This would include options for contexts, sources, receivers
+and wildcard receivers.</p>
+</li>
+
+<li>
+<p>Configure the Factory options for <tt class="LITERAL">uJMSConnectionFactory</tt>. See
+<a href="umm-gui.html#UMMGUI-JMS-FAC"><i>Configuring Factories</i></a>.</p>
+</li>
+
+<li>
+<p>If <tt class="LITERAL">uJMSConnectionFactory</tt> supports Destinations of:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">Type=UMS</tt>, configure the appropriate options in the UMS tab,
+such as transports and store configuration options.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">Type=UMP</tt>, configure the appropriate options in the UMP tab,
+such as store configuration options.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">Type=UMQ</tt>, configure the appropriate queue options in the UMQ
+tab.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Create and configure the Destinations to be used by the producers and consumers
+created by applications using this ConnectionFactory. See <a
+href="umm-gui.html#UMMGUI-JMS-DEST"><i>Configuring Destinations</i></a>.</p>
+</li>
+
+<li>
+<p>Create a JMS user and assign <tt class="LITERAL">uJMSConnectionFactory</tt> to the new
+user. Assign the password, <tt class="LITERAL">jmssecret</tt>.</p>
+</li>
+
+<li>
+<p>In the jndi.properties file, ensure that you specify the address:port where the UMM
+Daemon runs. For example,</p>
+
+<p><tt class="LITERAL">ummd = 10.29.3.95:21273</tt>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> UMM Daemon runs on a machine at <tt
+class="LITERAL">10.29.3.95:21273</tt>. See also <a
+href="umm-daemon.html#UMM-ENVIRON-VAR"><i>Connecting Your Applications to the UMM
+Daemon</i></a>.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Start JMS application(s).</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-MENUS" name="UMMGUI-MENUS">3.3. UMM Menus</a></h2>
+
+<p>The following table explains the <b class="APPLICATION">UMM</b> menu selections.</p>
+
+<div class="INFORMALTABLE"><a id="AEN305" name="AEN305"></a>
+<table border="1" class="CALSTABLE">
+<col width="72" />
+<col width="120" />
+<col width="384" />
+<thead>
+<tr>
+<th>Menu</th>
+<th>Selection</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>File</td>
+<td>New</td>
+<td>Allows you to create a new Application, Template or User.</td>
+</tr>
+
+<tr>
+<td>File</td>
+<td>Save</td>
+<td>Saves the current Application, Template or User record.</td>
+</tr>
+
+<tr>
+<td>File</td>
+<td>Save All</td>
+<td>Saves all the records that you have created or edited.</td>
+</tr>
+
+<tr>
+<td>File</td>
+<td>Revert</td>
+<td>Revert to the previously saved version of the Application, Template or User.</td>
+</tr>
+
+<tr>
+<td>File</td>
+<td>Save To File</td>
+<td>Save the Application, Template or User record to an XML file instead of the database.
+This selection allows you to use the <b class="APPLICATION">UMM</b> GUI to configure
+applications but not use UMM Daemon when running your applications. After saving an
+application's configuration to a file, you can use the LBM_XML_CONFIG_FILENAME and
+LBM_XML_CONFIG_APPNAME environment variables to enable the XML configuration file. See <a
+href="../Config/config.html#GETTINGSTARTEDXMLCONFIG" target="doccontent">Using XML
+Configuration Files With a UM Application</a>.</td>
+</tr>
+
+<tr>
+<td>File</td>
+<td>Exit</td>
+<td>Close the <b class="APPLICATION">UMM</b> GUI.</td>
+</tr>
+
+<tr>
+<td>Edit</td>
+<td>Duplicate</td>
+<td>Copy the selected Application, Template or User record to a new record.</td>
+</tr>
+
+<tr>
+<td>Edit</td>
+<td>Delete</td>
+<td>Delete the selected Application, Template or User record(s).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-TEMPLATES" name="UMMGUI-TEMPLATES">3.4. Creating
+Configuration Templates</a></h2>
+
+<p>You can define option templates that can be applied in application configurations.
+Multiple templates can be applied to any primitive <b class="APPLICATION">UM</b> object
+or application. Templates can be applied to most tags including <tt
+class="LITERAL">&lt;application&#62;</tt>, <tt class="LITERAL">&lt;contexts&#62;</tt>,
+<tt class="LITERAL">&lt;context&#62;</tt>, <tt class="LITERAL">&lt;sources&#62;</tt>, <tt
+class="LITERAL">&lt;receivers&#62;</tt>, <tt class="LITERAL">&lt;topic&#62;</tt>, and <tt
+class="LITERAL">&lt;wildcard-receivers&#62;</tt>.</p>
+
+<ol type="1">
+<li>
+<p>Click on <b class="APPLICATION">Templates</b> in the object tree in the left pane and
+then right-click or click on the File Menu.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">New</b> and then select <b
+class="APPLICATION">Templates</b> from the drop-down menu.</p>
+</li>
+
+<li>
+<p>Enter the <b class="APPLICATION">Template Name</b> and click <b
+class="APPLICATION">OK</b>. The Template window appears in the right pane.</p>
+
+<div class="FIGURE"><a id="TEMPLATE-NEW" name="TEMPLATE-NEW"></a>
+<p><b>Figure 2. New Template Window</b></p>
+
+<img src="Template_New.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Context</b> tab and then click on <b
+class="APPLICATION">Options</b> button. A list of Context scope options appears.</p>
+
+<div class="FIGURE"><a id="TEMPLATE-OPTIONS" name="TEMPLATE-OPTIONS"></a>
+<p><b>Figure 3. Options List</b></p>
+
+<img src="Template_Options.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Click on the checkbox next to the desired context options. Click <b
+class="APPLICATION">OK</b>. The selected options appear in the Template/Context pane.</p>
+</li>
+
+<li>
+<p>For each option, click on the <b class="APPLICATION">Value</b> field, select or enter
+a new value and press <b class="APPLICATION">ENTER</b>.</p>
+
+<div class="FIGURE"><a id="TEMPLATE-OPTIONS-VALUES" name="TEMPLATE-OPTIONS-VALUES"></a>
+<p><b>Figure 4. Setting Option Values</b></p>
+
+<img src="Template_Options_Values.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If desired, set permissions for the option's values. See <a
+href="umm-gui.html#UMMGUI-ORDER-VALUES"><i>Setting Permitted and Restricted
+Values</i></a>.</p>
+</li>
+
+<li>
+<p>Repeat Steps 4-7 for Source Options.</p>
+</li>
+
+<li>
+<p>Repeat Steps 4-7 for Receiver Options.</p>
+</li>
+
+<li>
+<p>Repeat Steps 4-7 for Event Queue Options.</p>
+</li>
+
+<li>
+<p>Repeat Steps 4-7 for Wildcard Receiver Options.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">XML View</b> to verify your entries.</p>
+</li>
+
+<li>
+<p>Right click on the object name in the left pane or click on the File Menu. Then click
+<b class="APPLICATION">Save</b>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-ORDER" name="UMMGUI-ORDER">3.5. Using the Order
+Attribute</a></h2>
+
+<p>Any option used in a template or directly configured for an application has an <tt
+class="LITERAL">order</tt> attribute expressed with two values in one of two
+sequences,</p>
+
+<pre class="SCREEN">
+&lt;option default-value="tcp" name="transport" order="deny,allow"&#62;
+       
+</pre>
+
+<p>or</p>
+
+<pre class="SCREEN">
+&lt;option default-value="tcp" name="transport" order="allow,deny"&#62;
+       
+</pre>
+
+<p>The <tt class="LITERAL">order</tt> attribute allows you to permit or restrict more
+than one value for the option. The order, <b class="APPLICATION">allow,deny</b>
+essentially means "allow what you specify, deny everything else." The order, <b
+class="APPLICATION">deny, allow</b> means "deny what you specify, allow everything else."
+The default order is <b class="APPLICATION">deny,allow</b>. If you specify nothing, the
+default rule executes, ignoring the option's default value. Order of appearance of rules
+is not significant.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ORDERING-DENYALLOW" name="ORDERING-DENYALLOW">3.5.1. Using the
+Deny,Allow Order</a></h3>
+
+<p>The example below allows any transport type except for LBT-IPC or LBT-RDMA.</p>
+
+<pre class="SCREEN">
+&lt;option default-value="tcp" name="transport" order="deny,allow"&#62;
+    &lt;deny&#62;LBT-IPC&lt;/deny&#62;
+    &lt;deny&#62;LBT-RDMA&lt;/deny&#62;
+&lt;/option&#62;
+       
+</pre>
+
+<p>The procedure below shows how to accomplish this in the <b class="APPLICATION">UMM</b>
+GUI. Refer to the composite screen image following the procedure.</p>
+
+<ol type="1">
+<li>
+<p>For the source option, <tt class="LITERAL">transport</tt>, click in the <b
+class="APPLICATION">Ordering</b> box and select <b
+class="APPLICATION">Deny,Allow</b>.</p>
+</li>
+
+<li>
+<p>Click the <b class="APPLICATION">Edit</b> button. The Permissions Window appears.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">Add</b> and type <tt class="LITERAL">LBT-IPC</tt>.</p>
+</li>
+
+<li>
+<p>Click again on <b class="APPLICATION">Add</b> and type <tt
+class="LITERAL">LBT-RDMA</tt>.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">OK</b>.</p>
+</li>
+</ol>
+
+<div class="FIGURE"><a id="ORDERDENYALLOW" name="ORDERDENYALLOW"></a>
+<p><b>Figure 5. Ordering - Deny,Allow</b></p>
+
+<img src="Order-DenyAllow.png" align="CENTER" /></div>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ORDERING-ALLOWDENY" name="ORDERING-ALLOWDENY">3.5.2. Using the
+Allow,Deny Order</a></h3>
+
+<p>You could accomplish the same restriction shown in <a
+href="umm-gui.html#ORDERING-DENYALLOW"><i>Using the Deny,Allow Order</i></a> with the
+next example.</p>
+
+<pre class="SCREEN">
+&lt;option default-value="tcp" name="transport" order="allow,deny"&#62;
+    &lt;allow&#62;TCP&lt;/allow&#62;
+    &lt;allow&#62;TCP-LB&lt;/allow&#62;
+    &lt;allow&#62;LBT-RU&lt;/allow&#62;
+    &lt;allow&#62;LBT-RM&lt;/allow&#62;
+&lt;/option&#62;
+       
+</pre>
+
+<p>The procedure below shows how to accomplish this in the <b class="APPLICATION">UMM</b>
+GUI. Refer to the composite screen image following the procedure.</p>
+
+<ol type="1">
+<li>
+<p>For the source option, <tt class="LITERAL">transport</tt>, click in the <b
+class="APPLICATION">Ordering</b> box and select <b
+class="APPLICATION">Allow,Deny</b>.</p>
+</li>
+
+<li>
+<p>Click the <b class="APPLICATION">Edit</b> button. The Permissions Window appears.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">Add</b> and type <tt class="LITERAL">TCP</tt>.</p>
+</li>
+
+<li>
+<p>Click again on <b class="APPLICATION">Add</b> and type <tt
+class="LITERAL">TCP-LB</tt>.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">Add</b> and type <tt class="LITERAL">LBT-RU</tt>.</p>
+</li>
+
+<li>
+<p>Click again on <b class="APPLICATION">Add</b> and type <tt
+class="LITERAL">LBT-RM</tt>.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">OK</b>.</p>
+</li>
+</ol>
+
+<div class="FIGURE"><a id="ORDERALLOWDENY" name="ORDERALLOWDENY"></a>
+<p><b>Figure 6. Ordering - Allow,Deny</b></p>
+
+<img src="Order_AllowDeny.png" align="CENTER" /></div>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-ORDER-VALUES" name="UMMGUI-ORDER-VALUES">3.5.3. Setting
+Permitted and Restricted Values</a></h3>
+
+<p></p>
+
+<ol type="1">
+<li>
+<p>To use the <b class="APPLICATION">Order</b> attribute for an option, click on the <b
+class="APPLICATION">Order</b> field and select either <b
+class="APPLICATION">Allow,Deny</b> or <b class="APPLICATION">Deny,Allow</b>
+(default).</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Edit</b> button in the Permissions column. The
+Permissions dialog box appears.</p>
+</li>
+
+<li>
+<p>To add an option value with a specific permission, click <b
+class="APPLICATION">Add</b>. A permission row appears.</p>
+</li>
+
+<li>
+<p>Select the permission from the <b class="APPLICATION">Allow,Deny</b> column.</p>
+</li>
+
+<li>
+<p>Enter the option value in the <b class="APPLICATION">Value</b> column.</p>
+</li>
+
+<li>
+<p>Repeat Steps 3-5 for each additional option value that requires specific
+permissions.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">OK</b>. The Permissions dialog box disappears and your
+entries appear in the Permission column for the option.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">XML View</b> to verify your entries.</p>
+</li>
+
+<li>
+<p>Right click on the object name in the left pane or click on the File Menu. Then click
+<b class="APPLICATION">Save</b>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-ORDER-RANGES" name="UMMGUI-ORDER-RANGES">3.5.4. Options
+with Value Ranges</a></h3>
+
+<p>Some options can specify a range of values. You can specify both <tt
+class="LITERAL">allow</tt> and <tt class="LITERAL">deny</tt> rules to allow one or more
+values of a larger range. The next example allows a single multicast address out of a
+range of otherwise allowable addresses.</p>
+
+<pre class="SCREEN">
+&lt;options&#62;
+  &lt;option name="transport_lbtrm_multicast_address" default_value="239.191.10.11" order="deny,allow"&#62;
+    &lt;allow&#62;239.191.10.15&lt;/allow&#62;
+    &lt;deny&#62;239.191.10.12-239.191.10.20&lt;/deny&#62;
+  &lt;/option&#62;
+&lt;/options&#62;
+           
+</pre>
+
+<p>Address 239.191.10.15 matches both an allow and deny rule, but since the order
+indicates that allow is the default, the value is allowed.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-APPS" name="UMMGUI-APPS">3.6. Creating Application
+Configurations</a></h2>
+
+<p>You can configure UM Configuration Options for specific applications. You can attach a
+template or select any number of individual options. Separate applications can have the
+same options, but with different values. You can also configure an application with
+multiple contexts or event queues and apply an order attribute to easily vary similar
+configurations.</p>
+
+<ol type="1">
+<li>
+<p>Click on <b class="APPLICATION">Applications</b> in the object tree in the left pane
+and then right-click or click on the File Menu.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">New</b> and then select <b
+class="APPLICATION">Application</b> from the drop-down menu.</p>
+</li>
+
+<li>
+<p>Enter the <b class="APPLICATION">Application Name</b> and click <b
+class="APPLICATION">OK</b>. The initial, blank Application window appears.</p>
+
+<div class="FIGURE"><a id="APP-NEW" name="APP-NEW"></a>
+<p><b>Figure 7. New Application Window</b></p>
+
+<img src="App-New.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Application</b> tab. The Application window
+appears.</p>
+
+<div class="FIGURE"><a id="APP-APPLICATION" name="APP-APPLICATION"></a>
+<p><b>Figure 8. Application Window</b></p>
+
+<img src="App-Application.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Add the additional contexts and event queues required by this application.</p>
+
+<ul>
+<li>
+<p>Click on the <b class="APPLICATION">Add</b> button and enter the context's or event
+queue's name.</p>
+</li>
+
+<li>
+<p>Click <b class="APPLICATION">OK</b>.</p>
+</li>
+
+<li>
+<p>Repeat the above steps for every additional context and event queue.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>If you wish to apply a template to the application, click on the <b
+class="APPLICATION">Templates</b> button. The Templates window appears.</p>
+
+<div class="FIGURE"><a id="TEMPLATES" name="TEMPLATES"></a>
+<p><b>Figure 9. Templates List</b></p>
+
+<img src="Templates.png" align="CENTER" /></div>
+
+<p>See <a href="umm-gui.html#UMMGUI-APPS-TEMPLATES"><i>Applying Templates</i></a>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Comment</b> text window and enter any notes or
+comments about the application. (These comments appear within the <tt
+class="LITERAL">&lt;application-data&#62;</tt> element.)</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Default Context</b> tab.</p>
+
+<div class="FIGURE"><a id="DEFAULT-CONTEXT" name="DEFAULT-CONTEXT"></a>
+<p><b>Figure 10. Default Context Window</b></p>
+
+<img src="Default-Context.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If needed, change the default <span class="emphasis"><i class="EMPHASIS">Ordering for
+All Contexts</i></span> to <b class="APPLICATION">allow,deny</b>. See also <a
+href="../Config/xmlconfigurationfiles.html#ORDER-RULE-ATTR" target="doccontent">Using the Order
+and Rule Attributes</a>.</p>
+</li>
+
+<li>
+<p>Configure the application's Default Context.</p>
+
+<ul>
+<li>
+<p>If you wish to apply a template to the Default Context, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s).</p>
+</li>
+
+<li>
+<p>Configure the Sources. See <a href="umm-gui.html#UMMGUI-APPS-SRC"><i>Configuring
+Sources</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the Receivers. See <a href="umm-gui.html#UMMGUI-APPS-RCV"><i>Configuring
+Receivers</i></a>.</p>
+</li>
+
+<li>
+<p>Configure any Wildcard Receivers. See <a
+href="umm-gui.html#UMMGUI-APPS-WRCV"><i>Configuring Wildcard Receivers</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the options for the Default Context by clicking on the <b
+class="APPLICATION">Options</b> button and selecting the options. See <a
+href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration Templates</i></a> for more
+on configuring options.</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Repeat the above step for all contexts in the application.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Event Queue</b> tab. The Event Queue window
+appears.</p>
+
+<div class="FIGURE"><a id="DEFAULT-EVQ" name="DEFAULT-EVQ"></a>
+<p><b>Figure 11. Setting Option Values</b></p>
+
+<img src="Default-EVQ.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If needed, change the default <span class="emphasis"><i class="EMPHASIS">Ordering for
+All Event-queues</i></span> to <b class="APPLICATION">allow,deny</b>. See also <a
+href="../Config/xmlconfigurationfiles.html#ORDER-RULE-ATTR" target="doccontent">Using the Order
+and Rule Attributes</a>.</p>
+</li>
+
+<li>
+<p>Configure the application's Default Event Queue.</p>
+
+<ul>
+<li>
+<p>If you wish to apply a template to the Default Event Queue, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s). queue's name.</p>
+</li>
+
+<li>
+<p>Configure the options for the Default Event Queue by clicking on the <b
+class="APPLICATION">Options</b> button and selecting the options. See <a
+href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration Templates</i></a> for more
+on configuring options.</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Repeat the above step for all Event Queues used in the application.</p>
+</li>
+
+<li>
+<p>Right click on the object name in the left pane or click on the File Menu. Then click
+<b class="APPLICATION">Save All</b>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">XML View</b> tab to review the actual XML
+configuration for the application. (Template options and values do not appear in this
+view.)</p>
+</li>
+</ol>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-APPS-SRC" name="UMMGUI-APPS-SRC">3.6.1. Configuring
+Sources</a></h3>
+
+<p>You can configure an individual <b class="APPLICATION">UM</b> source using a <tt
+class="LITERAL">topicname</tt> or a topic <tt class="LITERAL">pattern</tt>. Configuring a
+pattern allows you to easily specify option values for all the topics that match the
+pattern instead of configuring individual topics (<tt class="LITERAL">topicname</tt>)
+with the same options and values. (You could also apply a template to the context that
+has all the source scope option values.) When using a topic <tt
+class="LITERAL">pattern</tt>, the following rules apply.</p>
+
+<ul>
+<li>
+<p>Topics that match both a <tt class="LITERAL">topicname</tt> and a topic <tt
+class="LITERAL">pattern</tt> use the option values from the more specific match, i.e. the
+<tt class="LITERAL">topicname</tt>.</p>
+</li>
+
+<li>
+<p>If multiple patterns match a given topic, <b class="APPLICATION">UMM</b> uses the
+first pattern matched in the XML configuration file. In the example below, when your
+application creates a source for topic <tt class="LITERAL">SRM</tt>, it will use the
+LBTRM transport, which is configured for the the first pattern, <b
+class="APPLICATION">*R*</b>, and not the TCP transport which is configured for the second
+pattern, <b class="APPLICATION">*RM</b>.</p>
+</li>
+</ul>
+
+<pre class="SCREEN">
+      &lt;sources order="deny,allow"&#62;
+        &lt;topic pattern="*R*" rule="allow"&#62;
+          &lt;options type="source"&#62;
+            &lt;option default-value="lbtrm" name="transport"/&#62;
+          &lt;/options&#62;
+        &lt;/topic&#62;
+        &lt;topic pattern="*RM" rule="allow"&#62;
+          &lt;options type="source"&#62;
+            &lt;option default-value="tcp" name="transport"/&#62;
+          &lt;/options&#62;
+        &lt;/topic&#62;
+      &lt;/sources&#62;
+           
+</pre>
+
+<p>Use the following procedure to configure options for an individual <b
+class="APPLICATION">UM</b> source.</p>
+
+<ol type="1">
+<li>
+<p>Click on the <b class="APPLICATION">Sources</b> tab on the left of the context pane.
+An empty <b class="APPLICATION">Sources</b> window appears.</p>
+
+<div class="FIGURE"><a id="APP-SOURCE" name="APP-SOURCE"></a>
+<p><b>Figure 12. Sources Tab</b></p>
+
+<img src="App-Source.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If needed, change the default <span class="emphasis"><i class="EMPHASIS">Ordering for
+All Sources</i></span> to <b class="APPLICATION">allow,deny</b>. See also <a
+href="../Config/xmlconfigurationfiles.html#ORDER-RULE-ATTR" target="doccontent">Using the Order
+and Rule Attributes</a>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Add</b> button. The Source window appears.</p>
+
+<div class="FIGURE"><a id="APP-SOURCE-TOPIC" name="APP-SOURCE-TOPIC"></a>
+<p><b>Figure 13. Source Topic Name/Pattern Options List</b></p>
+
+<img src="App-Source-Topic.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Enter the <tt class="LITERAL">topicname</tt> or a topic <tt
+class="LITERAL">pattern</tt>.</p>
+</li>
+
+<li>
+<p>Select the <b class="APPLICATION">Type</b>, <span class="emphasis"><i
+class="EMPHASIS">Topic Name</i></span> or <span class="emphasis"><i
+class="EMPHASIS">Pattern</i></span> from the drop-down menu.</p>
+</li>
+
+<li>
+<p>Click on the checkbox next to the desired options for the topic or pattern. Click <b
+class="APPLICATION">OK</b>. The <b class="APPLICATION">Sources</b> window appears with
+the selected options.</p>
+
+<div class="FIGURE"><a id="APP-SOURCE-TOPIC-OPTIONS" name="APP-SOURCE-TOPIC-OPTIONS"></a>
+<p><b>Figure 14. Topic/Pattern Option Values</b></p>
+
+<img src="App-Source-Topic-Options.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Adjust the option values. See <a href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating
+Configuration Templates</i></a> for more on configuring options.</p>
+</li>
+
+<li>
+<p>If you wish to apply a template to the source, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s).</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+
+<li>
+<p>Repeat Steps 3-9 for all topics and topic patterns for the context.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-APPS-RCV" name="UMMGUI-APPS-RCV">3.6.2. Configuring
+Receivers</a></h3>
+
+<p>Use the following procedure to configure options for an individual <b
+class="APPLICATION">UM</b> receiver.</p>
+
+<ol type="1">
+<li>
+<p>Click on the <b class="APPLICATION">Receivers</b> tab on the left of the context pane.
+An empty <b class="APPLICATION">Receivers</b> window appears.</p>
+
+<div class="FIGURE"><a id="APP-RECEIVER" name="APP-RECEIVER"></a>
+<p><b>Figure 15. Receivers Tab</b></p>
+
+<img src="App-Receiver.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If needed, change the default <span class="emphasis"><i class="EMPHASIS">Ordering for
+All Receivers</i></span> to <b class="APPLICATION">allow,deny</b>. See also <a
+href="../Config/xmlconfigurationfiles.html#ORDER-RULE-ATTR" target="doccontent">Using the Order
+and Rule Attributes</a>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Add</b> button. The Receiver window appears.</p>
+
+<div class="FIGURE"><a id="APP-RECEIVER-TOPIC" name="APP-RECEIVER-TOPIC"></a>
+<p><b>Figure 16. Receiver Topic Name/Pattern Options List</b></p>
+
+<img src="App-Receiver-Topic.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Enter the <tt class="LITERAL">topicname</tt> or a topic <tt
+class="LITERAL">pattern</tt>.</p>
+</li>
+
+<li>
+<p>Select the Type, <span class="emphasis"><i class="EMPHASIS">Topic Name</i></span> or
+<span class="emphasis"><i class="EMPHASIS">Pattern</i></span> from the drop-down
+menu.</p>
+</li>
+
+<li>
+<p>Click on the checkbox next to the desired options for the topic or pattern. Click <b
+class="APPLICATION">OK</b>. The <b class="APPLICATION">Receivers</b> window appears with
+the selected options.</p>
+
+<div class="FIGURE"><a id="APP-RECEIVER-TOPIC-OPTIONS"
+name="APP-RECEIVER-TOPIC-OPTIONS"></a>
+<p><b>Figure 17. Topic/Pattern Option Values</b></p>
+
+<img src="App-Receiver-Topic-Options.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Adjust the option values. See <a href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating
+Configuration Templates</i></a> for more on configuring options.</p>
+</li>
+
+<li>
+<p>If you wish to apply a template to the source, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s).</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+
+<li>
+<p>Repeat Steps 3-9 for all receiver topics and topic patterns for the context.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-APPS-WRCV" name="UMMGUI-APPS-WRCV">3.6.3. Configuring
+Wildcard Receivers</a></h3>
+
+<p>To apply XML configuration to a wildcard receiver, be sure both the <tt
+class="LITERAL">pattern</tt> and <tt class="LITERAL">pattern-type</tt> match exactly. You
+may also specify both receiver and wildcard receiver options.</p>
+
+<p>Use the following procedure to configure options for an individual <b
+class="APPLICATION">UM</b> wildcard receiver.</p>
+
+<ol type="1">
+<li>
+<p>Click on the <b class="APPLICATION">Wildcard Receivers</b> tab on the left of the
+context pane. An empty <b class="APPLICATION">Wildcard Receivers</b> window appears.</p>
+
+<div class="FIGURE"><a id="APP-WILDCARD-RECEIVER" name="APP-WILDCARD-RECEIVER"></a>
+<p><b>Figure 18. Sources Tab</b></p>
+
+<img src="App-Wildcard-Receiver.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>If needed, change the default <span class="emphasis"><i class="EMPHASIS">Ordering for
+All Wildcard-receivers</i></span> to <b class="APPLICATION">allow,deny</b>. See also <a
+href="../Config/xmlconfigurationfiles.html#ORDER-RULE-ATTR" target="doccontent">Using the Order
+and Rule Attributes</a>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Add</b> button. The <b
+class="APPLICATION">Wildcard Receivers</b> window appears.</p>
+
+<div class="FIGURE"><a id="APP-WILDCARD-RECEIVER-PATTERN"
+name="APP-WILDCARD-RECEIVER-PATTERN"></a>
+<p><b>Figure 19. Wildcard Receiver Pattern Options List</b></p>
+
+<img src="App-Wildcard-Receiver-Pattern.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Enter the wildcard receiver <b class="APPLICATION">Pattern</b>.</p>
+</li>
+
+<li>
+<p>Select the <b class="APPLICATION">Pattern Type</b>, <span class="emphasis"><i
+class="EMPHASIS">pcre</i></span>, <span class="emphasis"><i
+class="EMPHASIS">regex</i></span> or <span class="emphasis"><i
+class="EMPHASIS">appcb</i></span> from the drop-down menu. See <a
+href="../Config/wildcardreceiveroptions.html#WILDCARDRECEIVERPATTERNTYPE"
+target="doccontent"><tt class="LITERAL">pattern_type</tt></a> for more information about these
+option values.</p>
+</li>
+
+<li>
+<p>Click on the checkbox next to the desired options for the topic or pattern. Click <b
+class="APPLICATION">OK</b>. The <b class="APPLICATION">Wildcard Receivers</b> window
+appears with the selected options.</p>
+
+<div class="FIGURE"><a id="APP-WILDCARD-RECEIVER-PATTERN-OPTIONS"
+name="APP-WILDCARD-RECEIVER-PATTERN-OPTIONS"></a>
+<p><b>Figure 20. Wildcard Receiver Pattern Option Values</b></p>
+
+<img src="App-Wildcard-Receiver-Pattern-Options.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Adjust the option values. See <a href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating
+Configuration Templates</i></a> for more on configuring options.</p>
+</li>
+
+<li>
+<p>If you wish to apply a template to the source, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s).</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+
+<li>
+<p>Repeat Steps 3-9 for all wildcard receiver patterns for the context.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-APPS-TEMPLATES" name="UMMGUI-APPS-TEMPLATES">3.6.4.
+Applying Templates</a></h3>
+
+<p>The Templates dialog box allows you to apply templates to applications or any
+primitive <b class="APPLICATION">UM</b> object and also to remove templates or change the
+order.</p>
+
+<div class="FIGURE"><a id="TEMPLATES-LIST" name="TEMPLATES-LIST"></a>
+<p><b>Figure 21. Templates List</b></p>
+
+<img src="Templates.png" align="CENTER" /></div>
+
+<ul>
+<li>
+<p>To apply a template, click on the <b class="APPLICATION">Template Name</b> in the left
+pane and click the <b class="APPLICATION">Right Arrow</b>. The template appears in the
+right pane. You can also hold down the <b class="APPLICATION">Ctrl</b> key to select
+multiple templates.</p>
+</li>
+
+<li>
+<p>To remove a template already applied, click on the <b class="APPLICATION">Template
+Name</b> in the right pane and click the <b class="APPLICATION">Left Arrow</b>. The
+template disappears from the right pane.</p>
+</li>
+
+<li>
+<p>To change the order of the applied templates, click on the <b
+class="APPLICATION">Template Name</b> in the right pane and click the <b
+class="APPLICATION">Up Arrow</b> or <b class="APPLICATION">Down Arrow</b> to reposition
+the template.</p>
+</li>
+</ul>
+
+<p>You can apply multiple templates to applications or any primitive <b
+class="APPLICATION">UM</b> object. The order in which you attach templates determines the
+resolution of conflicting option values. The last instance of an option determines the
+value used. In the <b class="APPLICATION">UMM</b> GUI, this means the lowest option
+instance in the file.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-JMS" name="UMMGUI-JMS">3.7. Creating JMS
+Configurations</a></h2>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umm-gui.html#UMMGUI-JMS-CONNFAC"><i>Configuring
+ConnectionFactories</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-JMS-FAC"><i>Configuring Factories</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-gui.html#UMMGUI-JMS-DEST"><i>Configuring Destinations</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-JMS-CONNFAC" name="UMMGUI-JMS-CONNFAC">3.7.1.
+Configuring ConnectionFactories</a></h3>
+
+<p></p>
+
+<ol type="1">
+<li>
+<p>Click on <b class="APPLICATION">JMS</b> in the object tree in the left pane and then
+right-click or click on the File Menu.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">New</b> and then select <b
+class="APPLICATION">ConnectionFactory</b> from the drop-down menu.</p>
+</li>
+
+<li>
+<p>Enter the <b class="APPLICATION">ConnectionFactory Name</b> and click <b
+class="APPLICATION">OK</b>. The initial, blank ConnectionFactory window appears.</p>
+
+<div class="FIGURE"><a id="CONNFAC-NEW" name="CONNFAC-NEW"></a>
+<p><b>Figure 22. New ConnectionFactory Window</b></p>
+
+<img src="JMS_ConnectionFactory.png" align="CENTER" /></div>
+
+<p>The listed ConnectionFactories, <tt class="LITERAL">uJMSConnectionFactory</tt>, <tt
+class="LITERAL">TopicConnectionFactory</tt>, and <tt
+class="LITERAL">QueueConnectionFactory</tt> are pre-installed and facilitate running the
+compiled example JMS applications. See <a
+href="../QuickStart/jms-binary-quick-start.html" target="doccontent">Ultra Messaging JMS Quick
+Start</a>.</p>
+</li>
+
+<li>
+<p>If you wish to apply a template to the ConnectionFactory, click on the <b
+class="APPLICATION">Templates</b> button. The Templates window appears.</p>
+
+<div class="FIGURE"><a id="JMS-TEMPLATES" name="JMS-TEMPLATES"></a>
+<p><b>Figure 23. Templates List</b></p>
+
+<img src="Templates.png" align="CENTER" /></div>
+
+<p>See <a href="umm-gui.html#UMMGUI-APPS-TEMPLATES"><i>Applying Templates</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the ConnectionFactory's Context.</p>
+
+<ul>
+<li>
+<p>If you wish to apply a template to the Context, click on the <b
+class="APPLICATION">Templates</b> button and apply the template(s).</p>
+</li>
+
+<li>
+<p>Configure the options for the Context by clicking on the <b
+class="APPLICATION">Options</b> button and selecting the options. See <a
+href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration Templates</i></a> for more
+on configuring options.</p>
+</li>
+
+<li>
+<p>Configure the Sources. See <a href="umm-gui.html#UMMGUI-APPS-SRC"><i>Configuring
+Sources</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the Receivers. See <a href="umm-gui.html#UMMGUI-APPS-RCV"><i>Configuring
+Receivers</i></a>.</p>
+</li>
+
+<li>
+<p>Configure any Wildcard Receivers. See <a
+href="umm-gui.html#UMMGUI-APPS-WRCV"><i>Configuring Wildcard Receivers</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the Factory options. See <a
+href="umm-gui.html#UMMGUI-JMS-FAC"><i>Configuring Factories</i></a>.</p>
+</li>
+
+<li>
+<p>Set the <b class="APPLICATION">Rule</b> attribute, if needed.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Configure options for the types of Destinations used with the ConnectionFactory. See
+<a href="umm-gui.html#UMMGUI-JMS-DEST"><i>Configuring Destinations</i></a>.</p>
+
+<ul>
+<li>
+<p>For Destinations with the <tt class="LITERAL">Type=UMS</tt>, click on the <b
+class="APPLICATION">UMS</b> tab and configure the appropriate options such as transport
+options.</p>
+</li>
+
+<li>
+<p>For Destinations with the <tt class="LITERAL">Type=UMP</tt>, click on the <b
+class="APPLICATION">UMP</b> tab and configure the appropriate options such as store
+configuration options.</p>
+</li>
+
+<li>
+<p>For Destinations with the <tt class="LITERAL">Type=UMQ</tt>, click on the <b
+class="APPLICATION">UMQ</b> tab and configure the appropriate options such as queue
+configuration options.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Right click on the ConnectionFactory name in the left pane or click on the File Menu.
+Then click <b class="APPLICATION">Save All</b>.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">XML View</b> tab to review the actual XML
+configuration for the ConnectionFactory. (Template options and values do not appear in
+this view.)</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-JMS-FAC" name="UMMGUI-JMS-FAC">3.7.2. Configuring
+Factories</a></h3>
+
+<p>Follow the procedure below to configure Factory options for the ConnectionFactory.</p>
+
+<ol type="1">
+<li>
+<p>Click on the <b class="APPLICATION">Factory</b> vertical tab and click on the <b
+class="APPLICATION">Options</b> button. The Factory Options list appears.</p>
+
+<div class="FIGURE"><a id="JMS-FACTORY" name="JMS-FACTORY"></a>
+<p><b>Figure 24. Factory Options Window</b></p>
+
+<img src="JMS_Factory_Options.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Select the Factory options by clicking in the checkbox for each desired option. Then
+click <b class="APPLICATION">OK</b>.</p>
+</li>
+
+<li>
+<p>Enter the option values for the selected Factory options.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-JMS-DEST" name="UMMGUI-JMS-DEST">3.7.3. Configuring
+Destinations</a></h3>
+
+<p>Follow the procedure below to create Destinations and configure Destination options
+for the ConnectionFactory.</p>
+
+<ol type="1">
+<li>
+<p>Click on <b class="APPLICATION">JMS</b> in the object tree in the left pane and then
+right-click or click on the File Menu.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">New</b> and then select <b
+class="APPLICATION">Destination</b> from the drop-down menu.</p>
+</li>
+
+<li>
+<p>Enter the <b class="APPLICATION">Destination Name</b> and click <b
+class="APPLICATION">OK</b>. The initial, blank Destination window appears.</p>
+
+<div class="FIGURE"><a id="DESTINATION-NEW" name="DESTINATION-NEW"></a>
+<p><b>Figure 25. New Destination Window</b></p>
+
+<img src="JMS_Destination.png" align="CENTER" /></div>
+
+<p>The listed Destinations are pre-installed and facilitate running the compiled example
+JMS applications. See <a href="../QuickStart/jms-binary-quick-start.html"
+target="doccontent">Ultra Messaging JMS Quick Start</a>.</p>
+</li>
+
+<li>
+<p>Configure the options for the Destination by clicking on the <b
+class="APPLICATION">Options</b> button and selecting the options.</p>
+</li>
+
+<li>
+<p>Enter the option values for the selected Destination options.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMMGUI-USERS" name="UMMGUI-USERS">3.8. Managing Users</a></h2>
+
+<p>You can authenticate the users of your applications by adding them to the User List
+and assigning applications to them. <b class="APPLICATION">UMM</b> does not serve
+configuration information to an application without the proper user authentication. See
+also <a href="umm-daemon.html"><i>UM Manager Daemon</i></a>.</p>
+
+<p><b class="APPLICATION">UMM</b> comes with a Default User (username = <tt
+class="LITERAL">default</tt>, password = <tt class="LITERAL">default</tt>). The first
+time you start the <b class="APPLICATION">UMM</b> GUI, a prompt appears for the password
+of the Default User. When logged in as the Default User, you can change the Default
+User's password and other properties. You can also add other users. If you don't require
+extensive user authentication, you could assign all your applications to a single
+user.</p>
+
+<p>Upon starting the <b class="APPLICATION">UMM</b> GUI for the first time, Informatica
+recommends that you either:</p>
+
+<ul>
+<li>
+<p>Change the password of the Default User, or</p>
+</li>
+
+<li>
+<p>Create a new administrative user, re-login as that new user and delete the Default
+User.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-USERS-PSSWD" name="UMMGUI-USERS-PSSWD">3.8.1. Changing
+the Default User Password</a></h3>
+
+<p>Use the following procedure to change the default user password.</p>
+
+<ol type="1">
+<li>
+<p>Expand the <b class="APPLICATION">Users</b> object tree in the left pane.</p>
+</li>
+
+<li>
+<p>Click on <b class="APPLICATION">default</b>. The Default User window appears.</p>
+
+<div class="FIGURE"><a id="USER" name="USER"></a>
+<p><b>Figure 26. Default User Window</b></p>
+
+<img src="User.png" align="CENTER" /></div>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Change</b> button. The New Password dialog box
+appears.</p>
+</li>
+
+<li>
+<p>Enter the new password and click on <b class="APPLICATION">OK</b>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMMGUI-USERS-ADDING" name="UMMGUI-USERS-ADDING">3.8.2.
+Managing Users</a></h3>
+
+<p>Follow the procedure below to add a new user.</p>
+
+<ol type="1">
+<li>
+<p>Click on <b class="APPLICATION">Users</b> in the object tree in the left pane and then
+right-click or click on the File Menu.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">New</b> and then select <b class="APPLICATION">User</b>
+from the drop-down menu. The User Name dialog box appears.</p>
+</li>
+
+<li>
+<p>Enter the <b class="APPLICATION">User Name</b> and click <b
+class="APPLICATION">OK</b>. The user profile dialog box appears.</p>
+</li>
+
+<li>
+<p>Click in the <b class="APPLICATION">Password</b> entry box and enter the user's <b
+class="APPLICATION">Password</b>. (<b class="APPLICATION">UMM</b> hides the password
+after you save the user's record.)</p>
+</li>
+
+<li>
+<p>Select the type of user, <span class="emphasis"><i class="EMPHASIS">Normal</i></span>
+or <span class="emphasis"><i class="EMPHASIS">Admin</i></span>.</p>
+</li>
+
+<li>
+<p>Check the <b class="APPLICATION">Active</b> check box if the user is an active
+user.</p>
+</li>
+
+<li>
+<p>Click on the <b class="APPLICATION">Add</b> button under the <b
+class="APPLICATION">Applications</b> entry box. A list of the configured applications
+appears.</p>
+</li>
+
+<li>
+<p>Click on the applications this user has permission to run, holding down the <b
+class="APPLICATION">Ctrl</b> key to select multiple applications.</p>
+</li>
+
+<li>
+<p>Select <b class="APPLICATION">Save</b> from the File Menu.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ummanager.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umm-api.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging Manager</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Using the UMM API</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

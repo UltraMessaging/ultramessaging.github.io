@@ -1,0 +1,810 @@
+<html><head><title>Ultra Messaging Examples</title>	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body bgcolor="#ffffff">
+<h1>Ultra Messaging Examples</h1>
+
+<p>The files in this directory are the source for the performance measurement
+binaries.  If you haven't done so already, please start with the example
+programs found in the
+<a href="../QuickStart/index.html">Quick Start Guide</a>.
+
+<p>Most users are not interested in compiling these sources in their current
+form, but instead use them for "spare parts", extracting fragments of code
+as appropriate.  For users who wish to build the tools, and especially for
+users who may want to modify the tools, we recommend creating a new directory
+and copying the doc/example directory contents into that new directory.
+The make files are especially easy to use if you place the new directory
+under the installed "doc" directory, at the same level as the "example"
+directory.
+
+<p>Windows users can then "cd" to that directory, execute their
+"vsvars32.bat" file (to define compiler environment), and then enter:
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;nmake -f Makefile.windows</code>
+
+<p>Unix users should first set their PATH appropriately, and then enter:
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;make -f Makefile.unix TARGET_PLATFORM=&lt;</code><em>target</em>&gt;
+<br>where &lt;<em>target</em>&gt; is one of:
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;AIX-5-powerpc64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;Darwin-9.8.0-x86_64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;HP-UX-B.11.31-LP64-ia64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;Linux-glibc-2.3-x86_64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;Linux-glibc-2.3-i686</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;Linux-glibc-2.5-x86_64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;Linux-glibc-2.3-ia64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;SunOS-5.10-amd64</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;SunOS-5.10-i386</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;SunOS-5.10-sparc</code>
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;SunOS-5.10-sparcv9</code>
+<br>For example:
+<br><code>&nbsp;&nbsp;&nbsp;&nbsp;make -f Makefile.unix TARGET_PLATFORM=Linux-glibc-2.3-i686</code>
+
+<h3>Support Files</h3>
+
+<p><a href="getopt.c"><b><code>getopt.c</code></b></a> -
+utility functions to parse command-line options (for Windows).
+
+<p><a href="verifymsg.c"><b><code>verifymsg.c</code></b></a> -
+utility function to help some programs create verifiable messages.
+
+<p><a href="monmodopts.h"><b><code>monmodopts.h</code></b></a> -
+common include file used by many of the example programs.  It includes
+option information for monitoring functionality.
+
+<p><a href="replgetopt.h"><b><code>replgetopt.h</code></b></a> -
+common include file used by many of the example programs.  It includes
+definitions for alternate getopt functions.
+
+<p><a href="umeblocksrc.h"><b><code>umeblocksrc.h</code></b></a> -
+include file used by umeblocksrc.c and umeblock.c.
+
+<p><a href="umeblocksrc.c"><b><code>umeblocksrc.c</code></b></a> -
+generic code used by umeblock.c.
+
+<p><a href="verifymsg.h"><b><code>verifymsg.h</code></b></a> -
+common include file used by many of the example programs.  It includes
+definitions for "verifymsg.c" (which needs to be linked into many
+programs).
+
+<p><a href="Makefile.unix"><b><code>Makefile.unix</code></b></a> -
+see contents for instructions of setting up environment variables.
+
+<p><a href="Makefile.windows"><b><code>Makefile.windows</code></b></a> -
+see contents for instructions of setting up make variables.
+
+
+<h3>Example Programs</h3>
+
+<p><a href="lbmhfrcv.c"><b><code>lbmhfrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).<br>
+<code>Usage:&nbsp;[-AEhsvV]&nbsp;[-c&nbsp;filename]&nbsp;[-r&nbsp;msgs]&nbsp;[-U&nbsp;losslev]&nbsp;topic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-A&nbsp;=&nbsp;display&nbsp;messages&nbsp;as&nbsp;ASCII&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-E&nbsp;=&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;msgs&nbsp;=&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;msgs&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;=&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-S&nbsp;=&nbsp;Exit&nbsp;after&nbsp;source&nbsp;ends,&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-V&nbsp;=&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+<p><a href="lbmhfrcvq.c"><b><code>lbmhfrcvq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).<br>
+<code>Usage:&nbsp;[-EhsvV]&nbsp;[-c&nbsp;filename]&nbsp;[-r&nbsp;msgs]&nbsp;[-U&nbsp;losslev]&nbsp;topic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-E&nbsp;=&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;msgs&nbsp;=&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;msgs&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;=&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-S&nbsp;=&nbsp;Exit&nbsp;after&nbsp;source&nbsp;ends,&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-U&nbsp;losslev&nbsp;=&nbsp;exit&nbsp;after&nbsp;losslev&nbsp;%&nbsp;unrecoverable&nbsp;loss<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-V&nbsp;=&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+<p><a href="lbmhfsrc.c"><b><code>lbmhfsrc.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;as&nbsp;fast&nbsp;as&nbsp;it&nbsp;can.<br>
+<code>Usage:&nbsp;lbmhfsrc&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-d&nbsp;delay&nbsp;=&nbsp;delay&nbsp;sending&nbsp;for&nbsp;delay&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;-i&nbsp;init&nbsp;=&nbsp;start&nbsp;at&nbsp;message&nbsp;init&nbsp;instead&nbsp;of&nbsp;0<br>
+&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;send&nbsp;messages&nbsp;of&nbsp;len&nbsp;bytes<br>
+&nbsp;&nbsp;-L&nbsp;linger&nbsp;=&nbsp;linger&nbsp;for&nbsp;linger&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-M&nbsp;msgs&nbsp;=&nbsp;send&nbsp;msgs&nbsp;number&nbsp;of&nbsp;messages<br>
+&nbsp;&nbsp;-N&nbsp;NUM&nbsp;=&nbsp;send&nbsp;on&nbsp;channel&nbsp;NUM<br>
+&nbsp;&nbsp;-P&nbsp;msec&nbsp;=&nbsp;pause&nbsp;after&nbsp;each&nbsp;send&nbsp;msec&nbsp;milliseconds<br>
+&nbsp;&nbsp;-R&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s&nbsp;sec&nbsp;=&nbsp;print&nbsp;stats&nbsp;every&nbsp;sec&nbsp;seconds<br>
+&nbsp;&nbsp;-t&nbsp;filename&nbsp;=&nbsp;use&nbsp;filename&nbsp;contents&nbsp;as&nbsp;a&nbsp;recording&nbsp;of&nbsp;message&nbsp;sequence&nbsp;numbers<br>
+&nbsp;&nbsp;-V&nbsp;=&nbsp;construct&nbsp;verifiable&nbsp;messages<br>
+&nbsp;&nbsp;-x&nbsp;bits&nbsp;=&nbsp;Use&nbsp;32&nbsp;or&nbsp;64&nbsp;bits&nbsp;for&nbsp;hot-failover&nbsp;sequence&nbsp;numbers<br>
+</code>
+
+<p><a href="lbmhfxrcv.c"><b><code>lbmhfxrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).<br>
+<code>Usage:&nbsp;lbmrcv&nbsp;[-aACdEfhqsSvV]&nbsp;[-I&nbsp;interface]&nbsp;[-c&nbsp;filename]&nbsp;[-r&nbsp;msgs]&nbsp;[-U&nbsp;losslev]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-a,&nbsp;--arrival-order&nbsp;&nbsp;deliver&nbsp;messages&nbsp;in&nbsp;the&nbsp;order&nbsp;that&nbsp;they&nbsp;arrive.<br>
+&nbsp;&nbsp;-A,&nbsp;--ascii&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;messages&nbsp;as&nbsp;ASCII&nbsp;text&nbsp;(-A&nbsp;-A&nbsp;=&nbsp;newlines&nbsp;after&nbsp;each&nbsp;msg)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-C,&nbsp;--context-stats&nbsp;&nbsp;fetch&nbsp;context&nbsp;rather&nbsp;than&nbsp;receiver&nbsp;stats<br>
+&nbsp;&nbsp;-d,&nbsp;--deliver-dups	Enable&nbsp;duplicate&nbsp;delivery<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;when&nbsp;source&nbsp;stops&nbsp;sending<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-I,&nbsp;--iface=CIDR		create&nbsp;a&nbsp;context&nbsp;on&nbsp;the&nbsp;interface&nbsp;specified&nbsp;by&nbsp;CIDR<br>
+						Multiple&nbsp;interfaces&nbsp;are&nbsp;allowed.<br>
+						Example:&nbsp;'-I&nbsp;10.29.1.0/24&nbsp;-I&nbsp;10.29.2.0/24'<br>
+&nbsp;&nbsp;-q,&nbsp;--eventq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;an&nbsp;LBM&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;-r,&nbsp;--msgs=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-O,&nbsp;--orderchecks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enable&nbsp;message&nbsp;order&nbsp;checking<br>
+&nbsp;&nbsp;-s,&nbsp;--stats=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;LBM&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;--max-sources=NUM&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;up&nbsp;to&nbsp;NUM&nbsp;sources&nbsp;(for&nbsp;statistics&nbsp;gathering&nbsp;purposes)<br>
+&nbsp;&nbsp;-S,&nbsp;--stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;when&nbsp;source&nbsp;stops&nbsp;sending,&nbsp;and&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;-U,&nbsp;--losslev=NUM&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;NUM%&nbsp;unrecoverable&nbsp;loss<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;-V,&nbsp;--verify&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+<p><a href="lbmhtrcv.c"><b><code>lbmhtrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;from&nbsp;a&nbsp;collection&nbsp;of&nbsp;HyperTopic&nbsp;patterns.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;<patterns<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-d&nbsp;msec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;hypertopic&nbsp;receiver&nbsp;every&nbsp;msec&nbsp;milliseconds<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-p&nbsp;string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;hypertopic&nbsp;prefix&nbsp;to&nbsp;string<br>
+&nbsp;&nbsp;-q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages<br>
+&nbsp;&nbsp;-x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;all&nbsp;receivers&nbsp;deleted<br>
+</code>
+
+<p><a href="lbmimsg.c"><b><code>lbmimsg.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;immediate&nbsp;messages&nbsp;as&nbsp;fast&nbsp;as&nbsp;it&nbsp;can<br>
+&nbsp;&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single&nbsp;source).<br>
+<code>Usage:&nbsp;lbmimsg&nbsp;[options]&nbsp;-o&nbsp;OR&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-d&nbsp;delay&nbsp;=&nbsp;delay&nbsp;sending&nbsp;for&nbsp;delay&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;send&nbsp;messages&nbsp;of&nbsp;len&nbsp;bytes<br>
+&nbsp;&nbsp;-L&nbsp;linger&nbsp;=&nbsp;linger&nbsp;for&nbsp;linger&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-M&nbsp;msgs&nbsp;=&nbsp;send&nbsp;msgs&nbsp;number&nbsp;of&nbsp;messages<br>
+&nbsp;&nbsp;-n&nbsp;num&nbsp;=&nbsp;Append&nbsp;a&nbsp;number&nbsp;between&nbsp;1&nbsp;and&nbsp;num&nbsp;to&nbsp;topic<br>
+&nbsp;&nbsp;-o&nbsp;=&nbsp;send&nbsp;topic-less&nbsp;immediate&nbsp;messages<br>
+&nbsp;&nbsp;-P&nbsp;msec&nbsp;=&nbsp;pause&nbsp;after&nbsp;each&nbsp;send&nbsp;msec&nbsp;milliseconds<br>
+&nbsp;&nbsp;-R&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-T&nbsp;target&nbsp;=&nbsp;target&nbsp;for&nbsp;unicast&nbsp;immediate&nbsp;messages<br>
+</code>
+
+<p><a href="lbmireq.c"><b><code>lbmireq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;immediate&nbsp;requests&nbsp;to&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;source)&nbsp;and&nbsp;waits&nbsp;for&nbsp;responses.<br>
+<code>Usage:&nbsp;[-hv]&nbsp;[-c&nbsp;filename]&nbsp;[-l&nbsp;len]&nbsp;[-L&nbsp;linger]&nbsp;[-P&nbsp;sec]&nbsp;[-r&nbsp;rate/pct]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-R&nbsp;requests]&nbsp;[-T&nbsp;target]&nbsp;[topic]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;send&nbsp;messages&nbsp;of&nbsp;len&nbsp;bytes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-L&nbsp;linger&nbsp;=&nbsp;linger&nbsp;for&nbsp;linger&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-P&nbsp;sec&nbsp;=&nbsp;pause&nbsp;sec&nbsp;seconds&nbsp;after&nbsp;sending&nbsp;request&nbsp;for&nbsp;responses&nbsp;to&nbsp;arrive<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-r&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-r&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-R&nbsp;requests&nbsp;=&nbsp;send&nbsp;requests&nbsp;number&nbsp;of&nbsp;requests<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-T&nbsp;target&nbsp;=&nbsp;send&nbsp;immediate&nbsp;request&nbsp;to&nbsp;target<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="lbmmon.c"><b><code>lbmmon.c</code></b></a> -
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-t,&nbsp;--transport=TRANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;transport&nbsp;module&nbsp;TRANS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TRANS&nbsp;may&nbsp;be&nbsp;`lbm',&nbsp;`udp',&nbsp;or&nbsp;`lbmsnmp',&nbsp;default&nbsp;is&nbsp;`lbm'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--transport-opts=OPTS&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;transport&nbsp;module&nbsp;options<br>
+&nbsp;&nbsp;-f,&nbsp;--format=FMT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;format&nbsp;module&nbsp;FMT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FMT&nbsp;may&nbsp;be&nbsp;`csv'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--format-opts=OPTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;format&nbsp;module&nbsp;options<br>
+</code>
+
+<p><a href="lbmmoncache.c"><b><code>lbmmoncache.c</code></b></a> -
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-C,&nbsp;--cache-size=size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;the&nbsp;cache&nbsp;size&nbsp;to&nbsp;'size'&nbsp;entries<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-t,&nbsp;--transport=TRANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;transport&nbsp;module&nbsp;TRANS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TRANS&nbsp;may&nbsp;be&nbsp;`lbm',&nbsp;`udp',&nbsp;or&nbsp;`lbmsnmp',&nbsp;default&nbsp;is&nbsp;`lbm'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--transport-opts=OPTS&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;transport&nbsp;module&nbsp;options<br>
+&nbsp;&nbsp;-f,&nbsp;--format=FMT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;format&nbsp;module&nbsp;FMT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FMT&nbsp;may&nbsp;be&nbsp;`csv'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--format-opts=OPTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;format&nbsp;module&nbsp;options<br>
+</code>
+
+<p><a href="lbmmondata.c"><b><code>lbmmondata.c</code></b></a> -
+<code>Usage:&nbsp;[-c&nbsp;filename]&nbsp;[-t&nbsp;topic]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-t&nbsp;topicname&nbsp;=&nbsp;use&nbsp;topic&nbsp;topicname&nbsp;to&nbsp;receive&nbsp;statistics<br>
+</code>
+
+<p><a href="lbmmonudp.c"><b><code>lbmmonudp.c</code></b></a> -
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-3,&nbsp;--force-32bit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;force&nbsp;all&nbsp;data&nbsp;values&nbsp;to&nbsp;fit&nbsp;within&nbsp;32&nbsp;bits<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;is&nbsp;to&nbsp;use&nbsp;native&nbsp;data&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;applies&nbsp;only&nbsp;to&nbsp;64-bit&nbsp;platforms<br>
+&nbsp;&nbsp;-a,&nbsp;--address=IP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;CSV&nbsp;data&nbsp;to&nbsp;unicast&nbsp;address&nbsp;IP<br>
+&nbsp;&nbsp;-b,&nbsp;--broadcast=IP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;CSV&nbsp;data&nbsp;to&nbsp;broadcast&nbsp;address&nbsp;IP<br>
+&nbsp;&nbsp;-f,&nbsp;--format=FMT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;monitor&nbsp;format&nbsp;module&nbsp;FMT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FMT&nbsp;may&nbsp;be&nbsp;`csv'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--format-opts=OPTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;format&nbsp;module&nbsp;options<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-i,&nbsp;--interface=IP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;multicast&nbsp;via&nbsp;interface&nbsp;IP<br>
+&nbsp;&nbsp;-m,&nbsp;--multicast=GRP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;CSV&nbsp;data&nbsp;to&nbsp;multicast&nbsp;group&nbsp;GRP<br>
+&nbsp;&nbsp;-p,&nbsp;--port=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;CSV&nbsp;data&nbsp;on&nbsp;UDP&nbsp;port&nbsp;NUM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;is&nbsp;port&nbsp;1234<br>
+&nbsp;&nbsp;-t,&nbsp;--transport=TRANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;monitor&nbsp;transport&nbsp;module&nbsp;TRANS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TRANS&nbsp;may&nbsp;be&nbsp;`lbm'&nbsp;or&nbsp;`udp',&nbsp;default&nbsp;is&nbsp;`lbm'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--transport-opts=OPTS&nbsp;&nbsp;use&nbsp;OPTS&nbsp;as&nbsp;transport&nbsp;module&nbsp;options<br>
+&nbsp;&nbsp;-T,&nbsp;--ttl=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;multicast&nbsp;with&nbsp;TTL&nbsp;NUM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;is&nbsp;1<br>
+</code>
+
+<p><a href="lbmmrcv.c"><b><code>lbmmrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;set&nbsp;of&nbsp;topics<br>
+&nbsp;&nbsp;(multiple&nbsp;receivers).<br>
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+&nbsp;&nbsp;-B,&nbsp;--bufsize=#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;receive&nbsp;socket&nbsp;buffer&nbsp;size&nbsp;to&nbsp;#&nbsp;(in&nbsp;MB)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-C,&nbsp;--contexts=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;lbm_context_t&nbsp;objects<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;and&nbsp;end&nbsp;upon&nbsp;receiving&nbsp;End-of-Stream&nbsp;notification<br>
+&nbsp;&nbsp;-e,&nbsp;--end-flag=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean&nbsp;up&nbsp;and&nbsp;exit&nbsp;when&nbsp;file&nbsp;FILE&nbsp;is&nbsp;created<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-i,&nbsp;--initial-topic=NUM&nbsp;&nbsp;use&nbsp;NUM&nbsp;as&nbsp;initial&nbsp;topic&nbsp;number<br>
+&nbsp;&nbsp;-o,&nbsp;--regid-offset=offset&nbsp;&nbsp;use&nbsp;offset&nbsp;to&nbsp;calculate&nbsp;Registration&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(as&nbsp;source&nbsp;registration&nbsp;ID&nbsp;+&nbsp;offset)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;of&nbsp;0&nbsp;forces&nbsp;creation&nbsp;of&nbsp;regid&nbsp;by&nbsp;store<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;done<br>
+&nbsp;&nbsp;-r,&nbsp;--root=STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;topic&nbsp;names&nbsp;with&nbsp;root&nbsp;of&nbsp;STRING<br>
+&nbsp;&nbsp;-R,&nbsp;--receivers=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create&nbsp;NUM&nbsp;receivers<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose<br>
+</code>
+
+<p><a href="lbmmrcvq.c"><b><code>lbmmrcvq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;set&nbsp;of&nbsp;topics<br>
+&nbsp;&nbsp;(multiple&nbsp;receivers)&nbsp;using&nbsp;event&nbsp;queues.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+&nbsp;&nbsp;-B,&nbsp;--bufsize=#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;receive&nbsp;socket&nbsp;buffer&nbsp;size&nbsp;to&nbsp;#&nbsp;(in&nbsp;MB)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-C,&nbsp;--contexts=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;lbm_context_t&nbsp;objects<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-i,&nbsp;--initial-topic=NUM&nbsp;&nbsp;use&nbsp;NUM&nbsp;as&nbsp;initial&nbsp;topic&nbsp;number<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;done<br>
+&nbsp;&nbsp;-r,&nbsp;--root=STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;topic&nbsp;names&nbsp;with&nbsp;root&nbsp;of&nbsp;STRING<br>
+&nbsp;&nbsp;-R,&nbsp;--receivers=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create&nbsp;NUM&nbsp;receivers<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose<br>
+</code>
+
+<p><a href="lbmmreq.c"><b><code>lbmmreq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;requests&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;and&nbsp;processes&nbsp;responses.<br>
+<code>Usage:&nbsp;lbmmreq&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg&nbsp;topicname'<br>
+&nbsp;&nbsp;-d&nbsp;delay&nbsp;=&nbsp;delay&nbsp;sending&nbsp;for&nbsp;delay&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;send&nbsp;messages&nbsp;of&nbsp;len&nbsp;bytes<br>
+&nbsp;&nbsp;-r&nbsp;rate/pct&nbsp;=&nbsp;send&nbsp;with&nbsp;LBT-RM&nbsp;at&nbsp;rate&nbsp;and&nbsp;retransmission&nbsp;pct%<br>
+&nbsp;&nbsp;-R&nbsp;requests&nbsp;=&nbsp;send&nbsp;requests&nbsp;number&nbsp;of&nbsp;requests<br>
+&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="lbmmsrc.c"><b><code>lbmmsrc.c</code></b></a> -
+&nbsp;Send&nbsp;messages&nbsp;on&nbsp;multiple&nbsp;topics,&nbsp;optionally&nbsp;by&nbsp;multiple&nbsp;threads.<br>
+&nbsp;&nbsp;Topic&nbsp;names&nbsp;generated&nbsp;as&nbsp;a&nbsp;root&nbsp;&nbsp;followed&nbsp;by&nbsp;a&nbsp;dot,&nbsp;followed&nbsp;by&nbsp;an&nbsp;integer.<br>
+&nbsp;&nbsp;By&nbsp;default,&nbsp;the&nbsp;first&nbsp;topic&nbsp;created&nbsp;will&nbsp;be&nbsp;'29west.example.multi.0'<br>
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-b,&nbsp;--batch=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;in&nbsp;batch&nbsp;sizes&nbsp;of&nbsp;NUM&nbsp;between&nbsp;each&nbsp;pause<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-d,&nbsp;--delay=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;sending&nbsp;for&nbsp;delay&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-i,&nbsp;--initial-topic=NUM&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;as&nbsp;initial&nbsp;topic&nbsp;number&nbsp;[0]<br>
+&nbsp;&nbsp;-j,&nbsp;--late-join=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enable&nbsp;Late&nbsp;Join&nbsp;with&nbsp;specified&nbsp;retention&nbsp;buffer&nbsp;size&nbsp;(in&nbsp;bytes)<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;length&nbsp;NUM&nbsp;bytes<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;done<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;maximum&nbsp;of&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-P,&nbsp;--pause=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pause&nbsp;NUM&nbsp;milliseconds&nbsp;after&nbsp;each&nbsp;send<br>
+&nbsp;&nbsp;-r,&nbsp;--root=STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;topic&nbsp;names&nbsp;with&nbsp;root&nbsp;of&nbsp;STRING&nbsp;[29west.example.multi]<br>
+&nbsp;&nbsp;-R,&nbsp;--rate=[UM]DATA/RETR&nbsp;&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;stats&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-S,&nbsp;--sources=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;sources<br>
+&nbsp;&nbsp;-T,&nbsp;--threads=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;threads<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose<br>
+</code>
+
+<p><a href="lbmpong.c"><b><code>lbmpong.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;measures&nbsp;message&nbsp;round&nbsp;trip&nbsp;time&nbsp;to<br>
+&nbsp;&nbsp;give&nbsp;a&nbsp;good&nbsp;measure&nbsp;of&nbsp;latency.<br>
+<code>Usage:&nbsp;[-ChIqRv]&nbsp;[-c&nbsp;filename]&nbsp;[-i&nbsp;msgs]&nbsp;[-l&nbsp;len]&nbsp;[-M&nbsp;msgs]&nbsp;[-P&nbsp;msec]&nbsp;[-r&nbsp;rate/pct]&nbsp;[-s&nbsp;seed]&nbsp;[-t&nbsp;secs]&nbsp;[-T&nbsp;topic]&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-C&nbsp;=&nbsp;collect&nbsp;RTT&nbsp;data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-i&nbsp;msgs&nbsp;=&nbsp;send&nbsp;and&nbsp;ignore&nbsp;msgs&nbsp;messages&nbsp;to&nbsp;warm&nbsp;up<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-o&nbsp;offset&nbsp;=&nbsp;use&nbsp;offset&nbsp;to&nbsp;calculate&nbsp;Registration&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(as&nbsp;source&nbsp;registration&nbsp;ID&nbsp;+&nbsp;offset)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;of&nbsp;0&nbsp;forces&nbsp;creation&nbsp;of&nbsp;regid&nbsp;by&nbsp;store<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-I&nbsp;=&nbsp;Use&nbsp;MIM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;use&nbsp;len&nbsp;length&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-M&nbsp;msgs&nbsp;=&nbsp;stop&nbsp;after&nbsp;receiving&nbsp;msgs&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-P&nbsp;msec&nbsp;=&nbsp;pause&nbsp;after&nbsp;each&nbsp;send&nbsp;msec&nbsp;milliseconds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-q&nbsp;=&nbsp;use&nbsp;an&nbsp;LBM&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-r&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-r&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-R&nbsp;=&nbsp;perform&nbsp;RTT&nbsp;measurement&nbsp;per&nbsp;message<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;seed&nbsp;=&nbsp;init&nbsp;randomization&nbsp;of&nbsp;contents&nbsp;of&nbsp;message&nbsp;payload<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-t&nbsp;secs&nbsp;=&nbsp;run&nbsp;for&nbsp;secs&nbsp;seconds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-T&nbsp;topic&nbsp;=&nbsp;topic&nbsp;name&nbsp;prefix&nbsp;(appended&nbsp;with&nbsp;'/'&nbsp;and&nbsp;id)&nbsp;[lbmpong]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;about&nbsp;each&nbsp;message&nbsp;(for&nbsp;RTT&nbsp;only)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;=&nbsp;either&nbsp;'ping'&nbsp;or&nbsp;'pong'<br>
+</code>
+
+<p><a href="lbmprice.c"><b><code>lbmprice.c</code></b></a> -
+&nbsp;Simulated&nbsp;price&nbsp;source&nbsp;and&nbsp;receiver&nbsp;for&nbsp;demonstration.<br>
+<code>Usage:&nbsp;-s&nbsp;[-h]&nbsp;[-c&nbsp;filename]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-H&nbsp;=&nbsp;act&nbsp;has&nbsp;Hot&nbsp;Failover&nbsp;relay&nbsp;for&nbsp;a&nbsp;price&nbsp;source<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;pct&nbsp;=&nbsp;induce&nbsp;random&nbsp;receiver&nbsp;loss&nbsp;of&nbsp;pct&nbsp;percent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-n&nbsp;ms&nbsp;=&nbsp;set&nbsp;receiver&nbsp;NAK&nbsp;generation&nbsp;interval&nbsp;to&nbsp;ms&nbsp;milliseconds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;=&nbsp;act&nbsp;as&nbsp;a&nbsp;price&nbsp;source&nbsp;(acts&nbsp;as&nbsp;a&nbsp;receiver&nbsp;by&nbsp;default)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-t&nbsp;ttl&nbsp;=&nbsp;set&nbsp;resolver&nbsp;(and&nbsp;multicast&nbsp;source)&nbsp;ttl&nbsp;to&nbsp;ttl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose<br>
+<code>Usage:&nbsp;[-h]&nbsp;[-c&nbsp;filename]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;read&nbsp;config&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-H&nbsp;=&nbsp;use&nbsp;Hot&nbsp;Failover&nbsp;receiver<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;pct&nbsp;=&nbsp;induce&nbsp;random&nbsp;receiver&nbsp;loss&nbsp;of&nbsp;pct&nbsp;percent,&nbsp;print&nbsp;max&nbsp;latency<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-n&nbsp;ms&nbsp;=&nbsp;set&nbsp;receiver&nbsp;NAK&nbsp;generation&nbsp;interval&nbsp;to&nbsp;ms&nbsp;milliseconds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-o&nbsp;mode&nbsp;=&nbsp;set&nbsp;ordered&nbsp;delivery&nbsp;mode&nbsp;(1=ordered,&nbsp;0=arrival&nbsp;order)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-t&nbsp;ttl&nbsp;=&nbsp;set&nbsp;resolver&nbsp;(and&nbsp;multicast&nbsp;source)&nbsp;ttl&nbsp;to&nbsp;ttl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose<br>
+</code>
+
+<p><a href="lbmpwdgen.c"><b><code>lbmpwdgen.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;generates&nbsp;password&nbsp;files&nbsp;for&nbsp;SRP&nbsp;authentication.<br>
+<code>Usage:&nbsp;lbmpwdgen<br>
+&nbsp;&nbsp;After&nbsp;the&nbsp;command&nbsp;prompt,&nbsp;pg>,&nbsp;enter&nbsp;one&nbsp;of&nbsp;the&nbsp;commands&nbsp;listed&nbsp;blow:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;open&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open&nbsp;pasword&nbsp;file,&nbsp;e.g.&nbsp;open&nbsp;file&nbsp;temp.xml.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;password&nbsp;file,&nbsp;e.g.&nbsp;close.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;a&nbsp;user&nbsp;with&nbsp;its&nbsp;name,&nbsp;password&nbsp;and&nbsp;role,&nbsp;e.g.&nbsp;add&nbsp;user&nbsp;userAbc&nbsp;pass1234&nbsp;admin.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;del&nbsp;user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;the&nbsp;user&nbsp;entry&nbsp;in&nbsp;the&nbsp;password&nbsp;file,&nbsp;e.g.&nbsp;del&nbsp;user&nbsp;userAbc.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;del&nbsp;urole&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;the&nbsp;role&nbsp;from&nbsp;the&nbsp;user's&nbsp;role&nbsp;list,&nbsp;e.g.&nbsp;del&nbsp;urole&nbsp;user&nbsp;admin.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;a&nbsp;role&nbsp;with&nbsp;its&nbsp;permitted&nbsp;action,&nbsp;e.g.&nbsp;add&nbsp;role&nbsp;admin&nbsp;MSG_LIST.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;the&nbsp;usage.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;quit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quit&nbsp;the&nbsp;command&nbsp;shell.<br>
+</code>
+
+<p><a href="lbmrcv.c"><b><code>lbmrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).<br>
+<code>Usage:&nbsp;lbmrcv&nbsp;[-ACEfhqsSvV]&nbsp;[-c&nbsp;filename]&nbsp;[-r&nbsp;msgs]&nbsp;[-U&nbsp;losslev]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-A,&nbsp;--ascii&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;messages&nbsp;as&nbsp;ASCII&nbsp;text&nbsp;(-A&nbsp;-A&nbsp;=&nbsp;newlines&nbsp;after&nbsp;each&nbsp;msg)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-C,&nbsp;--context-stats&nbsp;&nbsp;fetch&nbsp;context&nbsp;rather&nbsp;than&nbsp;receiver&nbsp;stats<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;when&nbsp;source&nbsp;stops&nbsp;sending<br>
+&nbsp;&nbsp;-f,&nbsp;--failover&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;a&nbsp;hot-failover&nbsp;receiver<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-q,&nbsp;--eventq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;an&nbsp;LBM&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;-r,&nbsp;--msgs=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-O,&nbsp;--orderchecks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enable&nbsp;message&nbsp;order&nbsp;checking<br>
+&nbsp;&nbsp;-N,&nbsp;--channel=NUM&nbsp;&nbsp;&nbsp;&nbsp;subscribe&nbsp;to&nbsp;channel&nbsp;NUM<br>
+&nbsp;&nbsp;-s,&nbsp;--stats=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;LBM&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;--max-sources=NUM&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;up&nbsp;to&nbsp;NUM&nbsp;sources&nbsp;(for&nbsp;statistics&nbsp;gathering&nbsp;purposes)<br>
+&nbsp;&nbsp;-S,&nbsp;--stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;when&nbsp;source&nbsp;stops&nbsp;sending,&nbsp;and&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;-U,&nbsp;--losslev=NUM&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;NUM%&nbsp;unrecoverable&nbsp;loss<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;-V,&nbsp;--verify&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+<p><a href="lbmrcvq.c"><b><code>lbmrcvq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver)&nbsp;using&nbsp;an&nbsp;event&nbsp;queue.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;-C,&nbsp;--context-stats&nbsp;&nbsp;&nbsp;fetch&nbsp;context&nbsp;rather&nbsp;than&nbsp;receiver&nbsp;stats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-r&nbsp;NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-s,&nbsp;--stats=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;LBM&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-S,&nbsp;--stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends,&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;-V,&nbsp;--verify&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+<p><a href="lbmreq.c"><b><code>lbmreq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;requests&nbsp;on&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;and&nbsp;waits&nbsp;for&nbsp;responses.<br>
+Purpose:&nbsp;Send&nbsp;request&nbsp;messages&nbsp;from&nbsp;&nbsp;a&nbsp;single&nbsp;source&nbsp;with&nbsp;settable&nbsp;interval<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between&nbsp;messages.<br>
+<code>Usage:&nbsp;lbmreq&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-d&nbsp;sec&nbsp;=&nbsp;delay&nbsp;sending&nbsp;for&nbsp;delay&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;send&nbsp;messages&nbsp;of&nbsp;len&nbsp;bytes<br>
+&nbsp;&nbsp;-L&nbsp;linger&nbsp;=&nbsp;linger&nbsp;for&nbsp;linger&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-P&nbsp;sec&nbsp;=&nbsp;pause&nbsp;sec&nbsp;seconds&nbsp;after&nbsp;sending&nbsp;request&nbsp;for&nbsp;responses&nbsp;to&nbsp;arrive<br>
+&nbsp;&nbsp;-r&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-r&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-r&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-R&nbsp;requests&nbsp;=&nbsp;send&nbsp;requests&nbsp;number&nbsp;of&nbsp;requests<br>
+&nbsp;&nbsp;-q&nbsp;=&nbsp;Use&nbsp;Event&nbsp;Queue<br>
+&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="lbmresp.c"><b><code>lbmresp.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;waits&nbsp;for&nbsp;requests&nbsp;and&nbsp;sends&nbsp;responses&nbsp;back<br>
+&nbsp;&nbsp;on&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single&nbsp;receiver).<br>
+<code>Usage:&nbsp;[-Ehsv]&nbsp;[-c&nbsp;filename]&nbsp;[-l&nbsp;len]&nbsp;[-r&nbsp;responses]&nbsp;[-f&nbsp;topic]&nbsp;topic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-E&nbsp;=&nbsp;end&nbsp;after&nbsp;end-of-stream<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;use&nbsp;len&nbsp;bytes&nbsp;for&nbsp;the&nbsp;length&nbsp;of&nbsp;each&nbsp;response<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;responses&nbsp;=&nbsp;send&nbsp;responses&nbsp;messages&nbsp;for&nbsp;each&nbsp;request<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;=&nbsp;be&nbsp;silent&nbsp;about&nbsp;incoming&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-f&nbsp;=&nbsp;forward&nbsp;request&nbsp;to&nbsp;responders&nbsp;listening&nbsp;on&nbsp;given&nbsp;topic<br>
+</code>
+
+<p><a href="lbmresping.c"><b><code>lbmresping.c</code></b></a> -
+&nbsp;Create&nbsp;a&nbsp;source&nbsp;and&nbsp;see&nbsp;if&nbsp;it&nbsp;can&nbsp;be&nbsp;resolved.&nbsp;&nbsp;Tests<br>
+&nbsp;&nbsp;operation&nbsp;of&nbsp;lbm&nbsp;resolver.&nbsp;&nbsp;Handy&nbsp;for&nbsp;troubleshooting&nbsp;problems&nbsp;reaching<br>
+&nbsp;&nbsp;lbm&nbsp;unicast&nbsp;resolvers.&nbsp;&nbsp;Reports&nbsp;time&nbsp;taken&nbsp;for&nbsp;topic&nbsp;resolution&nbsp;and<br>
+&nbsp;&nbsp;connection&nbsp;to&nbsp;the&nbsp;source.<br>
+<code>Usage:&nbsp;[-h]&nbsp;[-c&nbsp;filename]&nbsp;[unicast_resolver_host]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+</code>
+
+<p><a href="lbmrespq.c"><b><code>lbmrespq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;waits&nbsp;for&nbsp;requests&nbsp;and&nbsp;sends&nbsp;responses&nbsp;back<br>
+&nbsp;&nbsp;on&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single&nbsp;receiver),&nbsp;using&nbsp;an&nbsp;event&nbsp;queue.<br>
+<code>Usage:&nbsp;[-hs]&nbsp;[-c&nbsp;filename]&nbsp;[-r&nbsp;msgs]&nbsp;topic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-P&nbsp;msecs&nbsp;=&nbsp;pause&nbsp;msecs&nbsp;milliseconds&nbsp;before&nbsp;sending&nbsp;response<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;msgs&nbsp;=&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;msgs&nbsp;request&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-s&nbsp;=&nbsp;be&nbsp;silent&nbsp;about&nbsp;requests/sec&nbsp;rate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;=&nbsp;be&nbsp;verbose&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="lbmspike.c"><b><code>lbmspike.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;generates&nbsp;&&nbsp;receives&nbsp;message&nbsp;spikes&nbsp;for<br>
+&nbsp;performance&nbsp;testing.<br>
+<code>Usage:&nbsp;-R&nbsp;[-dhq]&nbsp;[-c&nbsp;filename]&nbsp;[-o&nbsp;ord]&nbsp;[-u&nbsp;bufsiz]&nbsp;[topic]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;filename.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-d&nbsp;=&nbsp;dump&nbsp;message&nbsp;time&nbsp;stamps&nbsp;to&nbsp;a&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-o&nbsp;ord&nbsp;=&nbsp;set&nbsp;receiver&nbsp;ordered&nbsp;delivery&nbsp;to&nbsp;ord<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-q&nbsp;=&nbsp;processess&nbsp;received&nbsp;messages&nbsp;on&nbsp;an&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-R&nbsp;=&nbsp;role&nbsp;is&nbsp;receiver&nbsp;(default&nbsp;role&nbsp;is&nbsp;source)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-u&nbsp;bufsiz&nbsp;=&nbsp;UDP&nbsp;buffer&nbsp;size&nbsp;for&nbsp;LBT-RM<br>
+<code>Usage:&nbsp;[-dhLn]&nbsp;[-B&nbsp;bghumms]&nbsp;[-c&nbsp;filename]&nbsp;[-l&nbsp;len]&nbsp;[-M&nbsp;msgs]&nbsp;[-r&nbsp;rate/pct]&nbsp;[-v&nbsp;recovms]&nbsp;[topic]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-B&nbsp;bghumms&nbsp;=&nbsp;milliseconds&nbsp;between&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c&nbsp;filename&nbsp;=&nbsp;read&nbsp;config&nbsp;file&nbsp;filename<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-d&nbsp;=&nbsp;dump&nbsp;message&nbsp;time&nbsp;stamps&nbsp;to&nbsp;a&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-h&nbsp;=&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-l&nbsp;len&nbsp;=&nbsp;use&nbsp;len&nbsp;length&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-L&nbsp;=&nbsp;use&nbsp;TCP-LB<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-M&nbsp;msgs&nbsp;=&nbsp;stop&nbsp;after&nbsp;receiving&nbsp;msgs&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-n&nbsp;=&nbsp;use&nbsp;non-blocking&nbsp;writes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;[UM]DATA/RETR&nbsp;=&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-r&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-r&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v&nbsp;recovms&nbsp;=&nbsp;milliseconds&nbsp;after&nbsp;spike&nbsp;to&nbsp;allow&nbsp;for&nbsp;recovery<br>
+</code>
+
+<p><a href="lbmsrc.c"><b><code>lbmsrc.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;as&nbsp;fast&nbsp;as&nbsp;it&nbsp;can.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-d,&nbsp;--delay=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;sending&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-j,&nbsp;--late-join=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enable&nbsp;Late&nbsp;Join&nbsp;with&nbsp;specified&nbsp;retention&nbsp;buffer&nbsp;size&nbsp;(in&nbsp;bytes)<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;NUM&nbsp;bytes<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-n,&nbsp;--non-block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;non-blocking&nbsp;I/O<br>
+&nbsp;&nbsp;-N,&nbsp;--channel=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;on&nbsp;channel&nbsp;NUM<br>
+&nbsp;&nbsp;-P,&nbsp;--pause=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pause&nbsp;NUM&nbsp;milliseconds&nbsp;after&nbsp;each&nbsp;send<br>
+&nbsp;&nbsp;-R,&nbsp;--rate=[UM]DATA/RETR&nbsp;&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-V,&nbsp;--verifiable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;construct&nbsp;verifiable&nbsp;messages<br>
+</code>
+
+<p><a href="lbmstrm.c"><b><code>lbmstrm.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;messages&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(multiple<br>
+&nbsp;&nbsp;sources)&nbsp;with&nbsp;rate&nbsp;control.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+&nbsp;&nbsp;Topic&nbsp;names&nbsp;generated&nbsp;as&nbsp;a&nbsp;root,&nbsp;followed&nbsp;by&nbsp;a&nbsp;dot,&nbsp;followed&nbsp;by&nbsp;an&nbsp;integer.<br>
+&nbsp;&nbsp;By&nbsp;default,&nbsp;the&nbsp;first&nbsp;topic&nbsp;created&nbsp;will&nbsp;be&nbsp;'29west.example.multi.0'<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-H,&nbsp;--hf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;hot&nbsp;failover&nbsp;sources<br>
+&nbsp;&nbsp;-i,&nbsp;--initial-topic=NUM&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;as&nbsp;initial&nbsp;topic&nbsp;number&nbsp;[0]<br>
+&nbsp;&nbsp;-j,&nbsp;--late-join=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enable&nbsp;Late&nbsp;Join&nbsp;with&nbsp;specified&nbsp;retention&nbsp;buffer&nbsp;size&nbsp;(in&nbsp;bytes)<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;length&nbsp;NUM&nbsp;bytes&nbsp;[25]<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;done&nbsp;[10]<br>
+&nbsp;&nbsp;-m,&nbsp;--message-rate=NUM&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;at&nbsp;NUM&nbsp;messages&nbsp;per&nbsp;second&nbsp;[10000]<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;maximum&nbsp;of&nbsp;NUM&nbsp;messages&nbsp;[10000000]<br>
+&nbsp;&nbsp;-r,&nbsp;--root=STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;topic&nbsp;names&nbsp;with&nbsp;root&nbsp;of&nbsp;STRING&nbsp;[29west.example.multi]<br>
+&nbsp;&nbsp;-R,&nbsp;--rate=[UM]DATA/RETR&nbsp;&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;stats&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-S,&nbsp;--sources=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;sources&nbsp;[100]<br>
+&nbsp;&nbsp;-t,&nbsp;--tight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tight&nbsp;loop&nbsp;(cpu-bound)&nbsp;for&nbsp;even&nbsp;message&nbsp;spacing<br>
+&nbsp;&nbsp;-T,&nbsp;--threads=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;NUM&nbsp;threads&nbsp;[1]<br>
+&nbsp;&nbsp;-x,&nbsp;--bits=NUM			&nbsp;use&nbsp;NUM&nbsp;bits&nbsp;for&nbsp;hot&nbsp;failover&nbsp;sequence&nbsp;number&nbsp;size&nbsp;(32&nbsp;or&nbsp;64)<br>
+</code>
+
+<p><a href="lbmtrreq.c"><b><code>lbmtrreq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;invokes&nbsp;the&nbsp;Topic&nbsp;Resolution&nbsp;Request&nbsp;API.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-a,&nbsp;--adverts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Request&nbsp;Advertisements<br>
+&nbsp;&nbsp;-q,&nbsp;--queries&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Request&nbsp;Queries<br>
+&nbsp;&nbsp;-w,&nbsp;--wildcard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Request&nbsp;Wildcard&nbsp;Queries<br>
+&nbsp;&nbsp;-i,&nbsp;--interval=NUM&nbsp;&nbsp;&nbsp;&nbsp;Interval&nbsp;between&nbsp;request<br>
+&nbsp;&nbsp;-d,&nbsp;--duration=NUM&nbsp;&nbsp;&nbsp;&nbsp;Minimum&nbsp;duration&nbsp;of&nbsp;requests<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+</code>
+
+<p><a href="lbmwrcv.c"><b><code>lbmwrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;wildcard&nbsp;receiver<br>
+<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;pattern<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-D,&nbsp;--deregister&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send&nbsp;Deregistration&nbsp;after&nbsp;receiving&nbsp;1000&nbsp;messages<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;event&nbsp;queue<br>
+&nbsp;&nbsp;-r&nbsp;NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-N,&nbsp;--channel=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subscribe&nbsp;to&nbsp;channel&nbsp;NUM<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="lbmwrcvq.c"><b><code>lbmwrcvq.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;wildcard&nbsp;receiver<br>
+<br>
+<code>Usage:&nbsp;[options]&nbsp;pattern<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multiple&nbsp;config&nbsp;files&nbsp;are&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:&nbsp;&nbsp;'-c&nbsp;file1.cfg&nbsp;-c&nbsp;file2.cfg'<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-r&nbsp;NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+</code>
+
+<p><a href="umeblock.c"><b><code>umeblock.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;at&nbsp;a&nbsp;rate-limited&nbsp;pace,&nbsp;using&nbsp;blocking&nbsp;send.&nbsp;Understands&nbsp;UME.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;NUM&nbsp;bytes<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;additional&nbsp;info&nbsp;in&nbsp;verbose&nbsp;form<br>
+</code>
+
+<p><a href="umercv.c"><b><code>umercv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).&nbsp;Understands&nbsp;UME.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-1,&nbsp;--compat10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;act&nbsp;as&nbsp;a&nbsp;UME&nbsp;1.2&nbsp;and&nbsp;earlier&nbsp;receiver&nbsp;would&nbsp;act<br>
+&nbsp;&nbsp;-A,&nbsp;--ascii&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;messages&nbsp;as&nbsp;ASCII&nbsp;text&nbsp;(-A&nbsp;-A&nbsp;for&nbsp;newlines&nbsp;after&nbsp;each&nbsp;msg)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;FILE&nbsp;as&nbsp;LBM&nbsp;configuration&nbsp;file<br>
+&nbsp;&nbsp;-D,&nbsp;--deregister=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deregister&nbsp;the&nbsp;receiver&nbsp;after&nbsp;receiving&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;-e,&nbsp;--explicit-ack=N&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;an&nbsp;Explicit&nbsp;ACK&nbsp;every&nbsp;N&nbsp;messages<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;--max-sources=num&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;num&nbsp;sources&nbsp;(for&nbsp;statistics&nbsp;gathering&nbsp;purposes)<br>
+&nbsp;&nbsp;-i,&nbsp;--regid-offset=offset&nbsp;&nbsp;&nbsp;use&nbsp;offset&nbsp;to&nbsp;calculate&nbsp;Registration&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(as&nbsp;source&nbsp;registration&nbsp;ID&nbsp;+&nbsp;offset)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;of&nbsp;0&nbsp;forces&nbsp;creation&nbsp;of&nbsp;regid&nbsp;by&nbsp;store<br>
+&nbsp;&nbsp;-N,&nbsp;--seqnum=X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;recovery&nbsp;sequence&nbsp;number&nbsp;info&nbsp;and&nbsp;set&nbsp;low&nbsp;seqnum&nbsp;to&nbsp;low+X<br>
+&nbsp;&nbsp;-r,&nbsp;--msgs=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds,&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-S,&nbsp;--stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends,&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;-u,&nbsp;--uregid=num&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;User&nbsp;settable&nbsp;Registration&nbsp;ID&nbsp;to&nbsp;num&nbsp;for&nbsp;context<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;-V,&nbsp;--verify&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;message&nbsp;contents<br>
+&nbsp;&nbsp;-x,&nbsp;--no-exit-on-reg-error&nbsp;&nbsp;don't&nbsp;exit&nbsp;on&nbsp;registration&nbsp;error&nbsp;(default&nbsp;is&nbsp;to&nbsp;exit)<br>
+</code>
+
+<p><a href="umesrc.c"><b><code>umesrc.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;at&nbsp;a&nbsp;rate-limited&nbsp;pace.&nbsp;Understands&nbsp;UME.<br>
+&nbsp;&nbsp;-1,&nbsp;--compat10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;act&nbsp;as&nbsp;a&nbsp;UME&nbsp;1.2&nbsp;and&nbsp;earlier&nbsp;source&nbsp;would&nbsp;act<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE<br>
+&nbsp;&nbsp;-d,&nbsp;--delay=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;sending&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-D,&nbsp;--deregister			&nbsp;deregister&nbsp;the&nbsp;source&nbsp;after&nbsp;sending&nbsp;messages<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-I,&nbsp;--regid=ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;Registration&nbsp;ID&nbsp;of&nbsp;ID<br>
+&nbsp;&nbsp;-j,&nbsp;--late-join&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turn&nbsp;on&nbsp;UME&nbsp;late&nbsp;join<br>
+&nbsp;&nbsp;-f,&nbsp;--flight-size=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;NUM&nbsp;unstabilized&nbsp;messages&nbsp;in&nbsp;flight&nbsp;(determines&nbsp;message&nbsp;rate)<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;NUM&nbsp;bytes<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-m,&nbsp;--message-rate=NUM&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;at&nbsp;NUM&nbsp;messages&nbsp;per&nbsp;second&nbsp;(trumped&nbsp;by&nbsp;-f)<br>
+&nbsp;&nbsp;-N,&nbsp;--seqnum-info&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;sequence&nbsp;number&nbsp;information&nbsp;from&nbsp;source&nbsp;events<br>
+&nbsp;&nbsp;-n,&nbsp;--non-block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;non-blocking&nbsp;I/O<br>
+&nbsp;&nbsp;-P,&nbsp;--pause=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pause&nbsp;NUM&nbsp;milliseconds&nbsp;after&nbsp;each&nbsp;send<br>
+&nbsp;&nbsp;-R,&nbsp;--rate=[UM]DATA/RETR&nbsp;&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-S,&nbsp;--store=IP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;specified&nbsp;UME&nbsp;store&nbsp;(note:&nbsp;if&nbsp;compat10&nbsp;flag&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enabled,&nbsp;the&nbsp;expected&nbsp;argument&nbsp;is&nbsp;IP:PORT&nbsp;instead)<br>
+&nbsp;&nbsp;-t,&nbsp;--storename=NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;specified&nbsp;UME&nbsp;store<br>
+&nbsp;&nbsp;-T,&nbsp;--stability&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;Message&nbsp;Stability&nbsp;Notification<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;additional&nbsp;info&nbsp;in&nbsp;verbose&nbsp;form<br>
+&nbsp;&nbsp;-V,&nbsp;--verifiable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;construct&nbsp;verifiable&nbsp;messages<br>
+</code>
+
+<p><a href="umqsrc.c"><b><code>umqsrc.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;sends&nbsp;to&nbsp;a&nbsp;given&nbsp;topic&nbsp;(single<br>
+&nbsp;&nbsp;source)&nbsp;at&nbsp;a&nbsp;rate-limited&nbsp;pace.&nbsp;Understands&nbsp;UMQ.<br>
+&nbsp;&nbsp;-A,&nbsp;--appsets=CFG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;ULB&nbsp;Application&nbsp;Sets&nbsp;given&nbsp;by&nbsp;CFG<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;LBM&nbsp;configuration&nbsp;file&nbsp;FILE<br>
+&nbsp;&nbsp;-d,&nbsp;--delay=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;sending&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;after&nbsp;source&nbsp;creation<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-f,&nbsp;--flight-size=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;NUM&nbsp;unstabilized&nbsp;messages&nbsp;in&nbsp;flight&nbsp;(determines&nbsp;message&nbsp;rate)<br>
+&nbsp;&nbsp;-i,&nbsp;--ids&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;Message&nbsp;IDs&nbsp;for&nbsp;sent&nbsp;message<br>
+&nbsp;&nbsp;-I,&nbsp;--im&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;submit&nbsp;Immediate&nbsp;Messages&nbsp;to&nbsp;the&nbsp;Queue<br>
+&nbsp;&nbsp;-l,&nbsp;--length=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;messages&nbsp;of&nbsp;NUM&nbsp;bytes<br>
+&nbsp;&nbsp;-L,&nbsp;--linger=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;linger&nbsp;for&nbsp;NUM&nbsp;seconds&nbsp;before&nbsp;closing&nbsp;context<br>
+&nbsp;&nbsp;-M,&nbsp;--messages=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-m,&nbsp;--message-rate=NUM&nbsp;&nbsp;&nbsp;&nbsp;send&nbsp;at&nbsp;NUM&nbsp;messages&nbsp;per&nbsp;second&nbsp;(trumped&nbsp;by&nbsp;-f)<br>
+&nbsp;&nbsp;-n,&nbsp;--non-block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;non-blocking&nbsp;I/O<br>
+&nbsp;&nbsp;-P,&nbsp;--pause=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pause&nbsp;NUM&nbsp;milliseconds&nbsp;after&nbsp;each&nbsp;send<br>
+&nbsp;&nbsp;-Q,&nbsp;--queue=name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;Queue&nbsp;given&nbsp;by&nbsp;name<br>
+&nbsp;&nbsp;-R,&nbsp;--rate=[UM]DATA/RETR&nbsp;&nbsp;Set&nbsp;transport&nbsp;type&nbsp;to&nbsp;LBT-R[UM],&nbsp;set&nbsp;data&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;bits&nbsp;per&nbsp;second,&nbsp;and&nbsp;set&nbsp;retransmit&nbsp;rate&nbsp;limit&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETR&nbsp;bits&nbsp;per&nbsp;second.&nbsp;&nbsp;For&nbsp;both&nbsp;limits,&nbsp;the&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k,&nbsp;m,&nbsp;and&nbsp;g&nbsp;suffixes&nbsp;may&nbsp;be&nbsp;used.&nbsp;&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'-R&nbsp;1m/500k'&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;'-R&nbsp;1000000/500000'<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds<br>
+&nbsp;&nbsp;-T,&nbsp;--stability&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;Message&nbsp;Stability&nbsp;Notification<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;additional&nbsp;info&nbsp;in&nbsp;verbose&nbsp;form<br>
+&nbsp;&nbsp;-V,&nbsp;--verifiable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;construct&nbsp;verifiable&nbsp;messages<br>
+&nbsp;&nbsp;-X,&nbsp;--index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send&nbsp;messages&nbsp;on&nbsp;specified&nbsp;index<br>
+</code>
+
+<p><a href="umqrcv.c"><b><code>umqrcv.c</code></b></a> -
+&nbsp;application&nbsp;that&nbsp;receives&nbsp;messages&nbsp;from&nbsp;a&nbsp;given&nbsp;topic<br>
+&nbsp;&nbsp;(single&nbsp;receiver).&nbsp;Understands&nbsp;UMQ.<br>
+<code>Usage:&nbsp;%s&nbsp;[options]&nbsp;topic<br>
+Available&nbsp;options:<br>
+&nbsp;&nbsp;-A,&nbsp;--ascii&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;messages&nbsp;as&nbsp;ASCII&nbsp;text&nbsp;(-A&nbsp;-A&nbsp;for&nbsp;newlines&nbsp;after&nbsp;each&nbsp;msg)<br>
+&nbsp;&nbsp;-c,&nbsp;--config=FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;FILE&nbsp;as&nbsp;LBM&nbsp;configuration&nbsp;file<br>
+&nbsp;&nbsp;-D,&nbsp;--dereg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deregister&nbsp;upon&nbsp;exit<br>
+&nbsp;&nbsp;-d,&nbsp;--delay=NUM		&nbsp;delay&nbsp;receiver&nbsp;creation&nbsp;NUM&nbsp;seconds&nbsp;from&nbsp;context&nbsp;creation<br>
+&nbsp;&nbsp;-E,&nbsp;--exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends<br>
+&nbsp;&nbsp;-h,&nbsp;--help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;this&nbsp;help&nbsp;and&nbsp;exit<br>
+&nbsp;&nbsp;-I,&nbsp;--type-id=ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;Receiver&nbsp;Type&nbsp;ID&nbsp;to&nbsp;ID<br>
+&nbsp;&nbsp;--max-sources=num&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow&nbsp;num&nbsp;sources&nbsp;(for&nbsp;statistics&nbsp;gathering&nbsp;purposes)<br>
+&nbsp;&nbsp;-r,&nbsp;--msgs=NUM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;receiver&nbsp;after&nbsp;NUM&nbsp;messages<br>
+&nbsp;&nbsp;-s,&nbsp;--statistics=NUM&nbsp;&nbsp;print&nbsp;statistics&nbsp;every&nbsp;NUM&nbsp;seconds,&nbsp;along&nbsp;with&nbsp;bandwidth<br>
+&nbsp;&nbsp;-S,&nbsp;--stop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;after&nbsp;source&nbsp;ends,&nbsp;print&nbsp;throughput&nbsp;summary<br>
+&nbsp;&nbsp;-X,&nbsp;--index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reserve&nbsp;given&nbsp;index&nbsp;if&nbsp;possible,&nbsp;or&nbsp;leave&nbsp;blank&nbsp;to&nbsp;reserve&nbsp;random&nbsp;index<br>
+&nbsp;&nbsp;-v,&nbsp;--verbose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;verbose&nbsp;about&nbsp;incoming&nbsp;messages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-v&nbsp;-v&nbsp;=&nbsp;be&nbsp;even&nbsp;more&nbsp;verbose)<br>
+&nbsp;&nbsp;-V,&nbsp;--verify&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify&nbsp;message&nbsp;contents<br>
+</code>
+
+</body>
+<script type="text/javascript">highlight();</script></html>

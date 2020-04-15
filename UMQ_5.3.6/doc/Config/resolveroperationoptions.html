@@ -1,0 +1,1969 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Resolver Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Major Options" href="majoroptions.html" />
+<link rel="NEXT" title="Multicast Resolver Network Options"
+href="multicastresolvernetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="majoroptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="multicastresolvernetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="RESOLVEROPERATIONOPTIONS" name="RESOLVEROPERATIONOPTIONS">4.3.
+Resolver Operation Options</a></h1>
+
+<p>See <a href="../Design/architecture.html#TOPIC-RESOLUTION" target="_top">Topic
+Resolution</a> for more information.</p>
+
+<p>The following topic resolution options have been deprecated in <b
+class="APPLICATION">LBM</b> Version 4.0.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">resolver_active_source_interval</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">resolver_active_threshold</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">resolver_maximum_advertisements</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">resolver_maximum_queries</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">resolver_query_interval</tt></p>
+</li>
+</ul>
+
+<p>See <a href="../Config/disable-topic-res.html#PRE40-TR" target="_top">Re-establish
+Pre-4.0 Topic Resolution</a> for option values that configure the topic resolution used
+in <b class="APPLICATION">LBM</b> Version 3.6 and prior versions. You should also comment
+out or remove from your <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration file the deprecated configuration options shown
+above.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MIN-INTERVAL-VALUES" name="MIN-INTERVAL-VALUES">4.3.1. Minimum
+Values for Advertisement and Query Intervals</a></h2>
+
+<p>These intervals have the following effective minimal values.</p>
+
+<ul>
+<li>
+<p>10 ms for Initial Phase Advertisements</p>
+</li>
+
+<li>
+<p>20 ms for Initial Phase Queries</p>
+</li>
+
+<li>
+<p>30 ms Wildcard Queries</p>
+</li>
+
+<li>
+<p>100 ms for Sustaining Phase Advertisements and Queries</p>
+</li>
+</ul>
+
+<p>These effective minimums exist because the internal timer that schedules
+advertisements and queries fires at the stated interval, i.e., every 10 ms for Initial
+Phase Advertisements, every 20 ms for Initial Phase Queries, etc. If you set the option's
+value below the minimum, after the the initial advertisement or query at 0 ms, the
+resolver schedules the second advertisement or query at the first timer "tick", which is
+the minimum. Subsequent advertisements or queries can only be issued at the next timer
+"tick". If you increase this option from the default to a value that is not a multiple of
+the minimum, the resolver maintains the rate you establish as an average over subsequent
+"ticks".</p>
+
+<p>As an example, If you set <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTSUSTAININTERVAL"
+target="_top"><tt class="LITERAL">resolver_advertisement_sustain_interval</tt></a> or <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYSUSTAININTERVAL"
+target="_top"><tt class="LITERAL">resolver_query_sustain_interval</tt></a> at 10 ms, the
+resolver schedules the second advertisement or query after the initial (0 ms) at the
+first timer "tick", which is 100 ms. Subsequent advertisements or queries can only be
+issued at the next timer "tick" (every 100 ms). If you increase either option from the
+default to 1.25 seconds, for example and not a multiple of 100 ms, the resolver maintains
+the rate you establish as an average over subsequent "ticks". That is, the second
+advertisement or query goes out at the 1300 ms "tick". The resolver tracks the tardiness
+of this advertisement (50 ms) and adjusts the next advertisement or query, which goes out
+at 2500 ms, giving an average of 1250 ms or 1.25 seconds.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDISABLEEXTENDEDTOPICRESOLUTIONMESSAGEOPTIONS"
+name="CONTEXTDISABLEEXTENDEDTOPICRESOLUTIONMESSAGEOPTIONS">4.3.2. <span
+class="lbm-option-name"><span
+class="PHRASE">disable_extended_topic_resolution_message_options
+(context)</span></span></a></h2>
+
+<p>This is a topic resolution compatibility option that, when set to 1, lets LBM 4.0 (or
+later) installations work with LBM 3.5.3 / UME 2.2.4 (or earlier) installations. If you
+do not have early-version installations in the network, leave this option at 0.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3843" name="AEN3843"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3866" name="AEN3866"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Enable compatibility with earlier-version installations (and disable some message
+structure features).</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Normal current-version compatibility. Strongly recommended. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLUTIONNOSOURCENOTIFICATIONTHRESHOLD"
+name="RECEIVERRESOLUTIONNOSOURCENOTIFICATIONTHRESHOLD">4.3.3. <span
+class="lbm-option-name"><span class="PHRASE">resolution_no_source_notification_threshold
+(receiver)</span></span></a></h2>
+
+<p>The threshold for the number of unanswered topic resolution queries before <b
+class="APPLICATION">UM</b> delivers a <code
+class="CONSTANT">LBM_MSG_NO_SOURCE_NOTIFICATION</code> for the topic. The receiver does
+not stop querying after the delivery of this notification. A value of 0 indicates no
+notifications will be sent.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3896" name="AEN3896"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>Number of queries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (do not
+notify)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLUTIONNUMBEROFSOURCESQUERYTHRESHOLD"
+name="RECEIVERRESOLUTIONNUMBEROFSOURCESQUERYTHRESHOLD">4.3.4. <span
+class="lbm-option-name"><span class="PHRASE">resolution_number_of_sources_query_threshold
+(receiver)</span></span></a></h2>
+
+<p>The threshold for the number of sources a topic must have before topic resolution
+queries are not sent. A value of zero results in no topic resolution queries being
+generated. See also <a href="disable-topic-res.html" target="_top">Disabling Aspects of
+Topic Resolution</a> .</p>
+
+<div class="INFORMALTABLE"><a id="AEN3937" name="AEN3937"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>Number of sources</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000000 (10
+million)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTMAXIMUMINITIALINTERVAL"
+name="SOURCERESOLVERADVERTISEMENTMAXIMUMINITIALINTERVAL">4.3.5. <span
+class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_maximum_initial_interval
+(source)</span></span></a></h2>
+
+<p>The longest - and last - interval in the initial phase of topic advertisement. A value
+of 0 disables the initial phase of advertisement. See also <a
+href="disable-topic-res.html" target="_top">Disabling Aspects of Topic
+Resolution</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3978" name="AEN3978"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTMINIMUMINITIALDURATION"
+name="SOURCERESOLVERADVERTISEMENTMINIMUMINITIALDURATION">4.3.6. <span
+class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_initial_duration
+(source)</span></span></a></h2>
+
+<p>The duration of the initial phase of topic advertisement. A value of 0 guarantees that
+the initial phase of advertisement never completes.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4022" name="AEN4022"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5000 (5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTMINIMUMINITIALINTERVAL"
+name="SOURCERESOLVERADVERTISEMENTMINIMUMINITIALINTERVAL">4.3.7. <span
+class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_initial_interval
+(source)</span></span></a></h2>
+
+<p>Interval between the first topic advertisement sent upon creation of the source and
+the second advertisement sent by the source. A value of 0 disables the initial phase of
+advertisement. See also <a href="disable-topic-res.html" target="_top">Disabling Aspects
+of Topic Resolution</a>. This option has an effective minimum of 10 ms. See <a
+href="resolveroperationoptions.html" target="_top">Minimum Values for Advertisement and
+Query Intervals</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4068" name="AEN4068"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10 (0.01
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTMINIMUMSUSTAINDURATION"
+name="SOURCERESOLVERADVERTISEMENTMINIMUMSUSTAINDURATION">4.3.8. <span
+class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_sustain_duration
+(source)</span></span></a></h2>
+
+<p>The duration of the sustaining phase of topic advertisement. A value of 0 guarantees
+that the sustaining phase of advertising never completes.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4112" name="AEN4112"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60 (1
+minute)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTSENDIMMEDIATERESPONSE"
+name="SOURCERESOLVERADVERTISEMENTSENDIMMEDIATERESPONSE">4.3.9. <span
+class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_send_immediate_response
+(source)</span></span></a></h2>
+
+<p>Allows you to disable the normal immediate response to queries and wildcard queries.
+Sources normally send topic advertisements (TIR) immediately in response to topic queries
+(TQR) for a local topic or wildcard queries (WC-TQR) with a pattern that matches a local
+topic. If you configure sources to delay sending advertisements, <b
+class="APPLICATION">UM</b> delays advertisements by the limits defined by the
+advertisement rate limiter options, <tt class="LITERAL">resolver_*_bps</tt> and <tt
+class="LITERAL">resolver_*_per_second</tt>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4156" name="AEN4156"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2/UMQ 2.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN4179" name="AEN4179"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Sources immediately send advertisements (TIR) in response to topic queries (TQR) or
+wildcard queries (WC-TQR). <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Sources delay sending advertisements (TIR) in response to topic queries (TQR) or
+wildcard queries (WC-TQR).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERADVERTISEMENTSUSTAININTERVAL"
+name="SOURCERESOLVERADVERTISEMENTSUSTAININTERVAL">4.3.10. <span
+class="lbm-option-name"><span class="PHRASE">resolver_advertisement_sustain_interval
+(source)</span></span></a></h2>
+
+<p>Interval between sending topic advertisements in the sustaining phase of topic
+advertisement. A value of 0 disables the sustaining phase of advertisement. See also <a
+href="disable-topic-res.html" target="_top">Disabling Aspects of Topic Resolution</a>.
+This option has an effective minimum of 100 ms. See <a
+href="resolveroperationoptions.html" target="_top">Minimum Values for Advertisement and
+Query Intervals</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4209" name="AEN4209"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERCACHE" name="CONTEXTRESOLVERCACHE">4.3.11.
+<span class="lbm-option-name"><span class="PHRASE">resolver_cache
+(context)</span></span></a></h2>
+
+<p>Whether or not to cache topic resolution information. When topic resolution
+information is not cached, it takes up less memory. However, wildcard receivers will only
+see topics that have other <b class="APPLICATION">UM</b> receivers created. And source
+notification only occurs for topics that have <b class="APPLICATION">UM</b> receivers
+created.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4252" name="AEN4252"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN4271" name="AEN4271"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Topic resolution information will be cached. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Do not cache topic resolution information.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERDATAGRAMMAXSIZE"
+name="CONTEXTRESOLVERDATAGRAMMAXSIZE">4.3.12. <span class="lbm-option-name"><span
+class="PHRASE">resolver_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated for topic resolution advertisements
+and queries. The default value is 8192, the minimum is 500 bytes, and the maximum is
+65535.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4296" name="AEN4296"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8192</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERINITIALADVERTISEMENTBPS"
+name="CONTEXTRESOLVERINITIALADVERTISEMENTBPS">4.3.13. <span class="lbm-option-name"><span
+class="PHRASE">resolver_initial_advertisement_bps (context)</span></span></a></h2>
+
+<p>Maximum advertisement rate during the initial phase of topic advertisement. A value of
+0 sets no rate limit on advertisements in the initial phase of topic advertisement.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4337" name="AEN4337"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERINITIALADVERTISEMENTSPERSECOND"
+name="CONTEXTRESOLVERINITIALADVERTISEMENTSPERSECOND">4.3.14. <span
+class="lbm-option-name"><span class="PHRASE">resolver_initial_advertisements_per_second
+(context)</span></span></a></h2>
+
+<p>Maximum number of advertisements sent within a one second period during the initial
+phase of topic advertisement. A value of 0 sets no rate limit on advertisements in the
+initial phase of topic advertisement.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4378" name="AEN4378"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>advertisements</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERINITIALQUERIESPERSECOND"
+name="CONTEXTRESOLVERINITIALQUERIESPERSECOND">4.3.15. <span class="lbm-option-name"><span
+class="PHRASE">resolver_initial_queries_per_second (context)</span></span></a></h2>
+
+<p>Maximum number of queries sent within a one second period during the initial phase of
+topic querying. A value of 0 sets no rate limit on queries in the initial phase of topic
+querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4419" name="AEN4419"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>advertisements</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERINITIALQUERYBPS"
+name="CONTEXTRESOLVERINITIALQUERYBPS">4.3.16. <span class="lbm-option-name"><span
+class="PHRASE">resolver_initial_query_bps (context)</span></span></a></h2>
+
+<p>Maximum query rate during the initial phase of topic querying. A value of 0 sets no
+rate limit on queries in the initial phase of topic querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4460" name="AEN4460"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLVERQUERYMAXIMUMINITIALINTERVAL"
+name="RECEIVERRESOLVERQUERYMAXIMUMINITIALINTERVAL">4.3.17. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_maximum_initial_interval
+(receiver)</span></span></a></h2>
+
+<p>The longest - and last - interval in the initial phase of topic querying. A value of 0
+disables the initial phase of querying. See also <a href="disable-topic-res.html"
+target="_top">Disabling Aspects of Topic Resolution</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4505" name="AEN4505"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 (0.2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLVERQUERYMINIMUMINITIALDURATION"
+name="RECEIVERRESOLVERQUERYMINIMUMINITIALDURATION">4.3.18. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_initial_duration
+(receiver)</span></span></a></h2>
+
+<p>The duration of the initial phase of topic querying. A value of 0 guarantees that the
+initial phase of querying never completes.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4549" name="AEN4549"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5000 (5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLVERQUERYMINIMUMINITIALINTERVAL"
+name="RECEIVERRESOLVERQUERYMINIMUMINITIALINTERVAL">4.3.19. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_initial_interval
+(receiver)</span></span></a></h2>
+
+<p>Interval between the first topic query sent upon creation of the receiver and the
+second query sent by the receiver. A value of 0 disables the initial phase of querying.
+See also <a href="disable-topic-res.html" target="_top">Disabling Aspects of Topic
+Resolution</a>. This option has an effective minimum of 20 ms. See <a
+href="resolveroperationoptions.html" target="_top">Minimum Values for Advertisement and
+Query Intervals</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4595" name="AEN4595"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20 (0.02
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLVERQUERYMINIMUMSUSTAINDURATION"
+name="RECEIVERRESOLVERQUERYMINIMUMSUSTAINDURATION">4.3.20. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_sustain_duration
+(receiver)</span></span></a></h2>
+
+<p>The duration of the sustaining phase of topic querying. A value of 0 guarantees that
+the sustaining phase of querying never completes.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4639" name="AEN4639"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60 (1
+minute)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRESOLVERQUERYSUSTAININTERVAL"
+name="RECEIVERRESOLVERQUERYSUSTAININTERVAL">4.3.21. <span class="lbm-option-name"><span
+class="PHRASE">resolver_query_sustain_interval (receiver)</span></span></a></h2>
+
+<p>Interval between sending topic queries in the sustaining phase of topic querying. A
+value of 0 disables the sustaining phase of querying. See also <a
+href="disable-topic-res.html" target="_top">Disabling Aspects of Topic Resolution</a>.
+This option has an effective minimum of 100 ms. See <a
+href="resolveroperationoptions.html" target="_top">Minimum Values for Advertisement and
+Query Intervals</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4685" name="AEN4685"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERRECEIVERMAPTABLESZ"
+name="CONTEXTRESOLVERRECEIVERMAPTABLESZ">4.3.22. <span class="lbm-option-name"><span
+class="PHRASE">resolver_receiver_map_tablesz (context)</span></span></a></h2>
+
+<p>The size of the hash table used for storing receiver topic information used for topic
+resolution. This value should be a prime number.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4726" name="AEN4726"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>map entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131111</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERESOLVERSENDINITIALADVERTISEMENT"
+name="SOURCERESOLVERSENDINITIALADVERTISEMENT">4.3.23. <span class="lbm-option-name"><span
+class="PHRASE">resolver_send_initial_advertisement (source)</span></span></a></h2>
+
+<p>Controls whether or not a source sends an advertisement upon creation. Turning off
+this advertisement speeds source creation and reduces the number of messages on your
+network through application initialization.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4763" name="AEN4763"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN4786" name="AEN4786"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Source sends a topic advertisement immediately upon creation. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Source does not send an advertisement upon creation. This setting does not affect the
+topic resolution phases you have configured, which execute as expected. See <a
+href="disable-topic-res.html" target="_top">Disabling Aspects of Topic Resolution</a> for
+information about altering topic resolution phase advertisements.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSOURCEMAPTABLESZ"
+name="CONTEXTRESOLVERSOURCEMAPTABLESZ">4.3.24. <span class="lbm-option-name"><span
+class="PHRASE">resolver_source_map_tablesz (context)</span></span></a></h2>
+
+<p>The size of the hash table used for storing source topic information used by topic
+resolution. This value should be a prime number.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4812" name="AEN4812"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>map entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131111</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSTRINGHASHFUNCTION"
+name="CONTEXTRESOLVERSTRINGHASHFUNCTION">4.3.25. <span class="lbm-option-name"><span
+class="PHRASE">resolver_string_hash_function (context)</span></span></a></h2>
+
+<p>The hash function to use for hashing topic name strings for source and receiver
+topics. The application may choose from a list of defined hash functions or it may define
+its own hash function, as identified by the string value of this option. When setting a
+hash function, note that:</p>
+
+<ul>
+<li>
+<p>If set through a configuration file or a call to <code
+class="FUNCTION">lbm_context_attr_str_setopt()</code>, only the string values <code
+class="CONSTANT">classic</code>, <code class="CONSTANT">djb2</code>, <code
+class="CONSTANT">sdbm</code>, or <code class="CONSTANT">murmur2</code> are valid. (If
+retrieved by a call to <code class="FUNCTION">lbm_context_attr_str_getopt()</code>, one
+of these string values is returned.)</p>
+</li>
+
+<li>
+<p>If set through a call to <code class="FUNCTION">lbm_context_attr_setopt()</code>, you
+must pass a pointer to a hash function. Use this method for hash functions other than the
+four pre-defined functions.</p>
+</li>
+</ul>
+
+<br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN4861" name="AEN4861"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_str_hash_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN4885" name="AEN4885"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="2*" title="COL1" />
+<col width="1*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">classic</code></td>
+<td>&nbsp;</td>
+<td>A "classic" good string hash function. Works best when topic names have a constant
+prefix with a changing suffix.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">djb2</code></td>
+<td>&nbsp;</td>
+<td>The Dan Bernstein algorithm from comp.lang.c. Works best when topic names have a
+changing prefix with a constant suffix.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">sdbm</code></td>
+<td>&nbsp;</td>
+<td>sdbm database library (used in Berkeley DB). A useful alternative to djb2.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">murmur2</code></td>
+<td>&nbsp;</td>
+<td>Good all-around hash function by Austin Appleby. Best for medium to long topic
+strings. <span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSTRINGHASHFUNCTIONEX"
+name="CONTEXTRESOLVERSTRINGHASHFUNCTIONEX">4.3.26. <span class="lbm-option-name"><span
+class="PHRASE">resolver_string_hash_function_ex (context)</span></span></a></h2>
+
+<p>This option is similar to the <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSTRINGHASHFUNCTION">resolver_string_hash_function</a>
+above, except for the following differences:</p>
+
+<ul>
+<li>
+<p>This option can be set via only <code
+class="FUNCTION">lbm_context_attr_setopt()</code> (not from a configuration file or <code
+class="FUNCTION">lbm_context_attr_str_setopt()</code>). Hence, this also means you cannot
+use the string options (<code class="CONSTANT">classic</code>, etc).</p>
+</li>
+
+<li>
+<p>You can pass a string length to the hash function, allowing it to then possibly run
+faster by operating on multiple-character strings at a time. Note that if -1 is passed
+in, you must use a strlen to calculate the length.</p>
+</li>
+
+<li>
+<p>The hash function accepts a clientd pointer, which you can set as needed, and which is
+passed back in each time the function is called.</p>
+</li>
+</ul>
+
+This option is the better choice when setting your own custom hash function. Note that
+both the <code class="CONSTANT">resolver_string_hash_function</code> and <code
+class="CONSTANT">resolver_string_hash_function_ex</code> options set the same attributes,
+hence, if you use both (not recommended) one will override the other. <br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN4942" name="AEN4942"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_str_hash_func_ex_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSUSTAINADVERTISEMENTBPS"
+name="CONTEXTRESOLVERSUSTAINADVERTISEMENTBPS">4.3.27. <span class="lbm-option-name"><span
+class="PHRASE">resolver_sustain_advertisement_bps (context)</span></span></a></h2>
+
+<p>Maximum advertisement rate during the sustaining phase of topic advertisement. A value
+of 0 sets no rate limit on advertisements in the sustaining phase of topic
+advertisement.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4979" name="AEN4979"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSUSTAINADVERTISEMENTSPERSECOND"
+name="CONTEXTRESOLVERSUSTAINADVERTISEMENTSPERSECOND">4.3.28. <span
+class="lbm-option-name"><span class="PHRASE">resolver_sustain_advertisements_per_second
+(context)</span></span></a></h2>
+
+<p>Maximum number of advertisements sent within a one second period during the sustaining
+phase of topic advertisement. A value of 0 sets no rate limit on advertisements in the
+sustaining phase of topic advertisement.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5020" name="AEN5020"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>advertisements</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSUSTAINQUERIESPERSECOND"
+name="CONTEXTRESOLVERSUSTAINQUERIESPERSECOND">4.3.29. <span class="lbm-option-name"><span
+class="PHRASE">resolver_sustain_queries_per_second (context)</span></span></a></h2>
+
+<p>Maximum number of queries sent within a one second period during the sustaining phase
+of topic querying. A value of 0 sets no rate limit on queries in the sustaining phase of
+topic querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5061" name="AEN5061"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>advertisements</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSUSTAINQUERYBPS"
+name="CONTEXTRESOLVERSUSTAINQUERYBPS">4.3.30. <span class="lbm-option-name"><span
+class="PHRASE">resolver_sustain_query_bps (context)</span></span></a></h2>
+
+<p>Maximum query rate during the sustaining phase of topic querying. A value of 0 sets no
+rate limit on queries in the sustaining phase of topic querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5102" name="AEN5102"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTACTIVITYTIMEOUT"
+name="CONTEXTRESOLVERUNICASTACTIVITYTIMEOUT">4.3.31. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_activity_timeout (context)</span></span></a></h2>
+
+<p>Indicates the maximum time between messages from a unicast resolver daemon before <b
+class="APPLICATION">UM</b> declares it inactive and stops sending normal topic resolution
+traffic via that daemon. <b class="APPLICATION">UM</b> will still send keepalives to the
+daemon. A value of 0 will force all resolver daemons to be treated as permanently
+active.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5145" name="AEN5145"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTCHANGEINTERVAL"
+name="CONTEXTRESOLVERUNICASTCHANGEINTERVAL">4.3.32. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_change_interval (context)</span></span></a></h2>
+
+<p>Indicates how often <b class="APPLICATION">UM</b> will change to the next available
+resolver daemon specified using the. resolver_unicast_daemon configuration option. The
+actual value used is random, and is selected from the range (1/2*change_interval,
+3/2*change_interval). If all resolver daemons have been marked inactive, <b
+class="APPLICATION">UM</b> enters a quick-change mode where it uses a random value from
+the range (1/4*change_interval, 3/4*change_interval) in order to more quickly locate an
+active daemon.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5188" name="AEN5188"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTCHECKINTERVAL"
+name="CONTEXTRESOLVERUNICASTCHECKINTERVAL">4.3.33. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_check_interval (context)</span></span></a></h2>
+
+<p>Indicates how often a <b class="APPLICATION">UM</b> checks for resolver activity in
+order to determine liveness. A value of 0 will disable activity checks. This setting only
+applies to the unicast resolver.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5230" name="AEN5230"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTFORCEALIVE"
+name="CONTEXTRESOLVERUNICASTFORCEALIVE">4.3.34. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_force_alive (context)</span></span></a></h2>
+
+<p>Indicates whether sources or receivers in this context should send keepalive messages
+to a configured Unicast Topic Resolver so they can receive topic resolution traffic.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5271" name="AEN5271"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN5290" name="AEN5290"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Send keepalive messages to the Unicast Topic Resolver every 5000ms, if this context
+has sent no topic resolution traffic during the interval.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Send keepalive messages to the Unicast Topic Resolver every 5000ms, regardless of
+whether this context has sent any other topic resolution traffic during the interval.
+Default for all. <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTKEEPALIVEINTERVAL"
+name="CONTEXTRESOLVERUNICASTKEEPALIVEINTERVAL">4.3.35. <span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_keepalive_interval
+(context)</span></span></a></h2>
+
+<p>Indicates how often keepalive messages should be sent to a resolver daemon. Keepalives
+are only sent if no other traffic has been sent since the last keepalive interval
+expired.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5315" name="AEN5315"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="majoroptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="multicastresolvernetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Major Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Multicast Resolver Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

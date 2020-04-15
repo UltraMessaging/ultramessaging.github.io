@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Series 1.5 Releases</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release 1.7 2005-08-23" href="sec1.7.html" />
+<link rel="NEXT" title="Series 1.1 Releases" href="sec1.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec1.7.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec1.1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC1.5" name="SEC1.5">82. Series 1.5 Releases</a></h1>
+
+<p>Key features added in the 1.5 series releases:</p>
+
+<ul>
+<li>
+<p>Added Latency Busters Transport for Reliable Unicast (LBT-RU)</p>
+</li>
+
+<li>
+<p>Major improvements to example code and documentation</p>
+</li>
+
+<li>
+<p>Added support for AIX</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.5.1.4" name="REL1.5.1.4">82.1. Release 1.5.1.4
+2005-07-11</a></h2>
+
+<ul>
+<li>
+<p>Minor revisions for AIX</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.5.1.3" name="REL1.5.1.3">82.2. Release 1.5.1.3
+2005-07-08</a></h2>
+
+<ul>
+<li>
+<p>Fixed a bug that broke unicast topic resolution in release 1.5.1.</p>
+</li>
+
+<li>
+<p>Added support for AIX</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.5.1" name="REL1.5.1">82.3. Release 1.5.1
+2005-06-03</a></h2>
+
+<ul>
+<li>
+<p>Added Latency Busters Transport for Reliable Unicast (LBT-RU)</p>
+</li>
+
+<li>
+<p>Major improvements to example code:</p>
+
+<ul>
+<li>
+<p>Added -r flag for easier testing with LBT-RM</p>
+</li>
+
+<li>
+<p>Added <tt class="COMMAND">lbmresping</tt> for troubleshooting <b
+class="APPLICATION">LBM</b> unicast resolver problems</p>
+</li>
+
+<li>
+<p>Added Makefile (for Windows) and all code needed to compile examples.</p>
+</li>
+
+<li>
+<p>General cleanup and many comments added</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Added five new sections to THPM white paper:</p>
+
+<ul>
+<li>
+<p>Messaging Latency Budget</p>
+</li>
+
+<li>
+<p>Latency Sources</p>
+</li>
+
+<li>
+<p>Latency Measurement Overview</p>
+</li>
+
+<li>
+<p>Measuring CPU Scheduling Latency</p>
+</li>
+
+<li>
+<p>Measuring CPU Contention Latency</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Improvements and additions to the FAQ in the Application Notes</p>
+</li>
+
+<li>
+<p>Added example config files (see <tt class="FILENAME">doc/Config/Examples</tt>) and
+moved <tt class="FILENAME">doc/lbm-config.txt</tt> to <tt
+class="FILENAME">doc/Config/lbm-config.txt</tt>.</p>
+</li>
+
+<li>
+<p>Added section to lbm-config that lists the ranges and port usage for TCP/UDP.</p>
+</li>
+
+<li>
+<p>Changed port ranges for some settings. Changes are:</p>
+
+<div class="INFORMALTABLE"><a id="AEN8339" name="AEN8339"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Ports Used</th>
+<th>Old</th>
+<th>New</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>LBT-RM src unicast ports</td>
+<td>4390 - 4300</td>
+<td>4390 - 4399</td>
+</tr>
+
+<tr>
+<td>Unicast resolver ports</td>
+<td>4401 - 4405</td>
+<td>4402 - 4406</td>
+</tr>
+
+<tr>
+<td>LBT-RM destination port</td>
+<td>4380</td>
+<td>4400</td>
+</tr>
+
+<tr>
+<td>TCP transport ports</td>
+<td>4380 - 4390</td>
+<td>4371 - 4390</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">request_tcp_reuseaddr</code> config variable.</p>
+</li>
+
+<li>
+<p>Fixed an error saving fragment state on platforms that require memory alignment (e.g.
+SPARC) that was causing assertion failures with loss.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec1.7.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec1.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release 1.7 2005-08-23</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Series 1.1 Releases</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

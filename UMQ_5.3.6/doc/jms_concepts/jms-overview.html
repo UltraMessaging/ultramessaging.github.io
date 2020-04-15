@@ -1,0 +1,979 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging JMS Overview</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="NEXT" title="Life Cycle of an Ultra Messaging JMS Application"
+href="life-cycle.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="life-cycle.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="JMS-OVERVIEW" name="JMS-OVERVIEW">2. Ultra Messaging JMS
+Overview</a></h1>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="jms-overview.html#JMSSPEC"><i>The JMS Specification</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#PUBSUB"><i>Publish/Subscribe Model</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#P2P"><i>Point-To-Point Model</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#QOS"><i>Quality of Service</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#JMSMESSAGES"><i>JMS Messages</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#JMSIMPLEMENTATION"><i>JMS Implementation</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#PROGRAMMINGARCHITECTURE"><i>Ultra Messaging JMS Programming
+Architecture</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#INTEROPERABILITY"><i>Interoperability</i></a></p>
+</li>
+
+<li>
+<p><a href="jms-overview.html#UNSUPPORTEDJMS"><i>Unsupported JMS
+Specifications</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="JMSSPEC" name="JMSSPEC">2.1. The JMS Specification</a></h2>
+
+<p>The Oracle <a
+href="http://download.oracle.com/otn-pub/jcp/7543-jms-1.0.2b-spec-oth-JSpec/jms-1_0_2b-spec.pdf"
+ target="doccontent">JMS Specification 1.0.2b</a> provides requirements and guidelines for
+developing JMS-based Java messaging applications. The specification provides for two
+models: Publish/Subscribe, and Point-To-Point. Both models are supported by Ultra
+Messaging JMS.</p>
+
+<p>Ultra Messaging JMS also supports Oracle <a
+href="http://download.oracle.com/otn-pub/jcp/7195-jms-1.1-fr-spec-oth-JSpec/jms-1_1-fr-spec.pdf"
+ target="doccontent">JMS Specification 1.1</a>, which unifies the class hierarchies of the
+Point-To-Point and Pub/Sub domains, but is fully backward compatible.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PUBSUB" name="PUBSUB">2.2. Publish/Subscribe Model</a></h2>
+
+<p>With the JMS publish/subscribe model, a JMS user (or <i class="FIRSTTERM">client</i>)
+publishes messages to a topic. Other clients then subscribe to the topic and are thus
+able to receive the published messages. The JMS model supports the concept of topic being
+an unadministered object (defined simply by its name), which directly correlates to the
+<b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> model. You
+can configure Ultra Messaging JMS to use either the streaming or persistence
+features.</p>
+
+<div class="FIGURE"><a id="PUBSUB-DIAGRAM" name="PUBSUB-DIAGRAM"></a>
+<p><b>Figure 1. JMS Publish/Subscribe</b></p>
+
+<p><img src="jmspubsub.png" align="CENTER" /></p>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The maximum topic length is 246 bytes.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="P2P" name="P2P">2.3. Point-To-Point Model</a></h2>
+
+<p>The Point-To-Point model differs from the Publish/Subscribe model mainly in that it
+employs a message queue and that the sending and receiving clients are aware of each
+other. Receiving clients extract messages from the queue and notifies it that the
+messages have been consumed. The queue retains messages until they are consumed or time
+out. Ultra Messaging JMS employs <b class="APPLICATION">UM</b>'s queue provided by <b
+class="APPLICATION">UMQ</b>.</p>
+
+<div class="FIGURE"><a id="P2P-DIAGRAM" name="P2P-DIAGRAM"></a>
+<p><b>Figure 2. JMS Point To Point</b></p>
+
+<p><img src="jmsp2p.png" align="CENTER" /></p>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Ultra Messaging JMS supports a pull-based (or polling-based)
+implementation of this model, where the receiving application requests messages from the
+queue (as opposed to the queue automatically pushing messages). However, the underlying
+queue, as provided by UMQ, uses a push model.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="JMSMESSAGES" name="JMSMESSAGES">2.4. JMS Messages</a></h2>
+
+<p>The JMS message generally consists of a header and body (data payload). You can set a
+JMS body type programatically and optionally identify the body type in a header field.
+JMS Messages can be of the types shown below. (Numeric values are used in the <b
+class="APPLICATION">UM</b> message property <tt class="LITERAL">LBMMessageType</tt>.)</p>
+
+<ul>
+<li>
+<p>TextMessage (0)</p>
+</li>
+
+<li>
+<p>BytesMessage (1)</p>
+</li>
+
+<li>
+<p>MapMessage (2)</p>
+</li>
+
+<li>
+<p>Message (3) (this message type has no body)</p>
+</li>
+
+<li>
+<p>ObjectMessage (4)</p>
+</li>
+
+<li>
+<p>StreamMessage (5)</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MESSAGECOMPONENTS" name="MESSAGECOMPONENTS">2.4.1. Message
+Components</a></h3>
+
+<p>When a JMS message passes through <b class="APPLICATION">UM</b> layers, its message
+properties are preserved as <a href="../Design/lbm-objects.html#MESSAGEPROPERTIESOBJECT"
+target="doccontent"><b class="APPLICATION">UM</b> message properties</a>. Also, header fields
+are translated into additional message properties.</p>
+
+<div class="FIGURE"><a id="MESSAGE-DIAGRAM" name="MESSAGE-DIAGRAM"></a>
+<p><b>Figure 3. Message Structure</b></p>
+
+<p><img src="JmsMessage.png" align="CENTER" /></p>
+</div>
+
+<p>A JMS message header consists of the following fields. In the <b
+class="APPLICATION">UM</b> layers, their information becomes <b
+class="APPLICATION">UM</b> message properties. Note that there is not always a one-to-one
+correlation between <b class="APPLICATION">UM</b> message properties and JMS
+properties/header fields.</p>
+
+<ul>
+<li>
+<p>JMSDestination</p>
+</li>
+
+<li>
+<p>JMSDeliveryMode</p>
+</li>
+
+<li>
+<p>JMSMessageID</p>
+</li>
+
+<li>
+<p>JMSTimestamp</p>
+</li>
+
+<li>
+<p>JMSCorrelationID</p>
+</li>
+
+<li>
+<p>JMSReplyTo</p>
+</li>
+
+<li>
+<p>JMSRedelivered</p>
+</li>
+
+<li>
+<p>JMSType</p>
+</li>
+
+<li>
+<p>JMSExpiration</p>
+</li>
+
+<li>
+<p>JMSPriority</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MESSAGEPROPERTIES" name="MESSAGEPROPERTIES">2.4.2. Message
+Properties</a></h3>
+
+<p>Message properties are defined by unique names and can be assigned values. <b
+class="APPLICATION">UM</b> supports all JMS message properties, which come in three
+categories.</p>
+
+<p><span class="bold"><b class="EMPHASIS">JMS defined properties</b></span> - The <a
+href="http://download.oracle.com/otn-pub/jcp/7195-jms-1.1-fr-spec-oth-JSpec/jms-1_1-fr-spec.pdf"
+ target="doccontent">JMS Specification</a> defines these properties (with prefix "JMSX") and
+reserves the use of their names.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Provider-specific properties</b></span> - These
+are properties defined and reserved for <b class="APPLICATION">UM</b>, and include:</p>
+
+<ul>
+<li>
+<p>LBMMessageType (JMS message body types)</p>
+</li>
+
+<li>
+<p>JMSTopicType (string, UMS/UMP/UMQ)</p>
+</li>
+
+<li>
+<p>JMSReplyToName (string, topic name)</p>
+</li>
+
+<li>
+<p>JMSReplyToWildcard (boolean)</p>
+</li>
+
+<li>
+<p>JMSReplyToType (string, UMS/UMP/UMQ)</p>
+</li>
+</ul>
+
+<p><span class="bold"><b class="EMPHASIS">User properties</b></span> - These are
+properties that you defined for your applications. A typical use for these is as <a
+href="messageselectors.html"><i>Message Selectors</i></a>.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="JMSIMPLEMENTATION" name="JMSIMPLEMENTATION">2.5. JMS
+Implementation</a></h2>
+
+<p>The Ultra Messaging JMS API serves as a wrapper, allowing JMS clients access to <b
+class="APPLICATION">UM</b> functionality. This section describes in more detail the
+relationship between the Ultra Messaging JMS and <b class="APPLICATION">UM</b>
+layers.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="JMSARCHITECTURE" name="JMSARCHITECTURE">2.5.1. JMS
+Architecture</a></h3>
+
+<p>The following diagram shows how Ultra Messaging JMS relates to the <b
+class="APPLICATION">UM</b> core middleware. When creating connections and sessions, you
+typically use JNDI (Java Naming and Directory Interface) to look up administered objects
+in <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Manager</b> (<b class="APPLICATION">UMM</b>).</p>
+
+<div class="FIGURE"><a id="JMS-DIAGRAM" name="JMS-DIAGRAM"></a>
+<p><b>Figure 4. Ultra Messaging JMS Architecture</b></p>
+
+<p><img src="JmsArchitecture.png" align="CENTER" /></p>
+</div>
+
+<p>The store (<b class="APPLICATION">UMP</b>) can be used with Publish/Subscribe
+applications, and the <b class="APPLICATION">UMQ</b> queue is needed for use with
+Point-To-Point applications.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="JMSOBJECTMAPPING" name="JMSOBJECTMAPPING">2.5.2. JMS-To-<b
+class="APPLICATION">UM</b> Object Mapping</a></h3>
+
+<p>From the JMS API layer to the Java API layer, there is a functional mapping of
+objects, as shown in the following diagram.</p>
+
+<div class="FIGURE"><a id="JMSOBJECTMAP" name="JMSOBJECTMAP"></a>
+<p><b>Figure 5. JMS-To-UM Mapping</b></p>
+
+<p><img src="JmsObjectMap.png" align="CENTER" /></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">ConnectionFactory</b></span> - One of the two
+objects that are administered (the other being Destination). A client uses the
+ConnectionFactory to create a connection with a provider.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Connection</b></span> - A connection to the
+provider can be either a queue connection or a topic connection, and creates session
+objects.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Session</b></span> - The session is the factory
+for producing producers and consumers. The ConnectionFactory, Connection, and Session
+combine to functionally map to a <b class="APPLICATION">UM</b> context, though you can
+reuse a context for multiple ConnectionFactories/connections.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Producer</b></span> - The producer maps
+directly to a <b class="APPLICATION">UM</b> source.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Consumer</b></span> - The consumer maps
+directly to a <b class="APPLICATION">UM</b> receiver. The JMS concept of a durable
+consumer and persistent delivery employ <b class="APPLICATION">UMP</b> receivers and <b
+class="APPLICATION">UMP</b> persistent stores.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Destination</b></span> - A client uses a
+destination to specify the target of messages it produces and/or the source of messages
+it consumes.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Message</b></span> - The JMS and <b
+class="APPLICATION">UM</b> message are variations on each other, with the primary
+difference being that JMS message header fields are message properties in the <b
+class="APPLICATION">UM</b> message.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PROGRAMMINGARCHITECTURE" name="PROGRAMMINGARCHITECTURE">2.6.
+Ultra Messaging JMS Programming Architecture</a></h2>
+
+<p>The general JMS programming model is shown in the following figure. <a
+href="life-cycle.html"><i>Life Cycle of an Ultra Messaging JMS Application</i></a> offers
+details for developing producer and consumer applications.</p>
+
+<div class="FIGURE"><a id="JMSMODEL" name="JMSMODEL"></a>
+<p><b>Figure 6. JMS Programming Model</b></p>
+
+<p><img src="JmsModel.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QOS" name="QOS">2.7. Quality of Service</a></h2>
+
+<p>Ultra Messaging JMS uses <b class="APPLICATION">UMP</b> and <b
+class="APPLICATION">UMQ</b> to provide the desired QoS based on the type of destination
+configured in JMSConfig.xml.</p>
+
+<p><code class="FUNCTION">MessageProducer</code></p>
+
+<ul>
+<li>
+<p>Persistent - The <code class="FUNCTION">send</code> method, if using a <code
+class="FUNCTION">Destination</code> configured as a <b class="APPLICATION">UMP</b>-type
+destination, blocks until the producer receives a Stability Acknowledgement.</p>
+</li>
+
+<li>
+<p>Non-Persistent - The <code class="FUNCTION">send</code> method does not block if using
+a <code class="FUNCTION">Destination</code> configured as a <b
+class="APPLICATION">UMS</b> or <b class="APPLICATION">UMQ</b> type.</p>
+</li>
+</ul>
+
+<p><code class="FUNCTION">MessageConsumer</code></p>
+
+<ul>
+<li>
+<p>Consumer - Only receives messages while the application is active.</p>
+</li>
+
+<li>
+<p>Durable Consumer - Receives all messages for the topic if the MessageConsumer was
+created with a <b class="APPLICATION">UMP</b> type destination, including messages sent
+while the durable consumer application was not running.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTEROPERABILITY" name="INTEROPERABILITY">2.8.
+Interoperability</a></h2>
+
+<p>In general, it is possible for JMS producers to send messages to <b
+class="APPLICATION">UM</b> receivers, or <b class="APPLICATION">UM</b> sources to send to
+JMS consumers. This is typically successful with default settings and message body types
+of TextMessage or BytesMessage. Such interoperability scenarios are also possible with
+non-default JMS or <b class="APPLICATION">UM</b> settings if you carefully select and
+test compatible configurations.</p>
+
+<p>A JMS application can communicate with a <b class="APPLICATION">UM</b> application on
+a limited basis, with the proper attention paid to mapping with JMS headers and message
+properties. A <b class="APPLICATION">UM</b> application can receive and process the data
+of a JMS message the same way as when it receives standard <b class="APPLICATION">UM</b>
+messages.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="NATIVESOURCE" name="NATIVESOURCE">2.8.1. Native
+Source</a></h3>
+
+<p>For a <b class="APPLICATION">UM</b> application sending to a JMS application, we
+recommend you send message data in byte or text format to avoid the risk of unrecognized
+data formatting. At the JMS application, set the <tt
+class="LITERAL">DEFAULT_MESSAGE_TYPE</tt> attribute in <a
+href="umjms-config.html#FACTORYATTRIBUTES"><i>FactoryAttributes</i></a> to match this
+format. If you need to use more than one message type, at the <b
+class="APPLICATION">UM</b> source use the <tt class="LITERAL">LBMMessageType</tt>
+property to manage this on a per-message basis.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="NATIVERECEIVER" name="NATIVERECEIVER">2.8.2. Native
+Receiver</a></h3>
+
+<p>Native receiver applications can receive messages from a JMS producer. These messages
+contain all JMS message properties and JMS header information within their own <b
+class="APPLICATION">UM</b> message properties objects.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="REQUESTREPLYEXAMPLE" name="REQUESTREPLYEXAMPLE">2.8.3.
+Request/Reply Example</a></h3>
+
+<p>The JMS Request/Reply feature employs the <tt class="LITERAL">JMSReplyTo</tt> and <tt
+class="LITERAL">JMSCorrelationID</tt> header fields to ensure that the correct
+receiver/consumer receives a reply and knows which request it pertains to. Consider the
+Request/Reply case where a native application issues a request to a JMS client (see the
+figure below).</p>
+
+<div class="FIGURE"><a id="INTEROPEXAMPLE" name="INTEROPEXAMPLE"></a>
+<p><b>Figure 7. Interoperation Example</b></p>
+
+<p><img src="InteropExample.png" align="CENTER" /></p>
+</div>
+
+<p>In this scenario, the <b class="APPLICATION">UM</b> application sends a request that
+the JMS client receives, and the JMS application responds by sending a reply. The
+following sequence of events provides more detail about this scenario. Note that code
+excerpts are from a C-sharp <b class="APPLICATION">UM</b> application and a Java JMS
+application, and example classes may not be part of any UM API.</p>
+
+<ol type="1">
+<li>
+<p>The <b class="APPLICATION">UM</b> application creates a source, which sends a message
+on topic AAA. The application has set several message properties to identify the topic
+type, message type, who to reply to, and a unique message identifier.</p>
+
+<pre class="SCREEN">
+                LBMSourceSendExInfo exinfo = new LBMSourceSendExInfo();
+
+                /* We want JMS to reply via the JMSReplyTo */
+                LBMMessageProperties props = new LBMMessageProperties();
+                props.set("JMSReplyToName", replyTopicString);
+                props.set("JMSReplyToWildcard", false);
+                props.set("JMSReplyToType", "LBM");
+                props.set("JMSTopicType", "topic");
+                props.set("LBMMessageType", 0); // Indicates to JMS that the message payload will be a text message
+                exinfo.setMessageProperties(props);
+                exinfo.setFlags(LBM.SRC_SEND_EX_FLAG_PROPERTIES);
+
+                /* Added sequence number info flag to print out the expected JMSCorrelationID */
+                exinfo.setFlags(exinfo.flags() | LBM.SRC_SEND_EX_FLAG_SEQUENCE_NUMBER_INFO | LBM.SRC_SEND_EX_FLAG_UMQ_MESSAGE_ID_INFO);
+
+                src.send(message, msglen, block ? 0 : LBM.SRC_NONBLOCK, exinfo);
+           
+</pre>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UM</b> application also creates a receiver for the
+anticipated reply.</p>
+
+<pre class="SCREEN">
+        private static string replyTopicString = "REPLY_" + Guid.NewGuid().ToString();
+           
+</pre>
+
+<p>The key here is that the source sends <tt class="LITERAL">replyTopicString</tt> as a
+message property to provide a "return address". The application then creates a receiver
+that listens on this topic for the reply.</p>
+
+<pre class="SCREEN">
+            SampleJMSRequestReceiver rcv = new SampleJMSRequestReceiver(verbose);
+            LBMReceiverAttributes rattr = new LBMReceiverAttributes();
+            LBMTopic replyTopic = ctx.lookupTopic(replyTopicString, rattr);
+            
+            LBMReceiver lbmrcv = new LBMReceiver(ctx, replyTopic, rcv.onReceive, null);
+           
+</pre>
+</li>
+
+<li>
+<p>The network passes the message to the JMS application, which converts message
+properties to JMS header field values and JMS properties, and confirms message type.</p>
+</li>
+
+<li>
+<p>The JMS application has a consumer that is listening on AAA. It receives the
+message.</p>
+</li>
+
+<li>
+<p>Using the JMS header fields, the JMS application's producer sends its reply message to
+the receiver, getting its reply destination extracted from the <tt
+class="LITERAL">JMSReplyTo</tt> field. The native application's <b
+class="APPLICATION">UM</b> receiver already listening on this topic then receives the
+reply.</p>
+
+<pre class="SCREEN">
+    public void onMessage(Message message) {
+        try {
+            TextMessage requestMessage = (TextMessage) message;
+            String contents = requestMessage.getText();
+            System.out.println("Got Message: " + contents);
+            // get the reply to destination
+            Destination replyDestination = requestMessage.getJMSReplyTo();
+            
+            TextMessage replyMessage = session.createTextMessage();
+            contents = "Re:" + contents;
+            replyMessage.setText(contents);
+
+            replyMessage.setJMSCorrelationID(requestMessage.getJMSMessageID());
+            System.out.println("Sending reply of: " + contents);
+            
+            replyProducer.send(replyDestination, replyMessage);
+        } catch (Exception e) {
+            System.err.println("Exception occurred: " + e.getMessage());
+            System.exit(-1);
+        }
+    }
+           
+</pre>
+</li>
+
+<li>
+<p>The network again passes the reply message to the <b class="APPLICATION">UM</b>
+application, which converts JMS header field values and JMS properties to <b
+class="APPLICATION">UM</b> message properties usable by the receiver. The <b
+class="APPLICATION">UM</b> application uses the <tt class="LITERAL">JMSCorrelationID</tt>
+to match the reply to its original request.</p>
+</li>
+</ol>
+
+<p>This example conveniently illustrates both native source and native receiver
+scenarios. Note that the key to successful interoperation is the correct exchange of
+information between <b class="APPLICATION">UM</b> message properties and JMS
+headers/properties.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="NATIVENOTES" name="NATIVENOTES">2.8.4. Native Application
+Notes</a></h3>
+
+<p>When a native source or receiver accesses message property <tt
+class="LITERAL">JMSDeliveryMode</tt>, the property must be an integer type, with a value
+of 1 (NON_PERSISTENT) or 2 (PERSISTENT). For example (in C language):</p>
+
+<pre class="SCREEN">
+int delivery_mode = 1;
+lbm_msg_properties_set(properties, "JMSDeliveryMode", &amp;delivery_mode, LBM_MSG_PROPERTY_INT,
+sizeof(int));
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INTEROPUMFEATURES" name="INTEROPUMFEATURES">2.8.5.
+Compatibility With Other <b class="APPLICATION">UM</b> Features</a></h3>
+
+<p>Please note that while most <b class="APPLICATION">UM</b> features are compatible with
+Ultra Messaging JMS, some are not. Following is a table of features and their
+compatibilities with Ultra Messaging JMS.</p>
+
+<div class="INFORMALTABLE"><a id="AEN439" name="AEN439"></a>
+<table border="1" class="CALSTABLE">
+<col width="288" />
+<col width="96" />
+<col width="192" />
+<thead>
+<tr>
+<th>UM Feature</th>
+<th>UM JMS</th>
+<th>Notes</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Acceleration - DBL</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Acceleration - UD</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Hot Failover (HF)</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Hot Failover Across Contexts (HFX)</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Late Join</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Message Batching</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Monitoring/Statistics</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Multicast Immediate Messaging (MIM)</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Multi-Transport Threads</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Off-Transport Recovery (OTR)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Ordered Delivery</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Pre-Defined Messaging (PDM)</td>
+<td>Yes</td>
+<td>Must use BytesMessage</td>
+</tr>
+
+<tr>
+<td>Request/Response</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Self-Describing Messaging (SDM)</td>
+<td>Yes</td>
+<td>Must use BytesMessage</td>
+</tr>
+
+<tr>
+<td>Source Side Filtering</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport LBT-IPC</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport LBT-RDMA</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport LBT-RM</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport LBT-RU</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport TCP</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Transport TCP-LB</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UM Gateway</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UM Spectrum</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Wildcard Receivers</td>
+<td>Yes</td>
+<td>Cannot use wildcard and non-wildcard receivers simultaneously</td>
+</tr>
+
+<tr>
+<td>Zero Object Delivery (ZOD)</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Implicit/Explicit Acknowledgements</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Persistent Store</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Proxy Sources</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Quorum Consensus</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Receiver-Paced Persistence (RPP)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Registration ID/Session Management</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMP Round Robin</td>
+<td>Yes</td>
+<td>Not recommended</td>
+</tr>
+
+<tr>
+<td>UMP Store Failover</td>
+<td>Yes</td>
+<td>Via umestored configuration</td>
+</tr>
+
+<tr>
+<td>UMQ Application Sets</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Parallel Queue Dissemination (PQD)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Queue Browser</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Queue Failover</td>
+<td>Yes</td>
+<td>Via umestored configuration</td>
+</tr>
+
+<tr>
+<td>UMQ Queue Redundancy</td>
+<td>Yes</td>
+<td>Via umestored configuration</td>
+</tr>
+
+<tr>
+<td>UMQ Registration ID/Session Management</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Serial Queue Dissemination (SQD)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Source Dissemination (SD)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMQ Ultra Load Balancing (ULB)</td>
+<td>No</td>
+<td>Not inhibited</td>
+</tr>
+
+<tr>
+<td>Ultra Messaging Desktop Services (UMDS)</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>Ultra Messaging Manager (UMM)</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UM SNMP Agent</td>
+<td>Yes</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>UMCache</td>
+<td>No</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UNSUPPORTEDJMS" name="UNSUPPORTEDJMS">2.9. Unsupported JMS
+Specifications</a></h2>
+
+<p>The Ultra Messaging JMS does not currently support the following JMS
+specifications.</p>
+
+<ul>
+<li>
+<p>Message prioritization</p>
+</li>
+
+<li>
+<p>JMS Application Server Facilities</p>
+</li>
+
+<li>
+<p>synchronous message consumption/delivery (partial support; see <a
+href="jms-overview.html#P2P"><i>Point-To-Point Model</i></a>)</p>
+</li>
+
+<li>
+<p><code class="FUNCTION">recover()</code> method (for session recovery)</p>
+</li>
+
+<li>
+<p>pull model for delivering messages from a queue to a receiver</p>
+</li>
+
+<li>
+<p>provider-supplied property naming requirement</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">TopicSubscriber NoLocal</tt> attribute</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">JMSMessageID</tt> passed over the wire from sender to receiver</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="life-cycle.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging JMS Guide</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Life Cycle of an Ultra Messaging JMS
+Application</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

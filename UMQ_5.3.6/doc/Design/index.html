@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Concepts</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="NEXT" title="Fundamental Concepts" href="fundamental-concepts.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="ARTICLE" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="ARTICLE">
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Concepts</a></h1>
+
+<p class="COPYRIGHT"><a href="INFACOPYRIGHT.html">Copyright</a> &copy; 2004 - 2014
+Informatica Corporation</p>
+
+<p class="PUBDATE">March 2014<br />
+</p>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="design.html">Single HTML</a> / <a href="design.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="index.html#INTRODUCTION">Introduction</a></dt>
+
+<dt>2. <a href="fundamental-concepts.html">Fundamental Concepts</a></dt>
+
+<dt>3. <a href="lbm-objects.html"><b class="APPLICATION">UM</b> Objects</a></dt>
+
+<dt>4. <a href="architecture.html">Architecture</a></dt>
+
+<dt>5. <a href="lbm-features.html">UMS Features</a></dt>
+
+<dt>6. <a href="monitoring.html">Monitoring UMS</a></dt>
+
+<dt>7. <a href="lbmrd-manpage.html">Manpage for lbmrd</a></dt>
+</dl>
+</div>
+
+<blockquote class="ABSTRACT">
+<div class="ABSTRACT"><a id="AEN42" name="AEN42"></a>
+<p>This document introduces important fundamental design concepts behind <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> high
+performance message streaming. Understanding these concepts is important to software
+developers designing and writing application code that uses the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> Application
+Programming Interface (API). For information about <b class="APPLICATION"><span
+class="TRADEMARK">Parallel Persistence</span>&reg;</b> and queuing, see <a
+href="../UME/index.html" target="doccontent">The Ultra Messaging Guide for Persistence and
+Queuing</a>.</p>
+</div>
+</blockquote>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="INTRODUCTION" name="INTRODUCTION">1. Introduction</a></h1>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> comprises a
+software layer, supplied in the form of a dynamic library (shared object), plus a daemon
+that implements persistence and queuing capabilities. These components provide
+applications with message delivery functionality that adds considerable value to the
+basic networking services contained in the host operating system. Applications access <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> features through
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> Application
+Programming Interface (API).</p>
+
+<p>There are actually four APIs: the <a href="../API/index.html" target="doccontent">UM C
+API</a>, the <a href="../JavaAPI/html/index.html" target="doccontent">UM Java API</a>, the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">UM .NET API</a> and the <a
+href="../JMSAPI/html/index.html" target="doccontent">JMS API</a> . These APIs are very similar,
+and for the most part this document concentrates on the C API. The translation from C
+functions to Java or .NET methods should be reasonably straightforward; see the <a
+href="../QuickStart/lbm-programming-quick-start.html" target="doccontent">UM Quick Start
+Guide</a> for sample applications in Java and .NET.</p>
+
+<p>The three most important design goals of <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> are to minimize message latency (the time
+that a given message spends "in transit"), maximize throughput, and insure delivery of
+all messages under a wide variety of operational and failure scenarios. <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> achieves these
+goals by not duplicating services provided by the underlying network whenever possible.
+Instead of implementing special messaging servers and daemons to receive and re-transmit
+messages, <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+routes messages primarily with the network infrastructure at wire speed. Placing little
+or nothing in between the sender and receiver is an important and unique design principle
+of <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top"><a href="fundamental-concepts.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Fundamental Concepts</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

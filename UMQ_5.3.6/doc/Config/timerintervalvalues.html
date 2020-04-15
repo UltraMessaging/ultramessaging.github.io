@@ -1,0 +1,626 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>UMS Timer Interval Values</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="UMS Multicast Group Values" href="mulcastgroupvalues.html" />
+<link rel="NEXT" title="Options That May Be Set During Operation"
+href="maybesetduringoperation.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="mulcastgroupvalues.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="maybesetduringoperation.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TIMERINTERVALVALUES" name="TIMERINTERVALVALUES">4.37. <b
+class="APPLICATION">UMS</b> Timer Interval Values</a></h1>
+
+<p>This section lists the default timer interval values use by <b
+class="APPLICATION">UMS</b>. All values are in milliseconds.</p>
+
+<div class="TABLE"><a id="AEN22623" name="AEN22623"></a>
+<p><b>Table 4-4. Default UMS Timer Interval Values</b></p>
+
+<table border="1" frame="border" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Configuration Option</th>
+<th>Scope</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td>delivery_control_loss_check_interval</td>
+<td>receiver</td>
+<td>0 (disabled)</td>
+</tr>
+
+<tr>
+<td>implicit_batching_interval</td>
+<td>source</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_activity_timeout</td>
+<td>context</td>
+<td>60000 (60 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_delivery_control_loss_check_interval</td>
+<td>context</td>
+<td>0 (disabled)</td>
+</tr>
+
+<tr>
+<td>mim_ignore_interval</td>
+<td>context</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_implicit_batching_interval</td>
+<td>context</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_nak_backoff_interval</td>
+<td>context</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_nak_generation_interval</td>
+<td>context</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_nak_initial_backoff_interval</td>
+<td>context</td>
+<td>50 (0.05 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_nak_suppress_interval</td>
+<td>context</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>mim_sm_maximum_interval</td>
+<td>context</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_sm_minimum_interval</td>
+<td>context</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>mim_src_deletion_timeout</td>
+<td>context</td>
+<td>30000 (30 seconds)</td>
+</tr>
+
+<tr>
+<td>rcv_sync_cache_timeout</td>
+<td>receiver</td>
+<td>2000 (2 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_active_source_interval</td>
+<td>context</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>resolver_advertisement_maximum_initial_interval</td>
+<td>source</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_advertisement_minimum_initial_duration</td>
+<td>source</td>
+<td>5000 (5 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_advertisement_minimum_initial_interval</td>
+<td>source</td>
+<td>10 (0.01 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_advertisement_minimum_sustain_duration</td>
+<td>source</td>
+<td>60 (1 minute)</td>
+</tr>
+
+<tr>
+<td>resolver_advertisement_sustain_interval</td>
+<td>source</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>resolver_context_advertisement_interval</td>
+<td>context</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_no_source_linger_timeout</td>
+<td>wildcard_receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>resolver_query_interval</td>
+<td>context</td>
+<td>100 (0.1 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_query_max_interval</td>
+<td>wildcard_receiver</td>
+<td>0 (do not query)</td>
+</tr>
+
+<tr>
+<td>resolver_query_maximum_initial_interval</td>
+<td>receiver</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_query_maximum_interval</td>
+<td>wildcard_receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>resolver_query_minimum_duration</td>
+<td>wildcard_receiver</td>
+<td>60 (1 minute)</td>
+</tr>
+
+<tr>
+<td>resolver_query_minimum_initial_duration</td>
+<td>receiver</td>
+<td>5000 (5 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_query_minimum_initial_interval</td>
+<td>receiver</td>
+<td>20 (0.02 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_query_minimum_interval</td>
+<td>wildcard_receiver</td>
+<td>50 (0.05 seconds)</td>
+</tr>
+
+<tr>
+<td>resolver_query_minimum_sustain_duration</td>
+<td>receiver</td>
+<td>60 (1 minute)</td>
+</tr>
+
+<tr>
+<td>resolver_query_sustain_interval</td>
+<td>receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>response_tcp_deletion_timeout</td>
+<td>context</td>
+<td>2000 (2 seconds)</td>
+</tr>
+
+<tr>
+<td>retransmit_request_generation_interval</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>retransmit_request_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtipc_acknowledgement_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtipc_activity_timeout</td>
+<td>receiver</td>
+<td>60,000 (60 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtipc_client_activity_timeout</td>
+<td>source</td>
+<td>10,000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtipc_sm_interval</td>
+<td>source</td>
+<td>10,000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_activity_timeout</td>
+<td>receiver</td>
+<td>60000 (60 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_ignore_interval</td>
+<td>source</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_nak_backoff_interval</td>
+<td>receiver</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_nak_generation_interval</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_nak_initial_backoff_interval</td>
+<td>receiver</td>
+<td>50 (0.05 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_nak_suppress_interval</td>
+<td>receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_preactivity_timeout</td>
+<td>receiver</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_rate_interval</td>
+<td>context</td>
+<td>100</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_sm_maximum_interval</td>
+<td>source</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtrm_sm_minimum_interval</td>
+<td>source</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_acknowledgement_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_activity_timeout</td>
+<td>receiver</td>
+<td>60000 (60 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_client_activity_timeout</td>
+<td>source</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_connect_interval</td>
+<td>receiver</td>
+<td>100 (0.1 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_ignore_interval</td>
+<td>source</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_nak_backoff_interval</td>
+<td>receiver</td>
+<td>200 [100,300] (0.2 [0.1,0.3] seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_nak_generation_interval</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_nak_suppress_interval</td>
+<td>receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_rate_interval</td>
+<td>context</td>
+<td>100</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_sm_maximum_interval</td>
+<td>source</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_lbtru_sm_minimum_interval</td>
+<td>source</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>transport_tcp_activity_timeout</td>
+<td>receiver</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>transport_topic_sequence_number_info_active_threshold</td>
+<td>source</td>
+<td>60</td>
+</tr>
+
+<tr>
+<td>transport_topic_sequence_number_info_interval</td>
+<td>source</td>
+<td>5000 (5 second)</td>
+</tr>
+
+<tr>
+<td>ume_ack_batching_interval</td>
+<td>context</td>
+<td>100 (0.1 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_activity_timeout</td>
+<td>receiver</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>ume_activity_timeout</td>
+<td>source</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>ume_receiver_liveness_interval</td>
+<td>context</td>
+<td>0 (disable; do not send keepalives)</td>
+</tr>
+
+<tr>
+<td>ume_registration_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_registration_interval</td>
+<td>source</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_retransmit_request_generation_interval</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_retransmit_request_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_source_liveness_timeout</td>
+<td>context</td>
+<td>0 (disable; do not track receivers)</td>
+</tr>
+
+<tr>
+<td>ume_state_lifetime</td>
+<td>receiver</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>ume_state_lifetime</td>
+<td>source</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>ume_store_activity_timeout</td>
+<td>source</td>
+<td>3000 (3 seconds)</td>
+</tr>
+
+<tr>
+<td>ume_store_check_interval</td>
+<td>source</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_command_interval</td>
+<td>context</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_delayed_consumption_report_interval</td>
+<td>receiver</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>umq_hold_interval</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_message_retransmission_interval</td>
+<td>context</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_msg_total_lifetime</td>
+<td>context</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>umq_msg_total_lifetime</td>
+<td>source</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td>umq_queue_activity_timeout</td>
+<td>context</td>
+<td>3000 (3.0 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_queue_check_interval</td>
+<td>context</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_queue_query_interval</td>
+<td>context</td>
+<td>200 (0.2 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_retransmit_request_interval</td>
+<td>receiver</td>
+<td>500 (0.5 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_ulb_check_interval</td>
+<td>source</td>
+<td>1000 (1 second)</td>
+</tr>
+
+<tr>
+<td>umq_ulb_source_activity_timeout</td>
+<td>receiver</td>
+<td>10000 (10 seconds)</td>
+</tr>
+
+<tr>
+<td>umq_ulb_source_check_interval</td>
+<td>receiver</td>
+<td>1000 (1 second)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="mulcastgroupvalues.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="maybesetduringoperation.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION">UMS</b> Multicast Group
+Values</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Options That May Be Set During Operation</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

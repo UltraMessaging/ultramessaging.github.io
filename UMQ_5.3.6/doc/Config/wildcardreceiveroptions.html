@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Wildcard Receiver Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Delivery Control Options"
+href="deliverycontroloptions.html" />
+<link rel="NEXT" title="Event Queue Options" href="eventqueueoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="deliverycontroloptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="eventqueueoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="WILDCARDRECEIVEROPTIONS" name="WILDCARDRECEIVEROPTIONS">4.27.
+Wildcard Receiver Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERPATTERNCALLBACK"
+name="WILDCARDRECEIVERPATTERNCALLBACK">4.27.1. <span class="lbm-option-name"><span
+class="PHRASE">pattern_callback (wildcard_receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a pattern
+match is desired for a topic discovered for a wildcard receiver if the pattern type is
+set to "appcb". This callback is called directly in line and does not use the event
+queue. A return value of 0 indicates the given topic should be considered part of the
+wildcard. A value of 1 or more indicates the topic should NOT be considered matching the
+wildcard.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14029" name="AEN14029"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_wildcard_rcv_compare_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERPATTERNTYPE"
+name="WILDCARDRECEIVERPATTERNTYPE">4.27.2. <span class="lbm-option-name"><span
+class="PHRASE">pattern_type (wildcard_receiver)</span></span></a></h2>
+
+<p>The type of pattern matching in use for the wildcard receiver. This is the behavior
+used for the pattern compare when new topics are seen.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14066" name="AEN14066"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN14085" name="AEN14085"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">pcre</code></td>
+<td><code class="CONSTANT">LBM_WILDCARD_RCV_PATTERN_TYPE_PCRE</code></td>
+<td>The pattern of the wildcard is assumed to be a regular expression usable by PCRE
+(Perl Compatible Regular Expressions) library. <span class="bold"><b
+class="EMPHASIS">Default for all if supported by platform.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">regex</code></td>
+<td><code class="CONSTANT">LBM_WILDCARD_RCV_PATTERN_TYPE_REGEX</code></td>
+<td>The pattern of the wildcard is assumed to be a regular expression usable by POSIX
+Extended Regular Expressions. <span class="bold"><b class="EMPHASIS">Default for all if
+supported and PCRE is not supported.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">appcb</code></td>
+<td><code class="CONSTANT">LBM_WILDCARD_RCV_PATTERN_TYPE_APP_CB</code></td>
+<td>The pattern is ignored and an application callback (set by the pattern_callback
+attribute) is called for each pattern match compare. <span class="bold"><b
+class="EMPHASIS">Default for all if neither PCRE nor REGEX is supported.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRECEIVERCREATECALLBACK"
+name="WILDCARDRECEIVERRECEIVERCREATECALLBACK">4.27.3. <span class="lbm-option-name"><span
+class="PHRASE">receiver_create_callback (wildcard_receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a receiver
+is about to be created for a topic which matched a wildcard receiver pattern. This
+callback is called directly in line and does not use the event queue. The callback
+function should always return 0.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14129" name="AEN14129"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_wildcard_rcv_create_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRECEIVERDELETECALLBACK"
+name="WILDCARDRECEIVERRECEIVERDELETECALLBACK">4.27.4. <span class="lbm-option-name"><span
+class="PHRASE">receiver_delete_callback (wildcard_receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a receiver
+is about to be deleted. This callback is called directly in line and does not use the
+event queue. The callback function should always return 0.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14173" name="AEN14173"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_wildcard_rcv_delete_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRESOLVERNOSOURCELINGERTIMEOUT"
+name="WILDCARDRECEIVERRESOLVERNOSOURCELINGERTIMEOUT">4.27.5. <span
+class="lbm-option-name"><span class="PHRASE">resolver_no_source_linger_timeout
+(wildcard_receiver)</span></span></a></h2>
+
+<p>This sets the linger timeout value before a topic with no sources is removed and
+cleaned up. Since wildcard receivers set the <a
+href="resolveroperationoptions.html#RECEIVERRESOLUTIONNOSOURCENOTIFICATIONTHRESHOLD">resolution_no_source_notification_threshold</a>
+to 10, the linger timer starts after the wildcard receiver sends 10 queries and
+subsequently receives a no-source notification.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14218" name="AEN14218"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRESOLVERQUERYMAXIMUMINTERVAL"
+name="WILDCARDRECEIVERRESOLVERQUERYMAXIMUMINTERVAL">4.27.6. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_maximum_interval
+(wildcard_receiver)</span></span></a></h2>
+
+<p>The longest - and last - interval in wildcard receiver topic querying. A value of 0
+disables wildcard receiver topic querying. See also <a href="disable-topic-res.html"
+target="_top">Disabling Aspects of Topic Resolution</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14259" name="AEN14259"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRESOLVERQUERYMINIMUMDURATION"
+name="WILDCARDRECEIVERRESOLVERQUERYMINIMUMDURATION">4.27.7. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_duration
+(wildcard_receiver)</span></span></a></h2>
+
+<p>The duration of wildcard queries in wildcard receiver topic querying. Only PCRE and
+regex pattern types can use wildcard queries. A value of 0 guarantees that wildcard
+receiver topic querying never completes.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14303" name="AEN14303"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60 (1
+minute)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRESOLVERQUERYMINIMUMINTERVAL"
+name="WILDCARDRECEIVERRESOLVERQUERYMINIMUMINTERVAL">4.27.8. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_interval
+(wildcard_receiver)</span></span></a></h2>
+
+<p>Interval between the first topic query sent upon creation of the wildcard receiver and
+the second query sent by the receiver. A value of 0 disables wildcard receiver topic
+querying. See also <a href="disable-topic-res.html" target="_top">Disabling Aspects of
+Topic Resolution</a>. This option has an effective minimum of 30 ms. See <a
+href="resolveroperationoptions.html" target="_top">Minimum Values for Advertisement and
+Query Intervals</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14349" name="AEN14349"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">50 (0.05
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERWILDCARDQUERIESPERSECOND"
+name="CONTEXTRESOLVERWILDCARDQUERIESPERSECOND">4.27.9. <span
+class="lbm-option-name"><span class="PHRASE">resolver_wildcard_queries_per_second
+(context)</span></span></a></h2>
+
+<p>Maximum number of queries sent within a one second period during wildcard receiver
+topic querying. A value of 0 sets no rate limit on queries in wildcard receiver topic
+querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14390" name="AEN14390"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>advertisements</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERWILDCARDQUERYBPS"
+name="CONTEXTRESOLVERWILDCARDQUERYBPS">4.27.10. <span class="lbm-option-name"><span
+class="PHRASE">resolver_wildcard_query_bps (context)</span></span></a></h2>
+
+<p>Maximum query rate during wildcard receiver topic querying. A value of 0 sets no rate
+limit on queries in wildcard receiver topic querying.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14431" name="AEN14431"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bits per second</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERWILDCARDRECEIVERMAPTABLESZ"
+name="CONTEXTRESOLVERWILDCARDRECEIVERMAPTABLESZ">4.27.11. <span
+class="lbm-option-name"><span class="PHRASE">resolver_wildcard_receiver_map_tablesz
+(context)</span></span></a></h2>
+
+<p>The size of the hash table used for storing wildcard receiver patterns. A value of 0
+disables caching wildcard receiver patterns. This value should be a prime number.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14472" name="AEN14472"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>map entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10273</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="deliverycontroloptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="eventqueueoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Delivery Control Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Event Queue Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

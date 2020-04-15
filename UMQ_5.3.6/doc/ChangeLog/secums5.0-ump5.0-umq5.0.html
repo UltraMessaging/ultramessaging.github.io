@@ -1,0 +1,628 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.0 / UMP 5.0 / UMQ 5.0 - August 2011</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UMS 5.0.1 / UMP 5.0.1 / UMQ 5.0.1 - September 2011"
+href="secums5.0.1-ump5.0.1-umq5.0.1.html" />
+<link rel="NEXT" title="Release LBM 4.2.8 / UME 3.2.8 / UMQ 2.1.8 - July 2011"
+href="seclbm4.2.8-ume3.2.8-umq2.1.8.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="secums5.0.1-ump5.0.1-umq5.0.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="seclbm4.2.8-ume3.2.8-umq2.1.8.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.0-UMP5.0-UMQ5.0" name="SECUMS5.0-UMP5.0-UMQ5.0">18.
+Release UMS 5.0 / UMP 5.0 / UMQ 5.0 - August 2011</a></h1>
+
+<p><b class="APPLICATION">Attention - Name Change:</b> Beginning with this release, the
+LBM product has been renamed to <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> <b class="APPLICATION">Streaming Edition</b> (<b
+class="APPLICATION">UMS</b>) and the UME product has been renamed to <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Persistence Edition</b> (<b class="APPLICATION">UMP</b>). <b
+class="APPLICATION">UMQ</b> retains its name, <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> <b class="APPLICATION">Queuing Edition</b>
+(<b class="APPLICATION">UMQ</b>). Also with this release, the version number for these
+core <b class="APPLICATION">UM</b> products will be the same.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.0" name="UMS5.0">18.1. UMS 5.0</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.0-NEW" name="UMS5.0-NEW">18.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Documentation TOC and Search Page -</b> The <b
+class="APPLICATION">UM</b> Readme file is now presented in a framed, HTML page. The left
+pane contains a Table of Contents for all documentation and a search function box,
+providing easier access to the <b class="APPLICATION">UM</b> documentation.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">XML Configuration Files -</b> Added the ability to use XML
+configuration files. See <a href="../Config/xmlconfigurationfiles.html" target="doccontent">XML
+Configuration Files</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Pre-Defined Messaging (PDM) -</b> Added Pre-Defined Messaging
+(PDM) that provides an API similar to the SDM API that allows you to define messages once
+and then use the definition to create messages that may contain self-describing data. See
+<a href="../Design/lbm-features.html#PRE-DEFINED-MESSAGING" target="doccontent">Pre-Defined
+Messaging</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.0-UPDATES" name="UMS5.0-UPDATES">18.1.2. Updates</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Multiple Unicast Resolver Daemons (<tt
+class="LITERAL">lbmrd</tt>) -</b> Added the ability to specify multiple Unicast Resolver
+Daemons (<tt class="LITERAL">lbmrd</tt>), to be used in a warm-warm failover mode. When
+using multiple <tt class="LITERAL">lbmrds</tt>, all applications should specify the same
+set of <tt class="LITERAL">lbmrds</tt>. See <a
+href="../Design/architecture.html#UNICAST-TOPIC-RES-RESILIENCE" target="doccontent">Unicast
+Topic Resolution Resilience</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Optimize Implicit Batching -</b> Changed the implicit batching
+feature to use a fixed-size array instead of a a queue that was not allowed to exceed a
+predefined maximum size. Preallocating an array of the maximum size removes a malloc/free
+combination from the message path for every message. This change improves performance by
+about 30 percent.</p>
+</li>
+
+<li>
+<p>Added the <tt class="LITERAL">LBMObjectRecycler</tt> and <tt
+class="LITERAL">LBMObjectRecyclerBase</tt> classes in the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a> to provide a way to reuse
+objects and reduce garbage collection. These classes support all of the Statistics types
+as well as the <tt class="LITERAL">LBMMessage</tt> type so promoted messages can be
+recycled. The <tt class="LITERAL">lbmhfxrcv</tt>, <tt class="LITERAL">lbmsrc</tt>, <tt
+class="LITERAL">lbmpong</tt>, <tt class="LITERAL">lbmrcv</tt>, <tt
+class="LITERAL">lbmreq</tt>, <tt class="LITERAL">lbmresp</tt>, <tt
+class="LITERAL">lbmmsrc</tt>, <tt class="LITERAL">umercv</tt>, <tt
+class="LITERAL">umesrc</tt>, <tt class="LITERAL">umqrcv</tt>, and <tt
+class="LITERAL">umqsrc</tt> <a href="../java_example" target="doccontent">Java example
+applications</a> and <a href="../dotnet_example" target="doccontent">.NET example
+applications</a> have been updated to demonstrate the use of these classes.</p>
+</li>
+
+<li>
+<p>Added the <b class="APPLICATION">murmur2</b> hash function as a built-in option to the
+<a href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERSTRINGHASHFUNCTION"
+target="doccontent"><tt class="LITERAL">resolver_string_hash_function</tt></a> context
+configuration option. <b class="APPLICATION">murmur2</b> can perform better than the
+existing built-in hash functions for long topic strings.</p>
+</li>
+
+<li>
+<p>Added support for setting <b class="APPLICATION">UMS</b> wildcard receiver options to
+the UM Gateway.</p>
+</li>
+
+<li>
+<p>Added the public <tt class="LITERAL">LBMMessage.promote()</tt> method. If applications
+intend to hold messages for later processing, they should call <tt
+class="LITERAL">promote()</tt> to guarantee that messages are not reclaimed by <b
+class="APPLICATION">UMS</b>.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">getAttributeValue</tt> and <tt
+class="LITERAL">setAttributeValue</tt> methods to <tt class="LITERAL">LBMHFXReceiver</tt>
+to provide the same functionality as other <b class="APPLICATION">UM</b> objects.</p>
+</li>
+
+<li>
+<p>Added a new UM Gateway Web Monitor statistic to show the number of retransmit requests
+received by an endpoint for an unknown source.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.0-FIXES" name="UMS5.0-FIXES">18.1.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>The UM Gateway now logs an error message if the initialization of gateway monitoring
+fails.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Automatic Monitoring that caused incorrect clean up of
+implicitly spawned reactor contexts. Other problems fixed occurred when using <tt
+class="LITERAL">epoll</tt> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> causing the UD Acceleration
+library to report errors during clean up. When UD Acceleration was not used, the base <tt
+class="LITERAL">epoll</tt> file descriptor leaked.</p>
+</li>
+
+<li>
+<p>In the UM Gateway, corrected a memory leak of 64 bytes for each <tt
+class="LITERAL">&lt;regex-pattern&#62;</tt> in an ACL.</p>
+</li>
+
+<li>
+<p>Fixed a condition where a regular receiver's callback function could be called before
+the user application's <tt class="LITERAL">lbm_rcv_t</tt> pointer is set.</p>
+</li>
+
+<li>
+<p>Added the <tt class="LITERAL">-E</tt> option to the <tt
+class="FILENAME">lbmmrcv.java</tt> example application to allow it to exit upon receiving
+an EOS like the C example application.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway that occurred if you create a context with <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPBINDREQUESTPORT"
+target="doccontent"><tt class="LITERAL">request_tcp_bind_request_port</tt></a> = 0, and a
+source created on that context provides <a
+href="../Config/latejoinoptions.html#SOURCELATEJOIN" target="doccontent"><tt
+class="LITERAL">late_join</tt></a>. This configuration disabled Late Join. Now <code
+class="FUNCTION">lbm_src_topic_alloc()</code> returns the following error. <tt
+class="LITERAL">late join not allowed when request_tcp_bind_request_port is
+disabled</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway that caused errors relating to the creation of
+unicast forwarding associations to be incorrectly reported.</p>
+</li>
+
+<li>
+<p>Fixed an issue that could lead to a crash if implicit batching was being used and a
+particular OS socket send call failed, which is relatively rare failure.</p>
+</li>
+
+<li>
+<p>Fixed an issue that could cause a crash if using Adaptive Batching and you delete a
+source with messages still outstanding in the batch buffer.</p>
+</li>
+
+<li>
+<p>Fixed an issue in the <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a>
+that caused a <tt class="LITERAL">NullReferenceException</tt> if you passed in null for
+the third parameter to the <tt class="LITERAL">LBMHFXReceiver constructor</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway that caused deafness in wildcard receivers due
+to case-insensitive topic patterns. The UM Gateway now uses case-sensitive string
+compares when mapping topics and patterns.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the UM Gateway that caused receivers using TCP, IPC, or
+LBT-RDMA transports to encounter the warning assertion: <tt
+class="LITERAL">MUL_SQN_GT(sqn,ctlr-&#62;stream_high_sqn)</tt> and receive data out of
+order despite Ordered Delivery was enabled.</p>
+</li>
+
+<li>
+<p>Removed a lock taken during a call to <code
+class="FUNCTION">lbm_context_delete()</code> which could cause a running IPC or RDMA
+receiver thread to deadlock during context deletion.</p>
+</li>
+
+<li>
+<p>Fixed an issue with the <a href="../JavaAPI/html/index.html" target="doccontent">Java
+API</a> where setting both a context source event callback via <tt
+class="LITERAL">LBMContextAttributes.setContextSourceEventCallback</tt> and also enabling
+receipt of topicless immediate messages via calling <tt
+class="LITERAL">LBMContext.enableImmediateMessageReceiver</tt> could cause a crash upon
+receipt of a topicless immediate message. Setting only one (or none) of the two callbacks
+was successful, and setting both callbacks was successful if the newer, preferred <tt
+class="LITERAL">LBMContextAttributes.setImmediateMessageCallback</tt> method was used to
+set the topicless immediate message callback instead of <tt
+class="LITERAL">LBMContext.enableImmediateMessageReceiver</tt>.</p>
+</li>
+
+<li>
+<p>Optimized memory usage of the resolver cache for contexts on a network with <b
+class="APPLICATION">LBM</b> 3.6 or earlier sources.</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused the <a href="../API/index.html" target="doccontent">C
+APIs</a> <code class="FUNCTION">lbm_*_attr_dump()</code> and their <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> / <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a> equivalents to return
+strings containing garbage values for deprecated or unsupported options.</p>
+</li>
+
+<li>
+<p>Updated the version of <tt class="FILENAME">libpre</tt> bundled with the AIX install
+packages to match the version of <tt class="FILENAME">libpre</tt> Informatica uses to
+build the AIX <b class="APPLICATION">UM</b> packages.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.0-KNOWNISSUES" name="UMS5.0-KNOWNISSUES">18.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Hot Failover is not currently supported with Multi-Transport Threads.</p>
+</li>
+
+<li>
+<p>Configuring sources with LBT-RU, source-side filtering, and adaptive batching may
+cause a crash. All three options must be set to cause the problem. Informatica is working
+to address this issue.</p>
+</li>
+
+<li>
+<p>When using the UM Gateway Informatica recommends that you <b class="APPLICATION">do
+not</b> enable the Multi-Transport Threads feature. Informatica does not support nor test
+the operation of Multi-Transport Threads across the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or queues (<b class="APPLICATION">UMQ</b>).</p>
+</li>
+
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Sending LBT-IPC messages larger than 65,535 bytes is not supported when <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero) unless you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt>.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">UMS</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">UMS</b> may leave a monitoring thread running after
+context deletion. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support responses that exceed the maximum datagram
+size.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bt applications using
+the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a 32-bit
+application using LBT-IPC. It can only interact with a 64-bit application. Likewise, a
+32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support queuing at this time, only streaming and
+persistence. This will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support a four gateway "full-mesh" configuration
+(i.e., all gateways connected).</p>
+</li>
+
+<li>
+<p>If using LBT-RDMA across the UM Gateway and you exit the gateway with <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>, you may see a segfault. Informatica is
+aware of this and has not observed any ill effects from this segfault.</p>
+</li>
+
+<li>
+<p>Informatica recommends against configuring UM Gateways in a ring of peer portals - use
+configurations utilizing gateway endpoints (parallel paths) to break the ring.</p>
+</li>
+
+<li>
+<p>Informatica recommends not stopping and restarting UM Gateways within the transport's
+activity timeout period (<tt class="LITERAL">transport_*_activity_timeout</tt> defaults
+to 60 seconds for LBTRU and LBTRM).</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.0" name="UMP5.0">18.2. UMP 5.0</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.0-NEW" name="UMP5.0-NEW">18.2.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Manager</b> - This new feature ensures the consistency and
+reliability of enterprise production applications by enabling IT administrators to
+control what configurations messaging applications can use and what users can operate
+them. See <a href="../UMM/index.html" target="doccontent">Ultra Messaging Manager</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.0-UPDATES" name="UMP5.0-UPDATES">18.2.2. Updates</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Batching Acknowledgments -</b> Added the ability configure <b
+class="APPLICATION">UMP</b> to acknowledge message consumption to a store(s) for a series
+of messages independent of when the receiving application consumed the messages. This
+option works well if multiple threads process messages off of an event queue, which may
+result in messages being consumed out of order. See <a
+href="../UME/designing-persistent-applications.html#BATCHINGACKS" target="doccontent">Batching
+Acknowledgments</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Object-free Explicit Acknowledgments -</b> When using explicit
+ACKs in a <a href="../JavaAPI/html/index.html" target="doccontent">Java</a> or <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET</a> application, you can enable <a
+href="https://communities.informatica.com/infakb/faq/5/Pages/80233.aspx"
+target="doccontent">Zero Object Delivery (ZOD)</a> and extract ACK information from messages
+and then send acknowledgements to the store(s) for any sequence number. See <a
+href="../UME/designing-persistent-applications.html#OBJECT-FREEEXPLICITACKS"
+target="doccontent">Object-free Explicit Acknowledgments</a>.</p>
+</li>
+
+<li>
+<p>Added new configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEALLOWCONFIRMEDDELIVERY"
+target="doccontent"><tt class="LITERAL">ume_allow_confirmed_delivery</tt></a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.0-FIXES" name="UMP5.0-FIXES">18.2.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p><code class="FUNCTION">lbm_msg_ume_send_explicit_ack()</code> now returns 0 (zero) for
+success instead of the number of bytes sent. It still returns -1 for failure.</p>
+</li>
+
+<li>
+<p>Fixed a problem originating from a source configured to use both <b
+class="APPLICATION">UMP</b> and ULB at the same time. This configuration caused the
+following assert: <tt class="LITERAL">WARNING: failed assertion
+[buff-&#62;umesendexcd!=NULL] at line 2543 in .../../../../src/lib/lbm/lbmsrc.c</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem that appeared if you did not configure any <b
+class="APPLICATION">UMP</b> stores and set either <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMECONFIRMEDDELIVERYNOTIFICATION"
+ target="doccontent"><tt class="LITERAL">ume_confirmed_delivery_notification</tt></a> or <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEMESSAGESTABILITYNOTIFICATION"
+ target="doccontent"><tt class="LITERAL">ume_message_stability_notification</tt></a> to deliver
+per message notifications as opposed to merely per fragment notifications.</p>
+</li>
+
+<li>
+<p>Fixed a rare condition that could briefly cause a single <b
+class="APPLICATION">UMP</b> receiver to be registered with a store multiple times for the
+same source.</p>
+</li>
+
+<li>
+<p>Corrected a fatal assertion that occurred when sending a combination of fragmented and
+non fragmented hot failover messages when running a Java receiver with <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEUSEACKBATCHING"
+target="doccontent"><tt class="LITERAL">ume_use_ack_batching</tt></a> enabled. The fatal
+assertion was <tt class="LITERAL">[MUL_SQN_GTE(first,ctlr-&#62;expected_sqn)] at line
+1555 in ../../../../src/lib/lbm/ume/umerctlr.c</tt></p>
+</li>
+
+<li>
+<p>Fixed a rare issue that could cause a <b class="APPLICATION">UM</b> application
+(including <tt class="LITERAL">umestored</tt>) to crash on startup with <tt
+class="LITERAL">FATAL: failed
+assertion[info-&#62;umq_ack.flags&amp;LBMC_UMQ_ACK_FLAG_TYPE_STABLE]</tt>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.0-KNOWNISSUES" name="UMP5.0-KNOWNISSUES">18.2.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.0" name="UMQ5.0">18.3. UMQ 5.0</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.0-UPDATES" name="UMQ5.0-UPDATES">18.3.1. Updates</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Indexed Ultra Load balancing (ULB) -</b> Added indexing
+features to ULB, which is similar to indexed queueing and uses the same APIs (<code
+class="FUNCTION">lbm_rcv_umq_index_start_assignment()</code>, <code
+class="FUNCTION">lbm_rcv_umq_index_release()</code>, etc.), specifying the ULB source
+string in place of a queue name. See <a
+href="../UME/ume-ops-operational-view.html#INDEXED-ULB" target="doccontent">Indexed Ultra Load
+Balancing (ULB)</a>.</p>
+</li>
+
+<li>
+<p>Added the ability to set a message's total lifetime for both <b
+class="APPLICATION">UMQ</b> and ULB sources. See <a
+href="../UME/designing-queuing-applications.html#MESSAGE-LIFETIMES-REASSIGN"
+target="doccontent">Message Lifetimes and Reassignment</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Local JMS Transaction Support -</b> <b
+class="APPLICATION">UM</b> JMS now supports local transaction.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">JMS Application Header Attribute-</b> Added the
+ConnectionFactory. attribute, USE_APP_HEADER, allowing you to turn off the use of App
+Headers which can greatly increases performance. See <a
+href="../jms_concepts/index.html#FACTORYATTRIBUTES"
+target="doccontent">FactoryAttributes</a>.</p>
+</li>
+
+<li>
+<p>Removed the restriction requiring that the <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSET"
+target="doccontent"><tt class="LITERAL">umq_ulb_application_set</tt></a> source option be
+specified prior to setting any other <tt class="LITERAL">umq_ulb_application_set_*</tt>
+or <tt class="LITERAL">umq_ulb_receiver_*</tt> options.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.0-FIXES" name="UMQ5.0-FIXES">18.3.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed an issue with ULB that prevented ULB receivers from completing registration when
+they attempted to register with a ULB source using an assignment ID (internal 32-bit
+identifier generated randomly at receiver startup) already in use by a different receiver
+at that source. This issue could cause the log warning : <tt class="LITERAL">received ACK
+with out-of-range appset index 65535/1</tt>.</p>
+</li>
+
+<li>
+<p>Fixed a problem in the <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a>
+that caused a <b class="APPLICATION">UMP</b> store or <b class="APPLICATION">UMQ</b>
+queue to fail to acknowledge messages that are passed off to a different thread to be
+disposed.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">LBM</tt> as a DEFAULT_TOPIC_TYPE and DEFAULT_TEMP_TOPIC_TYPE
+in the JMS App Header. This allows Request/Reply to work without <b
+class="APPLICATION">UMP</b>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="secums5.0.1-ump5.0.1-umq5.0.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.2.8-ume3.2.8-umq2.1.8.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UMS 5.0.1 / UMP 5.0.1 / UMQ 5.0.1 -
+September 2011</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.2.8 / UME 3.2.8 / UMQ 2.1.8 -
+July 2011</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.1.2 / UME 3.1.2 / UMQ 2.0 - November 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 4.1.3 / UME 3.1.3 / UMQ 2.0.1 - November 2010"
+href="seclbm4.1.3-ume3.1.3-umq2.0.1.html" />
+<link rel="NEXT" title="Release UME 3.0.2 - November 2010" href="secume3.0.2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm4.1.3-ume3.1.3-umq2.0.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="secume3.0.2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.1.2-UME3.1.2-UMQ2.0"
+name="SECLBM4.1.2-UME3.1.2-UMQ2.0">29. Release LBM 4.1.2 / UME 3.1.2 / UMQ 2.0 - November
+2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.1.2" name="LBM4.1.2">29.1. LBM 4.1.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1.2-FIXES" name="LBM4.1.2-FIXES">29.1.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Changed the <a
+href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE"
+target="doccontent"><tt class="LITERAL">resolver_unicast_interface</tt></a> option to accept
+either multicast-capable or non-multicast interfaces.</p>
+</li>
+
+<li>
+<p>Corrected a UM Gateway issue that could cause a peer portal to become deaf to a
+wildcard pattern, if the peer portal received a wildcard receiver topic query (WC-TQR)
+for the pattern before the companion portal was connected.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the UM Gateway that prevented topics from being purged when
+no receivers existed for them. This was evident in the Web Monitor's Gateway page that
+showed more active topics than any of the individual portals.</p>
+</li>
+
+<li>
+<p>Corrected a problem with <tt class="LITERAL">epoll</tt> initialization that prevented
+<tt class="LITERAL">epoll</tt> from being used with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a>.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the UM Gateway that created a deadlock if multiple, newly
+created sources immediately begin sending to a peer gateway.</p>
+</li>
+
+<li>
+<p>Corrected a segfault in a UM Gateway peer portal that might occur when a wildcard
+receiver has been deleted and the peer portal cancels interest in the deleted wildcard
+receiver's topic pattern.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1.2-KNOWNISSUES" name="LBM4.1.2-KNOWNISSUES">29.1.2.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using LBT-IPC, a seg fault can occur when sending messages larger than 65,535
+bytes when <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero). The
+seg fault occurs when fragments are lost. Setting <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt> avoids the seg fault by eliminating loss. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. 29West is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">LBM</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">LBM</b> may leave a monitoring thread running after
+context deletion. This situation produces the following error: <tt class="LITERAL">VMA
+ERROR : epoll_wait_call:36:epoll_wait_call() epfd 48 not found</tt>. 29West is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-CHANGES" name="LBM4.0-CHANGES">29.1.3. LBM 4.0
+Changes</a></h3>
+
+<p>The following changes were implemented in <b class="APPLICATION">LBM</b> Release 4.0
+but omitted from the <b class="APPLICATION">LBM</b> 4.0 <a
+href="seclbm4.0.html#LBM4.0-UPDATES"><i>Updated Features</i></a> section. They have also
+been added to that section.</p>
+
+<ul>
+<li>
+<p>Blocking sends from within a context-thread callback are no longer permitted and now
+return an LBM_EINVAL error. This restriction eliminates a possible deadlock. Non-blocking
+sends from a context-thread callback are still permitted, and any type of send is
+permitted outside a context-thread callback.</p>
+</li>
+
+<li>
+<p>Some API calls that were formerly never safe to call from within a context-thread
+callback (due to a deadlock condition) are now always safe to call from within a
+context-thread callback. These API calls include:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">lbm_request_delete()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_request_delete_ex()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_response_delete()</tt></p>
+</li>
+</ul>
+
+<p>Additionally, the following send-related API calls are now safe to call from within a
+context-thread callback provided you set the LBM_SRC_NONBLOCK flag.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">lbm_multicast_immediate_message()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_multicast_immediate_request()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_unicast_immediate_message()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_unicast_immediate_request()</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_send_response()</tt></p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Added ability to set a <b class="APPLICATION">LBM</b> Configuration Option interface
+by name. When setting by name the configuration option's value must be wrapped in
+quotes.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.1.2" name="UME3.1.2">29.2. UME 3.1.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.2-NEW" name="UME3.1.2-NEW">29.2.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added the following <b class="APPLICATION">UME</b> configuration options.</p>
+
+<ul>
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">(source) ume_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">(receiver) ume_activity_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">(source) ume_state_lifetime</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">(receiver) ume_state_lifetime</tt></a></p>
+</li>
+
+<li>
+<p>Also added new new topic ume-attributes options, <tt
+class="LITERAL">source-state-lifetime</tt> and <tt
+class="LITERAL">receiver-state-lifetime</tt>. See <a
+href="../UME/umestored-config.html#UMESTORED-TOPIC-OPTIONS" target="doccontent">Options for a
+Topic's ume-attributes Element</a>.</p>
+</li>
+</ul>
+
+<p>The activity and state lifetime timers protect the Reg IDs of inactive sources and
+receivers and also controls how long <b class="APPLICATION">UME</b> retains the state and
+cache for inactive sources and receivers. These options can operate in conjunction with
+the proxy source option or independently. See <a
+href="../UME/ume-fault-tolerance.html#ACTIVITY-TIMEOUT-STATE-LIFETIME"
+target="doccontent">Activity Timeout and State Lifetime Options</a> for a discussion of these
+timers work together and how they work with proxy sources.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.2-FIXES" name="UME3.1.2-FIXES">29.2.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed an issue that could result in a crash from leakage of a proxy source object in
+the store leading to a "double free" of the proxy source object.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could cause <b class="APPLICATION">UME</b> receivers to crash if
+their source goes down and comes back repeatedly with the same reg ID and also comes back
+registered to more stores than previously.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.2-KNOWNISSUES" name="UME3.1.2-KNOWNISSUES">29.2.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ2.0" name="UMQ2.0">29.3. UMQ 2.0</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ2.0-NEW" name="UMQ2.0-NEW">29.3.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">JMS Support:</b> Added support for JMS with the <b
+class="APPLICATION">Ultra Messaging JMS</b>. See <a
+href="../QuickStart/jms-binary-quick-start.html" target="doccontent">Ultra Messaging JMS API
+Quick Start</a> for information on running the example JMS client applications. See <a
+href="../jms_concepts/index.html" target="doccontent">Ultra Messaging JMS API Guide</a> for
+conceptual, operational and configuration information about Ultra Messaging JMS.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ2.0-FIXES" name="UMQ2.0-FIXES">29.3.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem that could cause a fatal assert if a queue received a MIM message
+not meant to be queued on a topic that exists in the queue due to other messages that
+were meant to be enqueued.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm4.1.3-ume3.1.3-umq2.0.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="secume3.0.2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 4.1.3 / UME 3.1.3 / UMQ 2.0.1 -
+November 2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UME 3.0.2 - November 2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

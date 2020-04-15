@@ -1,0 +1,108 @@
+﻿<html xmlns:MSHelp="http://msdn.microsoft.com/mshelp"><head><title>LBMObjectRecyclerBase Class</title><link rel="stylesheet" type="text/css" href="../styles/presentation.css" /><link rel="stylesheet" type="text/css" href="ms-help://Hx/HxRuntime/HxLink.css" /><script type="text/javascript" src="../scripts/script_prototype.js"> </script><script type="text/javascript" src="../scripts/EventUtilities.js"> </script><script type="text/javascript" src="../scripts/StyleUtilities.js"> </script><script type="text/javascript" src="../scripts/SplitScreen.js"> </script><script type="text/javascript" src="../scripts/ElementCollection.js"> </script><script type="text/javascript" src="../scripts/MemberFilter.js"> </script><script type="text/javascript" src="../scripts/CollapsibleSection.js"> </script><script type="text/javascript" src="../scripts/LanguageFilter.js"> </script><script type="text/javascript" src="../scripts/CookieDataStore.js"> </script><meta name="file" content="451244e2-bc2a-b1cf-11d1-4d087f4ffc8b" /><xml xmlns:msxsl="urn:schemas-microsoft-com:xslt"><MSHelp:Attr Name="AssetID" Value="T:com.latencybusters.lbm.LBMObjectRecyclerBase" /><MSHelp:Keyword Index="A" Term="T:com.latencybusters.lbm.LBMObjectRecyclerBase" /><MSHelp:Keyword Index="A" Term="frlrfcomlatencybusterslbmLBMObjectRecyclerBaseClassTopic" /><MSHelp:Keyword Index="A" Term="frlrfcomlatencybusterslbmLBMObjectRecyclerBaseMembersTopic" /><MSHelp:Keyword Index="K" Term="LBMObjectRecyclerBase class" /><MSHelp:Keyword Index="K" Term="com.latencybusters.lbm.LBMObjectRecyclerBase class" /><MSHelp:Keyword Index="F" Term="LBMObjectRecyclerBase" /><MSHelp:Keyword Index="F" Term="com.latencybusters.lbm.LBMObjectRecyclerBase" /><MSHelp:Attr Name="TopicType" Value="apiref" /><MSHelp:Attr Name="TopicType" Value="kbSyntax" /><MSHelp:Attr Name="APIType" Value="Managed" /><MSHelp:Attr Name="APILocation" Value="lbmcs.dll" /><MSHelp:Attr Name="APIName" Value="com.latencybusters.lbm.LBMObjectRecyclerBase" /><MSHelp:Attr Name="Locale" Value="en-us" /></xml></head><body><div id="control"><span class="productTitle">LBM .Net API Documentation</span><br /><span class="topicTitle">LBMObjectRecyclerBase Class</span><br /><div id="toolbar"><span id="chickenFeet"><a href="d4648875-d41a-783b-d5f4-638df39ee413.htm">Namespaces</a> ► <a href="687c4e76-c213-64c0-1151-0f7002f4ca91.htm">com.latencybusters.lbm</a> ► <span class="selflink">LBMObjectRecyclerBase</span></span><span id="languageFilter"><select id="languageSelector" onchange="var names = this.value.split(' '); toggleVisibleLanguage(names[1]); lfc.switchLanguage(names[0]); store.set('lang',this.value); store.save();" style="visibility: hidden;"><option value="CSharp cs">C#</option></select></span></div></div><div id="main"><span style="color: DarkGray"> </span><div class="summary">
+        <p>
+            This is an abstract base class, and should be subclassed to override any appropriate
+            non-functional methods, such as doneWith... or retrieve... (whose default implementation in
+            the base class is to always return null). LBMObjectRecycler is provided as a basic general
+            implementation of this class.
+            </p>
+        <p>
+            After being set in any of the UM attribute classes with the setObjectRecycler() method, UM
+            uses the LBMObjectRecyclerBase internally, instead of automatically creating a new Object of
+            the different supported types.
+            </p>
+        <p>
+            UM calls the appropriate retrieve method expecting either an object that it can use, or
+            null. In the latter case UM creates the new object as if there were no recycler available.
+            Once finished with an object, calling the appropriate doneWith method makes it available for
+            future retrieve calls.
+            </p>
+        <p>
+            When implementing your own recycler from this parent class, note that the retrieve methods
+            (below) are called from within the context thread as part of the callbacks. Hence, do not
+            perform any unsafe API calls from within a retrieve method.
+            </p>
+      </div><div class="section"><div class="sectionTitle" onclick="toggleSection(this.parentNode)"><img src="../icons/collapse_all.gif" /> Declaration Syntax</div><div class="sectionContent"><div id="syntaxSection"><table class="filter"><tr class="tabs" id="syntaxTabs"><td class="tab" x-lang="CSharp" onclick="toggleClass('syntaxTabs','x-lang','CSharp','activeTab','tab'); toggleStyle('syntaxBlocks','x-lang','CSharp','display','block','none');">C#</td></tr></table><div id="syntaxBlocks"><div class="code" x-lang="CSharp"><pre><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="identifier">LBMObjectRecyclerBase</span></pre></div></div></div></div></div><div class="section"><div class="sectionTitle" onclick="toggleSection(this.parentNode)"><img src="../icons/collapse_all.gif" /> Members</div><div class="sectionContent"><div id="allMembersSection"><table class="filter"><tr class="tabs" id="memberTabs"><td class="tab" value="all" onclick="toggleClass('memberTabs','value','all','activeTab','tab'); processSubgroup('all', 'member'); processList('memberList','filterElement','member');">All Members</td><td class="tab" value="constructor" onclick="toggleClass('memberTabs','value','constructor','activeTab','tab'); processSubgroup('constructor','member');processList('memberList','filterElement','member');">Constructors</td><td class="tab" value="method" onclick="toggleClass('memberTabs','value','method','activeTab','tab'); processSubgroup('method','member'); processList('memberList','filterElement','member');">Methods</td></tr><tr><td class="line" colspan="2"><label for="public"><input id="public" type="checkbox" checked="true" onclick="toggleCheckState('public',this.checked); processList('memberList','filterElement','member');" />Public</label><br /><label for="protected"><input id="protected" type="checkbox" checked="true" onclick="toggleCheckState('protected',this.checked); processList('memberList','filterElement','member');" />Protected</label></td><td class="line" colspan="2"><label for="instance"><input id="instance" type="checkbox" checked="true" onclick="toggleCheckState('instance',this.checked); processList('memberList','filterElement','member');" />Instance</label><br /><label for="static"><input id="static" type="checkbox" checked="true" onclick="toggleCheckState('static',this.checked); processList('memberList','filterElement','member');" />Static</label></td><td class="line" colspan="2"><label for="declared"><input id="declared" type="checkbox" checked="true" onclick="toggleCheckState('declared',this.checked); processList('memberList','filterElement','member');" />Declared</label><br /><label for="inherited"><input id="inherited" type="checkbox" checked="true" onclick="toggleCheckState('inherited',this.checked); processList('memberList','filterElement','member');" />Inherited</label></td></tr></table><table class="members" id="memberList"><tr><th class="iconColumn">Icon</th><th class="nameColumn">Member</th><th class="descriptionColumn">Description</th></tr><tr data="constructor; protected; instance; declared"><td><img src="../icons/protmethod.gif" /></td><td><a href="95ed682b-1951-9555-14e6-854398395f65.htm">LBMObjectRecyclerBase<span class="languageSpecificText"><span class="cs">()</span><span class="cpp">()</span><span class="nu">()</span></span></a></td><td><div class="summary">Initializes a new instance of the <span class="selflink">LBMObjectRecyclerBase</span> class</div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="de7e0d6c-c0a6-ba79-b331-af7d34d27af8.htm">close<span class="languageSpecificText"><span class="cs">()</span><span class="cpp">()</span><span class="nu">()</span></span></a></td><td><div class="summary">
+            A method that should be overridden by derived classes, if needed, to provide a way to clean up objects
+            referenced by the recycler (like stats objects).  
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="5d91716e-c900-c5bf-81a4-57a60716f4ab.htm">doneWithContextSourceEvent(LBMContextSourceEvent)</a></td><td><div class="summary">
+            If dispose is not called on an LBMContextSourceEvent in the callback, it is retained for use in the application.
+            Once the application is finished with the LBMContextSourceEvent, it should call dispose and then
+            pass it to this method to make it available for reuse, instead of letting it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="c41c908f-8ed1-88a0-a098-bfcfee76cfd1.htm">doneWithContextStatistics(LBMContextStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="ee645c38-b0c8-f644-8f3a-7bd619da7540.htm">doneWithEventQueueStatistics(LBMEventQueueStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected. 
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="e5df5180-851d-f5dc-0753-a5a2b596e024.htm">doneWithImmediateMessageReceiverStatistics(LBMImmediateMessageReceiverStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="dc5c7f7c-ae44-294a-3588-171a303216df.htm">doneWithImmediateMessageSourceStatistics(LBMImmediateMessageSourceStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected. 
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="2746a5d5-054b-cd81-39af-ec01cf4417f4.htm">doneWithMessage(LBMMessage)</a></td><td><div class="summary">
+            If dispose is not called on an LBMMessage in the callback, it is retained for use in the application.
+            Once the application is finished with the LBMMessage, it should call dispose and then
+            pass it to this method to make it available for reuse, instead of letting it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="6c3db755-78c2-2d1f-880e-84a91395bd97.htm">doneWithReceiverStatistics(LBMReceiverStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="c732fa3a-aa7b-d4f8-957c-f1de9ae38bbe.htm">doneWithSourceEvent(LBMSourceEvent)</a></td><td><div class="summary">
+            If dispose is not called on an LBMSourceEvent in the callback, it is retained for use in the application.
+            Once the application is finished with the LBMSourceEvent, it should call dispose and then
+            pass it to this method to make it available for reuse, instead of letting it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="a38ca598-2c45-47fa-9bcf-7fbcf9b1dd98.htm">doneWithSourceStatistics(LBMSourceStatistics)</a></td><td><div class="summary">
+            Once the application is finished with the stats object, it should NOT call dispose but rather
+            should pass it to this method to make the object instance available for reuse, instead of letting
+            it be garbage collected.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="fdb19245-bd12-e8a6-4dfd-d0c34f349d2f.htm">retrieveContextSourceEvent(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve an LBMContextSourceEvent object instance that it can use
+            instead of creating a new instance to reduce garbage collection.  It will reset the state of
+            the LBMContextSourceEvent once it is retrieved and then use it as if it were a new instance.  Returning null
+            causes LBM to create a new instance as if there were no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="09081ace-93fb-ae3e-7e37-f6b2e6fdebab.htm">retrieveContextStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="a8eee123-2b52-3f38-5c6d-f423dbd69eb5.htm">retrieveEventQueueStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler. 
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="386b4c0b-662a-7d12-9dc7-6065e60cb7ca.htm">retrieveImmediateMessageReceiverStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="9bd370d1-fb3b-7a13-f3a2-85c237e9aecc.htm">retrieveImmediateMessageSourceStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler. 
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="070f46c9-4949-5ec1-6f04-8fbf4ef51e88.htm">retrieveMessage(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a LBMMessage object instance that it can use
+            instead of creating a new instance to reduce garbage collection.  It will reset the state of
+            the LBMMessage once it is retrieved and then use it as if it were a new instance.  Returning null
+            causes LBM to create a new instance as if there were no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="425a198a-d488-93af-12e0-6153304a1234.htm">retrieveReceiverStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="169ca92d-bf8a-ddb5-56b8-947ef1c617cc.htm">retrieveSourceEvent(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve an LBMSourceEvent object instance that it can use
+            instead of creating a new instance to reduce garbage collection.  It will reset the state of
+            the LBMSourceEvent once it is retrieved and then use it as if it were a new instance.  Returning null
+            causes LBM to create a new instance as if there were no recycler.
+            </div><br /></td></tr><tr data="method; public; instance; declared"><td><img src="../icons/pubmethod.gif" /></td><td><a href="70dd8b3c-3b20-0611-1144-14b8e26fc43d.htm">retrieveSourceStatistics(Object)</a></td><td><div class="summary">
+            LBM will call this method to attempt to retrieve a stats object instance that it can use instead of
+            creating a new instance to reduce garbage collection.  It will refresh the stats object and then use it
+            as if it were a new instance.  Returning null causes LBM to create a new instance as if there were
+            no recycler.
+            </div><br /></td></tr></table></div></div></div><div class="section"><div class="sectionTitle" onclick="toggleSection(this.parentNode)"><img src="../icons/collapse_all.gif" /> Inheritance Hierarchy</div><div class="sectionContent"><table cellspacing="0" cellpadding="0"><tr><td colspan="3"><a href="http://msdn2.microsoft.com/en-us/library/e5kfa45b" target="_blank">Object</a></td></tr><tr><td><img src="../icons/LastChild.gif" /></td><td colspan="2"><span class="selflink">LBMObjectRecyclerBase</span></td></tr><tr><td> </td><td><img src="../icons/LastChild.gif" /></td><td><a href="a14d271c-2598-5112-665b-53c96fc2b246.htm">LBMObjectRecycler</a></td></tr></table></div></div><p><div id="footer">For questions or comments on this topic, contact http://29west.com/support <p />Copyright © 2006-2014 Informatica Corporation. All Rights Reserved.</div>Assembly: <span sdata="assembly">lbmcs</span> (Module: lbmcs) Version: 5.3.6.0</p></div></body></html>

@@ -1,0 +1,1152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Deprecated Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Automatic Monitoring Options"
+href="automaticmonitoringoptions.html" />
+<link rel="NEXT" title="UMS Port Values" href="portvalues.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="automaticmonitoringoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="portvalues.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DEPRECATEDOPTIONS" name="DEPRECATEDOPTIONS">4.34. Deprecated
+Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERACTIVESOURCEINTERVAL"
+name="CONTEXTRESOLVERACTIVESOURCEINTERVAL">4.34.1. <span class="lbm-option-name"><span
+class="PHRASE">resolver_active_source_interval (context)</span></span></a></h2>
+
+<p>Interval between sending Topic Resolution advertisements for active sources. A value
+of 0 indicates that periodic advertisements should not be sent (sources will still
+respond to queries). NOTE: when set to 0, the <tt
+class="LITERAL">resolver_active_threshold</tt> should typically also be set to 0. See
+also <a href="disable-topic-res.html" target="_top">Disabling Aspects of Topic
+Resolution</a>. NOTE: Although this option is eligible to be set during operation, two
+considerations exist.</p>
+
+<ul>
+<li>
+<p>If this option is disabled at initialization (set to 0), you cannot re-set the option
+during operation.</p>
+</li>
+
+<li>
+<p>Disabling this option by setting it to 0 (zero) during operation prevents you from
+re-setting the option a second time during operation.</p>
+</li>
+</ul>
+
+<br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN21475" name="AEN21475"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERACTIVETHRESHOLD"
+name="CONTEXTRESOLVERACTIVETHRESHOLD">4.34.2. <span class="lbm-option-name"><span
+class="PHRASE">resolver_active_threshold (context)</span></span></a></h2>
+
+<p>Number of seconds since the last application message was sent to a source that causes
+that source to be marked inactive. Inactive sources are not advertised periodically (but
+will continue to respond to queries). A value of 0 indicates that sources will advertise
+periodically regardless of how often the application sends messages. Note that for
+publishers with large numbers of sources, this can increase the topic resolution traffic
+load. However, also note that this option SHOULD be set to 0 if periodic advertisements
+are disabled (by setting <tt class="LITERAL">resolver_active_source_interval</tt> to 0).
+See also <a href="disable-topic-res.html" target="_top">Disabling Aspects of Topic
+Resolution</a> and <a href="../Config/grouprelated.html" target="_top">Interrelated
+Configuration Options</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21522" name="AEN21522"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMAXIMUMADVERTISEMENTS"
+name="CONTEXTRESOLVERMAXIMUMADVERTISEMENTS">4.34.3. <span class="lbm-option-name"><span
+class="PHRASE">resolver_maximum_advertisements (context)</span></span></a></h2>
+
+<p>Maximum number of topics that will be advertised per active source interval. A value
+of 0 means to advertise all topics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21566" name="AEN21566"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>Number of topics</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (all
+topics)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMAXIMUMQUERIES"
+name="CONTEXTRESOLVERMAXIMUMQUERIES">4.34.4. <span class="lbm-option-name"><span
+class="PHRASE">resolver_maximum_queries (context)</span></span></a></h2>
+
+<p>Maximum number of topics that will be queried for per query interval. A value of 0
+means to query for all topics that do not have at least one source.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21610" name="AEN21610"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>Number of topics</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (all topics with no
+source)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERQUERYINTERVAL"
+name="CONTEXTRESOLVERQUERYINTERVAL">4.34.5. <span class="lbm-option-name"><span
+class="PHRASE">resolver_query_interval (context)</span></span></a></h2>
+
+<p>Interval between query transmissions for receivers attempting Topic Resolution. A
+value of 0 indicates queries should not be sent. See also <a
+href="disable-topic-res.html" target="_top">Disabling Aspects of Topic Resolution</a>.
+NOTE: Although this option is eligible to be set during operation, two considerations
+exist.</p>
+
+<ul>
+<li>
+<p>If this option is disabled at initialization (set to 0), you cannot re-set the option
+during operation.</p>
+</li>
+
+<li>
+<p>Disabling this option by setting it to 0 (zero) during operation prevents you from
+re-setting the option a second time during operation.</p>
+</li>
+</ul>
+
+<br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN21663" name="AEN21663"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">100 (0.1
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WILDCARDRECEIVERRESOLVERQUERYMAXINTERVAL"
+name="WILDCARDRECEIVERRESOLVERQUERYMAXINTERVAL">4.34.6. <span
+class="lbm-option-name"><span class="PHRASE">resolver_query_max_interval
+(wildcard_receiver)</span></span></a></h2>
+
+<p>This sets the maximum interval between wildcard queries in topic resolution (when
+used). Only PCRE and regex pattern types can use wildcard queries. A value of 0 indicates
+wildcard queries should not be sent. <b class="APPLICATION">UM</b> currently queries a
+maximum of 250 unique wildcard patterns (receivers). NOTE: Although this option is
+eligible to be set during operation, two considerations exist.</p>
+
+<ul>
+<li>
+<p>If this option is disabled at initialization (set to 0), you cannot re-set the option
+during operation.</p>
+</li>
+
+<li>
+<p>Disabling this option by setting it to 0 (zero) during operation prevents you from
+re-setting the option a second time during operation.</p>
+</li>
+</ul>
+
+<br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN21716" name="AEN21716"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">wildcard_receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (do not
+query)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTADDRESS"
+name="CONTEXTRESOLVERUNICASTADDRESS">4.34.7. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_address (context)</span></span></a></h2>
+
+<p>The IP address to send unicast topic resolution messages to. If set to 0.0.0.0 (<code
+class="CONSTANT">INADDR_ANY</code>), then topic resolution uses multicast (the default).
+If set to anything else, then topic resolution messages go to the IP address
+specified.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21761" name="AEN21761"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UMS 5.0. See resolver_unicast_daemon instead.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTDESTINATIONPORT"
+name="CONTEXTRESOLVERUNICASTDESTINATIONPORT">4.34.8. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_destination_port (context)</span></span></a></h2>
+
+<p>The UDP port to send unicast topic resolution messages to. This is the UDP port used
+by the <b class="APPLICATION">UM</b> resolution daemon (lbmrd).</p>
+
+<div class="INFORMALTABLE"><a id="AEN21808" name="AEN21808"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">15380</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UMS 5.0. See resolver_unicast_daemon instead.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTPORT"
+name="CONTEXTRESOLVERUNICASTPORT">4.34.9. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_port (context)</span></span></a></h2>
+
+<p>The local UDP port used for unicast topic resolution messages. The <b
+class="APPLICATION">UM</b> resolution daemon (lbmrd) will send unicast topic resolution
+messages to this UDP port. A value of 0 indicates that <b class="APPLICATION">UM</b>
+should pick an open port in the range (<a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTLOW">resolver_unicast_port_low</a>,
+<a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTHIGH">resolver_unicast_port_high</a>).</p>
+
+<div class="INFORMALTABLE"><a id="AEN21859" name="AEN21859"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (pick open
+port)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UMS 5.0. See resolver_unicast_daemon instead.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCERETRANSMITMESSAGEMAPTABLESZ"
+name="SOURCERETRANSMITMESSAGEMAPTABLESZ">4.34.10. <span class="lbm-option-name"><span
+class="PHRASE">retransmit_message_map_tablesz (source)</span></span></a></h2>
+
+<p>The size of the hash table that the source uses to store messages for the retention
+policy in effect. A larger table means more messages can be stored more efficiently, but
+takes up more memory. A smaller table uses less memory, but costs more CPU time as more
+messages are retained. See <a
+href="../Design/lbm-features.html#USING-LATE-JOIN-LARGENUMBERS" target="_top">Configuring
+Late Join for Large Numbers of Messages</a> for additional information about this
+option.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21901" name="AEN21901"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option has been deprecated.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTDATAGRAMMAXSIZE"
+name="CONTEXTTRANSPORTDATAGRAMMAXSIZE">4.34.11. <span class="lbm-option-name"><span
+class="PHRASE">transport_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated by <b class="APPLICATION">UM</b>. The
+default value is 8192, the minimum is 400 bytes, and the maximum is 65535.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21939" name="AEN21939"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8192</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.3.5/UME 2.0.3.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTIPCACKNOWLEDGEMENTINTERVAL"
+name="RECEIVERTRANSPORTLBTIPCACKNOWLEDGEMENTINTERVAL">4.34.12. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_acknowledgement_interval
+(receiver)</span></span></a></h2>
+
+<p>Period of time between acknowledgement (keepalive) messages sent from the receiver to
+the IPC source. See also <a
+href="deprecatedoptions.html#SOURCETRANSPORTLBTIPCCLIENTACTIVITYTIMEOUT">transport_lbtipc_client_activity_timeout</a>.
+Refer to <a href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver
+Configuration and Transport Sessions</a> and <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21990" name="AEN21990"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCCLIENTACTIVITYTIMEOUT"
+name="SOURCETRANSPORTLBTIPCCLIENTACTIVITYTIMEOUT">4.34.13. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_client_activity_timeout
+(source)</span></span></a></h2>
+
+<p>The maximum period of inactivity (lack of acknowledgement keepalive messages) from a
+receiver before the source deletes the receiver from it's active receiver table. The IPC
+source signals all receivers in it's active receiver's table when it writes new data to
+the shared memory area. See also <a
+href="deprecatedoptions.html#RECEIVERTRANSPORTLBTIPCACKNOWLEDGEMENTINTERVAL">transport_lbtipc_acknowledgement_interval</a>.
+Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> and <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22037" name="AEN22037"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10,000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEMESSAGEMAPTABLESZ"
+name="SOURCEUMEMESSAGEMAPTABLESZ">4.34.14. <span class="lbm-option-name"><span
+class="PHRASE">ume_message_map_tablesz (source)</span></span></a></h2>
+
+<p>The size of the hash table that the source uses to store messages for the retention
+policy in effect. A larger table means more messages can be stored more efficiently, but
+takes up more memory. A smaller table uses less memory, but costs more CPU time as more
+messages are retained. This setting no longer has any effect.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22078" name="AEN22078"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option has been deprecated.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEPRIMARYSTOREADDRESS"
+name="SOURCEUMEPRIMARYSTOREADDRESS">4.34.15. <span class="lbm-option-name"><span
+class="PHRASE">ume_primary_store_address (source)</span></span></a></h2>
+
+<p>IPv4 address of the persistent store to be used as the primary store. A value of
+0.0.0.0 (or <code class="CONSTANT">INADDR_ANY</code>) indicates no store is set as the
+primary. In other words, persistence is not enabled for the source. This setting is
+deprecated. Its use is not recommended except by legacy systems. Please use the ume_store
+option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22119" name="AEN22119"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEPRIMARYSTOREPORT"
+name="SOURCEUMEPRIMARYSTOREPORT">4.34.16. <span class="lbm-option-name"><span
+class="PHRASE">ume_primary_store_port (source)</span></span></a></h2>
+
+<p>TCP port of the primary persistent store. This setting is deprecated. Its use is not
+recommended except by legacy systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22165" name="AEN22165"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14567</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREGISTRATIONID"
+name="SOURCEUMEREGISTRATIONID">4.34.17. <span class="lbm-option-name"><span
+class="PHRASE">ume_registration_id (source)</span></span></a></h2>
+
+<p>32-bit value that is used by a persistent store to identify a source. If a source
+desires to identify itself as a previously known source (after a crash or shutdown), it
+should set the ID to the value it was using before. A value of 0 indicates the source
+will allow the persistent store to assign an ID. This setting is deprecated. Its use is
+not recommended except by legacy systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22206" name="AEN22206"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>identifier</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (allow persistent store to
+assign ID)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESECONDARYSTOREADDRESS"
+name="SOURCEUMESECONDARYSTOREADDRESS">4.34.18. <span class="lbm-option-name"><span
+class="PHRASE">ume_secondary_store_address (source)</span></span></a></h2>
+
+<p>IPv4 address of the persistent store to be used as the secondary store. A value of
+0.0.0.0 (or <code class="CONSTANT">INADDR_ANY</code>) indicates no store is set as the
+secondary. This setting is deprecated. Its use is not recommended except by legacy
+systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22251" name="AEN22251"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESECONDARYSTOREPORT"
+name="SOURCEUMESECONDARYSTOREPORT">4.34.19. <span class="lbm-option-name"><span
+class="PHRASE">ume_secondary_store_port (source)</span></span></a></h2>
+
+<p>TCP port of the secondary persistent store. This setting is deprecated. Its use is not
+recommended except by legacy systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22297" name="AEN22297"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14567</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMETERTIARYSTOREADDRESS"
+name="SOURCEUMETERTIARYSTOREADDRESS">4.34.20. <span class="lbm-option-name"><span
+class="PHRASE">ume_tertiary_store_address (source)</span></span></a></h2>
+
+<p>IPv4 address of the persistent store to be used as the tertiary store. A value of
+0.0.0.0 (or <code class="CONSTANT">INADDR_ANY</code>) indicates no store is set as the
+tertiary. This setting is deprecated. Its use is not recommended except by legacy
+systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22342" name="AEN22342"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMETERTIARYSTOREPORT"
+name="SOURCEUMETERTIARYSTOREPORT">4.34.21. <span class="lbm-option-name"><span
+class="PHRASE">ume_tertiary_store_port (source)</span></span></a></h2>
+
+<p>TCP port of the tertiary persistent store. This setting is deprecated. Its use is not
+recommended except by legacy systems. Please use the ume_store option instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN22388" name="AEN22388"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14567</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was deprecated in UME 2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="automaticmonitoringoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="portvalues.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Automatic Monitoring Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top"><b class="APPLICATION">UMS</b> Port
+Values</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,1581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Monitoring UMS</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="PREVIOUS" title="UMS Features" href="lbm-features.html" />
+<link rel="NEXT" title="Manpage for lbmrd" href="lbmrd-manpage.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Concepts</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lbm-features.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="lbmrd-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MONITORING" name="MONITORING">6. Monitoring UMS</a></h1>
+
+<ul>
+<li>
+<p><a href="monitoring.html#MON-INTRODUCTION"><i>Introduction</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#LBM-API-FUNCTIONS"><i>UMS API Functions and Data
+Structures</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#LBM-MONITORING-API"><i>UMS Monitoring API</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#AUTOMONITOR"><i>Automatic Monitoring</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#MONITORING-EXAMPLES"><i>Monitoring Examples</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#INTERPRETING-LBT-RM-SOURCE-STATISTICS"><i>Interpreting LBT-RM
+Source Statistics</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MON-INTRODUCTION" name="MON-INTRODUCTION">6.1.
+Introduction</a></h2>
+
+<p>Messaging systems often employ real-time monitoring and rapid human intervention to
+prevent the system from becoming unstable. The design of <b class="APPLICATION">UM</b>
+encourages stable operation by allowing you to pre-configure how <b
+class="APPLICATION">UM</b> will use resources under all traffic and network conditions.
+Hence manual intervention is not required when those conditions occur.</p>
+
+<p>Monitoring <b class="APPLICATION">UM</b> still fills important roles other than
+maintaining stable operation. Chiefly among these are capacity planning and a better
+understanding of the latency added by <b class="APPLICATION">UM</b> as it recovers from
+loss. Collecting accumulated statistics from all sources and all receivers once per day
+is generally adequate for these purposes.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="WHY-MONITOR" name="WHY-MONITOR">6.1.1. Why Monitor?</a></h3>
+
+<p>Monitoring can aid different groups within an organization.</p>
+
+<ul>
+<li>
+<p>Developers can spot bugs that impact system performance.</p>
+</li>
+
+<li>
+<p>Performance tuning groups can pinpoint under-performing receivers.</p>
+</li>
+
+<li>
+<p>Testing groups can understand the reaction of a system to stresses like random packet
+loss during pre-production testing.</p>
+</li>
+
+<li>
+<p>Network or middleware management groups can use monitoring to ensure a production
+system continues to operate within its design criteria.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="WHAT-TO-MONITOR" name="WHAT-TO-MONITOR">6.1.2. What to
+Monitor</a></h3>
+
+<p>Before discussing the monitoring statistics that are built into <b
+class="APPLICATION">UM</b>, we mention two things that are probably more important to
+monitor: connectivity and latency. <b class="APPLICATION">UM</b> provides some assistance
+for monitoring these, but the final responsibility rests with your applications.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONNECTIVITY" name="CONNECTIVITY">6.1.2.1.
+Connectivity</a></h4>
+
+<p>If you monitor only one thing, monitor connectivity, defined as the ability of your
+system components to talk to each other when needed Connectivity failures generally
+indicate a software, hardware, or network failure and generally require prompt attention.
+<b class="APPLICATION">UM</b> features like End Of Source (EOS) events, new source
+notifications, and receiver connect/disconnect events may help in application
+connectivity monitoring. See the lbmprice.c example to see techniques for using these to
+build an awareness of when components of the system come and go.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MESSAGE-LATENCY" name="MESSAGE-LATENCY">6.1.2.2. Message
+Latency</a></h4>
+
+<p>If you monitor only two things, monitor connectivity and the latency of every message.
+Connectivity monitoring will catch the hard failures and latency monitoring will catch
+the soft failures. Many impending hard failures in hardware, software, and networks show
+up first as rises in average latency or as latency spikes. See our white paper Pragmatic
+Advice for Handling Market Data Rate Increases for additional comments on the importance
+of measuring latency.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MONITOR-METHODS" name="MONITOR-METHODS">6.1.2.3. Monitoring
+Methods</a></h4>
+
+<p><b class="APPLICATION">UM</b> provides the following four methods to monitor your <b
+class="APPLICATION">UM</b> activities.</p>
+
+<ul>
+<li>
+<p>Use <b class="APPLICATION">UM</b> API function calls within your applications to
+retrieve statistics and deliver them to your monitoring application.</p>
+</li>
+
+<li>
+<p>Use the <b class="APPLICATION">UM</b> Monitoring API to more easily retrieve and send
+statistics to your monitoring application.</p>
+</li>
+
+<li>
+<p>Use Automatic Monitoring to easily employ the <b class="APPLICATION">UM</b> Monitoring
+API to monitor <b class="APPLICATION">UM</b> activity at an <b class="APPLICATION">UM</b>
+context level.</p>
+</li>
+
+<li>
+<p>Use the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b>
+<b class="APPLICATION">SNMP Agent</b> and MIB to monitor statistics through a Network
+Management System. The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> <b class="APPLICATION">SNMP Agent</b> is purchased separately.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM-API-FUNCTIONS" name="LBM-API-FUNCTIONS">6.2. UMS API
+Functions and Data Structures</a></h2>
+
+<p>The <b class="APPLICATION">UM</b> API contains functions that retrieve various
+statistics for a context, event queue, source or receiver. This section lists the
+functions and constructors you can use to retrieve statistics, along with the data
+structures <b class="APPLICATION">UM</b> uses to deliver the statistics. Refer to the UMS
+API documentation ( <a href="../API/index.html" target="doccontent"><b
+class="APPLICATION">UM</b> C API</a>, <a href="../JavaAPI/html/index.html"
+target="doccontent"><b class="APPLICATION">UM</b> Java API</a> or <a
+href="../DotNetAPI/doc/Index.html" target="doccontent"><b class="APPLICATION">UM</b> .NET
+API</a>) for specific information about the functions and constructors. Links to the data
+structures appear in the tables to provide quick access to the specific statistics
+available.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONTEXTSTATS" name="CONTEXTSTATS">6.2.1. Context
+Statistics</a></h3>
+
+<p>Context statistics help you monitor topic resolution activity, along with the number
+of unknown messages received and the number of sends and responses that were blocked or
+returned EWOULDBLOCK. Context statistics also contain transport statistics for Multicast
+Immediate Messaging (MIM) activity and transport statistics for all the sources or
+receivers in a context.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2916" name="AEN2916"></a>
+<table border="1" class="CALSTABLE">
+<col width="312" />
+<col width="240" />
+<col width="216" />
+<thead>
+<tr>
+<th>C API Function</th>
+<th>Java or .NET API Constructor</th>
+<th>Data Structure</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">lbm_context_retrieve_stats()</tt></td>
+<td><tt class="LITERAL">LBMContextStatistics(LBMContext ctx)</tt></td>
+<td><a href="../API/structlbm__context__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_context_stats_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_context_retrieve_rcv_transport_stats()</tt></td>
+<td><tt class="LITERAL">LBMReceiverStatistics(LBMContext int maxStats)</tt></td>
+<td><a href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_context_retrieve_src_transport_stats()</tt></td>
+<td><tt class="LITERAL">LBMSourceStatistics(LBMContext int maxStats)</tt></td>
+<td><a href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_context_retrieve_mim_rcv_stats()</tt></td>
+<td><tt class="LITERAL">LBMMIMReceiverStatistics(LBMContext ctx)</tt></td>
+<td><a href="../API/structlbm__rcv__transport__stats__lbtrm__t__stct.html"
+target="doccontent"><tt class="LITERAL">lbm_rcv_transport_stats_lbtrm_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_context_retrieve_mim_src_stats()</tt></td>
+<td><tt class="LITERAL">LBMMIMSourceStatistics(LBMContext ctx)</tt></td>
+<td><a href="../API/structlbm__src__transport__stats__lbtrm__t__stct.html"
+target="doccontent"><tt class="LITERAL">lbm_src_transport_stats_lbtrm_t</tt></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="EVENTQSTATS" name="EVENTQSTATS">6.2.2. Event Queue
+Statistics</a></h3>
+
+<p>Event Queue statistics help you monitor the number of events currently on the queue,
+how long it takes to service them (maximum, minimum and mean service times) and the total
+number of events for the monitoring period. These statistics are available for the
+following types of events.</p>
+
+<ul>
+<li>
+<p>Data messages</p>
+</li>
+
+<li>
+<p>Request messages</p>
+</li>
+
+<li>
+<p>Immediate messages</p>
+</li>
+
+<li>
+<p>Wildcard receiver messages</p>
+</li>
+
+<li>
+<p>I/O events</p>
+</li>
+
+<li>
+<p>Timer events</p>
+</li>
+
+<li>
+<p>Source events</p>
+</li>
+
+<li>
+<p>Unblock events</p>
+</li>
+
+<li>
+<p>Cancel events</p>
+</li>
+
+<li>
+<p>Callback events</p>
+</li>
+
+<li>
+<p>Context source events</p>
+</li>
+
+<li>
+<p>Total events</p>
+</li>
+
+<li>
+<p>Age of events</p>
+</li>
+</ul>
+
+<p>When monitoring Event Queue statistics you must enable the Event Queue <b
+class="APPLICATION">UM</b> Configuration Options, <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUEAGEENABLED" target="doccontent"><tt
+class="LITERAL">queue_age_enabled</tt></a>, <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUECOUNTENABLED" target="doccontent"><tt
+class="LITERAL">queue_count_enabled</tt></a> and <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUESERVICETIMEENABLED"
+target="doccontent"><tt class="LITERAL">queue_service_time_enabled</tt></a> . <b
+class="APPLICATION">UM</b> disables these options by default, which produces no event
+queue statistics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3006" name="AEN3006"></a>
+<table border="1" class="CALSTABLE">
+<col width="312" />
+<col width="240" />
+<col width="216" />
+<thead>
+<tr>
+<th>C API Function</th>
+<th>Java or .NET API Constructor</th>
+<th>Data Structure</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">lbm_event_queue_retrieve_stats()</tt></td>
+<td><tt class="LITERAL">LBMEventQueueStatistics(LBMEventQueue evq)</tt></td>
+<td><a href="../API/structlbm__event__queue__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_event_queue_stats_t</tt></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORTSTATS" name="TRANSPORTSTATS">6.2.3. Transport
+Statistics</a></h3>
+
+<p>You can retrieve transport statistics for different types of transports (TCP, LBT-RU,
+LBT-RM, LBT-IPC, LBT-RDMA). In addition, you can limit these transport statistics to a
+specifc source sending on the particular transport or a specifc receiver receiving
+messages over the transport. Source statistics for LBT-RM, for example, include the
+number of messages (datagrams) sent and the number of retransmissions sent. For receiver
+LBT-RM, statistics include, for example, the number of messages (datagrams) received and
+number of <b class="APPLICATION">UM</b> messages received.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> None of the three types of transport statistics (all, source, or
+receiver) are topic level statistics. Currently UM does not provide topic-specific
+transport statistics.</p>
+</blockquote>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3031" name="AEN3031"></a>
+<table border="1" class="CALSTABLE">
+<col width="312" />
+<col width="240" />
+<col width="216" />
+<thead>
+<tr>
+<th>C API Function</th>
+<th>Java or .NET API Constructor</th>
+<th>Data Structure</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">lbm_rcv_retrieve_transport_stats()</tt></td>
+<td><tt class="LITERAL">LBMReceiverStatistics(LBMReceiver lbmrcv source)</tt></td>
+<td><a href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_rcv_retrieve_all_transport_stats()</tt></td>
+<td><tt class="LITERAL">LBMReceiverStatistics(LBMReceiver lbmrcv int maxStats)</tt></td>
+<td><a href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_src_retrieve_transport_stats()</tt></td>
+<td><tt class="LITERAL">LBMSourceStatistics(LBMSource lbmsrc)</tt></td>
+<td><a href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM-MONITORING-API" name="LBM-MONITORING-API">6.3. UMS
+Monitoring API</a></h2>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="monitoring.html#LBM-MONITORING-PROCESS-FLOW"><i>UMS Monitoring Process
+Flow</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#API-FRAMEWORK-FLEXIBILITY"><i>API Framework
+Flexibility</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#INITIAL-MONITORING-QUESTIONS"><i>Initial Monitoring
+Questions</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#CREATING-MONITORING-SOURCE"><i>Creating a Monitoring
+Source</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#SPECIFYING-OBJECT-TO-MONITOR"><i>Specifying the Object to
+Monitor</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#RECEIVING-MONITORING-DATA"><i>Receiving Monitoring
+Data</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#LBM-TRANSPORT-MODULE"><i>The UMS Transport Module</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#UDP-TRANSPORT-MODULE"><i>The UDP Transport Module</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#SNMP-TRANSPORT-MODULE"><i>The SNMP Transport
+Module</i></a></p>
+</li>
+</ul>
+
+<p>The <b class="APPLICATION">UM</b> Monitoring API (see <a href="../API/lbmmon_8h.html"
+target="doccontent"><tt class="LITERAL">lbmmon.h</tt></a> or the <tt
+class="LITERAL">LBMMonitor</tt> classes in the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and the <a href="../DotNetAPI/doc/Index.html"
+target="doccontent">.NET API</a>) provides a framework to easily gather UMS transport
+statistics and send them to a monitoring or reporting application. Transport sessions for
+sources and receivers, along with all transport sessions for a given context can be
+monitored. This API can be implemented in one of two ways.</p>
+
+<ul>
+<li>
+<p>Build monitoring into your application with the <b class="APPLICATION">UM</b>
+Monitoring API functions.</p>
+</li>
+
+<li>
+<p>Turn on Automatic Monitoring with UMS configuration options. See <a
+href="monitoring.html#AUTOMONITOR"><i>Automatic Monitoring</i></a>.</p>
+</li>
+</ul>
+
+<p>An application requesting transport monitoring is called a <b
+class="APPLICATION">monitor source</b>, and an application accepting statistics is a <b
+class="APPLICATION">monitor receiver</b>. These monitoring objects deal only with
+transport session statistics and should not be confused with <b
+class="APPLICATION">UM</b> sources and <b class="APPLICATION">UM</b> receivers, which
+deal with <b class="APPLICATION">UM</b> messages. Statistics for both <b
+class="APPLICATION">UM</b> sources and <b class="APPLICATION">UM</b> receivers can be
+forwarded by a monitor source application.</p>
+
+<p>Both a monitor source and monitor receiver comprise three modules:</p>
+
+<ul>
+<li>
+<p>A <b class="APPLICATION">format</b> module, responsible for serializing and
+de-serializing the statistics. The proper transmission between monitor source and monitor
+receiver requires this serialization.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">transport</b> module that is responsible for sending and
+receiving statistics data.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">control</b> module, responsible for gathering the statistics,
+and calling the appropriate functions from the format and transport modules.</p>
+</li>
+</ul>
+
+<p>You can substitute format and transport modules of your own choosing or creation. <b
+class="APPLICATION">UM</b> Monitoring provides the following sample modules:</p>
+
+<ul>
+<li>
+<p>LBMMON CSV format module</p>
+</li>
+
+<li>
+<p>LBMMON UMS transport module</p>
+</li>
+
+<li>
+<p>LBMMON UDP transport module</p>
+</li>
+
+<li>
+<p>LBMMON SNMP transport module</p>
+</li>
+</ul>
+
+<p>To view the source code for all LBMMON transport modules, see <a
+href="../API/lbmmon_examples.html" target="doccontent">LBMMON Example Source Code</a> found on
+the Related Pages tab in the C Application Programmer's Interface.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The LBMMON SNMP transport module can be used for non-SNMP based
+monitoring. The <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+<b class="APPLICATION">SNMP Agent</b> is not required for its use.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM-MONITORING-PROCESS-FLOW"
+name="LBM-MONITORING-PROCESS-FLOW">6.3.1. UMS Monitoring Process Flow</a></h3>
+
+<p>The overall process flow appears in the diagram below.</p>
+
+<div class="FIGURE"><a id="LBMMONPROCESS" name="LBMMONPROCESS"></a>
+<p><b>Figure 14. UMS Monitoring Process Flow</b></p>
+
+<p><img src="lbmmon.png" align="CENTER" /></p>
+</div>
+
+<ol type="1">
+<li>
+<p>Your application creates the monitor source controller, specifying the format and
+transport modules to use. It also calls lbmmon functions to start monitoring an <b
+class="APPLICATION">UM</b> context, <b class="APPLICATION">UM</b> source or <b
+class="APPLICATION">UM</b> receiver.</p>
+</li>
+
+<li>
+<p>The monitor source controller passes those statistics to the format module
+serialization function.</p>
+</li>
+
+<li>
+<p>The monitor source controller passes the resulting serialized data to the transport
+module send function.</p>
+</li>
+
+<li>
+<p>The transport module transmits the data over some transport medium (such as a
+network).</p>
+</li>
+
+<li>
+<p>The monitor receiver controller transport module receives the serialized data. (Your
+monitoring application has already created the monitor receiver controller specifying the
+format and transport modules to use, along with the application callback functions to use
+upon the receipt of <b class="APPLICATION">UM</b> source or <b class="APPLICATION">UM</b>
+receiver statistics data.)</p>
+</li>
+
+<li>
+<p>The monitor receiver controller calls the format module's de-serialization
+function.</p>
+</li>
+
+<li>
+<p>Finally, the monitor receiver controller passes the statistics to your monitoring
+application via the specified application callback functions.</p>
+</li>
+</ol>
+
+<p>Your applications only calls functions in the controller modules, which calls the
+appropriate functions in the transport and format modules.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="API-FRAMEWORK-FLEXIBILITY"
+name="API-FRAMEWORK-FLEXIBILITY">6.3.2. API Framework Flexibility</a></h3>
+
+<p>The segregation of <b class="APPLICATION">UM</b> Monitoring into control, format, and
+transport modules provides flexibility for monitor receivers in two ways.</p>
+
+<ul>
+<li>
+<p>Allows you to use languages for which no <b class="APPLICATION">UM</b> API or binding
+exists.</p>
+</li>
+
+<li>
+<p>Allows you to use monitoring products which do not integrate with <b
+class="APPLICATION">UM</b>.</p>
+</li>
+</ul>
+
+<p>As an example, assume you have a Perl application which currently gathers statistics
+from other network applications (or, you are simply most comfortable working in Perl for
+such tasks). There is no Perl binding for <b class="APPLICATION">UM</b>. However, Perl
+can handle UDP packets very nicely, and can pick apart CSV data easily. By implementing a
+UDP transport module to be used by the monitor sources, your Perl application can read
+the UDP packets and process the statistics.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INITIAL-MONITORING-QUESTIONS"
+name="INITIAL-MONITORING-QUESTIONS">6.3.3. Initial Monitoring Questions</a></h3>
+
+<p>If you can answer the following questions, you're already on your way.</p>
+
+<ol type="1">
+<li>
+<p>What format module will you use? LBMMON CSV Format module or a different one.</p>
+</li>
+
+<li>
+<p>What transport module will you use? One of the 3 LBMMON modules or a different
+one.</p>
+</li>
+
+<li>
+<p>Do you want to monitor individual sources/receivers, or an entire context? The
+difference is in how the statistics are aggregated.</p>
+
+<ul>
+<li>
+<p>Monitoring a context aggregates transport statistics for all sources and receivers
+associated with a context, by transport. Note that this is not by transport type. The
+default configuration for TCP, for example, allocates up to 10 ports, forming up to 10
+separate transport sessions. Absent any specific instructions, <b
+class="APPLICATION">UM</b> allocates sources and receivers to these 10 transports in a
+round-robin fashion. So the statistics for a specific transport on a context will
+aggregate all sources and receivers which use that specific transport.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> recommends
+that you monitor either a context or source/receiver, but not both. For example if Topic1
+and Topic2 are mapped to the same transport session (which is the only transport session
+for the context) and you monitor both the receivers and the context, you will get 3
+identical sets of statistics: one for Topic1 reporting the stats for it's transport
+session, one for Topic2 reporting the stats for the same transport session, and one for
+the transport session via the context.</p>
+</li>
+
+<li>
+<p>In the case of wildcard receivers, only the context may be monitored. <b
+class="APPLICATION">UM</b> creates wildcard receivers dynamically as it detects topics
+which match the wildcard pattern. The application does not have access to these
+dynamically-created receivers. So the only way to monitor a wildcard receiver is to
+monitor the context on which it was created.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Should statistics be sent automatically, or on demand?</p>
+
+<ul>
+<li>
+<p>Automatic sending of statistics is by far the simplest approach. You simply indicate
+how often the statistics should be gathered and sent. The rest is taken care of.</p>
+</li>
+
+<li>
+<p>On-demand is somewhat more involved. Your application decides when statistics should
+be gathered and sent. If you intend to use the arrival of statistics as a type of
+heartbeat, this is the method you should use.</p>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>The following sections present more discussion and sample source code about starting
+monitor sources, monitor receivers and the LBMMON format and transport modules.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CREATING-MONITORING-SOURCE"
+name="CREATING-MONITORING-SOURCE">6.3.4. Creating a Monitoring Source</a></h3>
+
+<p>The following examples demonstrate how to use the <b class="APPLICATION">UM</b>
+Monitoring API to enable monitoring in your application.</p>
+
+<p>First, create a monitoring source controller:</p>
+
+<pre class="PROGRAMLISTING">
+lbm_context_t * ctx;
+lbm_src_t * src;
+lbm_rcv_t * rcv;
+lbmmon_sctl_t * monctl;
+
+if (lbmmon_sctl_create(&amp;monctl, lbmmon_format_csv_module(), NULL, lbmmon_transport_lbm_module(), NULL) == -1)
+{
+        fprintf(stderr, "lbmmon_sctl_create() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>The above code tacitly assumes that the <tt class="LITERAL">ctx</tt>, <tt
+class="LITERAL">src</tt>, and <tt class="LITERAL">rcv</tt> variables have been previously
+assigned via the appropriate <b class="APPLICATION">UM</b> API calls.</p>
+
+<p>The monitoring source controller object must be passed to subsequent calls to
+reference a specific source controller. One implication of this is that it is possible to
+have multiple monitoring source controllers within a single application, each perhaps
+monitoring a different set of objects.</p>
+
+<p>In the above example, the default CSV format module and default <b
+class="APPLICATION">UM</b> transport module are specified via the provided module
+functions <tt class="LITERAL">lbmmon_format_csv_module()</tt> and <tt
+class="LITERAL">lbmmon_transport_lbm_module()</tt>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SPECIFYING-OBJECT-TO-MONITOR"
+name="SPECIFYING-OBJECT-TO-MONITOR">6.3.5. Specifying the Object to Monitor</a></h3>
+
+<p>Once a monitoring source controller is created, the application can monitor a specific
+context using:</p>
+
+<pre class="PROGRAMLISTING">
+if (lbmmon_context_monitor(monctl, ctx, NULL, 10) == -1)
+{
+        fprintf(stderr, "lbmmon_context_monitor() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>The above example indicates that statistics for all transports on the specified
+context will be gathered and sent every 10 seconds.</p>
+
+<p>A <b class="APPLICATION">UM</b> source can be monitored using:</p>
+
+<pre class="PROGRAMLISTING">
+if (lbmmon_src_monitor(monctl, src, NULL, 10) == -1)
+{
+        fprintf(stderr, "lbmmon_src_monitor() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>Finally, an <b class="APPLICATION">UM</b> receiver can be monitored using:</p>
+
+<pre class="PROGRAMLISTING">
+if (lbmmon_rcv_monitor(monctl, rcv, NULL, 10) == -1)
+{
+        fprintf(stderr, "lbmmon_rcv_monitor() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>The two above examples also request that statistics for all transports on the
+specified source or receiver be gathered and sent every 10 seconds.</p>
+
+<p>Statistics can also be gathered and sent in an on-demand manner. Passing 0 for the
+Seconds parameter to <tt class="LITERAL">lbmmon_context_monitor()</tt>, <tt
+class="LITERAL">lbmmon_src_monitor()</tt>, or <tt
+class="LITERAL">lbmmon_rcv_monitor()</tt> prevents the automatic gathering and sending of
+statistics. To trigger the gather/send process, use:</p>
+
+<pre class="PROGRAMLISTING">
+lbmmon_sctl_sample(monctl);
+</pre>
+
+<p>Such a call will perform a single gather/send action on all monitored objects
+(contexts, sources, and receivers) which were registered as on-demand.</p>
+
+<p>As part of application cleanup, the created monitoring objects should be destroyed.
+Each individual object can be de-registered using <tt
+class="LITERAL">lbmmon_context_unmonitor()</tt>, <tt
+class="LITERAL">lbmmon_src_unmonitor()</tt>, or <tt
+class="LITERAL">lbmmon_rcv_unmonitor()</tt>. Finally, the monitoring source controller
+can be destroyed using:</p>
+
+<pre class="PROGRAMLISTING">
+lbmmon_sctl_destroy(monctl);
+</pre>
+
+<p>Any objects which are still registered will be automatically de-registered by <tt
+class="LITERAL">lbmmon_sctl_destroy()</tt>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVING-MONITORING-DATA"
+name="RECEIVING-MONITORING-DATA">6.3.6. Receiving Monitoring Data</a></h3>
+
+<p>To make use of the statistics, an application must be running which receives the
+monitor data. This application creates a monitoring receive controller, and specifies
+callback functions which are called upon the receipt of source or receiver statistics
+data.</p>
+
+<p>Use the following to create a monitoring receive controller:</p>
+
+<pre class="PROGRAMLISTING">
+lbmmon_rctl_t * monctl;
+lbmmon_rctl_attr_t * attr;
+lbmmon_rcv_statistics_func_t rcvcb = { rcv_statistics_cb };
+lbmmon_src_statistics_func_t srccb = { src_statistics_cb };
+lbmmon_evq_statistics_func_t evqcb = { evq_statistics_cb };
+lbmmon_ctx_statistics_func_t ctxcb = { ctx_statistics_cb };
+
+if (lbmmon_rctl_attr_create(&amp;attr) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_create() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_attr_setopt(attr, LBMMON_RCTL_RECEIVER_CALLBACK, (void *) &amp;rcvcb, sizeof(rcvcb)) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_setopt() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_attr_setopt(attr, LBMMON_RCTL_SOURCE_CALLBACK, (void *) &amp;srccb, sizeof(srccb)) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_setopt() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_attr_setopt(attr, LBMMON_RCTL_EVENT_QUEUE_CALLBACK, (void *) &amp;evqcb, sizeof(evqcb)) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_setopt() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_attr_setopt(attr, LBMMON_RCTL_CONTEXT_CALLBACK, (void *) &amp;sctxcb, sizeof(ctxcb)) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_setopt() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_create(&amp;monctl, lbmmon_format_csv_module(), NULL, lbmmon_transport_lbm_module(), (void *) 
+transport_options, attr) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_create() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+if (lbmmon_rctl_attr_delete(attr) != 0)
+{
+    fprintf(stderr, "call to lbmmon_rctl_attr_delete() failed, %s\n", lbmmon_errmsg());
+    exit(1);
+}
+</pre>
+
+<p>As in the earlier example, the default CSV format module and default <b
+class="APPLICATION">UM</b> transport module are specified via the provided module
+functions <tt class="LITERAL">lbmmon_format_csv_module()</tt> and <tt
+class="LITERAL">lbmmon_transport_lbm_module()</tt>.</p>
+
+<p>As an example of minimal callback functions, consider the following example:</p>
+
+<pre class="PROGRAMLISTING">
+void rcv_statistics_cb(const void * AttributeBlock, const lbm_rcv_transport_stats_t * Statistics)
+{
+    lbm_ulong_t source = LBMMON_ATTR_SOURCE_NORMAL;
+    if (lbmmon_attr_get_source(AttributeBlock, &amp;source) != 0)
+    {
+        source = LBMMON_ATTR_SOURCE_NORMAL;
+    }
+    switch (Statistics-&#62;type)
+    {
+        case LBM_TRANSPORT_STAT_TCP:
+            handle_rcv_tcp_statistics();
+            break; 
+        case LBM_TRANSPORT_STAT_LBTRM:
+            switch (source)
+            {
+                case LBMMON_ATTR_SOURCE_IM:
+                    handle_rcv_im_lbtrm_statistics();
+                    break;
+                default:
+                    handle_rcv_lbtrm_statistics();
+                    break;
+            }
+            break;
+        case LBM_TRANSPORT_STAT_LBTRU:
+            handle_rcv_lbtru_statistics();
+            break;
+    }
+}
+
+void src_statistics_cb(const void * AttributeBlock, const lbm_src_transport_stats_t * Statistics)
+{
+    lbm_ulong_t source = LBMMON_ATTR_SOURCE_NORMAL;
+    if (lbmmon_attr_get_source(AttributeBlock, &amp;source) != 0)
+    {
+        source = LBMMON_ATTR_SOURCE_NORMAL;
+    }
+    switch (Statistics-&#62;type)
+    {
+        case LBM_TRANSPORT_STAT_TCP:
+            handle_src_tcp_statistics();
+            break;
+        case LBM_TRANSPORT_STAT_LBTRM:
+            switch (source)
+            {
+                case LBMMON_ATTR_SOURCE_IM:
+                    handle_src_im_lbtrm_statistics();
+                    break;
+                default:
+                    handle_src_lbtrm_statistics();
+                    break;
+            }
+            break;
+        case LBM_TRANSPORT_STAT_LBTRU:
+            handle_src_lbtru_statistics();
+            break;
+    }
+}
+
+void ctx_statistics_cb(const void * AttributeBlock, const lbm_context_stats_t * Statistics)
+{
+    /* Handle context stats */
+}
+
+void evq_statistics_cb(const void * AttributeBlock, const lbm_event_queue_stats_t * Statistics)
+{
+    /* Handle event queue stats */
+}
+</pre>
+
+<p>Upon receipt of a statistics message, the appropriate callback function is called. The
+application can then do whatever is desired with the statistics data, which might include
+writing it to a file or database, performing calculations, or whatever is
+appropriate.</p>
+
+<p>Beyond the actual statistics, several additional pieces of data are sent with each
+statistics packet. These data are stored in an attribute block, and are accessible via
+the <tt class="LITERAL">lbmmon_attr_get_*()</tt> functions. Currently, these data include
+the IPV4 address of machine which sent the statistics data, the timestamp (as a time_t)
+at which the statistics were generated, and the application ID string supplied by the
+sending application at the time the object was registered for monitoring. See <tt
+class="LITERAL">lbmmon_attr_get_ipv4sender()</tt>, <tt
+class="LITERAL">lbmmon_attr_get_timestamp()</tt>, and <tt
+class="LITERAL">lbmmon_attr_get_appsourceid()</tt> for more information.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM-TRANSPORT-MODULE" name="LBM-TRANSPORT-MODULE">6.3.7. The
+UMS Transport Module</a></h3>
+
+<p>The <b class="APPLICATION">UM</b> transport module understands several options which
+may be used to customize your use of the module. The options are passed via the
+TransportOptions parameter to the <tt class="LITERAL">lbmmon_sctl_create()</tt> and <tt
+class="LITERAL">lbmmon_rctl_create()</tt> functions, as a null-terminated string
+containing semicolon-separated name/value pairs.</p>
+
+<p>The following options are available:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">config</tt> specifies a configuration file. This file is processed
+in a manner similar to <tt class="LITERAL">lbm_config()</tt>. However, unlike <tt
+class="LITERAL">lbm_config()</tt>, the current default attributes are not changed.
+Instead, the options parsed from the configuration file are applied only to the <b
+class="APPLICATION">UM</b> objects created by the module.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">topic</tt> specifies the topic name to use for sending and
+receiving statistics. By default, the topic <tt class="LITERAL">/29west/statistics</tt>
+is used.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">wctopic</tt> specifies (for monitor receivers only) a wildcard
+pattern to be used to receive statistics.</p>
+</li>
+</ul>
+
+<p>As an example, assume your application needs to use a special configuration file for
+statistics. The following call allows your application to customize the <b
+class="APPLICATION">UM</b> transport module using the configuration file <tt
+class="LITERAL">stats.cfg</tt>.</p>
+
+<pre class="PROGRAMLISTING">
+lbmmon_sctl_t * monctl;
+const char * tropt = "config=stats.cfg";
+if (lbmmon_sctl_create(&amp;smp;monctl, lbmmon_format_csv_module(), NULL, 
+lbmmon_transport_lbm_module(), tropt) == -1)
+{
+        fprintf(stderr, "lbmmon_sctl_create() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>If your application also needs to use a specific topic for statistics, the following
+code specifies that, in addition to the configuration file, the topic <tt
+class="LITERAL">StatisticsTopic</tt> be used for statistics.</p>
+
+<pre class="PROGRAMLISTING">
+lbmmon_sctl_t * monctl;
+const char * tropt = "config=stats.cfg;topic=StatisticsTopic";
+if (lbmmon_sctl_create(&amp;monctl, lbmmon_format_csv_module(), NULL, lbmmon_transport_lbm_module(), 
+tropt) == -1)
+{
+        fprintf(stderr, "lbmmon_sctl_create() failed\n");
+        exit(1);
+}
+</pre>
+
+<p>It is important to use the same topic and configuration for both monitor sources and
+receivers. Otherwise your applications may send the statistics, but the monitor receiver
+won't be able to receive them.</p>
+
+<p>To view the source code for all LBMMON transport modules, see <a
+href="../API/lbmmon_examples.html" target="doccontent">LBMMON Example Source Code</a> found on
+the Related Pages tab in the C Application Programmer's Interface.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UDP-TRANSPORT-MODULE" name="UDP-TRANSPORT-MODULE">6.3.8. The
+UDP Transport Module</a></h3>
+
+<p>The UDP transport module understands several options which may be used to customize
+your use of the module. The options are passed via the <code
+class="PARAMETER">TransportOptions</code> parameter to the <tt
+class="LITERAL">lbmmon_sctl_create()</tt> and <tt
+class="LITERAL">lbmmon_rctl_create()</tt> functions, as a null-terminated string
+containing semicolon-separated name/value pairs.</p>
+
+<p>The UDP module supports sending and receiving via UDP unicast, UDP broadcast, and UDP
+multicast. The following options are available.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">address</tt> specifies the unicast IP address to which statistics
+are sent via UDP. Applicable to sender only.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">port</tt> is the IP port packets are sent to. Defaults to
+2933.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">interface</tt> specifies the network interface over which
+multicast UDP is sent or received.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">mcgroup</tt> is the multicast group on which to send and receive
+UDP packets.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">bcaddress</tt> specified the broadcast address to which UDP
+packets are sent. Applicable to sender only.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">ttl</tt> specifies the TTL for each multicast UDP packet.
+Applicable to sender only.</p>
+</li>
+</ul>
+
+<p>To view the source code for all LBMMON transport modules, see <a
+href="../API/lbmmon_examples.html" target="doccontent">LBMMON Example Source Code</a> found on
+the Related Pages tab in the C Application Programmer's Interface.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SNMP-TRANSPORT-MODULE" name="SNMP-TRANSPORT-MODULE">6.3.9. The
+SNMP Transport Module</a></h3>
+
+<p>The SNMP transport modules operates in identical fashion to the UMS Transport Module.
+See <a href="monitoring.html#LBM-TRANSPORT-MODULE"><i>The UMS Transport
+Module</i></a></p>
+
+<p>To view the source code for all LBMMON transport modules, see <a
+href="../API/lbmmon_examples.html" target="doccontent">LBMMON Example Source Code</a> found on
+the Related Pages tab in the C Application Programmer's Interface.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="AUTOMONITOR" name="AUTOMONITOR">6.4. Automatic
+Monitoring</a></h2>
+
+<p>Instead of building a monitoring capability into your application using the <b
+class="APPLICATION">UM</b> Monitoring API, automatic monitoring allows you to easily
+produce monitoring statistics with the <b class="APPLICATION">UM</b> Monitoring API by
+setting a few simple <b class="APPLICATION">UM</b> configuration options. Automatic
+monitoring does not require any changes to your application. You control Automatic
+Monitoring with eight <a href="../Config/automaticmonitoringoptions.html"
+target="doccontent">Automatic Monitoring Options</a>.</p>
+
+<p>You can enable Automatic Monitoring for either or both of the following.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Transport Statistics</b> - Automatic monitoring of transport
+statistics reflect data for all the transport sessions within the <b
+class="APPLICATION">UM</b> context. You cannot, however, receive statistics for an
+individual transport session. Essentially, you turn on automatic monitoring of a
+context's transport sessions by specifying a <a
+href="../Config/automaticmonitoringoptions.html#CONTEXTMONITORINTERVAL" target="doccontent"><tt
+class="LITERAL">context monitor_interval</tt></a>. The use of the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">SNMP Agent</b> requires the <tt class="LITERAL">lbmsnmp</tt> <a
+href="../Config/automaticmonitoringoptions.html#CONTEXTMONITORTRANSPORT"
+target="doccontent"><tt class="LITERAL">monitor_transport</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Event Queue Statistics</b> - Automatic Monitoring of Event
+Queues provides statistics for all the Event Queues within the <b
+class="APPLICATION">UM</b> context. You turn on automatic monitoring of a context's Event
+Queues by specifying a <a
+href="../Config/automaticmonitoringoptions.html#CONTEXTMONITORINTERVAL" target="doccontent"><tt
+class="LITERAL">event_queue monitor_interval</tt></a>.</p>
+</li>
+</ul>
+
+<p>You can also set environment variables to turn on automatic monitoring for all <b
+class="APPLICATION">UM</b> contexts (transports and event queues). See <a
+href="../Config/automaticmonitoringoptions.html" target="doccontent">Automatic Monitoring
+Options</a> for more information.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MONITORING-EXAMPLES" name="MONITORING-EXAMPLES">6.5.
+Monitoring Examples</a></h2>
+
+<p>This section demonstrates the use of the two <b class="APPLICATION">UM</b> monitoring
+example applications described in /doc/example/index.html. We present advice based on
+what we have seen productively monitored by customers and our own knowledge of transport
+statistics that might be of interest. Of course, what you choose to monitor depends on
+your needs so merge these thoughts with your own needs to determine what is best for
+you.</p>
+
+<ul>
+<li>
+<p><a href="monitoring.html#LBMMON"><i>lbmmon.c</i></a></p>
+</li>
+
+<li>
+<p><a href="monitoring.html#LBMMONUDP"><i>lbmmonudp.c and lbmmondiag.pl</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBMMON" name="LBMMON">6.5.1. lbmmon.c</a></h3>
+
+<p>The example application <b class="APPLICATION">lbmmon.c</b> acts as a Monitor Receiver
+and is provided in both executable and source form. It writes monitoring statistics to
+the screen and can be used in conjunction with other example applications (which act as
+the Monitor Sources). The following procedure uses <b class="APPLICATION">lbmrcv</b> and
+<b class="APPLICATION">lbmsrc</b> to create messaging traffic and adds a configuration
+file in order to specify the LBT-RM transport instead of the TCP default. (The LBT-RM
+transport displays more statistics than TCP.)</p>
+
+<p>Since <b class="APPLICATION">UM</b> does not generate monitoring statistics by
+default, you must activate monitoring in your application. For the example application,
+use the <tt class="LITERAL">--monitor-ctx=n</tt> option where <tt class="LITERAL">n</tt>
+is the number of seconds between reports. The following procedure activates monitoring on
+the receiver, specifying the context (ctx) to create a complete set of receiver
+statistics. You could activate monitoring in a similar fashion on the source and create
+source statistics.</p>
+
+<p>To use <b class="APPLICATION">lbmmon</b> to view statistics from sample application
+output:</p>
+
+<ol type="1">
+<li>
+<p>Create configuration file with the single option of <tt class="LITERAL">source
+transport lbtrm</tt> and name it <tt class="LITERAL">LBTRM.cfg</tt>.</p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmmon --transport-opts="config=LBTRM.cfg"</tt></p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmrcv -c LBTRM.cfg --monitor-ctx=5 Arizona</tt></p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmsrc -c LBTRM.cfg Arizona</tt></p>
+</li>
+</ol>
+
+<p>After <b class="APPLICATION">lbmsrc</b> completes, the final output for <b
+class="APPLICATION">lbmmon</b> should closely resemble the following.</p>
+
+<pre class="SCREEN">
+Receiver statistics received from C:\Program Files\29West\UME_1.2.1\Win2k-i386\bin\lbmrcv.exe 
+at 10.29.1.78, sent Wed Jan 09 14:25:49 2008
+Source: LBTRM:10.29.1.78:4391:323382d8:224.10.10.10:4400
+Transport: LBT-RM
+LBT-RM messages received                                 : 45455
+Bytes received                                           : 370000000
+LBT-RM NAK packets sent                                  : 0
+LBT-RM NAKs sent                                         : 0
+Lost LBT-RM messages detected                            : 0
+NCFs received (ignored)                                  : 0
+NCFs received (shed)                                     : 0
+NCFs received (retransmit delay)                         : 0
+NCFs received (unknown)                                  : 0
+Loss recovery minimum time                               : 4294967295ms
+Loss recovery mean time                                  : 0ms
+Loss recovery maximum time                               : 0ms
+Minimum transmissions per individual NAK                 : 4294967295
+Mean transmissions per individual NAK                    : 0
+Maximum transmissions per individual NAK                 : 0
+Duplicate LBT-RM data messages received                  : 0
+LBT-RM messages unrecoverable (window advance)           : 0
+LBT-RM messages unrecoverable (NAK generation expiration): 0
+LBT-RM LBM messages received                             : 10000000
+LBT-RM LBM messages received with no topic               : 0
+LBT-RM LBM requests received                             : 0
+       
+</pre>
+
+<p>Notes:</p>
+
+<ul>
+<li>
+<p>Since this procedure was done on a single machine. No packets were lost and therefore
+<b class="APPLICATION">lbmrcv</b> did not generate any NAKs and <b
+class="APPLICATION">lbmsrc</b> did not send any NCFs. If you run this procedure across a
+network, packets may be lost and you would see statistics for NAKs, NCFs and loss
+recovery.</p>
+</li>
+
+<li>
+<p>This procedure activates monitoring on the receiver, specifying the context (<tt
+class="LITERAL">--monitor-ctx</tt>) to create a complete set of receiver transport
+statistics. You could activate monitoring in a similar fashion on the source and create
+source statistics. Each set of statistics shows one side of the transmission. For
+example, source statistics contain information about NAKs received by the source
+(ignored, shed, retransmit delay, etc.) where receiver statistics contain data about NCFs
+received. Each view can be helpful.</p>
+</li>
+
+<li>
+<p>Moreover, as explained earlier in Specifying the Object to Monitor, individual
+receivers or sources can be monitored instead of all transport activity for a context.
+For this procedure, use <tt class="LITERAL">--monitor-rcv</tt> or <tt
+class="LITERAL">--monitor-src</tt>.</p>
+</li>
+
+<li>
+<p>You could run this procedure again specifying a different transport (LBT-RU or TCP) in
+the configuration file and receive a different set of statistics. For descriptions of all
+the transport statistics, refer to the transport statistics data structures in the C
+Application Programmer's Interface. Click on the Data Structures tab at the top and click
+on <a href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a> or <a
+href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBMMONUDP" name="LBMMONUDP">6.5.2. lbmmonudp.c and
+lbmmondiag.pl</a></h3>
+
+<p>The example application, <b class="APPLICATION">lbmmonudp.c</b> receives <b
+class="APPLICATION">UM</b> statistics and forwards them as CSV data over a UDP transport.
+The Perl script, <b class="APPLICATION">lbmmondiag.pl</b>, can read UDP packets and
+process the statistics, reporting Severity 1 and Severity 2 events. This script only
+reports on LBT-RM transports.</p>
+
+<p>To run <b class="APPLICATION">lbmmonudp.c</b> with <tt
+class="FILENAME">lbmmondiag.pl</tt>, use the following procedure.</p>
+
+<ol type="1">
+<li>
+<p>Create configuration file with the single option of <tt class="LITERAL">source
+transport lbtrm</tt> and name it <tt class="LITERAL">LBTRM.cfg</tt>.</p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmmonudp -a 127.0.0.1
+--transport-opts="config=LBTRM.cfg"</tt></p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmrcv -c LBTRM.cfg --monitor-ctx=5 Arizona</tt></p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmsrc -c LBTRM.cfg Arizona</tt></p>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">lbmmondiag.pl</tt></p>
+</li>
+</ol>
+
+<p>The following sections discuss some of the possible results of this procedure. Your
+results will vary depending upon conditions in your network or if you run the procedure
+on a single machine.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UNRECOVERABLE-LOSS" name="UNRECOVERABLE-LOSS">6.5.2.1.
+Severity 1 -- Monitoring Unrecoverable Loss</a></h4>
+
+<p>The most severe system problems are often due to unrecoverable datagram loss at the
+reliable transport level. These are reported as severity 1 events by the <tt
+class="FILENAME">lbmmondiag.pl</tt> example script. Many of the scalability and latency
+benefits of <b class="APPLICATION">UM</b> come from the use of reliable transport
+protocols like LBT-RM and LBT-RU. These protocols provide loss detection, retransmission,
+and recovery up to the limits specified by an application. Unrecoverable loss is reported
+by the transport when loss repair is impossible within the specified limits.</p>
+
+<p>Unrecoverable transport loss often (but not always) leads to unrecoverable message
+loss so it is very significant to applications that benefit from lossless message
+delivery.</p>
+
+<p>Unrecoverable loss can be declared by receivers when the <a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_nak_generation_interval</code></a>
+has ended without receipt of repair. Each such loss event is recorded by incrementing the
+<tt class="LITERAL">unrecovered_tmo</tt> field in <a
+href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a>. Output from <tt
+class="FILENAME">lbmmondiag.pl</tt> might look like this:</p>
+
+<pre class="SCREEN">
+    Sev1: 34 datagrams unrecovered due to NAK generation interval ending
+       
+</pre>
+
+<p>Unrecoverable loss can also be triggered at receivers by notice from a source that the
+lost datagram has passed out of the source's transmission window. Each such loss event is
+recorded by incrementing the <tt class="LITERAL">unrecovered_txw</tt> field in <a
+href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a>. Output from <tt
+class="FILENAME">lbmmondiag.pl</tt> might look like this:</p>
+
+<pre class="SCREEN">
+    Sev1: 249 datagrams unrecovered due to transmission window advancement
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RATE-CONTROLLER" name="RATE-CONTROLLER">6.5.2.2. Severity 2 --
+Monitoring Rate Controller Activity</a></h4>
+
+<p>The data and retransmission rate controllers built into LBT-RM provide for stable
+operation under all traffic conditions. These rate controllers introduce some latency at
+the source since that is generally preferable to the alternative of NAK storms or other
+unstable states. The <tt class="FILENAME">lbmmondiag.pl</tt> example script reports this
+activity as a severity 2 event since latency is normally the only effect of their
+operation.</p>
+
+<p>Activity of the rate controller indicates that a source tried to send faster than the
+configured <a
+href="../Config/transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMDATARATELIMIT"
+target="doccontent"><code class="PARAMETER">transport_lbtrm_data_rate_limit</code></a>.
+Normally, this limit is set to the speed of the fastest receivers. Sending faster than
+this rate would induce loss in all receivers so it is generally best to add latency at
+the source or avoid sending in such situations.</p>
+
+<p>The current number of datagrams queued by the rate controller is given in the <tt
+class="LITERAL">rctlr_data_msgs</tt> field in <a
+href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a>. No more than 10 datagrams are ever
+queued. Output from <tt class="FILENAME">lbmmondiag.pl</tt> might look like this:</p>
+
+<pre class="SCREEN">
+    Sev2: 10 datagrams queued by data rate controller
+    
+</pre>
+
+<p>Activity of the retransmission rate controller indicates that receivers have requested
+retransmissions in excess of the configured <a
+href="../Config/transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMRETRANSMITRATELIMIT"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_retransmit_rate_limit</code></a>.
+Latency is added to retransmission requests in excess of the limit to control the amount
+of latency they may add to messages being sent the first time. This behavior avoids NAK
+storms.</p>
+
+<p>The current number of datagrams queued by the retransmission rate controller is given
+in the <tt class="LITERAL">rctlr_rx_msgs</tt> field in <a
+href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a>. No more than 101 datagrams are ever
+queued. Output from <tt class="FILENAME">lbmmondiag.pl</tt> might look like this:</p>
+
+<pre class="SCREEN">
+    Sev2: 101 datagrams queued by retransmission rate controller
+    
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-RECOVERY" name="RECEIVER-RECOVERY">6.5.2.3. Severity
+2 -- Monitoring Loss Recovery Activity for a Receiver</a></h4>
+
+<p>It is important to monitor loss recovery activity because it always adds latency if
+the loss is successfully repaired. <b class="APPLICATION">UM</b> defaults generally
+provide for quite a bit of loss recovery activity before loss would become unrecoverable.
+Statistics on such activity are maintained at both the source and receiver. Unrecoverable
+loss will normally be preceded by a burst of such activity.</p>
+
+<p><b class="APPLICATION">UM</b> receivers measure the amount of time required to repair
+each loss detected. For each transport session, an exponentially weighted moving average
+is computed from repair times and the maximum and minimum times are tracked.</p>
+
+<p>The total number of losses detected appears in the lost field in <a
+href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a>. It may be multiplied by the average
+repair time given in the <tt class="LITERAL">nak_stm_mean</tt> field in <a
+href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a> to estimate of the amount of latency
+that was added to repair loss. This is probably the single most important metric to track
+for those interested in minimizing repair latency. The <tt
+class="FILENAME">lbmmondiag.pl</tt> script reports this whenever the lost field changes
+and the average repair time is nonzero. Output might look like this:</p>
+
+<pre class="SCREEN">
+    Sev2: 310 datagrams lost
+     Sev2: 112.236 seconds estimated total latency due to repair of 564 losses
+       
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> This estimate only includes latency added in the recovery of lost
+messages. Requiring ordered delivery also adds latency for all messages that arrive after
+the time of loss and before the time that repair arrives. See the <code
+class="PARAMETER">ordered_delivery</code> option to control this.</p>
+</blockquote>
+</div>
+
+<p>In addition to counting losses detected, <b class="APPLICATION">UM</b> reliable
+receivers also count the number of NAKs generated in the <tt
+class="LITERAL">naks_sent</tt> field in <a
+href="../API/structlbm__rcv__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_t</tt></a>. Output from <tt
+class="FILENAME">lbmmondiag.pl</tt> might look like this:</p>
+
+<pre class="SCREEN">
+    Sev2: 58 NAKs sent
+       
+</pre>
+
+<p>Those who are new to reliable multicast protocols are sometimes surprised to learn
+that losses detected do not always lead to NAK generation. If a datagram is lost in the
+network close to the source, it is common for many receivers to detect loss
+simultaneously when a datagram following the loss arrives. Scalability would suffer if
+all receivers that detected loss reported it by generating a NAK at the same time. To
+improve scalability, a random delay is added to NAK generation at each receiver. Since
+retransmissions are multicast, often only one NAK is generated to repair the loss for all
+receivers. Thus it is common for the number of losses detected to be much larger than the
+number of NAKs sent, especially when there are many receivers with similar loss
+patterns.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-RECOVERY" name="SOURCE-RECOVERY">6.5.2.4. Severity 2 --
+Monitoring Loss Recovery Activity for a Source</a></h4>
+
+<p>For sources, the principal concern is often understanding how much the retransmission
+of messages already sent at least once slowed down the source. Obviously, bandwidth and
+CPU time spent servicing retransmission requests cannot be used to send new messages.
+This is the way that lossy receivers add latency for lossless receivers.</p>
+
+<p><b class="APPLICATION">UM</b> sources track the number of NAKs received in the <tt
+class="LITERAL">naks_rcved</tt> field in <a
+href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a>. The number of datagrams that they
+retransmit to repair loss is recorded in the <tt class="LITERAL">rxs_sent</tt> field in
+<a href="../API/structlbm__src__transport__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_t</tt></a>.</p>
+
+<p>The number of retransmitted datagrams may be multiplied by the average datagram size
+and divided by the wire speed to estimate the amount of latency added to new messages by
+retransmission. Output from the example <tt class="FILENAME">lbmmondiag.pl</tt> script
+might look like this:</p>
+
+<pre class="SCREEN">
+    Sev2: 7478 NAKs received
+     Sev2: 50 retransmissions sent
+     Sev2: 0.015056 seconds estimated total latency due to retransmissions
+       
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTERPRETING-LBT-RM-SOURCE-STATISTICS"
+name="INTERPRETING-LBT-RM-SOURCE-STATISTICS">6.6. Interpreting LBT-RM Source
+Statistics</a></h2>
+
+<p>LBT-RM sources maintain many statistics that can be useful in diagnosing reliable
+multicast problems. See the <b class="APPLICATION">UM</b> API documentation <a
+href="../API/structlbm__src__transport__stats__lbtrm__t__stct.html" target="doccontent"><code
+class="FUNCTION">lbm_src_transport_stats_lbtrm_t</code> Structure Reference</a> for a
+description of the fields. The remainder of this section gives advice on interpreting the
+statistics.</p>
+
+<p>Divide <code class="FUNCTION">naks_rcved</code> by <code
+class="FUNCTION">msgs_sent</code> to find the likelihood that sending a message resulted
+in a NAK being received. Expect no more than a few percent on a network with reasonable
+loss levels.</p>
+
+<p></p>
+
+<p>Divide <code class="FUNCTION">rxs_sent</code> by <code
+class="FUNCTION">msgs_sent</code> to find the ratio of retransmissions to new data. Many
+NAKs arriving at a source will cause many retransmissions.</p>
+
+<p>Divide <code class="FUNCTION">naks_shed</code> by <code
+class="FUNCTION">naks_rcved</code> to find the likelihood that excessive NAKs were
+ignored. Consider reducing loss to avoid NAK generation.</p>
+
+<p>Divide <code class="FUNCTION">naks_rcved</code> by <code
+class="FUNCTION">nak_pckts_rcved</code> to find the likelihood that NAKs arrived
+individually (~1&nbsp;-&#62;&nbsp;individual NAKs likely; ~0&nbsp;-&#62;&nbsp;NAKs likely
+to have arrived grouped in a single packet). Individual NAKs often indicate sporadic loss
+while grouped NAKs often indicate burst loss.</p>
+
+<p>Divide <code class="FUNCTION">naks_rx_delay_ignored</code> by <code
+class="FUNCTION">naks_ignored</code> to find the likelihood that NAKs arrived during the
+ignore interval following a retransmission. The configuration option <a
+href="../Config/transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMIGNOREINTERVAL"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_ignore_interval</code></a>
+controls the length of this interval.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lbm-features.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="lbmrd-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">UMS Features</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Manpage for lbmrd</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

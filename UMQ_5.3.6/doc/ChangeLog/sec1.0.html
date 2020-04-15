@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Series 1.0 Releases</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Series 1.1 Releases" href="sec1.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec1.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom">&nbsp;</td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC1.0" name="SEC1.0">84. Series 1.0 Releases</a></h1>
+
+<p>Key features in the 1.0 series releases:</p>
+
+<ul>
+<li>
+<p>"No daemons" direct messaging design</p>
+</li>
+
+<li>
+<p>Multi-threaded design for high performance/low latency</p>
+</li>
+
+<li>
+<p>All message routing done in network hardware--not in software</p>
+</li>
+
+<li>
+<p>Basic messaging API; request/response API</p>
+</li>
+
+<li>
+<p>Managed Event Queue API; timer API</p>
+</li>
+
+<li>
+<p>Explicit/Implicit batching of messages</p>
+</li>
+
+<li>
+<p>Choice of transports: TCP, TCP-LB (latency-bounded TCP), or LBT-RM (latency-bounded
+reliable multicast).</p>
+</li>
+
+<li>
+<p>Automatic/Manual topic to transport mapping</p>
+</li>
+
+<li>
+<p>Multiple transports per sender</p>
+</li>
+
+<li>
+<p>Multicast topic resolution</p>
+</li>
+
+<li>
+<p>Linux/Windows platform support</p>
+</li>
+
+<li>
+<p>Configuration via API or config file</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.0.3" name="REL1.0.3">84.1. Release 1.0.3
+2004-12-11</a></h2>
+
+<ul>
+<li>
+<p>Added latency bounded TCP behavior and <code
+class="PARAMETER">transport_tcp_multiple_receiver_behavior</code> option.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.0.2" name="REL1.0.2">84.2. Release 1.0.2
+2004-12-06</a></h2>
+
+<ul>
+<li>
+<p>Fixed stat retrieval on receiver so that it handled multiple sources correctly.</p>
+</li>
+
+<li>
+<p>Added Windows static library changes. The static <b class="APPLICATION">LBM</b>
+library is named lbm_static.lib.</p>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">response_tcp_nodelay</code> and <code
+class="PARAMETER">response_tcp_deletion_timeout</code> options.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.0.1" name="REL1.0.1">84.3. Release 1.0.1
+2004-11-19</a></h2>
+
+<ul>
+<li>
+<p>Changed the pipe used in notifying fdm so that it is non-blocking on both ends. Helps
+to avoid a potential block on write() under some circumstances that can lead to
+deadlock.</p>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">transport_lbtrm_coalesce_threshold</code> option to help
+with memory usage with small messages at the expense of memcpys.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.0" name="REL1.0">84.4. Release 1.0 2004-10-29</a></h2>
+
+<ul>
+<li>
+<p>Updated <b class="APPLICATION">LBM</b> Design document.</p>
+</li>
+
+<li>
+<p>Added retransmit delay ignore information (including statistics) and added handling of
+the flag. LBT-RM now ignores after the packet has cleared the retransmit rate control
+mechanism instead of before.</p>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">transport_tcp_listen_backlog</code> and <code
+class="PARAMETER">request_tcp_listen_backlog</code> options.</p>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">transport_lbtrm_send_naks</code> option.</p>
+</li>
+
+<li>
+<p>Added SIGPIPE ignore to a few other examples.</p>
+</li>
+
+<li>
+<p>Added len checks based on transport for sending. Changed default SO_SNDBUF for TCP on
+Windows to be 128000 instead of OS default.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">LBM_RESOLVER_LOSS_RATE</tt> environment variable. Added
+optional value for initial delay to lbmreq example. Modified lbmresp to take a -E arg to
+tell it to exit upon EOS (default is not to).</p>
+</li>
+
+<li>
+<p>Added retrieval of <code class="PARAMETER">request_tcp_port</code> and display of the
+value for lbmreq and lbmmreq examples.</p>
+</li>
+
+<li>
+<p>Added SIGPIPE ignore to lbmmsrc and added waiting for all threads to finish before
+deleting sources.</p>
+</li>
+
+<li>
+<p>Added changes to example receiver output display.</p>
+</li>
+
+<li>
+<p>Added stats retrieval functions and structures.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec1.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Series 1.1 Releases</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

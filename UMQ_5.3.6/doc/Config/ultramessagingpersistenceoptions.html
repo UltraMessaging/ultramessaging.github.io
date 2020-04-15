@@ -1,0 +1,2980 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Persistence Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Event Queue Options" href="eventqueueoptions.html" />
+<link rel="NEXT" title="Ultra Messaging Queuing Options"
+href="ultramessagingqueuingoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="eventqueueoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="ultramessagingqueuingoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ULTRAMESSAGINGPERSISTENCEOPTIONS"
+name="ULTRAMESSAGINGPERSISTENCEOPTIONS">4.29. Ultra Messaging Persistence
+Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMEACKBATCHINGINTERVAL"
+name="CONTEXTUMEACKBATCHINGINTERVAL">4.29.1. <span class="lbm-option-name"><span
+class="PHRASE">ume_ack_batching_interval (context)</span></span></a></h2>
+
+<p>The interval between checks by <b class="APPLICATION">UMP</b> of consumed,
+unacknowledged messages. See also <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEUSEACKBATCHING">ume_use_ack_batching</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14923" name="AEN14923"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">100 (0.1
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0, UMP 5.0, UMQ 5.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEACTIVITYTIMEOUT"
+name="RECEIVERUMEACTIVITYTIMEOUT">4.29.2. <span class="lbm-option-name"><span
+class="PHRASE">ume_activity_timeout (receiver)</span></span></a></h2>
+
+<p>Establishes the period of time from a receiver's last activity to the release of the
+receiver's Reg ID. Stores return an error to any new request for the receiver's Reg ID
+during this period. Overrides the <tt class="LITERAL">receiver-activity-timeout</tt>
+setting configured for the receiver's topic on the store. The default value of 0 (zero)
+disables this option. See also <a href="../UME/ume-fault-tolerance.html#PROXYSOURCES"
+target="_top">Proxy Sources</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN14969" name="AEN14969"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEACTIVITYTIMEOUT"
+name="SOURCEUMEACTIVITYTIMEOUT">4.29.3. <span class="lbm-option-name"><span
+class="PHRASE">ume_activity_timeout (source)</span></span></a></h2>
+
+<p>Establishes the period of time from a source's last activity to the release of the
+source's Reg ID. Stores return an error to any new source requesting the source's Reg ID
+during this period. If proxy sources are enabled (<a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEPROXYSOURCE">ume_proxy_source</a>),
+the store does not release the source's Reg ID and <b class="APPLICATION">UMP</b> elects
+a proxy source. Overrides the <tt class="LITERAL">source-activity-timeout</tt> setting
+configured for the source's topic on the store. The default value of 0 (zero) disables
+this option. If neither proxy sources nor <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME">ume_state_lifetime</a>
+are configured, the store also deletes the source's state and cache. See also <a
+href="../UME/ume-fault-tolerance.html#PROXYSOURCES" target="_top">Proxy Sources</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15014" name="AEN15014"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEALLOWCONFIRMEDDELIVERY"
+name="RECEIVERUMEALLOWCONFIRMEDDELIVERY">4.29.4. <span class="lbm-option-name"><span
+class="PHRASE">ume_allow_confirmed_delivery (receiver)</span></span></a></h2>
+
+<p>Specifies whether or not <b class="APPLICATION">UMP</b> allows the sending of
+confirmed delivery notifications back to the source.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15052" name="AEN15052"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0, UMP 5.0, UMQ 5.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15075" name="AEN15075"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates that <b class="APPLICATION">UMP</b> can send confirmed delivery
+notifications. <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates that <b class="APPLICATION">UMP</b> can not send confirmed delivery
+notifications.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMECONFIRMEDDELIVERYNOTIFICATION"
+name="SOURCEUMECONFIRMEDDELIVERYNOTIFICATION">4.29.5. <span class="lbm-option-name"><span
+class="PHRASE">ume_confirmed_delivery_notification (source)</span></span></a></h2>
+
+<p>Flag indicating the source is interested in receiving notifications of delivery of
+messages to receivers (confirmed delivery) via the source event mechanism. When turned
+off, receivers do not send delivery confirmation notifications to the source unless the
+release policy dictates the need for them.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15102" name="AEN15102"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15121" name="AEN15121"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">0</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_CDELV_EVENT_NONE</code></td>
+<td>The source does not wish to receive delivery confirmation notifications.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">1</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_CDELV_EVENT_PER_FRAGMENT</code></td>
+<td>The source wishes to receive delivery confirmation notifications for all messages and
+message fragments. <span class="bold"><b class="EMPHASIS">Default for all.</b></span>
+</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">2</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_CDELV_EVENT_PER_MESSAGE</code></td>
+<td>The source wishes to receive only one delivery confirmation for a message regardless
+of how many fragments it comprised.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">3</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_CDELV_EVENT_FRAG_AND_MSG</code></td>
+<td>The source wishes to receive delivery confirmation notifications for all messages and
+message fragments. In addition, the notification contains a WHOLE_MESSAGE_CONFIRMED flag
+when the last fragment of a message has been delivered.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMECONSENSUSSEQUENCENUMBERBEHAVIOR"
+name="RECEIVERUMECONSENSUSSEQUENCENUMBERBEHAVIOR">4.29.6. <span
+class="lbm-option-name"><span class="PHRASE">ume_consensus_sequence_number_behavior
+(receiver)</span></span></a></h2>
+
+<p>The behavior that the receiver will follow when determining the consensus sequence
+number used as the sequence number to begin reception at upon re-registration after a
+failure or suspension. This setting is only used when quorum-consensus is also used on
+the source.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15166" name="AEN15166"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15185" name="AEN15185"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">lowest</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_LOWEST</code></td>
+<td>Consensus is determined as the lowest of the latest sequence numbers seen from any
+store.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">majority</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_MAJORITY</code></td>
+<td>Consensus is determined as the latest sequence number agreed upon by the majority of
+stores within a group. Between groups, the latest of all majority decisions is used.
+<span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">highest</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_HIGHEST</code></td>
+<td>Consensus is determined as the highest of the latest sequence numbers seen from any
+store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMECONSENSUSSEQUENCENUMBERBEHAVIOR"
+name="SOURCEUMECONSENSUSSEQUENCENUMBERBEHAVIOR">4.29.7. <span
+class="lbm-option-name"><span class="PHRASE">ume_consensus_sequence_number_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow when determining the consensus sequence
+number used as the first message of a source upon re-registration after a failure or
+suspension. This setting is only used when quorum-consensus is also used.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15224" name="AEN15224"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15243" name="AEN15243"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">lowest</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_LOWEST</code></td>
+<td>Consensus is determined as the lowest of the latest sequence numbers seen from any
+store.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">majority</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_MAJORITY</code></td>
+<td>Consensus is determined as the latest sequence number agreed upon by the majority of
+stores within a group. Between groups, the latest of all majority decisions is used.
+<span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">highest</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_QC_SQN_BEHAVIOR_HIGHEST</code></td>
+<td>Consensus is determined as the highest of the latest sequence numbers seen from any
+store.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEEXPLICITACKONLY"
+name="RECEIVERUMEEXPLICITACKONLY">4.29.8. <span class="lbm-option-name"><span
+class="PHRASE">ume_explicit_ack_only (receiver)</span></span></a></h2>
+
+<p>Flag indicating if the receiver should automatically send acknowledgements to any
+stores and to the source or if the application desires to explicitly generate
+acknowledgements itself. See also <a
+href="../UME/designing-persistent-applications.html#EXPLICITACKS" target="_top">Explicit
+Acknowledgments</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15283" name="AEN15283"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15302" name="AEN15302"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The receiving application will generate acknowledgements explicitly and the <b
+class="APPLICATION">UMP</b> receiver should not automatically generate them.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The <b class="APPLICATION">UMP</b> receiver will automatically generate and send
+acknowledgements based on message consumption. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEFLIGHTSIZE" name="SOURCEUMEFLIGHTSIZE">4.29.9. <span
+class="lbm-option-name"><span class="PHRASE">ume_flight_size
+(source)</span></span></a></h2>
+
+<p>Specifies the number of messages allowed to be in flight (unstabilized at a store and
+without delivery confirmation) before a new message send either blocks or triggers a
+notification (source event).</p>
+
+<div class="INFORMALTABLE"><a id="AEN15329" name="AEN15329"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEFLIGHTSIZEBEHAVIOR"
+name="SOURCEUMEFLIGHTSIZEBEHAVIOR">4.29.10. <span class="lbm-option-name"><span
+class="PHRASE">ume_flight_size_behavior (source)</span></span></a></h2>
+
+<p>The behavior that <b class="APPLICATION">UMP</b> follows when a message send exceeds
+the source's <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE">ume_flight_size</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15372" name="AEN15372"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15395" name="AEN15395"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Block</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_BLOCK</code></td>
+<td>The send call blocks when a source sends a message that exceeds it's flight size. If
+the source uses a non-blocking send, the send returns an LBM_EWOULD_BLOCK. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Notify</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_NOTIFY</code></td>
+<td>A message send that exceeds the configured flight size does not block but triggers a
+flight size notification (source event), indicating that the flight size has been
+surpassed. <b class="APPLICATION">UMP</b> also sends a source event notification if the
+number of in-flight messages falls below the configured flight size.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEFLIGHTSIZEBYTES"
+name="SOURCEUMEFLIGHTSIZEBYTES">4.29.11. <span class="lbm-option-name"><span
+class="PHRASE">ume_flight_size_bytes (source)</span></span></a></h2>
+
+<p>Specifies the message payload in bytes allowed to be in flight (unstabilized at a
+store and without delivery confirmation) before a new message send either blocks or
+triggers a notification source event. <b class="APPLICATION">UMP</b> monitors both this
+option and <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE">ume_flight_size</a>. If
+either threshold is met, the configured blocking or notification behavior executes. See
+<a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR">ume_flight_size_behavior</a>.
+When using Receiver-paced Persistence, set this option greater than 0 (zero) but less
+than or equal to the repository's <tt
+class="LITERAL">source-flight-size-bytes-maximum</tt> value.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15433" name="AEN15433"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEFORCERECLAIMFUNCTION"
+name="SOURCEUMEFORCERECLAIMFUNCTION">4.29.12. <span class="lbm-option-name"><span
+class="PHRASE">ume_force_reclaim_function (source)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a source is
+forced to release a retained message due to size limitations specified. This callback is
+called directly in line and does not use the event queue. Therefore the callback function
+used should not block or it will block the context thread processing. A value of NULL for
+the callback turns off the callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15477" name="AEN15477"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_src_force_reclaim_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMELATEJOIN" name="SOURCEUMELATEJOIN">4.29.13. <span
+class="lbm-option-name"><span class="PHRASE">ume_late_join
+(source)</span></span></a></h2>
+
+<p>Flag indicating the source should allow late join operation for receivers and
+persistent stores. This is a compatibility setting. The <a
+href="latejoinoptions.html#SOURCELATEJOIN">late_join</a> setting should be used
+instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15515" name="AEN15515"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15534" name="AEN15534"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The source allows late join receivers and persistent stores.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The source does not allow late join receivers or persistent stores. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEMESSAGESTABILITYNOTIFICATION"
+name="SOURCEUMEMESSAGESTABILITYNOTIFICATION">4.29.14. <span class="lbm-option-name"><span
+class="PHRASE">ume_message_stability_notification (source)</span></span></a></h2>
+
+<p>Flag indicating the source is interested in receiving notifications of message
+stability from persistent stores via the source event mechanism. Even when turned off,
+stores continue to send message stability notifications to the source for retention
+purposes. However, no notification will be delivered to the application.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15559" name="AEN15559"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15578" name="AEN15578"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">0</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_EVENT_NONE</code></td>
+<td>The source does not wish to receive message stability notifications from the
+store.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">1</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_EVENT_FRAGMENT</code></td>
+<td>The source wishes to receive all message and message fragment stability notifications
+from the store. <span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">2</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_EVENT_MESSAGE</code></td>
+<td>The source wishes to receive only a single message stability notifications from the
+store when the entire message has been stabilized. This notification contains the
+Sequence Number of the last fragment of the whole message but does NOT contain store
+information.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">3</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_EVENT_FRAG_AND_MSG</code></td>
+<td>The source wishes to receive all message and message fragment stability notifications
+from the store. In addition, the notification contains a WHOLE_MESSAGE_STABLE flag when
+the last fragment of a message has been stabilized.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEPROXYSOURCE" name="SOURCEUMEPROXYSOURCE">4.29.15.
+<span class="lbm-option-name"><span class="PHRASE">ume_proxy_source
+(source)</span></span></a></h2>
+
+<p>Controls whether any stores with which the source registers should provide a proxy
+source in the event the actual source terminates. Proxy source support is only available
+for quorum/consensus store configurations. In addition, proxy source support requires
+that the source register with an actual registration ID, and not request that the store
+assign it a registration ID.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15623" name="AEN15623"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15647" name="AEN15647"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Enables proxy source support.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Disables proxy source support. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMERECEIVERLIVENESSINTERVAL"
+name="CONTEXTUMERECEIVERLIVENESSINTERVAL">4.29.16. <span class="lbm-option-name"><span
+class="PHRASE">ume_receiver_liveness_interval (context)</span></span></a></h2>
+
+<p>The maximum interval between delivery confirmations or keepalive messages send to the
+source. Expiration of this interval triggers another keepalive and an interval reset.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15675" name="AEN15675"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disable; do not send
+keepalives)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERECEIVERPACEDPERSISTENCE"
+name="RECEIVERUMERECEIVERPACEDPERSISTENCE">4.29.17. <span class="lbm-option-name"><span
+class="PHRASE">ume_receiver_paced_persistence (receiver)</span></span></a></h2>
+
+<p>Specifies that the receiver is a Receiver-paced Persistence (RPP) receiver. If the
+repository has set <tt class="LITERAL">repository-allow-receiver-paced-persistence</tt>
+to 0 (disable), setting this option to 1 creates a store registration error.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15717" name="AEN15717"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint8_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15740" name="AEN15740"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates that the receiver is a RPP receiver.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates that the receiver is not a RPP receiver. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERECEIVERPACEDPERSISTENCE"
+name="SOURCEUMERECEIVERPACEDPERSISTENCE">4.29.18. <span class="lbm-option-name"><span
+class="PHRASE">ume_receiver_paced_persistence (source)</span></span></a></h2>
+
+<p>Specifies that the source is a Receiver-paced Persistence (RPP) source and may change
+certain topic repository options to values allowed by the repository. If the repository
+has set <tt class="LITERAL">repository-allow-receiver-paced-persistence</tt> to 0
+(disable), setting this option to 1 creates a store registration error.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15766" name="AEN15766"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint8_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN15789" name="AEN15789"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates that source is a RPP source.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates that source is not a RPP source. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERECOVERYSEQUENCENUMBERINFOFUNCTION"
+name="RECEIVERUMERECOVERYSEQUENCENUMBERINFOFUNCTION">4.29.19. <span
+class="lbm-option-name"><span class="PHRASE">ume_recovery_sequence_number_info_function
+(receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a receiver
+is about to complete registration from the stores in use by the source and the low
+sequence number is to be determined. The application has the ability to modify the
+sequence number to use if it desires. This callback is called directly in line and does
+not use the event queue. Therefore the callback function used should not block or it will
+block the context thread processing. A value of NULL for the callback turns off the
+callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15817" name="AEN15817"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_rcv_recovery_info_ex_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEREGISTRATIONEXTENDEDFUNCTION"
+name="RECEIVERUMEREGISTRATIONEXTENDEDFUNCTION">4.29.20. <span
+class="lbm-option-name"><span class="PHRASE">ume_registration_extended_function
+(receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a receiver
+is about to attempt to register with a persistent store. The app must return the
+registration ID to request from the store or 0 if it will allow the store to allocate
+one. This function passes additional extended information, such as the store being used
+and a source client data pointer, etc. This callback is called directly in line and does
+not use the event queue. Therefore the callback function used should not block or it will
+block the context thread processing. A value of NULL for the callback turns off the
+callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15857" name="AEN15857"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_rcv_regid_ex_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEREGISTRATIONFUNCTION"
+name="RECEIVERUMEREGISTRATIONFUNCTION">4.29.21. <span class="lbm-option-name"><span
+class="PHRASE">ume_registration_function (receiver)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a receiver
+is about to attempt to register with a persistent store. The app must return the
+registration ID to request from the store or 0 if it will allow the store to allocate
+one. This callback is called directly in line and does not use the event queue. Therefore
+the callback function used should not block or it will block the context thread
+processing. A value of NULL for the callback turns off the callback being called. This
+setting is provided for compatibility. The <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEREGISTRATIONEXTENDEDFUNCTION">ume_registration_extended_function</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15898" name="AEN15898"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_rcv_regid_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEREGISTRATIONINTERVAL"
+name="RECEIVERUMEREGISTRATIONINTERVAL">4.29.22. <span class="lbm-option-name"><span
+class="PHRASE">ume_registration_interval (receiver)</span></span></a></h2>
+
+<p>The interval between registration attempts by the receiver to a persistent store in
+use by the source.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15938" name="AEN15938"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREGISTRATIONINTERVAL"
+name="SOURCEUMEREGISTRATIONINTERVAL">4.29.23. <span class="lbm-option-name"><span
+class="PHRASE">ume_registration_interval (source)</span></span></a></h2>
+
+<p>The interval between registration attempts by the source. When using the round-robin
+store behavior, this is the value between registration attempts with the various stores.
+In other words, attempt to register with primary, wait interval, attempt to register with
+secondary, wait interval, etc.</p>
+
+<div class="INFORMALTABLE"><a id="AEN15978" name="AEN15978"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREPOSITORYACKONRECEPTION"
+name="SOURCEUMEREPOSITORYACKONRECEPTION">4.29.24. <span class="lbm-option-name"><span
+class="PHRASE">ume_repository_ack_on_reception (source)</span></span></a></h2>
+
+<p>For topics with a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">disk</tt> or <tt class="LITERAL">reduced-fd</tt>, specifies that the
+stability acknowledgement should be sent upon message reception by the store instead of
+when the message has been written to disk. When using Receiver-paced Persistence, if the
+repository has set <tt class="LITERAL">repository-allow-ack-on-reception</tt> to 0
+(disable), setting this option to 1 creates a store registration error. This option has
+no effect on Source-paced Persistence repositories.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16019" name="AEN16019"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint8_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN16042" name="AEN16042"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The repository sends a stability acknowledgement for a message as soon as it has
+received the message.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The repository sends a stability acknowledgement for a message once it has been
+written to disk. <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREPOSITORYDISKFILESIZELIMIT"
+name="SOURCEUMEREPOSITORYDISKFILESIZELIMIT">4.29.25. <span class="lbm-option-name"><span
+class="PHRASE">ume_repository_disk_file_size_limit (source)</span></span></a></h2>
+
+<p>For topics with a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">disk</tt> or <tt class="LITERAL">reduced-fd</tt>, specifies the maximum
+amount of disk space used to store retained messages. Using the default value of 0 (zero)
+implements the repository's <tt class="LITERAL">repository-disk-file-size-limit</tt>
+value. When not set to 0, <b class="APPLICATION">UMP</b> enforces a minimum value of
+196992. When using Receiver-paced Persistence and you require that the source dictates
+the repository's <tt class="LITERAL">repository-disk-file-size-limit</tt> value, you must
+set this option greater than 0 (zero) but less than or equal to the repository's current
+<tt class="LITERAL">repository-disk-file-size-limit</tt> value.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16074" name="AEN16074"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREPOSITORYSIZELIMIT"
+name="SOURCEUMEREPOSITORYSIZELIMIT">4.29.26. <span class="lbm-option-name"><span
+class="PHRASE">ume_repository_size_limit (source)</span></span></a></h2>
+
+<p>For topics with a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">memory</tt>, <tt class="LITERAL">disk</tt> or <tt
+class="LITERAL">reduced-fd</tt>, specifies the maximum number of message bytes retained
+(includes payload only). When using Receiver-paced Persistence and you require that the
+source dictates the repository's <tt class="LITERAL">repository-size-limit</tt> value,
+you must set this option greater than 0 (zero) but less than or equal to the repository's
+current <tt class="LITERAL">repository-size-limit</tt> value. For the <tt
+class="LITERAL">disk</tt> or <tt class="LITERAL">reduced-fd</tt> repository type, this
+value configures the size of the memory cache. Using the default value of 0 (zero)
+implements the repository's value for this option.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16123" name="AEN16123"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEREPOSITORYSIZETHRESHOLD"
+name="SOURCEUMEREPOSITORYSIZETHRESHOLD">4.29.27. <span class="lbm-option-name"><span
+class="PHRASE">ume_repository_size_threshold (source)</span></span></a></h2>
+
+<p>For topics with a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">memory</tt>, <tt class="LITERAL">disk</tt> or <tt
+class="LITERAL">reduced-fd</tt>, specifies the minimum number of message bytes retained
+(includes payload only). When using Receiver-paced Persistence and you require that the
+source dictates the repository's <tt class="LITERAL">repository-size-threshold</tt>
+value, you must set this option greater than 0 (zero) but less than or equal to the
+repository's current <tt class="LITERAL">repository-size-threshold</tt> value. For the
+<tt class="LITERAL">disk</tt> or <tt class="LITERAL">reduced-fd</tt> repository type,
+this value configures the size of the memory cache. Using the default value of 0 (zero)
+implements the repository's value for this option.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16172" name="AEN16172"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR"
+name="SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR">4.29.28. <span
+class="lbm-option-name"><span class="PHRASE">ume_retention_intergroup_stability_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow when determining the stability of a message
+from an inter-group perspective. This has a direct impact on the release policy for the
+source in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16213" name="AEN16213"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN16232" name="AEN16232"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">any</code>, <code class="CONSTANT">any-group</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_ANY</code></td>
+<td>Message is considered stable once it is stable in any group. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">majority</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_MAJORITY</code></td>
+<td>Message is considered stable once it is stable in a majority of groups.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-groups</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message is considered stable once all groups have reached intra-group stability for
+the message.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message is considered stable once it is stable in all active groups. A group is
+considered active if it has at least a quorum of active or registered stores. Intergroup
+stability requires at least one stable group.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+name="SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR">4.29.29. <span
+class="lbm-option-name"><span class="PHRASE">ume_retention_intragroup_stability_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow when determining the stability of a message
+from an intra-group perspective. This has a direct impact on the release policy for the
+source in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16279" name="AEN16279"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN16298" name="AEN16298"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">quorum</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_QUORUM</code></td>
+<td>Message is considered stable within the group once a quorum (or majority) of the
+stores have acknowledged the message as stable. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-stores</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message is considered stable within the group once all stores have acknowledged the
+message as stable.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message is considered stable within the group once each registered store in that
+group has acknowledged the message as stable. Only stores registered with a source are
+considered "active".</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERETENTIONSIZELIMIT"
+name="SOURCEUMERETENTIONSIZELIMIT">4.29.30. <span class="lbm-option-name"><span
+class="PHRASE">ume_retention_size_limit (source)</span></span></a></h2>
+
+<p>The release policy regarding aggregate size limit before messages are forced to be
+released. If the total number of bytes retained for the source is less than this amount,
+they may be released depending on other retention settings. If the total number of bytes
+exceeds this amount, then the message is forced to be released and a log message
+generated. This setting is provided for compatibility. The <a
+href="latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZELIMIT">retransmit_retention_size_limit</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16339" name="AEN16339"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">25165824 (24
+MB)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERETENTIONSIZETHRESHOLD"
+name="SOURCEUMERETENTIONSIZETHRESHOLD">4.29.31. <span class="lbm-option-name"><span
+class="PHRASE">ume_retention_size_threshold (source)</span></span></a></h2>
+
+<p>The release policy regarding aggregate size threshold before messages are released. If
+the total number of bytes retained for the source is less than this amount, they will not
+be released. If the total number of bytes exceeds this amount, then the message may be
+released if no other release policy setting overrides the decision. A value of 0
+indicates there is no size threshold set. This setting is provided for compatibility. The
+<a
+href="latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZETHRESHOLD">retransmit_retention_size_threshold</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16377" name="AEN16377"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (no
+threshold)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMERETENTIONUNIQUECONFIRMATIONS"
+name="SOURCEUMERETENTIONUNIQUECONFIRMATIONS">4.29.32. <span class="lbm-option-name"><span
+class="PHRASE">ume_retention_unique_confirmations (source)</span></span></a></h2>
+
+<p>The release policy regarding the number of confirmations from different receivers
+required before the source can release a message. This option enhances, but does not
+supersede, message stability notification from the store(s). If the number of unique
+confirmations for a message is less than this amount, the message will not be released.
+If the number of unique confirmations for a message exceeds or equals this amount, then
+the message may be released if no other release policy setting overrides the decision. A
+value of 0 indicates there is no unique number of confirmations required for
+reclamation.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16414" name="AEN16414"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of confirmations</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (none
+required)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERETRANSMITREQUESTGENERATIONINTERVAL"
+name="RECEIVERUMERETRANSMITREQUESTGENERATIONINTERVAL">4.29.33. <span
+class="lbm-option-name"><span class="PHRASE">ume_retransmit_request_generation_interval
+(receiver)</span></span></a></h2>
+
+<p>The maximum interval between when a retransmission request is first sent and when it
+is given up on and loss is reported. This setting is provided for compatibility. The <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTGENERATIONINTERVAL">retransmit_request_generation_interval</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16455" name="AEN16455"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERETRANSMITREQUESTINTERVAL"
+name="RECEIVERUMERETRANSMITREQUESTINTERVAL">4.29.34. <span class="lbm-option-name"><span
+class="PHRASE">ume_retransmit_request_interval (receiver)</span></span></a></h2>
+
+<p>The interval between retransmission request messages to the persistent store or to the
+source. This setting is provided for compatibility. The <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTINTERVAL">retransmit_request_interval</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16496" name="AEN16496"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERETRANSMITREQUESTMAXIMUM"
+name="RECEIVERUMERETRANSMITREQUESTMAXIMUM">4.29.35. <span class="lbm-option-name"><span
+class="PHRASE">ume_retransmit_request_maximum (receiver)</span></span></a></h2>
+
+<p>The maximum number of messages to request back from the current latest message when
+late joining a topic or when registering with a <b class="APPLICATION">UMP</b> store. A
+value of 0 indicates no maximum. This setting is provided for compatibility. The <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM">retransmit_request_maximum</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16535" name="AEN16535"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMERETRANSMITREQUESTOUTSTANDINGMAXIMUM"
+name="RECEIVERUMERETRANSMITREQUESTOUTSTANDINGMAXIMUM">4.29.36. <span
+class="lbm-option-name"><span class="PHRASE">ume_retransmit_request_outstanding_maximum
+(receiver)</span></span></a></h2>
+
+<p>The maximum number of messages to request at a single time from the store or source. A
+value of 0 indicates no maximum. This setting is provided for compatibility. The <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTOUTSTANDINGMAXIMUM">retransmit_request_outstanding_maximum</a>
+setting should be used instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16573" name="AEN16573"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMESESSIONID" name="CONTEXTUMESESSIONID">4.29.37. <span
+class="lbm-option-name"><span class="PHRASE">ume_session_id
+(context)</span></span></a></h2>
+
+<p>Specifies the default Session ID to use for sources and receivers within a context. A
+value of 0 (zero) indicates no Session ID is to be set. See also <a
+href="../UME/designing-persistent-applications.html#SESSION-IDS" target="_top">Managing
+RegIDs with Session IDs.</a>. Valid formats for session IDs are as follows: A hexadecimal
+string with a maximum value of FFFFFFFFFFFFFFFE, prefixed with '0x'. An octal string with
+a maximum value of 1777777777777777777776 prefixed with '0'. A decimal string with a
+maximum value of 18446744073709551614. Prior to <b class="APPLICATION">LBM</b> 5.2.2, all
+<b class="APPLICATION">UME</b> session IDs were interpreted as hexadecimal, and did not
+accept the '0x' prefix. If upgrading from an earlier version to <b
+class="APPLICATION">LBM</b> 5.2.2 or later, prepend '0x' to the original setting to use
+the originally assigned session ID.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16614" name="AEN16614"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMESESSIONID" name="RECEIVERUMESESSIONID">4.29.38.
+<span class="lbm-option-name"><span class="PHRASE">ume_session_id
+(receiver)</span></span></a></h2>
+
+<p>Specifies the Session ID to use for a receiver. A value of 0 (zero) indicates the
+context ume_session_id will be used. See also <a
+href="../UME/designing-persistent-applications.html#SESSION-IDS" target="_top">Managing
+RegIDs with Session IDs.</a>. Valid formats for session IDs are as follows: A hexadecimal
+string with a maximum value of FFFFFFFFFFFFFFFE, prefixed with '0x'. An octal string with
+a maximum value of 1777777777777777777776 prefixed with '0'. A decimal string with a
+maximum value of 18446744073709551614. Prior to <b class="APPLICATION">LBM</b> 5.2.2, all
+<b class="APPLICATION">UME</b> session IDs were interpreted as hexadecimal, and did not
+accept the '0x' prefix. If upgrading from an earlier version to <b
+class="APPLICATION">LBM</b> 5.2.2 or later, prepend '0x' to the original setting to use
+the originally assigned session ID.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16655" name="AEN16655"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESESSIONID" name="SOURCEUMESESSIONID">4.29.39. <span
+class="lbm-option-name"><span class="PHRASE">ume_session_id
+(source)</span></span></a></h2>
+
+<p>Specifies the Session ID to use for a source. A value of 0 (zero) indicates the
+context ume_session_id will be used. See also <a
+href="../UME/designing-persistent-applications.html#SESSION-IDS" target="_top">Managing
+RegIDs with Session IDs.</a>. Valid formats for session IDs are as follows: A hexadecimal
+string with a maximum value of FFFFFFFFFFFFFFFE, prefixed with '0x'. An octal string with
+a maximum value of 1777777777777777777776 prefixed with '0'. A decimal string with a
+maximum value of 18446744073709551614. Prior to <b class="APPLICATION">LBM</b> 5.2.2, all
+<b class="APPLICATION">UME</b> session IDs were interpreted as hexadecimal, and did not
+accept the '0x' prefix. If upgrading from an earlier version to <b
+class="APPLICATION">LBM</b> 5.2.2 or later, prepend '0x' to the original setting to use
+the originally assigned session ID.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16696" name="AEN16696"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMESOURCELIVENESSTIMEOUT"
+name="CONTEXTUMESOURCELIVENESSTIMEOUT">4.29.40. <span class="lbm-option-name"><span
+class="PHRASE">ume_source_liveness_timeout (context)</span></span></a></h2>
+
+<p>The expected maximum interval between keepalive or delivery confirmation messages from
+a receiver. If neither are received within the interval, the source declares the receiver
+"dead".</p>
+
+<div class="INFORMALTABLE"><a id="AEN16736" name="AEN16736"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disable; do not track
+receivers)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMESTATELIFETIME"
+name="RECEIVERUMESTATELIFETIME">4.29.41. <span class="lbm-option-name"><span
+class="PHRASE">ume_state_lifetime (receiver)</span></span></a></h2>
+
+<p>Establishes the period of time from a receiver's last activity to the deletion of the
+receiver's state and cache by the store. You can also configure a <tt
+class="LITERAL">receiver-state-lifetime</tt> for the receiver's topic on the store. The
+store uses whichever is shorter. The default value of 0 (zero) disables this option. See
+also <a href="../UME/ume-fault-tolerance.html#PROXYSOURCES" target="_top">Proxy
+Sources</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16782" name="AEN16782"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTATELIFETIME" name="SOURCEUMESTATELIFETIME">4.29.42.
+<span class="lbm-option-name"><span class="PHRASE">ume_state_lifetime
+(source)</span></span></a></h2>
+
+<p>Establishes the period of time from a source's last activity to the deletion of the
+source's state and cache by the store, regardless of whether a proxy source has been
+created or not. You can also configure a <tt class="LITERAL">source-state-lifetime</tt>
+for the source's topic on the store. The store uses whichever is shorter. The default
+value of 0 (zero) disables this option. See also <a
+href="../UME/ume-fault-tolerance.html#PROXYSOURCES" target="_top">Proxy Sources</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16824" name="AEN16824"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTORE" name="SOURCEUMESTORE">4.29.43. <span
+class="lbm-option-name"><span class="PHRASE">ume_store (source)</span></span></a></h2>
+
+<p>Add a store specification to the list of stores specified for the source. Unlike most
+other <b class="APPLICATION">UMP</b> settings, every time this setting is called, it adds
+another store specification to the list and does NOT overwrite previous specifications.
+Each entry contains the IP address, TCP port, registration ID, and group index for the
+store. For the configuration file as well as string versions of setting this option, the
+string value is formatted as "IP:port:RegID:GroupIDX" where IP is the stores IP address,
+port is the TCP port for the store, RegID is the registration ID that the source desires
+to use, and GroupIDX is the group index that the store belongs to. The RegID and GroupIDX
+pieces may be left off the string if desired. If so, then the value of 0 is assumed for
+them. Because each entry adds a new store specification and does not overwrite previous
+values, an entry or string with the IP address of 0.0.0.0 and TCP port of 0 will cause
+all previous store specifications to be removed. A single store specification means the
+source will use persistence. If no stores are specified, then persistence will not be
+provided for the source.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16862" name="AEN16862"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_store_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTOREACTIVITYTIMEOUT"
+name="SOURCEUMESTOREACTIVITYTIMEOUT">4.29.44. <span class="lbm-option-name"><span
+class="PHRASE">ume_store_activity_timeout (source)</span></span></a></h2>
+
+<p>The timeout value used to indicate when a store is unresponsive. The store must not be
+active within this interval to be considered unresponsive. This value must be much larger
+than the check interval.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16893" name="AEN16893"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">3000 (3
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTOREBEHAVIOR" name="SOURCEUMESTOREBEHAVIOR">4.29.45.
+<span class="lbm-option-name"><span class="PHRASE">ume_store_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow for handling store failures.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16930" name="AEN16930"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN16949" name="AEN16949"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">rr</code>, <code class="CONSTANT">round-robin</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STORE_BEHAVIOR_RR</code></td>
+<td>The source will use a single store at a time and when a store is unresponsive due to
+failure or disconnect, the next store in the list will be used. This will continue in a
+round-robin fashion until a store is found that is available. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">qc</code>, <code class="CONSTANT">quorum-consensus</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UME_STORE_BEHAVIOR_QC</code></td>
+<td>The source will use multiple stores at the same time based on store and store group
+configuration.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTORECHECKINTERVAL"
+name="SOURCEUMESTORECHECKINTERVAL">4.29.46. <span class="lbm-option-name"><span
+class="PHRASE">ume_store_check_interval (source)</span></span></a></h2>
+
+<p>The interval between activity checks of the current store.</p>
+
+<div class="INFORMALTABLE"><a id="AEN16987" name="AEN16987"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTOREGROUP" name="SOURCEUMESTOREGROUP">4.29.47. <span
+class="lbm-option-name"><span class="PHRASE">ume_store_group
+(source)</span></span></a></h2>
+
+<p>Add a store group specification to the list of store groups specified for the source.
+Unlike other <b class="APPLICATION">UMP</b> settings, every time this setting is called,
+it adds another store group specification to the list and does NOT overwrite previous
+specifications. Each entry contains the group index and group size for the group. For the
+configuration file as well as string versions of setting this option, the string value is
+formatted as "GroupIDX:GroupSZ" where GroupIDX is the index of the group and GroupSZ is
+the size of the group. Because each entry adds a new store specification and does not
+overwrite previous values, an entry or string with the group index of 0 and group size of
+0 will cause all previous store group specifications to be removed.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17025" name="AEN17025"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_store_group_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMESTORENAME" name="SOURCEUMESTORENAME">4.29.48. <span
+class="lbm-option-name"><span class="PHRASE">ume_store_name
+(source)</span></span></a></h2>
+
+<p>Add a store specification to the list of stores specified for the source. Unlike other
+<b class="APPLICATION">UMP</b> settings, every time this setting is called, it adds
+another store specification to the list and does NOT overwrite previous specifications.
+Each entry contains the store name, registration ID, and group index for the store. For
+the configuration file as well as string versions of setting this option, the string
+value is formatted as "name:RegID:GroupIDX" where <tt class="LITERAL">name</tt> is the
+name of the store configured with the store attribute, <tt
+class="LITERAL">context-name</tt> in the <tt class="LITERAL">umestored</tt> XML
+configuration file, RegID is the registration ID that the source desires to use, and
+GroupIDX is the group index that the store belongs to. The RegID and GroupIDX pieces may
+be left off the string if desired. If so, then the value of 0 is assumed for them. Store
+names are restricted to 128 characters in length, and may contain only alphanumeric
+characters, hyphens, and underscores.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17057" name="AEN17057"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ume_store_name_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEUSEACKBATCHING"
+name="RECEIVERUMEUSEACKBATCHING">4.29.49. <span class="lbm-option-name"><span
+class="PHRASE">ume_use_ack_batching (receiver)</span></span></a></h2>
+
+<p>Specifies whether or not <b class="APPLICATION">UMP</b> allows the batching of
+consumption acknowledgments sent to the store(s). If enabled, <b
+class="APPLICATION">UMP</b> checks for contiguous sequence numbered messages at the <a
+href="ultramessagingpersistenceoptions.html#CONTEXTUMEACKBATCHINGINTERVAL">ume_ack_batching_interval</a>.
+See also <a href="../UME/designing-persistent-applications.html#BATCHINGACKS"
+target="_top">Batching Acknowledgments</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17089" name="AEN17089"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0, UMP 5.0, UMQ 5.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17112" name="AEN17112"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates that <b class="APPLICATION">UMP</b> can acknowledge the consumption of a
+batch of messages.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates that <b class="APPLICATION">UMP</b> acknowledges the consumption of
+individual messages by the receiver. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEUSELATEJOIN" name="RECEIVERUMEUSELATEJOIN">4.29.50.
+<span class="lbm-option-name"><span class="PHRASE">ume_use_late_join
+(receiver)</span></span></a></h2>
+
+<p>Flag indicating if the receiver should participate in late join operation or not. This
+is a compatibility setting. The <a
+href="latejoinoptions.html#RECEIVERUSELATEJOIN">use_late_join</a> setting should be used
+instead.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17140" name="AEN17140"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17159" name="AEN17159"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The receiver will participate in using late join if requested to by the source. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The receiver will not participate in using late join even if requested to by the
+source.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMEUSESTORE" name="RECEIVERUMEUSESTORE">4.29.51. <span
+class="lbm-option-name"><span class="PHRASE">ume_use_store
+(receiver)</span></span></a></h2>
+
+<p>Flag indicating if the receiver should participate in using a persistent store or
+not.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17184" name="AEN17184"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17203" name="AEN17203"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The receiver will participate in using a persistent store if requested to by the
+source. <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The receiver will not participate in using a persistent store even if requested to by
+the source.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMEUSERRECEIVERREGISTRATIONID"
+name="CONTEXTUMEUSERRECEIVERREGISTRATIONID">4.29.52. <span class="lbm-option-name"><span
+class="PHRASE">ume_user_receiver_registration_id (context)</span></span></a></h2>
+
+<p>32-bit value that is used as a user set identifier to be included as the receiver
+registration ID in acknowledgements send by any receivers in the context to sources as
+confirmed delivery notifications. The value is not interpreted by <b
+class="APPLICATION">UMP</b> in any way and has no relation to registration IDs used by
+the receiver. A value of 0 indicates no user set value is in use and should not be sent
+with acknowledgements</p>
+
+<div class="INFORMALTABLE"><a id="AEN17229" name="AEN17229"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>identifier</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (no user set value in
+use)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMEWRITEDELAY" name="SOURCEUMEWRITEDELAY">4.29.53. <span
+class="lbm-option-name"><span class="PHRASE">ume_write_delay
+(source)</span></span></a></h2>
+
+<p>For topics with a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">disk</tt>, specifies the delay in milliseconds before the repository
+persists a message to disk. When using Receiver-paced Persistence, you must set this
+option greater than 0 (zero) but less than or equal to the repository's <tt
+class="LITERAL">write-delay</tt> value.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17269" name="AEN17269"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint32_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMP 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="eventqueueoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ultramessagingqueuingoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Event Queue Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Ultra Messaging Queuing Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

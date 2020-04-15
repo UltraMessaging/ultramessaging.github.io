@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>The Ultra Messaging Guide for Persistence and Queuing</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="NEXT" title="Concepts" href="umeconcepts.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="ARTICLE" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="ARTICLE">
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2">The <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Guide for Persistence and
+Queuing</a></h1>
+
+<p class="COPYRIGHT"><a href="INFACOPYRIGHT.html">Copyright</a> &copy; 2007 - 2014
+Informatica</p>
+
+<p class="PUBDATE">March 2014<br />
+</p>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="ume.html">Single HTML</a> / <a href="ume.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="index.html#INTRODUCTION">Introduction</a></dt>
+
+<dt>2. <a href="umeconcepts.html">Concepts</a></dt>
+
+<dt>3. <a href="architectures.html">Architectures</a></dt>
+
+<dt>4. <a href="ume-ops-operational-view.html">Operational View</a></dt>
+
+<dt>5. <a href="tutorial.html">Enabling Persistence</a></dt>
+
+<dt>6. <a href="demonstrating-ume-persistence.html">Demonstrating Persistence</a></dt>
+
+<dt>7. <a href="designing-persistent-applications.html">Designing Persistence
+Applications</a></dt>
+
+<dt>8. <a href="enabling-queuing.html">Enabling Queuing</a></dt>
+
+<dt>9. <a href="designing-queuing-applications.html">Designing Queuing
+Applications</a></dt>
+
+<dt>10. <a href="ume-fault-tolerance.html">Fault Tolerance</a></dt>
+
+<dt>11. <a href="umestored-manpage.html">Man Pages</a></dt>
+
+<dt>12. <a href="umestored-config.html">Configuration Reference for Umestored</a></dt>
+
+<dt>13. <a href="ume-store-web-monitor.html"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Web Monitor</a></dt>
+</dl>
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="INTRODUCTION" name="INTRODUCTION">1. Introduction</a></h1>
+
+<p>In addition to high performance streaming, <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> also provides persistence and low
+latency queuing by implementing a configurable daemon that runs persistent stores ,
+queues or both .</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTRO-PERSISTENCE" name="INTRO-PERSISTENCE">1.1.
+Persistence</a></h2>
+
+<p>A system implementing <b class="APPLICATION">UMP</b> persistence comprises any number
+of sources, receivers, and persistent stores. <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b>'s unique design provides <b
+class="APPLICATION"><span class="TRADEMARK">Parallel Persistence</span>&reg;</b>, which
+refers to the ability of a persistent store or stores to run independently of sources and
+receivers and in parallel with messaging. The persistence store does not interfere with
+message delivery to receiving applications. <b class="APPLICATION"><span
+class="TRADEMARK">Parallel Persistence</span></b> adds several key features missing in
+other messaging solutions.</p>
+
+<ul>
+<li>
+<p>A fault recovery ability</p>
+</li>
+
+<li>
+<p>The capacity to continue operation during specific types of failures</p>
+</li>
+</ul>
+
+<p>Fault recovery refers to the system's ability to recover from a failure of any system
+component (source, receiver or store). Under certain circumstances, <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> can even recover
+from multiple failures and multiple cascading failures.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTRO-QUEUING" name="INTRO-QUEUING">1.2. Queuing</a></h2>
+
+<p>In addition to the capabilities of <b class="APPLICATION">UMP</b> and UMS, <b
+class="APPLICATION">UMQ</b> supports brokered and brokerless queuing semantics.</p>
+
+<p>Key features of <b class="APPLICATION">UMQ</b> include the following:</p>
+
+<ul>
+<li>
+<p>Once and only once (OAOO) delivery for applications such as clearing and settlement
+that require each trade be processed only once.</p>
+</li>
+
+<li>
+<p>Application Sets for publishing into multiple logical queues with a single send,
+making it easy to onboard new applications that require copies of the same data.</p>
+</li>
+
+<li>
+<p>Ultra Load Balancing (ULB) for brokerless non-persistent queuing semantics, with
+special considerations for message assignment, receiver pacing, and multi-source
+fairness.</p>
+</li>
+
+<li>
+<p>Java Messaging Service (JMS) support. See the Ultra Messaging JMS Guide for more
+details.</p>
+</li>
+</ul>
+
+<p>Queuing semantics are supported only within the same Topic Resolution Domain (TRD),
+without Gateways or Dynamic Routers in the data path.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTRO-UMPUMQ" name="INTRO-UMPUMQ">1.3. Semantic
+Responsibilities</a></h2>
+
+<p>Brokered and brokerless queuing semantics are orthogonal and independent from the
+reliable non-persistent and durable persistent streaming semantics provided by UMS and
+UMP. Differences outlined in the following list:</p>
+
+<ul>
+<li>
+<p>Reliable non-persistent streaming (UMS) provides in-order message delivery and
+gap/loss notification, while applications are running, without load-balanced message
+delivery.</p>
+</li>
+
+<li>
+<p>Durable persistent streaming (UMP) provides in-order message delivery and gap/loss
+notification, while applications are running and across restarts, without load-balanced
+message delivery.</p>
+</li>
+
+<li>
+<p>Brokered queuing (UMQ) provides load-balanced message delivery, while applications are
+running and across restarts, without message ordering and without gap/loss
+notification.</p>
+</li>
+
+<li>
+<p>Brokerless queuing (UMQ) provides load-balanced message delivery, while applications
+are running, without message ordering and without gap/loss notification.</p>
+</li>
+</ul>
+
+<p>Regardless of the messaging semantic chosen, applications assume the following
+responsibilities to the extent applicable for their use case:</p>
+
+<ul>
+<li>
+<p>Application resubmission (re-sending) of in-flight messages after source application
+restart</p>
+</li>
+
+<li>
+<p>Handling potentially duplicate messages from messaging layer or application
+resubmission</p>
+</li>
+
+<li>
+<p>Marking application resubmitted messages as such if needed to support duplicate
+handling</p>
+</li>
+
+<li>
+<p>Detecting stale data, for example, by using synchronized timestamps</p>
+</li>
+
+<li>
+<p>Source and receiver application failover and state reconstruction</p>
+</li>
+</ul>
+
+<p>Queuing is recommended for cases where load-balanced message delivery is required and
+out-of-order message delivery and message loss without notification are acceptable, i.e.,
+message delivery order and message loss are either unimportant or are handled by
+applications (inclusive of application-level sequencing and gap detection, or
+equivalent). For example, queuing is well-suited for load-balanced request/response with
+bidirectional topics and application-level retries.</p>
+
+<p>When designing queuing applications, it is important to consider whether message
+processing is stateless (any receiver can process any message) or requires local state
+(only certain receivers can process certain messages). If local state is required, the
+recovery strategy for receiver hardware failure must consider how to rebuild that local
+state. Receivers with local state may be better served by durable persistent streaming
+rather than queuing.</p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top"><a href="umeconcepts.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Concepts</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

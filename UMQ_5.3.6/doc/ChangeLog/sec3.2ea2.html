@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.2ea2 2007-07-19</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.2 2007-08-27" href="sec3.2.html" />
+<link rel="NEXT" title="Release LBM 3.2ea1 2007-06-15 " href="sec3.2ea1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec3.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec3.2ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC3.2EA2" name="SEC3.2EA2">70. Release LBM 3.2ea2
+2007-07-19</a></h1>
+
+<ul>
+<li>
+<p>A number of internal changes to the <b class="APPLICATION">LBM</b> Gateway to better
+handle synchronization between the inbound and outbound sides, as well as reduce memory
+utilization.</p>
+</li>
+
+<li>
+<p>Changes to Windows completion ports to improve send performance. Also fixes potential
+heap corruption when receivers are deleted.</p>
+</li>
+
+<li>
+<p>Added config options <code
+class="PARAMETER">transport_lbtrm_source_socket_buffer</code> and <code
+class="PARAMETER">transport_lbtru_source_socket_buffer</code>. Set default values to
+65536 or OS default, whichever is larger. This has the effect of improving Windows send
+performance.</p>
+</li>
+
+<li>
+<p>Added Windows support to the Gateway.</p>
+</li>
+
+<li>
+<p>Corrected the implementation of -q with Java and C#.</p>
+</li>
+
+<li>
+<p>Corrected the statistics omission from usage message on .NET (lbm).</p>
+</li>
+
+<li>
+<p>Improved Completion Ports (send &#38; receive).</p>
+</li>
+
+<li>
+<p>Added a -s (statistics) option to the Java version of umercv.</p>
+</li>
+
+<li>
+<p>Added Gateway to Solaris binary packaging.</p>
+</li>
+
+<li>
+<p>Fixed cleanup of callback token at JNI.</p>
+</li>
+
+<li>
+<p>Fixed the condition that crashed LBM, occurring when the same topic is allocated on
+separate threads and one thread creates and deletes its receiver before the second thread
+creates its receiver.</p>
+</li>
+
+<li>
+<p>Fixed condition where <b class="APPLICATION">LBM</b> allows corruption if more than
+1024 FD's registered.</p>
+</li>
+
+<li>
+<p>Fixed condition where Gateway prints "topic mgmt packet invalid version" and ceases to
+function.</p>
+</li>
+
+<li>
+<p>Fixed condition where Gateway dumps core in mixed-receiver direct scenario.</p>
+</li>
+
+<li>
+<p>Fixed failed assertion [sock-&#62;rcv_maxlen==maxlen] in Gateway.</p>
+</li>
+
+<li>
+<p>Fixed problem so that Gateway explicitly sets the context operational_mode.</p>
+</li>
+
+<li>
+<p>Fixed a memory leak in the Gateway that occurred when large numbers of receivers were
+present.</p>
+</li>
+
+<li>
+<p>Fixed numerous problems in the Gateway that occurred when large numbers of receivers
+were present.</p>
+</li>
+
+<li>
+<p>Fixed an incorrect error message that could cause the Gateway to crash if debugging
+was on.</p>
+</li>
+
+<li>
+<p>Provided a fix that prevents spurious messages sent to an <b
+class="APPLICATION">LBM</b> port from throwing <b class="APPLICATION">LBM</b> into an
+infinite loop.</p>
+</li>
+</ul>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec3.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec3.2ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.2 2007-08-27</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.2ea1 2007-06-15</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

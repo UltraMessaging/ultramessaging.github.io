@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>lbmrd</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="UP" title="Manpage for lbmrd" href="lbmrd-manpage.html" />
+<link rel="PREVIOUS" title="Manpage for lbmrd" href="lbmrd-manpage.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="REFENTRY" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Concepts</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lbmrd-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom">&nbsp;</td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<h1><a id="LBMRD" name="LBMRD"></a>lbmrd</h1>
+
+<div class="REFNAMEDIV"><a id="AEN3571" name="AEN3571"></a>
+<h2>Name</h2>
+
+lbmrd&nbsp;--&nbsp;UMS Resolver Daemon, for unicast topic resolution</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN3574" name="AEN3574"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">lbmrd</tt> [<code class="OPTION">-a</code>] [<code
+class="OPTION">--activity</code>] [<code class="OPTION">-d</code>] [<code
+class="OPTION">--dump-dtd</code>] [<code class="OPTION">-h</code>] [<code
+class="OPTION">--help</code>] [<code class="OPTION">-i</code>] [<code
+class="OPTION">--interface</code>] [<code class="OPTION">-L</code>] [<code
+class="OPTION">--logfile</code>] [<code class="OPTION">-p</code>] [<code
+class="OPTION">--port</code>] [<code class="OPTION">-t</code>] [<code
+class="OPTION">--ttl</code>] [<code class="OPTION">-v</code>] [<code
+class="OPTION">--validate</code>] <tt class="REPLACEABLE"><i>config-file</i></tt></p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3611" name="AEN3611"></a>
+<h2>Description</h2>
+
+<p>Resolver services for <b class="APPLICATION">UM</b> messaging products are provided by
+<tt class="COMMAND">lbmrd</tt>.</p>
+
+<p>The <code class="OPTION">-i</code> and <code class="OPTION">-p</code> (or <code
+class="OPTION">--interface</code> and <code class="OPTION">--port</code>) options
+identify the network interface IP address and port that <tt class="COMMAND">lbmrd</tt>
+opens to listen for unicast topic resolution traffic. The defaults are <tt
+class="LITERAL">INADDR_ANY</tt> and <tt class="LITERAL">15380</tt>, respectively.</p>
+
+<p>The <code class="OPTION">-a</code> and <code class="OPTION">-t</code> (or <code
+class="OPTION">--activity</code> and <code class="OPTION">--ttl</code>) options interact
+to detect and remove "dead" clients, i.e., UMS/UME client applications that are in the
+<tt class="COMMAND">lbmrd</tt> active client list, but have stopped sending topic
+resolution queries, advertisements, or keepalives, usually due to early termination or
+looping. These are described in detail below.</p>
+
+<p>Option <code class="OPTION">-t</code> describes the length of time (in seconds),
+during which no messages have been received from a given client, that will cause that
+client to be marked "dead" and removed from the active client list. <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> recommends a
+value at least 5 seconds longer than the longest network outage you wish to tolerate.</p>
+
+<p>Option <code class="OPTION">-a</code> describes a repeating time interval (in
+milliseconds) after which <tt class="COMMAND">lbmrd</tt> checks for these "dead" clients.
+<b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> recommends a
+value not larger than <code class="OPTION">-t * 1000</code>.</p>
+
+<p>NOTE: Even clients that send no topic resolution advertisements or queries will still
+send keepalive messages to <tt class="COMMAND">lbmrd</tt> every 5 seconds. This value is
+hard-coded and not configurable.</p>
+
+<p>The output will be written to a log file if either -L or --logfile is supplied.</p>
+
+<p>The DTD used to validate a configuration file will be dumped to standard output with
+the <code class="OPTION">-d</code> or <code class="OPTION">--dump-dtd</code> option.
+After dumping the DTD, <tt class="COMMAND">lbmrd</tt> exits immediately.</p>
+
+<p>The configuration file will be validated against the DTD if either the <code
+class="OPTION">-v</code> or <code class="OPTION">--validate</code> options are given.
+After attempting validation, <tt class="COMMAND">lbmrd</tt> exits immediately. The exit
+status will be 0 for a configuration file validated by the DTD and non-zero
+otherwise.</p>
+
+<p>Command line help is available with <code class="OPTION">-h</code> or <code
+class="OPTION">--help</code>.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3654" name="AEN3654"></a>
+<h2>Exit Status</h2>
+
+<p>The exit status from <tt class="COMMAND">lbmrd</tt> is 0 for success and some non-zero
+value for failure.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lbmrd-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Manpage for lbmrd</td>
+<td width="34%" align="center" valign="top"><a href="lbmrd-manpage.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.5 / UME 2.2 - July 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.5.1 / UME 2.2.1 - July 2009"
+href="seclbm3.5.1-ume2.2.1.html" />
+<link rel="NEXT" title="Release LBM 3.6.ea1 / UME 3.0ea1 - July 2009"
+href="seclbm3.6ea1-ume3.0ea1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.5.1-ume2.2.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.6ea1-ume3.0ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.5-UME2.2" name="SECLBM3.5-UME2.2">46. Release LBM 3.5
+/ UME 2.2 - July 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.5" name="LBM3.5">46.1. LBM 3.5</a></h2>
+
+<p>See also <a href="seclbm3.5ea3.html"><i>Release LBM 3.5.ea3 / UME 2.2ea1 - May
+2009</i></a> and <a href="seclbm3.5ea2.html"><i>Release LBM 3.5.ea2 - April
+2009</i></a>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5-FIXES" name="LBM3.5-FIXES">46.1.1. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem with Java and .NET <tt class="LITERAL">lbmmon</tt> example
+applications that resulted in the incorrect display of the source application's process
+and object IDs.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Java and .NET <tt class="LITERAL">lbmmsrc</tt> example
+applications that caused the following exception when printing IPC statistics: <tt
+class="LITERAL">Unhandled Exception: com.latencybusters.lbm.LBMEInvalException: value at
+num must be large enough to handle all transport sessions.</tt> This exception was caused
+by an incorrect calculation of the number of transport sessions.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now ignores any spaces at the end of numeric attributes
+in <b class="APPLICATION">LBM</b> configuration files.</p>
+</li>
+
+<li>
+<p>Fixed an issue with the wire format for LBM messages where the explicit batching flags
+were not being correctly converted to network byte order. This resulted in the
+LBM_MSG_FLAG_START_BATCH and LBM_MSG_FLAG_END_BATCH flags not being set correctly if
+sending from a big-endian machine to a little-endian machine, or vice versa. LBM now
+correctly formats the field in question.</p>
+
+<p>Due to the change in the wire format, mixing <b class="APPLICATION">LBM</b> 3.5 with
+earlier versions results in incorrectly set batching flags in most cases. This does not
+impact the behavior of explicit batching on the source side, only the message flags on
+the receiver side. These flags provide information to the receiving application, and are
+not used in message delivery, so applications that do not currently use them can mix <b
+class="APPLICATION">LBM</b> versions without impact.</p>
+</li>
+
+<li>
+<p>Changed the way multiple LBT-IPC processes verify availability of the LBT-IPC
+transport during Topic Resolution. If two processes check the transport at nearly the
+same time, the second process will experience a 1 second delay. Multiple processes now
+verify serially.</p>
+</li>
+
+<li>
+<p>Fixed a problem with calling <tt class="LITERAL">lbm_src_flush()</tt> from multiple
+threads or using <tt class="LITERAL">lbm_src_send()</tt> in combination with <tt
+class="LITERAL">lbm_src_flush()</tt> from multiple threads. This problem produced the
+following assertion. WARNING: failed assertion [num&#62;0] at line 1382 in
+../../../../src/lib/lbm/lbmsock.c. With this correction, using <tt
+class="LITERAL">lbm_src_send()</tt> in combination with <tt
+class="LITERAL">lbm_src_flush()</tt> from multiple threads does not cause a problem.</p>
+</li>
+
+<li>
+<p>Corrected a problem with setting <tt class="LITERAL">*_interface</tt> options from
+within the <b class="APPLICATION">LBM</b> Configuration File specified by the environment
+variable LBM_DEFAULT_CONFIG_FILE. Setting <tt class="LITERAL">*_interface</tt> options in
+this manner no longer results in an error.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5-KNOWNISSUES" name="LBM3.5-KNOWNISSUES">46.1.2. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. 29West
+is investigating this issue.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.2" name="UME2.2">46.2. UME 2.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME2.2-FIXES" name="UME2.2-FIXES">46.2.1. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Java <b class="APPLICATION">UME</b> receiver applications must now call <tt
+class="LITERAL">LBMMessage.dispose()</tt> when the application is completely finished
+with the message. Previously, <b class="APPLICATION">UME</b> sent implicit ACKs
+immediately on return from the user's callback. If a Java <b class="APPLICATION">UME</b>
+receiver application uses implicit ACKs (the default), <b class="APPLICATION">UME</b>
+will not send any implicit ACKs unless the application calls <tt
+class="LITERAL">LBMMessage.dispose()</tt>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.5.1-ume2.2.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.6ea1-ume3.0ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.5.1 / UME 2.2.1 - July 2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.6.ea1 / UME 3.0ea1 - July
+2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.3.8 / UME 2.0.6 - October 2008</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.3.9 / UME 2.0.7 - December 2008"
+href="seclbm3.3.9-ume2.0.7.html" />
+<link rel="NEXT" title="Release LBM 3.3.7 / UME 2.0.5 - September 2008"
+href="seclbm3.3.7-ume2.0.5.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.3.9-ume2.0.7.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.3.7-ume2.0.5.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.3.8-UME2.0.6" name="SECLBM3.3.8-UME2.0.6">53. Release
+LBM 3.3.8 / UME 2.0.6 - October 2008</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.3.8" name="LBM3.3.8">53.1. LBM 3.3.8</a></h2>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Known Issue:</b> When using Event Queues with the Java API on
+Mac OS X kernel 9.4, core dumps have occurred. Mac OS X kernel versions prior to 9.4 have
+not produced this behavior. 29West is investigating this issue.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Feature Suspension:</b> String caching for the Java and .NET
+APIs has been temporarily disabled due to unstable operation. In addition, for the
+setSourceNotificationCallbacks in Java and .NET (LBMReceiverAttributes), LBM temporarily
+ignores the value returned from the source creation callback. Relevant calls to retrieve
+this object will return NULL. String caching and full setSourceNotificationCallbacks
+functionality will be re-enabled in a later release.</p>
+</li>
+
+<li>
+<p>Added the <code class="PARAMETER">Source_Paced</code> value to the <a
+href="../Config/transporttcpoperationoptions.html#SOURCETRANSPORTTCPMULTIPLERECEIVERBEHAVIOR"
+ target="doccontent"><code
+class="PARAMETER">transport_tcp_multiple_receiver_behavior</code></a> option. TCP senders
+can now send as fast as they can without regard to the speed of the receivers. This may
+cause lost messages.</p>
+</li>
+
+<li>
+<p>Fixed memory corruption problem in Java API which caused crashes during cleanup of
+transport sessions on 32-bit systems for receivers using LBM Event Queues.</p>
+</li>
+
+<li>
+<p>Corrected a fatal assertion ("map!=NULL") on an LBT-RU source caused when using Source
+Side Filtering (SSF) that resulted from deleting a receiver which had not completely
+connected to the corresponding source.</p>
+</li>
+
+<li>
+<p>Fixed a race condition in the Java API that occurred when a context is closed that
+allowed LBMTimers to be constructed without appropriate callbacks.</p>
+</li>
+
+<li>
+<p>Fixed a race condition in the .NET API with LBMContext.scheduleTimer() which could
+result in callbacks not being executed for very short duration timers because the timers
+would expire before their callbacks had been registered. Timer callbacks are now
+registered before the timer is actually scheduled.</p>
+</li>
+
+<li>
+<p>Fixed a race condition in the .NET API which could cause crashes or deadlocks when
+calling LBMContext.close().</p>
+</li>
+
+<li>
+<p>Fixed an issue in the .NET API caused by marshalling data between managed and native
+code. Data was being lost after being passed down to native code, which lead to deadlocks
+in very rare cases.</p>
+</li>
+
+<li>
+<p>Fixed a very small memory leak (~40 bytes) when deleting an LBM context on <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg;. A
+mutex used for MIM was not being freed.</p>
+</li>
+
+<li>
+<p>Reverted LBMTimer.cancel() method in Java API to take no arguments. An overload of the
+<tt class="LITERAL">cancel()</tt> method which took a boolean argument was inadvertently
+added in <b class="APPLICATION">LBM</b> 3.3.7 in place of the original method. This meant
+that users of 3.3.7 had to call <tt class="LITERAL">LBMTimer.cancel(false)</tt> instead
+of <tt class="LITERAL">LBMTimer.cancel()</tt>.</p>
+</li>
+
+<li>
+<p>Added <b class="APPLICATION">LBM</b> log warnings when connection disconnects or
+connection deletion occurs when data exists in the send queue.</p>
+</li>
+
+<li>
+<p>Added the new LBM Configuration option, <a
+href="../Config/transporttcpoperationoptions.html#RECEIVERTRANSPORTTCPACTIVITYMETHOD"
+target="doccontent"><code class="PARAMETER">transport_tcp_activity_method</code></a> to support
+the ability for receivers on TCP transports to use TCP keepalive support in the Operating
+System for determining transport session liveness.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the LBM Gateway running on <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> that prevented
+traffic from being sent across a filtering gateway.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Multicast Immediate Messaging (MIM) sends when the rate
+limiter is exceeded so that it no longer indefinitely blocks.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.0.6" name="UME2.0.6">53.2. UME 2.0.6</a></h2>
+
+<ul>
+<li>
+<p>No specific <b class="APPLICATION">UME</b> problems were discovered.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.3.9-ume2.0.7.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.3.7-ume2.0.5.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.3.9 / UME 2.0.7 - December
+2008</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.3.7 / UME 2.0.5 - September
+2008</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

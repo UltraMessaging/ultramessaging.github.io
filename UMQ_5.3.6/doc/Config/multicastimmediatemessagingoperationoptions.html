@@ -1,0 +1,833 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Multicast Immediate Messaging Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Multicast Immediate Messaging Reliability Options"
+href="multicastimmediatemessagingreliabilityoptions.html" />
+<link rel="NEXT" title="Late Join Options" href="latejoinoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="multicastimmediatemessagingreliabilityoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="latejoinoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MULTICASTIMMEDIATEMESSAGINGOPERATIONOPTIONS"
+name="MULTICASTIMMEDIATEMESSAGINGOPERATIONOPTIONS">4.19. Multicast Immediate Messaging
+Operation Options</a></h1>
+
+<p>For many MIM operation options, there is a corresponding LBT-RM operation option. For
+more information on how MIM operation options interact and for illustrations, please see
+the introduction to the <a href="transportlbt-rmoperationoptions.html">transport LBT-RM
+operation options</a> section.</p>
+
+<p>Note that the LBT-RM rate controller also governs MIM transmission rates. Hence there
+is no separate option for setting MIM transmission rate.</p>
+
+<p>See also <a href="../Design/lbm-features.html#MULTICAST-IMMEDIATE-MESSAGING"
+target="_top">Multicast Immediate Messaging</a> for more information about this
+feature.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTIMMEDIATEMESSAGERECEIVERFUNCTION"
+name="CONTEXTIMMEDIATEMESSAGERECEIVERFUNCTION">4.19.1. <span
+class="lbm-option-name"><span class="PHRASE">immediate_message_receiver_function
+(context)</span></span></a></h2>
+
+<p>Callback function (and associated event queue and client data pointer) called when a
+topic-less immediate message is received for which there is no receiver. A value of NULL
+for the callback prevents the callback from being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11341" name="AEN11341"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_context_rcv_immediate_msgs_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTIMMEDIATEMESSAGETOPICRECEIVERFUNCTION"
+name="CONTEXTIMMEDIATEMESSAGETOPICRECEIVERFUNCTION">4.19.2. <span
+class="lbm-option-name"><span class="PHRASE">immediate_message_topic_receiver_function
+(context)</span></span></a></h2>
+
+<p>Callback function (and associated event queue and client data pointer) that is called
+when an immediate message is received for a topic for which there is no receiver. A value
+of NULL for the callback prevents the callback from being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11381" name="AEN11381"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_context_rcv_immediate_msgs_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMACTIVITYTIMEOUT"
+name="CONTEXTMIMACTIVITYTIMEOUT">4.19.3. <span class="lbm-option-name"><span
+class="PHRASE">mim_activity_timeout (context)</span></span></a></h2>
+
+<p>For multicast immediate message receivers only. See <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT">transport_lbtrm_activity_timeout</a>
+for description. However, multicast immediate message channels do not deliver an EOS
+indication.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11422" name="AEN11422"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60000 (60
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMDELIVERYCONTROLACTIVITYCHECKINTERVAL"
+name="CONTEXTMIMDELIVERYCONTROLACTIVITYCHECKINTERVAL">4.19.4. <span
+class="lbm-option-name"><span class="PHRASE">mim_delivery_control_activity_check_interval
+(context)</span></span></a></h2>
+
+<p>The interval between activity checks of a Multicast Immediate Messaging delivery
+controller. Multiple MIM delivery controllers may exist to accommodate multiple messages
+from a single MIM sender received across more than one UM Gateway. These multiple
+delivery controllers allow for duplicate message detection.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11459" name="AEN11459"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5000 (5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMDELIVERYCONTROLACTIVITYTIMEOUT"
+name="CONTEXTMIMDELIVERYCONTROLACTIVITYTIMEOUT">4.19.5. <span
+class="lbm-option-name"><span class="PHRASE">mim_delivery_control_activity_timeout
+(context)</span></span></a></h2>
+
+<p>The maximum time that a Multicast Immediate Messaging delivery controller may be
+quiescent before it is deleted. MIM delivery controllers may be created to accommodate
+multiple messages from a single MIM sender received across more than one UM Gateway.
+These multiple delivery controllers allow for duplicate message detection.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11500" name="AEN11500"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60000 (60
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMDELIVERYCONTROLORDERTABLESZ"
+name="CONTEXTMIMDELIVERYCONTROLORDERTABLESZ">4.19.6. <span class="lbm-option-name"><span
+class="PHRASE">mim_delivery_control_order_tablesz (context)</span></span></a></h2>
+
+<p>For multicast immediate messages with ordered delivery, this controls the size of the
+hash table used to hold data.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11541" name="AEN11541"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>table entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1031</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMIMPLICITBATCHINGINTERVAL"
+name="CONTEXTMIMIMPLICITBATCHINGINTERVAL">4.19.7. <span class="lbm-option-name"><span
+class="PHRASE">mim_implicit_batching_interval (context)</span></span></a></h2>
+
+<p>The maximum timeout between when the first message of an implicitly batched immediate
+message is queued until the batch is sent. A message will not stay in the queue longer
+than this value before being sent in the worse case.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11581" name="AEN11581"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 (0.2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMIMPLICITBATCHINGMINIMUMLENGTH"
+name="CONTEXTMIMIMPLICITBATCHINGMINIMUMLENGTH">4.19.8. <span
+class="lbm-option-name"><span class="PHRASE">mim_implicit_batching_minimum_length
+(context)</span></span></a></h2>
+
+<p>The minimum length of an implicitly batched multicast immediate message. When the
+total length of the implicitly batched messages reaches or exceeds this value, the batch
+is sent.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11618" name="AEN11618"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">2048 (8192 for</span></span>
+<span class="lbm-option-default"><span class="PHRASE"><span
+class="TRADEMARK">Microsoft</span>&reg;</span></span><span
+class="lbm-option-default"><span class="PHRASE"></span></span><span
+class="lbm-option-default"><span class="PHRASE"><span
+class="TRADEMARK">Windows</span>&reg;</span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMORDEREDDELIVERY"
+name="CONTEXTMIMORDEREDDELIVERY">4.19.9. <span class="lbm-option-name"><span
+class="PHRASE">mim_ordered_delivery (context)</span></span></a></h2>
+
+<p>For multicast immediate messages only. Indicates whether or not the MIM source should
+have its data delivered in order. The default value also guarantees fragmentation and
+reassembly of large messages. Changing this option from the default value results in
+large messages being delivered as individual fragments of less than 8K each, requiring
+the application to reassemble them. See also <a
+href="../Design/architecture.html#ORDERED-DELIVERY" target="_top">Ordered Delivery</a>
+for more information about large message fragmentation and reassembly.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11662" name="AEN11662"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN11681" name="AEN11681"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates the source should have its data delivered in order. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The source should have its data delivered as soon as possible and may come in out of
+order.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMSMMAXIMUMINTERVAL"
+name="CONTEXTMIMSMMAXIMUMINTERVAL">4.19.10. <span class="lbm-option-name"><span
+class="PHRASE">mim_sm_maximum_interval (context)</span></span></a></h2>
+
+<p>For multicast immediate message senders only. See <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL">transport_lbtrm_sm_maximum_interval</a>
+for description.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11710" name="AEN11710"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMSMMINIMUMINTERVAL"
+name="CONTEXTMIMSMMINIMUMINTERVAL">4.19.11. <span class="lbm-option-name"><span
+class="PHRASE">mim_sm_minimum_interval (context)</span></span></a></h2>
+
+<p>For multicast immediate message senders only. See <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL">transport_lbtrm_sm_minimum_interval</a>
+for description.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11751" name="AEN11751"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 (0.2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMSQNWINDOWINCREMENT"
+name="CONTEXTMIMSQNWINDOWINCREMENT">4.19.12. <span class="lbm-option-name"><span
+class="PHRASE">mim_sqn_window_increment (context)</span></span></a></h2>
+
+<p>For multicast immediate message receivers only. Determines the increment by which the
+sequence number window is moved when detecting the receipt of duplicate multicast
+immediate messages. Must be a multiple of 8 and an even divisor of <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSQNWINDOWSIZE">mim_sqn_window_size</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11789" name="AEN11789"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8192</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2.8/UME 3.2.8/UMQ 2.1.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMSQNWINDOWSIZE"
+name="CONTEXTMIMSQNWINDOWSIZE">4.19.13. <span class="lbm-option-name"><span
+class="PHRASE">mim_sqn_window_size (context)</span></span></a></h2>
+
+<p>For multicast immediate message receivers only. Determines the window size used to
+detect the receipt of duplicate multicast immediate messages. Must be a multiple of
+8.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11830" name="AEN11830"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">16384</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2.8/UME 3.2.8/UMQ 2.1.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMSRCDELETIONTIMEOUT"
+name="CONTEXTMIMSRCDELETIONTIMEOUT">4.19.14. <span class="lbm-option-name"><span
+class="PHRASE">mim_src_deletion_timeout (context)</span></span></a></h2>
+
+<p>The timeout after a multicast immediate message is sent before the internal source is
+deleted and cleaned up.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11874" name="AEN11874"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">30000 (30
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMTGSZ" name="CONTEXTMIMTGSZ">4.19.15. <span
+class="lbm-option-name"><span class="PHRASE">mim_tgsz (context)</span></span></a></h2>
+
+<p>For multicast immediate message senders only. See <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMTGSZ">transport_lbtrm_tgsz</a>
+for description.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11912" name="AEN11912"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>packets</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">8</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMUNRECOVERABLELOSSFUNCTION"
+name="CONTEXTMIMUNRECOVERABLELOSSFUNCTION">4.19.16. <span class="lbm-option-name"><span
+class="PHRASE">mim_unrecoverable_loss_function (context)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a MIM
+receiver has unrecoverable loss. This callback is called directly in line and does not
+use the event queue. Therefore the callback function used should not block or it will
+block the context thread processing. A value of NULL for the callback turns off the
+callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN11952" name="AEN11952"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_mim_unrecloss_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a
+href="multicastimmediatemessagingreliabilityoptions.html" accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="latejoinoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Multicast Immediate Messaging Reliability
+Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Late Join Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

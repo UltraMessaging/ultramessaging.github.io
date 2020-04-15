@@ -1,0 +1,689 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport LBT-IPC Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-RU Operation Options"
+href="transportlbt-ruoperationoptions.html" />
+<link rel="NEXT" title="Transport LBT-RDMA Operation Options"
+href="transportlbt-rdmaoperationoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="transportlbt-ruoperationoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="transportlbt-rdmaoperationoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTLBT-IPCOPERATIONOPTIONS"
+name="TRANSPORTLBT-IPCOPERATIONOPTIONS">4.14. Transport LBT-IPC Operation
+Options</a></h1>
+
+<p>The following option descriptions and diagrams describe the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Configuration
+Options available for the LBT-IPC transport.</p>
+
+<div class="FIGURE"><a id="FIGLBT-IPC-SOURCE-SM-SCENARIO.TIMELINE.PNG"
+name="FIGLBT-IPC-SOURCE-SM-SCENARIO.TIMELINE.PNG"></a>
+<p><b>Figure 4-12. An LBT-IPC source goes away</b></p>
+
+<p><img src="reference/LBT_IPC_Source_SM_Scenario.Timeline.png" align="CENTER" /></p>
+</div>
+
+<p>The Source Session Message mechanism enables the receiver to detect when a source goes
+away and works similarly to LBT-RU. It operates independently of message writes and reads
+in the Shared Memory Area.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTIPCACTIVITYTIMEOUT"
+name="RECEIVERTRANSPORTLBTIPCACTIVITYTIMEOUT">4.14.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_activity_timeout (receiver)</span></span></a></h2>
+
+<p>The maximum period of inactivity (lack of session messages) from an IPC source before
+the <b class="APPLICATION">UM</b> delivers an EOS event for all topics using the
+transport session. Refer to <a href="../Design/lbm-objects.html#RECEIVER-OBJECT"
+target="_top">Receiver Configuration and Transport Sessions</a> and <a
+href="../Config/grouprelated.html" target="_top">Interrelated Configuration Options</a>
+for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9533" name="AEN9533"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60,000 (60
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCBEHAVIOR"
+name="SOURCETRANSPORTLBTIPCBEHAVIOR">4.14.2. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_behavior (source)</span></span></a></h2>
+
+<p>Desired flow control behavior when multiple receivers have joined the same LBT-IPC
+transport session. See also <a href="../Design/lbm-objects.html#TRANSPORT-LBT-IPC"
+target="_top">Transport LBT-IPC</a>. This option affects the transport session underlying
+the source rather than the source itself. The transport session uses the value from the
+first source created on the session and ignores subsequent sources. Refer to <a
+href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source Configuration and
+Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9576" name="AEN9576"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ushort_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN9599" name="AEN9599"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">source_paced</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_LBTIPC_BEHAVIOR_SOURCE_PACED</code> </td>
+<td>Your application writes as fast as it can to the LBT-IPC shared memory area. Slower
+receivers can experience loss. A source does not consider if any receivers have
+successfully read a message before it reclaims it. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">receiver_paced</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_LBTIPC_BEHAVIOR_RECEIVER_PACED</code> </td>
+<td>Your application writes to the LBT-IPC shared memory area only as fast as the slowest
+receiver consumes data. A source will not reclaim a message until all receivers have
+successfully read the message. This slows down all receiver on the LBT-IPC transport
+session.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTIPCDATAGRAMMAXSIZE"
+name="CONTEXTTRANSPORTLBTIPCDATAGRAMMAXSIZE">4.14.3. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated for a LBT-IPC transport session. The
+default value is 65535, the minimum is 500 bytes, and the maximum is 65535.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9632" name="AEN9632"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">65535</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCID"
+name="SOURCETRANSPORTLBTIPCID">4.14.4. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_id (source)</span></span></a></h2>
+
+<p>The preferred Transport ID for a specific source's LBT-IPC session. If 0, the UM
+context attempts to find one in the given Transport ID range of <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDLOW">transport_lbtipc_id_low</a>
+and <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDHIGH">transport_lbtipc_id_high</a>.
+Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9676" name="AEN9676"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use open
+port)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTIPCIDHIGH"
+name="CONTEXTTRANSPORTLBTIPCIDHIGH">4.14.5. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_id_high (context)</span></span></a></h2>
+
+<p>Highest transport ID of the range of available LBT-IPC Transport IDs.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9717" name="AEN9717"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20,005</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTIPCIDLOW"
+name="CONTEXTTRANSPORTLBTIPCIDLOW">4.14.6. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_id_low (context)</span></span></a></h2>
+
+<p>Lowest transport ID of the range of available LBT-IPC Transport IDs.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9754" name="AEN9754"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20,001</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCMAXIMUMRECEIVERSPERTRANSPORT"
+name="SOURCETRANSPORTLBTIPCMAXIMUMRECEIVERSPERTRANSPORT">4.14.7. <span
+class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_maximum_receivers_per_transport
+(source)</span></span></a></h2>
+
+<p>The maximum number of receiving contexts that can join an IPC transport session. Once
+a receiving context joins an IPC transport session, it can receive messages on multiple
+topics. Increasing this value increases the amount of shared memory allocated per
+transport session by a negligible amount.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9791" name="AEN9791"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ushort_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTIPCRECEIVEROPERATIONALMODE"
+name="CONTEXTTRANSPORTLBTIPCRECEIVEROPERATIONALMODE">4.14.8. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_receiver_operational_mode
+(context)</span></span></a></h2>
+
+<p>The mode in which <b class="APPLICATION">UM</b> operates to process LBT-IPC messages.
+See also <a href="../Design/architecture.html#EMBEDDED-MODE" target="_top">Embedded and
+Sequential Mode</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9830" name="AEN9830"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN9849" name="AEN9849"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">embedded</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_OP_EMBEDDED</code></td>
+<td><b class="APPLICATION">UM</b> spawns a thread to process received LBT-IPC messages.
+<span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">sequential</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_OP_SEQUENTIAL</code></td>
+<td>Your application must call <code
+class="FUNCTION">lbm_context_process_lbtipc_messages()</code> to process received LBT-IPC
+messages. If you also set the context's <a
+href="majoroptions.html#CONTEXTOPERATIONALMODE">operational_mode</a> option to
+sequential, your application must donate an additional thread to service <code
+class="FUNCTION">lbm_context_process_events()</code> calls. You can use sequential mode
+with the C API, but not with the Java API or .NET API. The Java and .NET APIs do not
+provide an equivalent <code class="FUNCTION">lbm_context_process_lbtipc_messages()</code>
+API for LBT-IPC.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTIPCRECEIVERTHREADBEHAVIOR"
+name="CONTEXTTRANSPORTLBTIPCRECEIVERTHREADBEHAVIOR">4.14.9. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_receiver_thread_behavior
+(context)</span></span></a></h2>
+
+<p>Receiver behavior for monitoring the signaling semaphore set by the IPC source when it
+writes new data to the shared memory area.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9887" name="AEN9887"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN9910" name="AEN9910"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">pend</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_IPC_RCV_THREAD_PEND</code></td>
+<td>Receiver waits (sleep) for notification from OS that IPC source has updated the
+signaling semaphore. This option is best when the IPC source frequently writes new data
+to the shared area. <span class="bold"><b class="EMPHASIS">Default for all.</b></span>
+</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">busy_wait</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_IPC_RCV_THREAD_BUSY_WAIT</code></td>
+<td>Provides the lowest latency as the receiver monopolizes the CPU core looking for an
+incremented semaphore. This option works best for infrequent or sporadic message delivery
+from the IPC source, but involves a CPU cost.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCSMINTERVAL"
+name="SOURCETRANSPORTLBTIPCSMINTERVAL">4.14.10. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_sm_interval (source)</span></span></a></h2>
+
+<p>Time period between sessions message sent from source to receivers. Refer to <a
+href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source Configuration and
+Transport Sessions</a> and <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9948" name="AEN9948"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10,000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTIPCTRANSMISSIONWINDOWSIZE"
+name="SOURCETRANSPORTLBTIPCTRANSMISSIONWINDOWSIZE">4.14.11. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_transmission_window_size
+(source)</span></span></a></h2>
+
+<p>Size of an LBT-IPC transport's shared memory area. This value may vary across
+platforms. The actual size of the shared memory area equals the value you specify for
+this option plus about 64 KB for header information. The minimum value for this option is
+65,536. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN9990" name="AEN9990"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">25165824 (24
+MB)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.5ea2/UME 2.2ea1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="transportlbt-ruoperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a
+href="transportlbt-rdmaoperationoptions.html" accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-RU Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport LBT-RDMA Operation Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="UM Gateway,tnwgd,WAN,WAN bandwidth,UM Gateway,log messages,tnwgd,log messages,XML configuration file,transport statistics,context statistics,event queue statistics,,UM Gateway,Web Monitor,tnwgd,Peer portal,Endpoint portal,topic resolution domain,Endpoint Send Statistics,Peer Send Statistics,UM Gateway,Process ID,Web Monitor,PID" />
+    <title>Monitoring the UM Gateway (tnwgd)</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html#3_5_10_1">Monitoring UM Statistics, Logs and Daemons</a> &gt; Monitoring the UM Gateway (tnwgd)</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_5_10_1">Monitoring the UM Gateway (tnwgd)</a></div>
+      <div class="Short_Description"><a name="3_5_10_2">The Ultra Messaging UM Gateway links disjoint topic resolution domains by forwarding multicast and/or unicast topic resolution traffic ensuring that receivers on the "other" side of the UM Gateway receive the topics to which they subscribe. See the </a><span class="Italic">UM Gateway Guide</span> for more details.</div>
+      <div class="Body"><a name="3_5_10_4_2">Understand UM Gateway (tnwgd) output traffic and WAN impacts - especially the use of rate limiters.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_4_2">WAN overrun is the number one source of UM Gateway problems</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_4_4">Test WAN link throughput to determine the real limits of the UM Gateway and environment</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_4_6">Make sure WAN bandwidth can cope with UM and any other traffic</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_10_4_6">Review and understand loss conditions unique to using a UM Gateway. Collaborate with your UM development team to ensure the correct tuning and configurations are applied for your messaging system. Also monitor latency over the UM Gateway with the UM sample application </a><span class="filepath">lbmpong</span> routinely and monitor output.</div>
+      <div class="Body"><a name="3_5_10_4_8">Monitor the following for UM Gateways.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_10_2">UM Gateway log files</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_10_4">Application events and log files</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_10_6">UM Gateway internal transport statistics</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_4_10_8">UM Gateway daemon web monitor</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_10_7_1">UM Gateway Log File</a></div>
+      <div class="Short_Description"><a name="3_5_10_7_2">You can monitor the UM Gateway log for changes detected by the UM Gateway. Like store logs, UM Gateway logs are appended, not overwritten. In general, you can ignore most Level 7 LBM_LOG_INFO messages. Critical and warning ( Level 2 MUL_LOG_CRIT and Level 5 MUL_LOG_WARNING) messages should always be investigated as soon as they occur.</a></div>
+      <div class="Body"><a name="3_5_10_7_4_2">The following are important UM Gateway</a> (tnwgd) log messages.</div>
+      <div class="Section_Title"><a name="3_5_10_7_4_4_2">Connection Failure Messages to Monitor</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_4_4_2">peer portal [name] failed to connect to peer at [IP:port] via [interface] [err]:</a></span> <span class="Italic">reason</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_4_4_4">peer portal [name] failed to accept connection (accept) [err]: </a></span> <span class="Italic">reason</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Section_Title"><a name="3_5_10_7_4_6_2">Lost Connection Messages to Monitor</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_6_4_2">peer portal [name] lost connection to peer at [IP:port] via [interface]</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_6_4_4">peer portal [name] connection destroyed due to socket failure</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_6_4_6">peer portal [name] detected dropped inbound connection (read) [err]:</a></span> <span class="Italic">reason</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_6_4_8">peer portal [name] detected dropped inbound connection (zero-len read)</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Section_Title"><a name="3_5_10_7_4_8_2">Endpoint Messages to Monitor</a></div>
+      <div class="Body"><a name="3_5_10_7_4_8_4">If a store is adjacent to the gateway and the gateway has been restarted, messages in the following form appear in the log file.</a></div>
+      <div class="Section"><span class="msgph"><a name="3_5_10_7_4_8-4">endpoint portal [name] has no forwarding entry for destination ctxinst [string], dropping msg (lbmc cntl ume)</a></span></div>
+      <div class="Body"><a name="3_5_10_7_4_8_7">These messages are normal and will stop when the gateway has established the forwarding information for the given context.</a></div>
+      <div class="Section_Title"><a name="3_5_10_7_4_10_2">Peer Messages to Monitor</a></div>
+      <div class="Body"><a name="3_5_10_7_4_10_4">Dual TCP:</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_10_6_2">peer portal [name] received connection from [IP:port]</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_10_6_4">peer portal [name] connected to [IP:port]</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_10_7_4_10_8">Single TCP:</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_10_10_2">Acceptor: peer portal [name] received connection from [IP:port]</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><span class="msgph"><a name="3_5_10_7_4_10_10_4">Initiator: peer portal [name] connected to [IP:port] </a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_10_9_1">UM Gateway Transport Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_10_9_2">Using the </a><span class="Keyword">&lt;monitor</span>&gt; element in a UM Gateway's XML configuration file, you can monitor the transport activity between the UM Gateway and its Topic Resolution Domain. The configuration also provides Context and Event Queue statistics. The statistics output identifies individual portals by name.</div>
+      <div class="Heading_2"><a name="3_5_10_11_1">UM Gateway Web Monitor</a></div>
+      <div class="Short_Description"><a name="3_5_10_11_2">The UM Gateway web monitor provides access to a UM Gateway's portal and general statistics and information. The UM Gateway XML configuration file contains the location of the gateway web monitor. The default port is 15305.</a></div>
+      <div class="Body"><a name="3_5_10_11_4_2">A UM Gateway Web Monitor provides a web page for each endpoint and peer portal configured for the UM Gateway. Peer portals connect UM Gateways and communicate only with other peer portals. Endpoint portals communicate with topic resolution domains. Each statistic display a value for units (messages or fragments) and bytes.</a></div>
+      <div class="Body"><a name="3_5_10_11_4_4">Important statistics you can monitor on the </a><span class="Keyword">tnwgd</span> Web Monitor include the following.</div>
+      <div class="Section_Title"><a name="3_5_10_11_4_6_2">Endpoint Send Statistics</a></div>
+      <div class="Body"><a name="3_5_10_11_4_6_4">Increases in the Endpoint Send Statistics values indicate errors and problems. A separate statistic appears for each of the three types of topic message: transport topic, immediate topic, immediate topicless.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_6_6_2">Fragments/bytes dropped due to blocking</a></span> - Indicates inability to send due to a transport's rate controller. Message rates on other portals probably exceed the rate controller limit on the monitored portal. The UM Gateway's XML configuration file may need to be adjusted.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_6_6_4">Fragments/bytes dropped due to error</a></span> - Indicates a possible network socket or memory failure.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_6_6_6">Fragments/Bytes Dropped Due To Fragment Size Error</a></span> - Indicates a configuration error which should be corrected. Maximum datagram size for all transports must be the same throughout the network. Nonzero indicates fragments were received which were larger than the egress portal's maximum datagram size.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Section_Title"><a name="3_5_10_11_4_8_2">Peer Send Statistics</a></div>
+      <div class="Body"><a name="3_5_10_11_4_8_4">Increases in the Peer Send Statistics values indicate errors and problems.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_8_6_2">Fragments/bytes (or messages/bytes) dropped (blocking)</a></span> - The result of attempting to send too much data via the peer link.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_8_6_4">Fragments/bytes (or messages/bytes) dropped (not operational)</a></span> - Peer connection not yet fully established. The UM Gateway peer could be down or starting up.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_8_6_6">Current/maximum data bytes enqueued</a></span> - Indicates how much data is currently queued and indicates the maximum amount of data queued because the incoming rate exceeded what the TCP connection could handle. Results in a latency penalty. Size of the queue is limited, so if the limit is exceeded, messages are dropped due to blocking.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">4. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="msgph"><a name="3_5_10_11_4_8_6_8">Messages or bytes Received / Fragments or bytes Forwarded</a></span> - Increasing counters indicate communicating peers. Stagnant counters indicate a lack of traffic flow. A sender could be down, receivers on the remote side could have no interest for the topics, the peer connection could have failed.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_10_13_1">Detecting UM Gateway Failures</a></div>
+      <div class="Short_Description"><a name="3_5_10_13_2">You can detect the loss of a UM Gateway by the following.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_13_4_2_2">Loss of the UM Gateway's Process ID (PID)</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_13_4_2_4">Loss of the UM Gateway's Web Monitor (you can poll the UM Gateway's Web Monitor to be sure it is accessible.)</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_13_4_2_6">Monitoring the performance of applications sending messages through the UM Gateway.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_2_outer" style="margin-left: 18pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_2_inner" style="width: 18pt; white-space: nowrap;">- </div>
+            </td>
+            <td width="100%">
+              <div class="List_2_inner"><a name="3_5_10_13_4_2_6_5_2">Are applications receiving the appropriate volume of data?</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_2_outer" style="margin-left: 18pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_2_inner" style="width: 18pt; white-space: nowrap;">- </div>
+            </td>
+            <td width="100%">
+              <div class="List_2_inner"><a name="3_5_10_13_4_2_6_5_4">Do you see a high number of retransmissions?</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_2_outer" style="margin-left: 18pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_2_inner" style="width: 18pt; white-space: nowrap;">- </div>
+            </td>
+            <td width="100%">
+              <div class="List_2_inner"><a name="3_5_10_13_4_2_6_5_6">Are applications generating the expected number of actions? Understanding the expected flow and actions is critical and requires collaboration with your UM development team.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_10_13_4_2_8">Monitoring network performance and behavior in and out of the UM Gateway. Understanding your network topology and the expected network traffic through the UM Gateway is critical and requires collaboration with your UM development team.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

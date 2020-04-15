@@ -1,0 +1,2371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Designing Persistence Applications</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Demonstrating Persistence"
+href="demonstrating-ume-persistence.html" />
+<link rel="NEXT" title="Enabling Queuing" href="enabling-queuing.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="demonstrating-ume-persistence.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="enabling-queuing.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DESIGNING-PERSISTENT-APPLICATIONS"
+name="DESIGNING-PERSISTENT-APPLICATIONS">7. Designing Persistence Applications</a></h1>
+
+<p>This section discusses considerations and methods for utilizing <b
+class="APPLICATION">UMP</b> persistence in your applications.</p>
+
+<ul>
+<li>
+<p><a
+href="designing-persistent-applications.html#PIECES-OF-PERSISTENT-SOLUTION"><i>Pieces of
+a Persistence Solution</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#FAULT-RECOVERY"><i>Fault
+Recovery</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PIECES-OF-PERSISTENT-SOLUTION"
+name="PIECES-OF-PERSISTENT-SOLUTION">7.1. Pieces of a Persistence Solution</a></h2>
+
+<p>In <b class="APPLICATION">UMP</b> , a persistent system is composed of <b
+class="APPLICATION">sources</b>, <b class="APPLICATION">receivers</b>, and <b
+class="APPLICATION">stores</b> managed by one or more applications. Sources and receivers
+are the endpoints of communication and the store(s) provide fault recovery and
+persistence of state information. Your application can leverage <b
+class="APPLICATION">UMP</b> 's flexible methods of persistence to add an unprecedented
+level of fault tolerance. With this flexibility your applications assume new
+responsibilities not normally required in other persistent messaging systems. This
+section identifies the important considerations for your messaging applications when
+implementing the following <b class="APPLICATION">UMP</b> features.</p>
+
+<ul>
+<li>
+<p><a
+href="designing-persistent-applications.html#REGISTRATION-IDENTIFIERS"><i>Registration
+Identifiers</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#UME-SOURCES"><i>UMP
+Sources</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#UME-RECEIVERS"><i>UMP
+Receivers</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#UME-STORES"><i>UMP Stores</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="REGISTRATION-IDENTIFIERS"
+name="REGISTRATION-IDENTIFIERS">7.1.1. Registration Identifiers</a></h3>
+
+<p>As mentioned in <a href="umeconcepts.html#UMECONCEPTS-REGID"><i>Registration
+Identifier</i></a> and <a href="tutorial.html#TUTORIAL-ADDINGFAULTRECOVERY"><i>Adding
+Fault Recovery with Registration IDs</i></a>, stores use RegIDs to identify sources and
+receivers. <b class="APPLICATION">UMP</b> offers three main methods for managing
+RegIDs.</p>
+
+<ul>
+<li>
+<p>Your applications assign static RegIDs and ensure that the same RegID is not assigned
+to multiple sources and/or receivers. See <a
+href="designing-persistent-applications.html#USE-STATIC-REGIDS"><i>Use Static
+RegIDs</i></a>.</p>
+</li>
+
+<li>
+<p>You can allow <b class="APPLICATION">UMP</b> stores to assign RegIDs and then save the
+assigned RegIDs. See <a
+href="designing-persistent-applications.html#SAVE-ASSIGNED-REGIDS"><i>Save Assigned
+RegIDs</i></a></p>
+</li>
+
+<li>
+<p>Use Session IDs to enable the <b class="APPLICATION">UMP</b> store to both assign and
+manage RegIDs. See <a
+href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with Session
+IDs</i></a></p>
+</li>
+</ul>
+
+<p>Your applications can manage RegIDs for the lifetime of a source or receiver as long
+as multiple applications do not reuse RegIDs simultaneously on the same store. RegIDs
+only need to be unique on the same store and may be reused between stores as desired. You
+can use a static mapping of RegIDs to applications or use some simple service to assign
+them.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="USE-STATIC-REGIDS" name="USE-STATIC-REGIDS">7.1.1.1. Use
+Static RegIDs</a></h4>
+
+<p>The simplest method uses static RegIDs for individual applications. This method works
+best if:</p>
+
+<ul>
+<li>
+<p>Applications use separate stores</p>
+</li>
+
+<li>
+<p>Multiple instances of an application also use separate stores</p>
+</li>
+</ul>
+
+<p>In the latter case, the same static source RegID can be used in every instance of the
+application because receivers will identify every Store/Source RegID tuple as unique.</p>
+
+<p>The following source code examples assign a static RegID to a source by adding the
+RegID, <tt class="LITERAL">1000</tt>, to the <tt class="LITERAL">ume_store</tt>
+attribute. (See also <a href="ume-example-src-2.c"
+target="doccontent">ume-example-src-2.c</a>.)</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+lbm_src_topic_attr_t * sattr;
+
+if (lbm_src_topic_attr_create(&amp;sattr) == LBM_FAILURE) {
+        fprintf(stderr, "lbm_src_topic_attr_create: %s\n", lbm_errmsg());
+        exit(1);
+}
+if (lbm_src_topic_attr_str_setopt(sattr, "ume_store", "127.0.0.1:14567:1000")
+== LBM_FAILURE) {
+        fprintf(stderr, "lbm_src_topic_attr_str_setopt: %s\n", lbm_errmsg());
+        exit(1);
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceAttributes sattr = null;
+try {
+sattr = new LBMSourceAttributes();
+sattr.setValue("ume_store", "127.0.0.1:14567:1000");
+}
+catch (LBMException ex) {
+System.err.println("Error creating source attribute: " + ex.toString());
+System.exit(1);
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceAttributes sattr = null;
+try {
+sattr = new LBMSourceAttributes();
+sattr.setValue("ume_store", "127.0.0.1:14567:1000");
+}
+catch (LBMException ex) {
+System.Console.Error.WriteLine ("Error creating source attribute: " + ex.toString());
+System.Environment.Exit(1);
+       }
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SAVE-ASSIGNED-REGIDS" name="SAVE-ASSIGNED-REGIDS">7.1.1.2.
+Save Assigned RegIDs</a></h4>
+
+<p>Your application can save the RegID assigned to a source or receiver from the store
+because the <b class="APPLICATION">UMP</b> API informs your application of the RegID used
+for each registration. This method of managing RegIDs is perhaps the most flexible, but
+also requires some work by the application to save RegIDs and retrieve them in some
+way.</p>
+
+<p>The following source code examples save the RegID assigned to a source to a file. (See
+also <a href="ume-example-src-3.c" target="doccontent">ume-example-src-3.c</a>.)</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+typedef struct src_info_t_stct {
+    int existing_regid;       
+    int message_num;          
+} src_info_t;
+
+#define SRC_REGID_SAVE_FILENAME "UME-example-src-RegID"
+
+int save_src_regid_to_file(const char *filename, lbm_src_event_ume_registration_ex_t *reg)
+{
+    FILE *fp;           
+    
+    if ((fp = fopen(filename, "w")) == NULL)
+        return -1;
+    fprintf(fp, "%s:%u", reg-&#62;store, reg-&#62;registration_id);
+    printf("saving RegID info to \"%s\" - %s:%u\n", filename, reg-&#62;store, reg-&#62;registration_id);
+    fflush(fp);
+    fclose(fp);
+    return 0;
+}
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SESSION-IDS" name="SESSION-IDS">7.1.1.3. Managing RegIDs with
+Session IDs</a></h4>
+
+<p>The RegIDs used by stores to identify sources and receivers must be unique. Rather
+than maintaining RegIDs (either statically or dynamically), applications can use a
+Session ID, which is simply a 64-bit value that uniquely identifies any set of sources
+with unique topics and receivers with unique topics. A single Session ID allows <b
+class="APPLICATION">UMP</b> stores to correctly identify all the sources and receivers
+for a particular application.</p>
+
+<p>Combinations of sources and receivers that make up a single valid session include the
+following.</p>
+
+<ul>
+<li>
+<p>Sources for topics A, B, and C</p>
+</li>
+
+<li>
+<p>Receivers for topics A, B, and C</p>
+</li>
+
+<li>
+<p>Sources for topics A, B, and C, and receivers for topics X, Y and Z</p>
+</li>
+
+<li>
+<p>Sources for topics A, B, and C, and receivers for topics A, B, and C</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Note that any topic can be used for a source and a receiver at the same
+time, but not for more than one of each. Two sources using topic A, for example, would
+need to be split into two different contexts.</p>
+</blockquote>
+</div>
+
+<p>The <b class="APPLICATION">UMP</b> configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMESESSIONID"
+target="doccontent"><tt class="LITERAL">ume_session_id</tt></a> , specifies a Session ID for a
+source, receiver or a context. If you want all sources and receivers for a particular
+context to use the same Session ID, use <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMESESSIONID"
+target="doccontent"><tt class="LITERAL">(context) ume_session_id</tt></a> . Any source or
+receiver that does not specify its own Session ID inherits the context's session ID. If a
+source or receiver specifies its own Session ID, it overrides the context Session ID for
+that individual source or receiver.</p>
+
+<p>Of the two mutually exclusive methods for managing RegIDs, ...</p>
+
+<ol type="1">
+<li>
+<p>Enable your application to assign and manage every RegID, ensuring no two objects
+registered with an individual store share the same RegID.</p>
+</li>
+
+<li>
+<p>Allow the store to assign every RegID and enable your application to persist the
+RegIDs.</p>
+</li>
+</ol>
+
+<p>... using Session IDs simplifies the second management method. Since you cannot
+combine these two strategies at any single store, you also cannot combine the first
+method with the use of Session IDs at a single store.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="SESSIONIDS-REGIDS" name="SESSIONIDS-REGIDS">7.1.1.3.1. How
+Stores Associate Session IDs and RegIDs</a></h5>
+
+<p>Session IDs do not replace the use of RegIDs by <b class="APPLICATION">UMP</b> but
+rather simplify RegID management. Using Session IDs equates to your application
+specifying a 0 (zero) RegID for all sources and receivers. However, instead of your
+application persisting the RegID assigned by the store, the store maintains the RegID for
+you.</p>
+
+<p>When a store receives a registration request from a source or receiver with a
+particular Session ID, it checks to see if it already has a source or receiver for that
+topic/Session ID. If it does, then it responds with that source's or receiver's
+RegID.</p>
+
+<p>If it does not find a source or receiver for that topic/Session ID pair, the store
+...</p>
+
+<ol type="1">
+<li>
+<p>Assigns a new RegID.</p>
+</li>
+
+<li>
+<p>Associates the topic/Session ID with the new RegID.</p>
+</li>
+
+<li>
+<p>Responds to the source or receiver with the new RegID.</p>
+</li>
+</ol>
+
+<p>The source can then advertise with the RegID supplied by the store. Receivers include
+the source's RegID in their registration request.</p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-SOURCES" name="UME-SOURCES">7.1.2. <b
+class="APPLICATION">UMP</b> Sources</a></h3>
+
+<p>The major concerns of sources revolve around RegID management and message retention.
+This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="designing-persistent-applications.html#NEW-OR-RE-REGISTRATION"><i>New or
+Re-Registration</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCES-MUST-BE-ABLE-TO-RESUME-SENDING"><i>Sources
+Must Be Able to Resume Sending</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCE-MESSAGE-RETENTION-AND-RELEASE"><i>Source
+Message Retention and Release</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCE-RELEASE-POLICY-OPTIONS"><i>Source
+Release Policy Options</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#CONFIRMED-DELIVERY"><i>Confirmed
+Delivery</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCES-USING-RR-STORE-CONFIGURATION"><i>Sources
+Using Round-Robin Store Configuration</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#SOURCE-EVENT-HANDLER"><i>Source Event
+Handler</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SOURCE-EVENT-HANDLER-STAB-CONF"><i>Source
+Event Handler - Stability, Confirmation and Release</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#MESSAGE-NUMBERS-TO-SEQUENCE-NUMBERS"><i>Mapping
+Your Message Numbers to</i> UMS/<i>UMP</i> Sequence Numbers</a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#RECEIVER-LIVENESS-DETECTION"><i>Receiver
+Liveness Detection</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="NEW-OR-RE-REGISTRATION" name="NEW-OR-RE-REGISTRATION">7.1.2.1.
+New or Re-Registration</a></h4>
+
+<p>Any source needs to know at start-up if it is a new registration or a re-registration.
+The answer determines how a source registers with the store. <b
+class="APPLICATION">UMP</b> can not answer this question. Therefore, it is essential that
+the developer consider what identifies the lifetime of a source and how a source
+determines the appropriate value to use as the RegID when it is ready to register. RegIDs
+are per source per topic per store, thus a single RegID per store is needed.</p>
+
+<p>The following source code examples look for an existing RegID from a file and uses a
+new RegID assigned from the store if it finds no existing RegID. (See also <a
+href="ume-example-src-3.c" target="doccontent">ume-example-src-3.c</a>.)</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+    err = lbm_context_create(&amp;ctx, NULL, NULL, NULL);
+    if (err) {printf("line %d: %s\n", __LINE__, lbm_errmsg()); exit(1);}
+
+    srcinfo.message_num = 1;
+    srcinfo.existing_regid = 0;
+    
+    err = read_src_regid_from_file(SRC_REGID_SAVE_FILENAME, store_info, sizeof(store_info));
+    if (!err) { srcinfo.existing_regid = 1; }
+
+        err = lbm_src_topic_attr_create(&amp;attr);
+        if (err) {printf("line %d: %s\n", __LINE__, lbm_errmsg()); exit(1);}
+
+        err = lbm_src_topic_attr_str_setopt(attr, "ume_store", store_info);
+        if (err) {printf("line %d: %s\n", __LINE__, lbm_errmsg()); exit(1);}
+       
+</pre>
+
+<p>The use of Session IDs allows <b class="APPLICATION">UMP</b> , as opposed to your
+application, to accomplish the same RegID management. See <a
+href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with Session
+IDs</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCES-MUST-BE-ABLE-TO-RESUME-SENDING"
+name="SOURCES-MUST-BE-ABLE-TO-RESUME-SENDING">7.1.2.2. Sources Must Be Able to Resume
+Sending</a></h4>
+
+<p>A source sends messages unless <b class="APPLICATION">UMP</b> prevents it, in which
+case, the send function returns an error. A source may lose the ability to send messages
+temporarily if the store(s) in use become unresponsive, e.g. the store(s) die or become
+disconnected from the source. Once the store(s) are responsive again, sending can
+continue. Thus source applications need to take into account that sending may fail
+temporarily under specific failure cases and be able to resume sending when the failure
+is removed.</p>
+
+<p>The following source code examples demonstrate how a failed send function can sleep
+for a second and try again.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+   while (lbm_src_send(src, message, len, 0) == LBM_FAILURE) {
+        If (lbm_errnum() == LBM_EUMENOREG) {
+            printf("Send unsuccessful. Waiting...\n");
+            sleep(1);
+            continue;
+        }
+        fprintf(stderr, "lbm_src_send: %s\n", lbm_errmsg());
+                        exit(1);
+                }
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+   for (;;) {
+        try {
+            src.send(message, len, 0);
+        }
+        catch (UMENoRegException ex) {
+            System.out.println("Send unsuccessful. Waiting...");
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) { }
+            continue;
+        }
+        catch (LBMException ex) {
+            System.err.println("Error sending message: " + ex.toString());
+System.exit(1);
+        }
+        break;
+    }
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+   for (;;) {
+        try {
+            src.send(message, len, 0);
+        }
+        catch (UMENoRegException ex) {
+            System.Console.Out.WriteLine("Send unsuccessful. Waiting...");
+            System.Threading.Thread.Sleep(1000);
+            continue;
+        }
+        catch (LBMException ex) {
+            System.Console.Out.WriteLine ("Error sending message: " + ex.toString());
+System.exit(1);
+        }
+        break;
+    }
+
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-MESSAGE-RETENTION-AND-RELEASE"
+name="SOURCE-MESSAGE-RETENTION-AND-RELEASE">7.1.2.3. Source Message Retention and
+Release</a></h4>
+
+<p><b class="APPLICATION">UMP</b> allows streaming of messages from a source without
+regard to message stability at a store, which is one reason for <b
+class="APPLICATION">UMP</b>'s performance advantage over other persistent messaging
+systems. Sources retain all messages until notified by the active store(s) that they are
+stable. This provides a method for stores to be brought up to date when restarted or
+started anew.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Source message retention is separate from the persistence of messages in
+the store.</p>
+</blockquote>
+</div>
+
+<p>When messages are considered stable at the store, the source can release them which
+frees up source retention memory for new messages. Generally, the source releases older
+stable messages first. To release the oldest retained message, all the following
+conditions must be met:</p>
+
+<ul>
+<li>
+<p>message must meet stability requirements of the source, which can range from a single
+stability notice from the active store to stability notices from a group of stores (See
+<a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a>)</p>
+
+<p>and</p>
+</li>
+
+<li>
+<p>message must have been confirmed as delivered by a configured number of receivers (<tt
+class="LITERAL">ume_retention_unique_confirmations</tt>),</p>
+
+<p>and</p>
+</li>
+
+<li>
+<p>the aggregate amount of buffered messages exceeds <tt
+class="LITERAL">retransmit_retention_size_threshold</tt> bytes in payload and
+headers.</p>
+</li>
+</ul>
+
+<p>Some things to note:</p>
+
+<ul>
+<li>
+<p>If the <tt class="LITERAL">retransmit_retention_size_threshold</tt> is not met, no
+messages will be released regardless of stability.</p>
+</li>
+
+<li>
+<p>If the source registered with a "no-cache" store (See <a
+href="designing-persistent-applications.html#UME-STORES"><i>UMP Stores</i></a>) or <tt
+class="LITERAL">ume_message_stability_notification</tt> is turned off, <tt
+class="LITERAL">ume_retention_unique_confirmations</tt> is the only way to allow the
+source to release messages before retention size options come into play.</p>
+</li>
+
+<li>
+<p>If the aggregate amount of buffered messages exceeds <tt
+class="LITERAL">retransmit_retention_size_limit</tt> bytes in payload and headers, then
+the oldest retained message is forcibly released even if it does not meet one or more of
+the conditions above. This condition should be avoided and suggests increasing the <tt
+class="LITERAL">retransmit_retention_size_limit</tt> or lowering the <tt
+class="LITERAL">retransmit_retention_size_threshold</tt>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-RELEASE-POLICY-OPTIONS"
+name="SOURCE-RELEASE-POLICY-OPTIONS">7.1.2.4. Source Release Policy Options</a></h4>
+
+<p>sources use a set of configuration options to release messages that, in effect,
+specify the source's release policy. The following configuration options directly impact
+when the source may release retained messages.</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEMESSAGESTABILITYNOTIFICATION"
+ target="doccontent"><tt class="LITERAL">ume_message_stability_notification</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONUNIQUECONFIRMATIONS"
+ target="doccontent"><tt class="LITERAL">ume_retention_unique_confirmations</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZETHRESHOLD"
+target="doccontent"><tt class="LITERAL">retransmit_retention_size_threshold</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZELIMIT"
+target="doccontent"><tt class="LITERAL">retransmit_retention_size_limit</tt></a></p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONFIRMED-DELIVERY" name="CONFIRMED-DELIVERY">7.1.2.5.
+Confirmed Delivery</a></h4>
+
+<p>As mentioned earlier, <tt class="LITERAL">ume_retention_unique_confirmations</tt>
+requires a message to have a minimum number of unique confirmations from different
+receivers before the message may be released. This retains messages that have not been
+confirmed as being received and processed and keeps them available to fulfill any
+retransmission requests.</p>
+
+<p>The following code samples show how to require a message to have 10 unique receiver
+confirmations</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+lbm_src_topic_attr_t * sattr;
+
+if (lbm_src_topic_attr_create(&amp;sattr) == LBM_FAILURE) {
+        fprintf(stderr, "lbm_src_topic_attr_create: %s\n", lbm_errmsg());
+        exit(1);
+}
+if (lbm_src_topic_attr_str_setopt(sattr, "ume_retention_unique_confirmations",
+"10") 
+== LBM_FAILURE) {
+        fprintf(stderr, "lbm_src_topic_attr_str_setopt: %s\n", lbm_errmsg());
+        exit(1);
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceAttributes sattr = null;
+try {
+sattr = new LBMSourceAttributes();
+sattr.setValue("ume_retention_unique_confirmations", "10");
+}
+catch (LBMException ex) {
+System.err.println("Error creating source attribute: " + ex.toString());
+System.exit(1);
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceAttributes sattr = null;
+try {
+sattr = new LBMSourceAttributes();
+sattr.setValue("ume_retention_unique_confirmations", "10");
+}
+catch (LBMException ex) {
+System.Console.Error.WriteLine ("Error creating source attribute: " + ex.toString());
+System.Environment.Exit(1);
+       }
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCES-USING-RR-STORE-CONFIGURATION"
+name="SOURCES-USING-RR-STORE-CONFIGURATION">7.1.2.6. Sources Using Round-Robin Store
+Configuration</a></h4>
+
+<p>The source retains messages until they are considered stable at the active store(s).
+For Round-Robin store behavior, this means the current active store notifies the source
+that it has stabilized the message via a message stability notification. The following
+configuration file statements implement Round-Robin behavior among 3 stores.</p>
+
+<pre class="PROGRAMLISTING">
+source ume_store 10.29.3.77:15313:150000:0
+source ume_store 10.29.3.76:16313:160000:0 
+source ume_store 10.29.3.75:17313:170000:0
+source ume_message_stability_notification 1
+source ume_store_behavior rr 
+       
+</pre>
+
+<p>See also <a
+href="designing-persistent-applications.html#ROUND-ROBIN-STORE-USAGE"><i>Round-Robin
+Store Usage</i></a></p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCES-USING-QC-STORE-CONFIGURATION"
+name="SOURCES-USING-QC-STORE-CONFIGURATION">7.1.2.7. Sources Using Quorum/Consensus Store
+Configuration</a></h4>
+
+<p>In the case of Quorum/Consensus store behavior, a message is considered stable after
+it has been successfully stored within a group of stores or among groups of stores
+according to the two settings, intergroup behavior and intragroup behavior, described
+below.</p>
+
+<ul>
+<li>
+<p>The <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intragroup behavior</a> specifies the requirements needed to stabilize a
+message among the stores within a group. A message is stable for the group once it is
+successfully stored at a quorum (majority) of the group's stores or successfully stored
+in all the stores in the group.</p>
+</li>
+
+<li>
+<p>The <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR"
+ target="doccontent">intergroup behavior</a> specifies the requirements needed to stabilize a
+message among groups of stores. A message is stable among the groups if it is
+successfully stored at any group, a majority of groups, or all groups.</p>
+</li>
+</ul>
+
+<p>Notice that a message needs to meet intragroup stability requirements before it can
+meet intergroup stability requirements. These options provide a number of possibilities
+for retention of messages for the source.</p>
+
+<p>The following configuration file statements implement a 3-group Quorum/Consensus
+configuration with each group on a different machine, in which a message is considered
+stable when it has been successfully stored at a quorum of stores in at least one group.
+(See <a
+href="ume-fault-tolerance.html#QC-CONFIG-SINGLE-LOCATION-GROUPS"><i>Quorum/Consensus -
+Single Location Groups</i></a> for more information about this configuration.)</p>
+
+<pre class="PROGRAMLISTING">
+source ume_store 10.29.3.77:10313:101000:0
+source ume_store 10.29.3.77:11313:110000:0
+source ume_store 10.29.3.77:12313:120000:0
+source ume_store 10.29.3.77:13313:130000:0
+source ume_store 10.29.3.77:14313:140000:0
+source ume_store 10.29.3.78:15313:150000:1
+source ume_store 10.29.3.78:16313:160000:1
+source ume_store 10.29.3.78:17313:170000:1
+source ume_store 10.29.3.79:18313:180000:2
+source ume_store 10.29.3.79:19313:190000:2
+source ume_store 10.29.3.79:29313:290000:2
+source ume_store 10.29.3.79:39313:390000:2
+source ume_store 10.29.3.79:49313:490000:2
+
+source ume_message_stability_notification 1
+source ume_store_behavior qc
+
+source ume_store_group 0:5
+source ume_store_group 1:3
+source ume_store_group 2:5
+
+source ume_retention_intragroup_stability_behavior quorum
+source ume_retention_intergroup_stability_behavior any
+       
+</pre>
+
+<p>See also <a
+href="designing-persistent-applications.html#QUORUM-CONSENSUS-STORE-USAGE"><i>Quorum/Consensus
+Store Usage</i></a> and <a
+href="ume-fault-tolerance.html#QC-CONFIG-MIXED-LOCATION-GROUPS"><i>Quorum/Consensus -
+Mixed Location Groups</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-EVENT-HANDLER" name="SOURCE-EVENT-HANDLER">7.1.2.8.
+Source Event Handler</a></h4>
+
+<p>The Source Event Handler is a function callback initialized at source creation to
+provide source events to your application related to the operation of the source. The
+following source code examples illustrate the use of a source event handler for
+registration events. To accept other source events, additional case statements would be
+required, one for each additional source event. See also <a
+href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ
+Events</i></a>.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+int handle_src_event(lbm_src_t *src, int event, void *ed, void *cd)
+{
+    switch (event) {
+    case LBM_SRC_EVENT_UME_REGISTRATION_ERROR:
+{
+const char *errstr = (const char *)ed;
+        printf("Error registering source with UME store: %s\n", errstr);
+}
+break;
+        case LBM_SRC_EVENT_UME_REGISTRATION_SUCCESS_EX:
+            {
+                lbm_src_event_ume_registration_ex_t *reg = 
+                        (lbm_src_event_ume_registration_ex_t *)ed;
+
+                    printf("UME store %u: %s registration success. RegID %u. Flags %x ", 
+                                reg-&#62;store_index, reg-&#62;store, reg-&#62;registration_id, 
+                                reg-&#62;flags);
+                    if (reg-&#62;flags &amp; LBM_SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD)
+                        printf("OLD[SQN %x] ", reg-&#62;sequence_number);
+                    if (reg-&#62;flags &amp; LBM_SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_NOACKS)
+                        printf("NOACKS ");
+                    printf("\n");
+            }
+         break;
+        case LBM_SRC_EVENT_UME_REGISTRATION_COMPLETE_EX:
+            {
+                    lbm_src_event_ume_registration_complete_ex_t *reg;
+
+                        reg  = (lbm_src_event_ume__complete_ex_t *)ed;
+                    printf("UME registration complete. SQN %x. Flags %x ", reg-&#62;sequence_number, 
+                        reg-&#62;flags);
+                    if (reg-&#62;flags &amp; LBM_SRC_EVENT_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM)
+                     printf("QUORUM ");
+                    printf("\n");
+            }
+         break;
+        case LBM_SRC_EVENT_UME_STORE_UNRESPONSIVE:
+        {
+            const char *infostr = (const char *)ed;
+            printf("UME store: %s\n", infostr);
+        }
+        break;
+    default:
+            printf("Unknown source event %d\n", event);
+            break;
+    }
+   return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onSourceEvent(Object arg, LBMSourceEvent sourceEvent)
+{
+    switch (sourceEvent.type()) {
+    case LBM.SRC_EVENT_UME_REGISTRATION_ERROR:
+System.out.println("Error registering source with UME store: "
++ sourceEvent.dataString());
+break;
+    case LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX:
+ UMESourceEventRegistrationSuccessInfo reg = sourceEvent.registrationSuccessInfo();
+ System.out.print("UME store " + reg.storeIndex() + ": " + reg.store()
++ " registration success. RegID " + reg.registrationId() + ". Flags "
++ reg.flags() + " ");
+                if (((reg.flags() &amp; LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD)) 
+                != 0) {
+ System.out.print("OLD[SQN " + reg.sequenceNumber() + "] ");
+                }
+                if (((reg.flags() &amp; LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_NOACKS)) 
+                != 0) {
+System.out.print("NOACKS ");
+                }
+                System.out.println();
+                break;
+    case LBM.SRC_EVENT_UME_REGISTRATION_COMPLETE_EX:
+                UMESourceEventRegistrationCompleteInfo regcomp = 
+                sourceEvent.registrationCompleteInfo();
+                System.out.print("UME registration complete. SQN " + regcomp.sequenceNumber()
++ ". Flags " + regcomp.flags() + " ");
+                if ((regcomp.flags() &amp; 
+                LBM.SRC_EVENT_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM) != 0) {
+System.out.print("QUORUM ");
+                }
+                System.out.println();
+                break;
+    case LBM.SRC_EVENT_UME_STORE_UNRESPONSIVE:
+                System.out.println("UME store: "
+                    + sourceEvent.dataString());
+                break;
+    ...
+    default:
+                System.out.println("Unknown source event "
++ sourceEvent.type());
+                break;
+        }
+        return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onSourceEvent(Object arg, LBMSourceEvent sourceEvent)
+{
+    switch (sourceEvent.type()) {
+    case LBM.SRC_EVENT_UME_REGISTRATION_ERROR:
+System.Console.Out.WriteLine("Error registering source with UME store: "
++ sourceEvent.dataString());
+break;
+    case LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX:
+ UMESourceEventRegistrationSuccessInfo reg = sourceEvent.registrationSuccessInfo();
+ System.Console.Out.Write("UME store " + reg.storeIndex() + ": " + reg.store()
++ " registration success. RegID " + reg.registrationId() + ". Flags "
++ reg.flags() + " ");
+                if (((reg.flags() &amp; LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD)) 
+                != 0) {
+ System.Console.Out.Write("OLD[SQN " + reg.sequenceNumber() + "] ");
+                }
+                if (((reg.flags() &amp; LBM.SRC_EVENT_UME_REGISTRATION_SUCCESS_EX_FLAG_NOACKS)) 
+                != 0) {
+System.Console.Out.Write("NOACKS ");
+                }
+                System.Console.Out.WriteLine();
+                break;
+    case LBM.SRC_EVENT_UME_REGISTRATION_COMPLETE_EX:
+                UMESourceEventRegistrationCompleteInfo regcomp = 
+                sourceEvent.registrationCompleteInfo();
+                System.Console.Out.Write("UME registration complete. SQN " + 
+                regcomp.sequenceNumber()
++ ". Flags " + regcomp.flags() + " ");
+                if ((regcomp.flags() &amp; 
+                LBM.SRC_EVENT_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM) != 0) {
+System.Console.Out.Write("QUORUM ");
+                }
+                System.Console.Out.WriteLine();
+                break;
+    case LBM.SRC_EVENT_UME_STORE_UNRESPONSIVE:
+                System.Console.Out.WriteLine("UME store: "
+                          + sourceEvent.dataString());
+                break;
+    ...
+    default:
+                System.Console.Out.WriteLine("Unknown source event "
++ sourceEvent.type());
+                break;
+        }
+        return 0;
+}
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCE-EVENT-HANDLER-STAB-CONF"
+name="SOURCE-EVENT-HANDLER-STAB-CONF">7.1.2.9. Source Event Handler - Stability,
+Confirmation and Release</a></h4>
+
+<p>As shown in <a
+href="designing-persistent-applications.html#SOURCE-EVENT-HANDLER">Section 7.1.2.8</a>
+above, the Source Event Handler can be expanded to handle more source events by adding
+additional case statements. The following source code examples show case statements to
+handle message stability events, delivery confirmation events and message release
+(reclaim) events. See also <a
+href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ
+Events</i></a>.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+case LBM_SRC_EVENT_UME_MESSAGE_STABLE_EX:  
+/* requires that source ume_message_stability_notification attribute is enabled */
+        {
+            lbm_src_event_ume_ack_ex_info_t *info = (lbm_src_event_ume_ack_ex_info_t *)ed;
+    
+            printf("UME store %u: %s message stable. SQN %x (msgno %d). Flags %x ", 
+            info-&#62;store_index, info-&#62;store,
+                    info-&#62;sequence_number, (int)info-&#62;msg_clientd - 1, info-&#62;flags);
+            if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTRAGROUP_STABLE)
+                    printf("IA "); /* Stable within store group */
+            if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTERGROUP_STABLE)
+                    printf("IR "); /* Stable amongst all stores */
+            if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STABLE)
+                    printf("STABLE ");  /* Just plain stable */
+            if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STORE)
+                    printf("STORE ");   /* Stability reported by UME Store */
+            printf("\n");   
+        }
+        break;
+
+case LBM_SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX:   
+/* requires that source ume_confirmed_delivery_notification attribute is enabled */
+        {
+            lbm_src_event_ume_ack_ex_info_t *info = (lbm_src_event_ume_ack_ex_info_t *)ed;
+
+                printf("UME delivery confirmation. SQN %x, Receiver RegID %u (msgno %d). Flags %x ",
+                       info-&#62;sequence_number, info-&#62;rcv_registration_id, 
+                       (int)info-&#62;msg_clientd - 1, info-&#62;flags);
+                if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UNIQUEACKS)
+                    printf("UNIQUEACKS ");   
+                    /* Satisfied number of unique ACKs requirement */
+                if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UREGID)
+                    printf("UREGID ");       
+                    /* Confirmation contains receiver application registration ID */
+                if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_OOD)
+                    printf("OOD ");          
+                    /* Confirmation received from arrival order receiver */
+                if (info-&#62;flags &#38; LBM_SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_EXACK)
+                    printf("EXACK ");        
+                    /* Confirmation explicitly sent by receiver */
+                printf("\n");
+        }
+        break;
+    
+case LBM_SRC_EVENT_UME_MESSAGE_RECLAIMED:  
+/* requires that source ume_confirmed_delivery_notification or ume_message_stability_notification 
+attributes are enabled */
+        {
+                lbm_src_event_ume_ack_info_t *ackinfo = (lbm_src_event_ume_ack_info_t *)ed;
+
+                printf("UME message released - sequence number %x (msgno %d)\n",
+                       ackinfo-&#62;sequence_number, (int)ackinfo-&#62;msg_clientd - 1);
+        }
+        break;
+
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+case LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX: 
+// requires that source ume_message_stability_notification attribute is enabled
+        UMESourceEventAckInfo staInfo = sourceEvent.ackInfo();
+        System.out.print("UME store " + staInfo.storeIndex() + ": "
+                    + staInfo.store() + " message stable. SQN " + staInfo.sequenceNumber()
+                    + " (msgno " + staInfo.clientObject() + "). Flags " 
+                    + staInfo.flags() + " ");
+        if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTRAGROUP_STABLE) 
+        != 0) {
+                System.out.print("IA "); // Stable within store group
+        }
+        if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTERGROUP_STABLE) 
+        != 0) {
+                System.out.print("IR ");  // Stable amongst all stores
+        }
+        if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STABLE) != 0) {
+                System.out.print("STABLE ");  // Just plain stable
+        }
+        if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STORE) != 0) {
+                System.out.print("STORE ");   // Stability reported by UME Store
+        }
+        System.out.println();
+        break;
+
+case LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX:  
+// requires that source ume_confirmed_delivery_notification attribute is enabled
+        UMESourceEventAckInfo cdelvinfo = sourceEvent.ackInfo();
+        System.out.print("UME delivery confirmation. SQN " + cdelvinfo.sequenceNumber()
+                    + ", RcvRegID " + cdelvinfo.receiverRegistrationId() + " (msgno "
+                    + cdelvinfo.clientObject() + "). Flags " + cdelvinfo.flags() + " ");
+        if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UNIQUEACKS) 
+        != 0) {
+                System.out.print("UNIQUEACKS "); // Satisfied number of unique ACKs requirement
+        }
+        if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UREGID) 
+        != 0) {
+                System.out.print("UREGID ");    // Confirmation contains receiver application 
+                registration ID
+        }
+        if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_OOD) 
+        != 0) {
+                System.out.print("OOD ");      // Confirmation received from arrival order 
+                receiver
+        }
+        if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_EXACK) 
+        != 0) {
+                System.out.print("EXACK ");    // Confirmation explicitly sent by receiver
+        }
+        System.out.println();
+        break;
+
+case LBM.SRC_EVENT_UME_MESSAGE_RECLAIMED:  
+// requires that source ume_confirmed_delivery_notification or 
+// ume_message_stability_notification attributes are enabled
+        System.out.println("UME message released - sequence number "
+                + Long.toHexString(sourceEvent.sequenceNumber())
+                + " (msgno "
+                + Long.toHexString(((Integer)sourceEvent.clientObject()).longValue())
+                + ")");
+        break;
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+case LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX: 
+// requires that source ume_message_stability_notification attribute is enabled
+            UMESourceEventAckInfo staInfo = sourceEvent.ackInfo();
+            System.Console.Out.Write("UME store " + staInfo.storeIndex() + ": "
+                        + staInfo.store() + " message stable. SQN " + staInfo.sequenceNumber()
+                        + " (msgno " + ((int)staInfo.clientObject()).ToString("x") + "). 
+                        Flags " + staInfo.flags() + " ");
+            if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTRAGROUP_STABLE) 
+            != 0)
+            {
+                    System.Console.Out.Write("IA ");  // Stable within store group
+            }
+            if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_INTERGROUP_STABLE) 
+            != 0) 
+            {
+                    System.Console.Out.Write("IR ");  // Stable amongst all stores
+            }
+            if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STABLE) != 0)
+            {
+                    System.Console.Out.Write("STABLE ");  // Just plain stable
+            }
+            if ((staInfo.flags() &#38; LBM.SRC_EVENT_UME_MESSAGE_STABLE_EX_FLAG_STORE) != 0)
+            {
+                    System.Console.Out.Write("STORE ");  // Stability reported by UME Store
+            }
+            System.Console.Out.WriteLine();
+            break;
+
+case LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX:  
+// requires that source ume_confirmed_delivery_notification attribute is enabled
+
+            UMESourceEventAckInfo cdelvinfo = sourceEvent.ackInfo();
+            
+            System.Console.Out.Write("UME delivery confirmation. SQN " + 
+            cdelvinfo.sequenceNumber()
+                        + ", RcvRegID " + cdelvinfo.receiverRegistrationId() + " (msgno "
+                        + ((int)cdelvinfo.clientObject()).ToString("x") + "). Flags " + 
+                        cdelvinfo.flags() + " ");
+            if ((cdelvinfo.flags() &#38; 
+            LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UNIQUEACKS) != 0)
+            {
+                    System.Console.Out.Write("UNIQUEACKS ");  // Satisfied number of unique 
+                    ACKs requirement
+            }
+            if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_UREGID) 
+            != 0)
+            {
+                    System.Console.Out.Write("UREGID ");  // Confirmation contains receiver 
+                    application registration ID
+            }
+            if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_OOD) 
+            != 0)
+            {
+                    System.Console.Out.Write("OOD ");  // Confirmation received from arrival 
+                    order receiver
+            }
+            if ((cdelvinfo.flags() &#38; LBM.SRC_EVENT_UME_DELIVERY_CONFIRMATION_EX_FLAG_EXACK) 
+            != 0)
+            {
+                    System.Console.Out.Write("EXACK ");  // Confirmation explicitly sent by 
+                    receiver
+            }
+            System.Console.Out.WriteLine();                    
+            break;
+
+case LBM.SRC_EVENT_UME_MESSAGE_RECLAIMED: 
+// requires that source ume_confirmed_delivery_notification or 
+// ume_message_stability_notification attributes are enabled
+            
+            System.Console.Out.WriteLine("UME message released - sequence number "
+                               + sourceEvent.sequenceNumber().ToString("x")
+                               + " (msgno "
+                               + ((int)sourceEvent.clientObject()).ToString("x")
+                               + ")");
+            break;
+
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MESSAGE-NUMBERS-TO-SEQUENCE-NUMBERS"
+name="MESSAGE-NUMBERS-TO-SEQUENCE-NUMBERS">7.1.2.10. Mapping Your Message Numbers to <b
+class="APPLICATION">UMS</b>/<b class="APPLICATION">UMP</b> Sequence Numbers</a></h4>
+
+<p><tt class="LITERAL">lbm_src_sendv_ex()</tt> allows you to create a pointer to an
+object or structure. This pointer will be returned to your application along with all
+source events. You can then update the object or structure with source event information.
+For example, if your messages exceed 8K - which requires fragmentation your application's
+message into more than one <b class="APPLICATION">UM</b> message - receiving sequence
+number events with this pointer allows you to determine all the <b
+class="APPLICATION">UM</b> sequence numbers for the message and, therefore, how many
+release (reclaim) events to expect. The following two source code examples show how
+to:</p>
+
+<ul>
+<li>
+<p>Enable message sequence number information</p>
+</li>
+
+<li>
+<p>Handle sequence number source events to determine the application message number in
+the Source Event Handler</p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">C API - Enable Message Information</b></p>
+
+<pre class="PROGRAMLISTING">
+lbm_src_send_ex_info_t exinfo;
+
+/* Enable message sequence number info to be returned */
+exinfo.flags = LBM_SRC_SEND_EX_FLAG_UME_CLIENTD | LBM_SRC_SEND_EX_FLAG_SEQUENCE_NUMBER_INFO;
+exinfo.ume_msg_clientd = (void *)(msgno + 1); 
+/* msgno set to application message number (can't evaluate to NULL) */
+while (lbm_src_send_ex(src, message, msglen, 0, &amp;exinfo) == LBM_FAILURE)
+{
+    if (lbm_errnum() == LBM_EUMENOREG)
+        {
+        printf("Send unsuccessful. Waiting...\n");
+                SLEEP_MSEC(1000);   /* Sleep for 1 second */
+        }
+    else
+    {
+        fprintf(stderr, "lbm_src_send: %s\n", lbm_errmsg());
+        break;
+    }
+}
+       
+</pre>
+
+<p><b class="APPLICATION">C API - Sequence Number Event Handler</b></p>
+
+<pre class="PROGRAMLISTING">
+int handle_src_event(lbm_src_t *src, int event, void *ed, void *cd)
+{
+      switch (event) {
+      case LBM_SRC_EVENT_SEQUENCE_NUMBER_INFO:
+            {
+                  lbm_src_event_sequence_number_info_t *info = 
+                  (lbm_src_event_sequence_number_info_t *)ed;
+
+                  if (info-&#62;first_sequence_number != info-&#62;last_sequence_number) {
+                        printf("SQN [%x,%x] (msgno %d)\n", info-&#62;first_sequence_number, 
+                        info-&#62;last_sequence_number, (int)info-&#62;msg_clientd - 1);
+                  } else {
+                        printf("SQN %x (msgno %d)\n", info-&#62;last_sequence_number, 
+                        (int)info-&#62;msg_clientd - 1);
+                }
+            }
+            break;
+      ...
+      }
+      return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API - Enable Message Information</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceSendExInfo exinfo = new LBMSourceSendExInfo();
+exinfo.setClientObject(new Integer(msgno));  // msgno set to application message number
+exinfo.setFlags(LBM.SRC_SEND_EX_FLAG_SEQUENCE_NUMBER_INFO);  
+// Enable message sequence number info to be returned 
+for (;;)
+{
+    try 
+    {
+        src.send(message, msglen, 0, exinfo);
+    }
+    catch(UMENoRegException ex)
+    {
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) { }
+        continue;
+
+    }
+    catch (LBMException ex)
+    {
+            System.err.println("Error sending message: " + ex.toString());  
+    }
+    break;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API - Sequence Number Event Handler</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onSourceEvent(Object arg, LBMSourceEvent sourceEvent)
+{
+      switch (sourceEvent.type())
+      {
+            case LBM.SRC_EVENT_SEQUENCE_NUMBER_INFO:
+                  LBMSourceEventSequenceNumberInfo info = sourceEvent.sequenceNumberInfo();
+                  if (info.firstSequenceNumber() != info.lastSequenceNumber()) {
+                        System.out.println("SQN [" + info.firstSequenceNumber()
+                            + "," + info.lastSequenceNumber() + "] (msgno "
+                            + info.clientObject() + ")");
+                  }
+                  else {
+                        System.out.println("SQN " + info.lastSequenceNumber()
+                            + " (msgno " + info.clientObject() + ")");
+                  }
+                  break;
+          ...
+      }
+      return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API - Enable Message Information</b></p>
+
+<pre class="PROGRAMLISTING">
+LBMSourceSendExInfo exinfo = new LBMSourceSendExInfo();
+exinfo.setClientObject(msgno);  // msgno set to application message number
+exinfo.setFlags(LBM.SRC_SEND_EX_FLAG_SEQUENCE_NUMBER_INFO);  
+// Enable message sequence number info to be returned
+for (;;)
+{
+    try 
+    {
+        src.send(message, msglen, 0, exinfo);
+    }
+    catch(UMENoRegException ex)
+    {
+            System.Threading.Thread.Sleep(100);
+        continue;
+
+    }
+    catch (LBMException ex)
+    {
+            System.Console.Out.WriteLine("Error sending message: " + ex.Message()); 
+    }
+    break;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API - Sequence Number Event Handler</b></p>
+
+<pre class="PROGRAMLISTING">
+public void onSourceEvent(Object arg, LBMSourceEvent sourceEvent)
+{
+      switch (sourceEvent.type())
+      {
+            case LBM.SRC_EVENT_SEQUENCE_NUMBER_INFO:
+                  LBMSourceEventSequenceNumberInfo info = sourceEvent.sequenceNumberInfo();
+                  if (info.firstSequenceNumber() != info.lastSequenceNumber())
+                  {
+                        System.Console.Out.WriteLine("SQN [" + info.firstSequenceNumber()
+                              + "," + info.lastSequenceNumber() + "] (cd "
+                              + ((int)info.clientObject()).ToString("x") + ")");
+                  }
+                  else
+                  {
+                        System.Console.Out.WriteLine("SQN " + info.lastSequenceNumber()
+                              + " (msgno " + ((int)info.clientObject()).ToString("x") + ")");
+                  }
+                  break;
+          ...
+
+      }
+      return 0;
+}
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-LIVENESS-DETECTION"
+name="RECEIVER-LIVENESS-DETECTION">7.1.2.11. Receiver Liveness Detection</a></h4>
+
+<p>As an extension to <a
+href="designing-persistent-applications.html#CONFIRMED-DELIVERY"><i>Confirmed
+Delivery</i></a>, you can set receivers to send a keepalive to a source during a measured
+absence of delivery confirmations (due to traffic lapse). In the event that neither
+message reaches the source within a designated interval, or if the delivery confirmation
+TCP connection breaks down, the receiver is assumed to have "died". <b
+class="APPLICATION">UM</b> then notifies the publishing application via context event
+callback. This lets the publisher assign a new subscriber.</p>
+
+<p>To use this feature, set these five configuration options:</p>
+
+<ul>
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#UMESOURCELIVENESSTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_source_liveness_timeout</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#UMERECEIVERLIVENESSINTERVAL"
+target="doccontent"><tt class="LITERAL">ume_receiver_liveness_interval</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#UMECONFIRMEDDELIVERYNOTIFICATION"
+target="doccontent"><tt class="LITERAL">ume_confirmed_delivery_notification</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/ultramessagingpersistenceoptions.html#UMEUSERRECEIVERREGISTRATIONID"
+target="doccontent"><tt class="LITERAL">ume_user_receiver_registration_id</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#UMESESSIONID"
+target="doccontent"><tt class="LITERAL">ume_session_id</tt></a></p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> You must set the <tt class="LITERAL">ume_source_liveness_timeout</tt>
+option to 5 times the value of <tt
+class="LITERAL">ume_receiver_liveness_interval</tt>.</p>
+</blockquote>
+</div>
+
+<p>This specialized feature is not recommended for general use. If you are considering
+it, please note the following caveats:</p>
+
+<ul>
+<li>
+<p>Do not use in conjunction with a <b class="APPLICATION">UM</b> Gateway.</p>
+</li>
+
+<li>
+<p>There is a variety of potential network occurrences that can break or reset the TCP
+connection and falsely indicate the death of a receiver.</p>
+</li>
+
+<li>
+<p>In cases where a receiver object is deleted while its context is not, the publisher
+may still falsely assume the receiver to be alive. Other false receiver-alive assumptions
+could be caused by the following:</p>
+</li>
+
+<li>
+<p>TCP connections can enter a half-open or otherwise corrupted state.</p>
+</li>
+
+<li>
+<p>Failed TCP connections sometimes do not fully close, or experience objectionable
+delays before fully closing.</p>
+</li>
+
+<li>
+<p>A switch or router failure along the path does not affect the TCP connection
+state.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-RECEIVERS" name="UME-RECEIVERS">7.1.3. <b
+class="APPLICATION">UMP</b> Receivers</a></h3>
+
+<p>Receivers are predominantly interested in RegID management and recovery management.
+This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="designing-persistent-applications.html#RECEIVER-REGID-MANAGEMENT"><i>Receiver
+RegID Management</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#RECEIVER-MESSAGE-EVENT-HANDLER"><i>Receiver
+Message and Event Handler</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#RECOVERY-MANAGEMENT"><i>Recovery
+Management</i></a></p>
+</li>
+
+<li>
+<p><a
+href="designing-persistent-applications.html#SETTING-CALLBACK-FOR-RECOVERY-SEQUENCE-NUMBER">
+<i>Setting Callback Function to Set Recovery Sequence Number</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#MESSAGE-CONSUMPTION"><i>Message
+Consumption</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-REGID-MANAGEMENT"
+name="RECEIVER-REGID-MANAGEMENT">7.1.3.1. Receiver RegID Management</a></h4>
+
+<p>RegIDs are slightly more involved for receivers than for sources. Since RegIDs are per
+source per topic per store and a topic may have several sources, a receiver may have to
+manage several RegIDs per store in use. Fortunately, receivers in <b
+class="APPLICATION">UMP</b> can leverage the RegID of the source with the use of a
+callback as discussed in <a href="tutorial.html#TUTORIAL-ADDINGFAULTRECOVERY"><i>Adding
+Fault Recovery with Registration IDs</i></a> and shown in <a href="ume-example-rcv-2.c"
+target="doccontent">ume-example-rcv-2.c</a>. Your application can determine the correct RegID
+to use and return it to <b class="APPLICATION">UMP</b> . You can also use Session IDs to
+enable <b class="APPLICATION">UMP</b> to manage receiver RegIDs. See <a
+href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with Session
+IDs</i></a>.</p>
+
+<p>Much like sources, receivers typically have a lifetime based on an amount of work,
+perhaps an infinite amount. And just like sources, it may be helpful to consider that a
+RegID is "assigned" at the start of that work and is out of use at the end. In between,
+the RegID is in use by the instance of the receiver application. However, the nature of
+RegIDs being per source means that the expected lifetime of a source should play a role
+in how RegIDs on the receiver are managed. Thus, it may be helpful for the application
+developer to consider the source application lifetime when deciding how best to handle
+RegIDs on the receiver.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-MESSAGE-EVENT-HANDLER"
+name="RECEIVER-MESSAGE-EVENT-HANDLER">7.1.3.2. Receiver Message and Event
+Handler</a></h4>
+
+<p>The Receiver Message and Event Handler is a function callback started at receiver
+initialization to provide Receiver messages to your application on behalf of the
+receiver. The following source code examples illustrate the use of a receiver message and
+event handler for registration messages. To accept other receiver events, additional case
+statements would be required, one for each additional event. See also <a
+href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ
+Events</i></a>.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+int rcv_handle_msg(lbm_rcv_t *rcv, lbm_msg_t *msg, void *clientd)
+{
+    switch (msg-&#62;type) {
+    ...
+    case LBM_MSG_UME_REGISTRATION_ERROR:
+            printf("[%s][%s] UME registration error: %s\n", msg-&#62;topic_name, msg-&#62;source, 
+                msg-&#62;data); 
+            exit(0);
+    break;
+    case LBM_MSG_UME_REGISTRATION_SUCCESS:
+            {
+                    lbm_msg_ume_registration_t *reg = (lbm_msg_ume_registration_t *)
+                        (msg-&#62;data);
+
+                    printf("[%s][%s] UME registration successful. SrcRegID %u RcvRegID %u\n",
+                     msg-&#62;topic_name, msg-&#62;source, reg-&#62;src_registration_id, 
+                         reg-&#62;rcv_registration_id);
+            }
+         break;
+    case LBM_MSG_UME_REGISTRATION_SUCCESS_EX:
+            {
+                    lbm_msg_ume_registration_ex_t *reg = (lbm_msg_ume_registration_ex_t *)
+                        (msg-&#62;data);
+
+                    printf("[%s][%s] store %u: %s UME registration successful. SrcRegID %u 
+                        RcvRegID %u. Flags %x ",
+                msg-&#62;topic_name, msg-&#62;source, reg-&#62;store_index, reg-&#62;store,
+                reg-&#62;src_registration_id, reg-&#62;rcv_registration_id, reg-&#62;flags);
+                if (reg-&#62;flags &amp; LBM_MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD)
+                     printf("OLD[SQN %x] ", reg-&#62;sequence_number);
+                    if (reg-&#62;flags &amp; LBM_MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_NOCACHE)
+                        printf("NOCACHE ");
+                    printf("\n");
+            }
+            break;
+    case LBM_MSG_UME_REGISTRATION_COMPLETE_EX:
+         {
+                    lbm_msg_ume_registration_complete_ex_t *reg;
+
+reg  = (lbm_msg_ume_registration_complete_ex_t *)(msg-&#62;data);
+printf("[%s][%s] UME registration complete. SQN %x. Flags %x ",
+                    msg-&#62;topic_name, msg-&#62;source, reg-&#62;sequence_number, reg-&#62;flags);
+                    if (reg-&#62;flags &amp; LBM_MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM)
+                     printf("QUORUM ");
+                 if (reg-&#62;flags &amp; LBM_MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_RXREQMAX)
+                        printf("RXREQMAX ");
+                    printf("\n");
+            }
+        break;
+    case LBM_MSG_UME_REGISTRATION_CHANGE:
+            printf("[%s][%s] UME registration change: %s\n", msg-&#62;topic_name, msg-&#62;source, 
+                msg-&#62;data);
+            break;
+    ...
+    default:
+            printf("Unknown lbm_msg_t type %x [%s][%s]\n", msg-&#62;type, msg-&#62;topic_name, 
+                msg-&#62;source);
+         break;
+    }
+    return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onReceive(Object cbArg, LBMMessage msg) 
+{
+    case LBM.MSG_UME_REGISTRATION_ERROR:
+            System.out.println("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration error: " + msg.dataString());
+            break;
+    case LBM.MSG_UME_REGISTRATION_SUCCESS_EX:
+            UMERegistrationSuccessInfo reg = msg.registrationSuccessInfo();
+            System.out.print("[" + msg.topicName() + "][" + msg.source()
+                    + "] store " + reg.storeIndex() + ": "
+                    + reg.store() + " UME registration successful. SrcRegID "
+                    + reg.sourceRegistrationId() + " RcvRegID " + reg.receiverRegistrationId()
+                    + ". Flags " + reg.flags() + " ");
+            if ((reg.flags() &amp; LBM.MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD) != 0)
+                System.out.print("OLD[SQN " + reg.sequenceNumber() + "] ");
+            if ((reg.flags() &amp; LBM.MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_NOCACHE) != 0)
+                System.out.print("NOCACHE ");
+            System.out.println();
+            break;
+    case LBM.MSG_UME_REGISTRATION_COMPLETE_EX:
+            UMERegistrationCompleteInfo regcomplete = msg.registrationCompleteInfo();
+            System.out.print("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration complete. SQN " + regcomplete.sequenceNumber()
+                    + ". Flags " + regcomplete.flags() + " ");
+            if ((regcomplete.flags() &amp; LBM.MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM) 
+            != 0) {
+                System.out.print("QUORUM ");
+            }
+            if ((regcomplete.flags() &amp; LBM.MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_RXREQMAX) 
+            != 0) {
+                System.out.print("RXREQMAX ");
+            }
+            System.out.println();
+            break;
+    case LBM.MSG_UME_REGISTRATION_CHANGE:
+            System.out.println("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration change: " + msg.dataString());
+            break;
+    ...
+    default:
+            System.err.println("Unknown lbm_msg_t type " + msg.type() + " ["
+                    + msg.topicName() + "][" + msg.source() + "]");
+            break;
+        }
+    return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onReceive(Object cbArg, LBMMessage msg) 
+{
+    case LBM.MSG_UME_REGISTRATION_ERROR:
+            System. Console.Out.WriteLine("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration error: " + msg.dataString());
+            break;
+    case LBM.MSG_UME_REGISTRATION_SUCCESS_EX:
+            UMERegistrationSuccessInfo reg = msg.registrationSuccessInfo();
+            System.Console.Out.Write("[" + msg.topicName() + "][" + msg.source()
+                    + "] store " + reg.storeIndex() + ": "
+                    + reg.store() + " UME registration successful. SrcRegID "
+                    + reg.sourceRegistrationId() + " RcvRegID " + reg.receiverRegistrationId()
+                    + ". Flags " + reg.flags() + " ");
+            if ((reg.flags() &amp; LBM.MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_OLD) != 0)
+                    System.Console.Out.Write ("OLD[SQN " + reg.sequenceNumber() + "] ");
+            if ((reg.flags() &amp; LBM.MSG_UME_REGISTRATION_SUCCESS_EX_FLAG_NOCACHE) != 0)
+                    System.Console.Out.Write ("NOCACHE ");
+            System.Console.Out.WriteLine();
+            break;
+    case LBM.MSG_UME_REGISTRATION_COMPLETE_EX:
+            UMERegistrationCompleteInfo regcomplete = msg.registrationCompleteInfo();
+            System.Console.Out.Write("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration complete. SQN " + regcomplete.sequenceNumber()
+                    + ". Flags " + regcomplete.flags() + " ");
+            if ((regcomplete.flags() &amp; LBM.MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_QUORUM) 
+            != 0) {
+                System.Console.Out.Write("QUORUM ");
+            }
+            if ((regcomplete.flags() &amp; LBM.MSG_UME_REGISTRATION_COMPLETE_EX_FLAG_RXREQMAX) 
+            != 0) {
+                System.Console.Out.Write("RXREQMAX ");
+            }
+System.Console.Out.WriteLine();
+            break;
+    case LBM.MSG_UME_REGISTRATION_CHANGE:
+            System.Console.Out.WriteLine("[" + msg.topicName() + "][" + msg.source()
+                    + "] UME registration change: " + msg.dataString());
+            break;
+    ...
+    default:
+            System.Console.Out.WriteLine("Unknown lbm_msg_t type " + msg.type() + " ["
+                    + msg.topicName() + "][" + msg.source() + "]");
+            break;
+        }
+    return 0;
+}
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECOVERY-MANAGEMENT" name="RECOVERY-MANAGEMENT">7.1.3.3.
+Recovery Management</a></h4>
+
+<p>Recovery management for receivers is fairly simple because <b
+class="APPLICATION">UMP</b> requests any missing messages from the store(s) and delivers
+them as they are retransmitted. However, your application can specify a different message
+to begin retransmission with using either the <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM" target="doccontent"><tt
+class="LITERAL">retransmit_request_maximum</tt></a> configuration option or <tt
+class="LITERAL">lbm_ume_rcv_recovery_info_ex_func_t</tt>.</p>
+
+<p>For example, assume a source sends 7 messages with sequence numbers 0-6 which are
+stabilized at the store. The receiver, configured with the <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM" target="doccontent"><tt
+class="LITERAL">retransmit_request_maximum</tt></a> set to 2, consumes message 0, goes
+down, then comes back at message 6. <tt
+class="LITERAL">lbm_ume_rcv_recovery_info_ex_func_t</tt> returns the following:</p>
+
+<pre class="PROGRAMLISTING">
+high_sequence_number = 6
+low_rxreq_max_sequence_number = 4
+low_sequence_number = 1
+
+NOTE: low_rxreq_max_sequence_number = high_sequence_number - retransmit_request_maximum
+       
+</pre>
+
+<ul>
+<li>
+<p><b class="APPLICATION">UMP</b> obeys the <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM" target="doccontent"><tt
+class="LITERAL">retransmit_request_maximum</tt></a> configuration option and restarts
+with message 4. This is the default.</p>
+</li>
+
+<li>
+<p>If you modify the <tt class="LITERAL">low_sequence_number</tt> to satisfy some other
+requirements, you can override the configuration option and restart at message 0, 2, 3, 5
+or 6. See <a
+href="designing-persistent-applications.html#SETTING-CALLBACK-FOR-RECOVERY-SEQUENCE-NUMBER">
+<i>Setting Callback Function to Set Recovery Sequence Number</i></a> below.</p>
+</li>
+
+<li>
+<p>The only way to restart at message 1 in this case, is to set the <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM" target="doccontent"><tt
+class="LITERAL">retransmit_request_maximum</tt></a> configuration option to its default
+value of 0. If your application changes the <tt class="LITERAL">low_sequence_number</tt>
+and for whatever reason, the calculation results in the same value as the <tt
+class="LITERAL">low_sequence_number</tt>, <b class="APPLICATION">UMP</b> ignores the
+calculation and restarts with message 4.</p>
+</li>
+</ul>
+
+<p>All messages retransmitted to a receiver are marked as retransmissions via a flag in
+the message structure. Thus it is easy for an application to determine if a message is a
+new message from the source or a retransmission, which may or may not have been processed
+before the failure. The presence or absence of the retransmit flag gives the application
+a hint of how best to handle the message with regard to it being processed previously or
+not.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SETTING-CALLBACK-FOR-RECOVERY-SEQUENCE-NUMBER"
+name="SETTING-CALLBACK-FOR-RECOVERY-SEQUENCE-NUMBER">7.1.3.4. Setting Callback Function
+to Set Recovery Sequence Number</a></h4>
+
+<p>The sample source code below demonstrates how to use the recovery sequence number info
+function to determine the stored message with which to restart a receiver. This method
+retrieves the low sequence number from the recovery sequence number structure and adds an
+offset to determine the beginning sequence number. The offset is a value completely under
+the control of your application. For example, if a receiver was down for a "long" period
+and you only want the receiver to receive the last 10 messages, use an offset to start
+the receiver with the 10th most recent message. If you wish not to receive any messages,
+set the <tt class="LITERAL">low_sequence_number</tt> to the <tt
+class="LITERAL">high_sequence_number</tt> plus one.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+lbm_ume_rcv_recovery_info_ex_func_t cb;
+
+cb.func = ume_rcv_seqnum_ex;
+cb.clientd = NULL;
+if (lbm_rcv_topic_attr_setopt(&amp;rcv_attr, "ume_recovery_sequence_number_info_function", 
+&amp;cb, sizeof(cb)) == LBM_FAILURE) {
+            fprintf(stderr, 
+            "lbm_rcv_topic_attr_setopt:ume_recovery_sequence_number_info_function: %s\n", 
+            lbm_errmsg());
+            exit(1);
+}
+printf("Will use seqnum info with low offset %u.\n", seqnum_offset); 
+
+int ume_rcv_seqnum_ex(lbm_ume_rcv_recovery_info_ex_func_info_t *info, void *clientd)
+{
+     lbm_uint_t new_lo = info-&#62;low_sequence_number + seqnum_offset;
+
+     printf("[%s] SQNs Low %x (will set to %x), Low rxreqmax %x, High %x (CD %p)\n",
+info-&#62;source, info-&#62;low_sequence_number,
+             new_lo, info-&#62;low_rxreq_max_sequence_number, info-&#62;high_sequence_number, 
+info-&#62;source_clientd);
+        info-&#62;low_sequence_number = new_lo;
+        return 0;
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API</b></p>
+
+<pre class="PROGRAMLISTING">
+UMERcvRecInfo umerecinfocb = new UMERcvRecInfo(seqnum_offset);
+rcv_attr.setRecoverySequenceNumberCallback(umerecinfocb, null);
+System.out.println("Will use seqnum info with low offset " + seqnum_offset + ".");
+
+class UMERcvRecInfo implements UMERecoverySequenceNumberCallback {
+    private long _seqnum_offset = 0;
+
+    public UMERcvRecInfo(long seqnum_offset) {
+        _seqnum_offset = seqnum_offset;
+    }
+
+    public int setRecoverySequenceNumberInfo(Object cbArg, 
+    UMERecoverySequenceNumberCallbackInfo cbInfo) 
+    {
+long new_low = cbInfo.lowSequenceNumber() + _seqnum_offset;
+if (new_low &#60; 0) {
+System.out.println("New low sequence number would be negative.  
+Leaving low SQN unchanged.");
+new_low = cbInfo.lowSequenceNumber();
+         }
+            System.out.println("SQNs Low " + cbInfo.lowSequenceNumber() + " (will set to "
+                    + new_low + "), Low rxreqmax " + cbInfo.lowRxReqMaxSequenceNumber()
+                 + ", High " + cbInfo.highSequenceNumber());
+            try {
+                    cbInfo.setLowSequenceNumber(new_low);
+         }
+            catch (LBMEInvalException e) {
+                    System.err.println(e.getMessage());
+        }
+            return 0;
+ }
+       
+</pre>
+
+<p><b class="APPLICATION">.NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+UMERcvRecInfo umerecinfocb = new UMERcvRecInfo(seqnum_offset);
+rcv_attr.setRecoverySequenceNumberCallback(umerecinfocb, null);
+System.Console.Out.WriteLine("Will use seqnum info with low offset " + seqnum_offset + ".");
+
+class UMERcvRecInfo implements UMERecoverySequenceNumberCallback {
+    private long _seqnum_offset = 0;
+
+    public UMERcvRecInfo(long seqnum_offset) {
+        _seqnum_offset = seqnum_offset;
+    }
+
+    public int setRecoverySequenceNumberInfo(Object cbArg, 
+    UMERecoverySequenceNumberCallbackInfo cbInfo) 
+    {
+long new_low = cbInfo.lowSequenceNumber() + _seqnum_offset;
+if (new_low &#60; 0) {
+System.Console.Out.WriteLine ("New low sequence number would be negative.  
+Leaving low SQN unchanged.");
+new_low = cbInfo.lowSequenceNumber();
+         }
+            System.Console.Out.WriteLine ("SQNs Low " + cbInfo.lowSequenceNumber() + " 
+                (will set to "
+                    + new_low + "), Low rxreqmax " + cbInfo.lowRxReqMaxSequenceNumber()
+                 + ", High " + cbInfo.highSequenceNumber());
+            try {
+                    cbInfo.setLowSequenceNumber(new_low);
+         }
+            catch (LBMEInvalException e) {
+                    System.Console.Out.WriteLine (e.getMessage());
+        }
+            return 0;
+ }
+       
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MESSAGE-CONSUMPTION" name="MESSAGE-CONSUMPTION">7.1.3.5.
+Message Consumption</a></h4>
+
+<p>Receivers use message consumption, defined as message deletion, to indicate that <b
+class="APPLICATION">UMP</b> should notify the store(s) that the application consumed the
+message. This notification takes the form of an acknowledgement, or ACK, to the store(s)
+in use as well as to the source if you configured the source for <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMECONFIRMEDDELIVERYNOTIFICATION"
+ target="doccontent">delivery confirmation</a>.</p>
+
+<ul>
+<li>
+<p>In the <a href="../API/index.html" target="doccontent">C API</a>, message deletion happens
+by default when the receive callback returns, unless the callback uses <code
+class="FUNCTION">lbm_msg_retain()</code>. If the callback uses <code
+class="FUNCTION">lbm_msg_retain()</code> then the application has responsibility to use
+<code class="FUNCTION">lbm_msg_delete()</code> when it has finished processing the
+message.</p>
+</li>
+
+<li>
+<p>In the <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>, message deletion must be
+triggered explicitly by the application by using the <tt class="LITERAL">dispose()</tt>
+method of the message object. Without explicit usage of <tt
+class="LITERAL">dispose()</tt>, <b class="APPLICATION">UMP</b> does not know when the
+application has finished processing the message.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="BATCHINGACKS" name="BATCHINGACKS">7.1.3.5.1. Batching
+Acknowledgments</a></h5>
+
+<p>You can configure <b class="APPLICATION">UMP</b> to acknowledge message consumption to
+a store(s) for a series of messages independent of when the receiving application
+consumed the messages. This option works well if multiple threads process messages off of
+an event queue, which may result in messages being consumed out of order. This feature is
+not compatible with <a
+href="designing-persistent-applications.html#EXPLICITACKS"><i>Explicit
+Acknowledgments</i></a>.</p>
+
+<p>If you set <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEUSEACKBATCHING"
+target="doccontent"><tt class="LITERAL">ume_use_ack_batching</tt></a> to <b
+class="APPLICATION">1</b>, <b class="APPLICATION">UMP</b> does not acknowledge individual
+messages as the application consumes them. Instead, <b class="APPLICATION">UMP</b> checks
+the consumed, but unacknowledged messages at the interval configured with <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMEACKBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">ume_ack_batching_interval</tt></a>. When <b
+class="APPLICATION">UMP</b> discovers a contiguous series of consumed message sequence
+numbers (<tt class="LITERAL">sqn</tt>), it sends acknowledgments to the store(s) for all
+the contiguous messages.</p>
+
+<p>For example, assume your application consumes and acknowledges messages 1 and 2, then
+consumes subsequent messages in the following order: 4, 5, 7, 8, 6, 10, 3. At the next <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMEACKBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">ume_ack_batching_interval</tt></a>, <b
+class="APPLICATION">UMP</b> sends consumption acknowledgments to the store(s) for
+messages 3 - 8.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="EXPLICITACKS" name="EXPLICITACKS">7.1.3.5.2. Explicit
+Acknowledgments</a></h5>
+
+<p>In addition, <b class="APPLICATION">UMP</b> supports Explicit ACKs ( <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEEXPLICITACKONLY"
+target="doccontent"><tt class="LITERAL">ume_explicit_ack_only</tt></a>), which silences <b
+class="APPLICATION">UMP</b>'s acknowledgement behavior, allowing your application control
+of message consumption notification. See also <code
+class="FUNCTION">lbm_msg_ume_send_explicit_ack()</code> in the <a
+href="../API/index.html" target="doccontent">C API</a> and the <tt
+class="LITERAL">LBMMessage</tt> class method <code
+class="FUNCTION">sendExplicitAck()</code> in the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a>.</p>
+
+<p>The explicit ACK sending function/method automatically supplies additional ACKs for
+missing messages in sequence number gaps. This can be a useful efficiency feature, but
+note that to acknowledge each message consumption individually, you must issue their ACKs
+in ascending sequence-number order.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="OBJECT-FREEEXPLICITACKS"
+name="OBJECT-FREEEXPLICITACKS">7.1.3.5.3. Object-free Explicit Acknowledgments</a></h5>
+
+<p>When using explicit ACKs in your <a href="../JavaAPI/html/index.html"
+target="doccontent">Java</a> or <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET</a>
+application, you can extract ACK information from messages and then send acknowledgements
+to the store(s) for any sequence number. You can also extract ACK information from a
+message when using the <a href="../API/index.html" target="doccontent">C API</a> with <code
+class="FUNCTION">lbm_msg_extract_ume_ack()</code>.</p>
+
+<p>The following source code examples show how to extract ACK information and send an
+explicit ACK.</p>
+
+<p><b class="APPLICATION">C API</b></p>
+
+<pre class="PROGRAMLISTING">
+int rcv_handle_msg(lbm_rcv_t *rcv, lbm_msg_t *msg, void *clientd)
+{
+    lbm_ume_rcv_ack_t *ack = NULL;
+...
+
+    ack = lbm_msg_extract_ume_ack(msg);
+    lbm_ume_ack_send_explicit_ack(ack, msg-&#62;sequence_number);
+    lbm_ume_ack_delete(ack);
+...
+
+}
+       
+</pre>
+
+<p><b class="APPLICATION">JAVA API or .NET API</b></p>
+
+<pre class="PROGRAMLISTING">
+public int onReceive(Object cbArg, LBMMessage msg)
+{
+    UMEMessageAck ack;
+...
+
+    ack = msg.extractUMEAck();
+    ack.sendExplicitAck(msg.sequenceNumber());
+    ack.dispose();
+
+...
+
+}
+       
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-STORES" name="UME-STORES">7.1.4. <b
+class="APPLICATION">UMP</b> Stores</a></h3>
+
+<p>As mentioned in <a href="umeconcepts.html#UMECONCEPTS-PERSISTENCESTORE"><i>Persistent
+Store</i></a>, the <b class="APPLICATION">UMP</b> persistent stores, also just called
+stores, actually persist the source and receiver state and use RegIDs to identify sources
+and receivers. Each source to which a store provides persistence may have zero or more
+receivers. The store maintains each receiver's state along with the source's state and
+the messages the source has sent.</p>
+
+<p>The store can be configured with its own set of <a href="../UME/umestored-config.html"
+target="doccontent">options</a> to persist this state information on disk or simply in memory.
+The term <span class="emphasis"><i class="EMPHASIS">disk store</i></span> is used to
+signify a store that persists state to disk, and the term <span class="emphasis"><i
+class="EMPHASIS">memory store</i></span> is used to signify a store that persists state
+only in memory. A store may also be configured not to cache the source's data, but to
+simply persist the source and receiver state in memory. This is called a <span
+class="emphasis"><i class="EMPHASIS">no-cache store</i></span>.</p>
+
+<p>Unlike many persistent systems, the persistent store in <b class="APPLICATION">UMP</b>
+is not in the message path. In other words, a source does not send data to the store and
+then have the store forward it to the receivers. In <b class="APPLICATION">UMP</b> , the
+source sends to the receiver(s) and the store(s) in parallel. See <a
+href="ume-ops-operational-view.html#UME-OPS-NORMAL-OPERATION"><i>Normal
+Operation</i></a>. Thus, <b class="APPLICATION">UMP</b> can provide extremely low latency
+to receiving applications.</p>
+
+<p>The store(s) that a source uses are part of the source's configuration settings.
+Sources must be configured to use specific store(s) and use one of two different types of
+store failover behaviors to match expected failure scenarios. See <a
+href="designing-persistent-applications.html#ROUND-ROBIN-STORE-USAGE"><i>Round-Robin
+Store Usage</i></a> and <a
+href="designing-persistent-applications.html#QUORUM-CONSENSUS-STORE-USAGE"><i>Quorum/Consensus
+Store Usage</i></a> below for more about store failover scenarios.</p>
+
+<p>Receivers, on the other hand, do not need to be configured with store information a
+priori. The source advertises store information as part of the normal <b
+class="APPLICATION">UM</b> topic resolution process. Thus the receivers will learn the
+store(s) to use from the source without needing to be configured themselves. Because
+receivers learn about the store(s) a source is using via topic resolution, the source
+needs to be available to receivers as long as the receivers may need them. However, the
+source does not have to be actively sending data to do this.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="ROUND-ROBIN-STORE-USAGE"
+name="ROUND-ROBIN-STORE-USAGE">7.1.4.1. Round-Robin Store Usage</a></h4>
+
+<p>Stores can be used in a Round-Robin fashion by a source during failover. A source
+provides <b class="APPLICATION">UMP</b> with a list of stores to use. The first is the
+primary, the second is the secondary, the third is the tertiary, etc. The source uses a
+single store at any one time. If the currently active store becomes unresponsive due to a
+crash or network disconnect, <b class="APPLICATION">UMP</b> tries other stores in the
+list one by one until it finds a responsive store.</p>
+
+<p>With round-robin store usage, inactive stores do not receive data from the source.
+Thus, a store that becomes the active store will not have any data from the source. In
+this case, the source may be configured to retain messages and stream those messages to
+the new store using <a href="../Config/latejoinoptions.html#SOURCELATEJOIN"
+target="doccontent">Late Join</a>. Cascading failures of sources, stores and receivers may
+require using stores in a Quorum/Consensus fashion.</p>
+
+<p>See also <a
+href="designing-persistent-applications.html#SOURCES-USING-RR-STORE-CONFIGURATION"><i>Sources
+Using Round-Robin Store Configuration</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUORUM-CONSENSUS-STORE-USAGE"
+name="QUORUM-CONSENSUS-STORE-USAGE">7.1.4.2. Quorum/Consensus Store Usage</a></h4>
+
+<p>To provide the highest degree of resiliency in the face of failures, <b
+class="APPLICATION">UMP</b> provides the Quorum/Consensus failover strategy which allows
+a source to provide <b class="APPLICATION">UMP</b> with a number of stores to be used at
+the same time. Multiple stores can fail and <b class="APPLICATION">UMP</b> can continue
+operation unhindered. Moreover, Late Join is not needed as in Round-Robin.</p>
+
+<p>Quorum/Consensus, also called QC, allows a source and the associated receivers to have
+their persisted state maintained at several stores at the same time. Central to QC is the
+concept of a group of stores, which is a logical grouping of stores that are intended to
+signify a single entity of resilience. Within the group, individual stores may fail but
+for the group as a whole to be viable and provide resiliency, a quorum must be available.
+In <b class="APPLICATION">UMP</b> , a quorum is a simple majority. For example, in a
+group of five stores, three stores are required to maintain a quorum. One or two stores
+may fail and the group continues to provide resiliency. <b class="APPLICATION">UMP</b>
+requires a source to have a quorum of stores available in the group in order to send
+messages. A group can consist of a single store.</p>
+
+<p>QC also provides the ability to use multiple groups. As long as a single group
+maintains quorum, then <b class="APPLICATION">UMP</b> allows a source to proceed. Groups
+are logical in nature and can be combined in any way imaginable, such as by store
+location, store type, etc. In addition, QC provides the ability to specify backup stores
+within groups. Backups may be used if or when a store in the group becomes unresponsive
+to the source. Quorum/Consensus allows a source many different failure scenarios simply
+not available in other persistent messaging systems.</p>
+
+<p>See also <a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a>, <a
+href="ume-fault-tolerance.html#QC-CONFIG-SINGLE-LOCATION-GROUPS"><i>Quorum/Consensus -
+Single Location Groups</i></a> and <a
+href="ume-fault-tolerance.html#QC-CONFIG-MIXED-LOCATION-GROUPS"><i>Quorum/Consensus -
+Mixed Location Groups</i></a>.</p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="FAULT-RECOVERY" name="FAULT-RECOVERY">7.2. Fault
+Recovery</a></h2>
+
+<p>Recovery from source and receiver failure is the real heart of <b
+class="APPLICATION">UMP</b> operation. For a source, this means continuing operation from
+where it stopped. For a receiver, this means essentially the same thing, but with the
+retransmission of missed messages. Application developers can easily leverage the
+information in <b class="APPLICATION">UMP</b> to make their applications recover from
+failure in graceful ways.</p>
+
+<p><a href="../Design/lbm-features.html#USING-LATE-JOIN" target="doccontent">Late Join</a> is
+the mechanism of <b class="APPLICATION">UMP</b> recovery as well as an <b
+class="APPLICATION">UM</b> streaming feature. If Late Join is turned off on a source ( <a
+href="../Config/latejoinoptions.html#SOURCELATEJOIN" target="doccontent"><tt
+class="LITERAL">late_join</tt></a>) or receiver ( <a
+href="../Config/latejoinoptions.html#RECEIVERUSELATEJOIN" target="doccontent"><tt
+class="LITERAL">use_late_join</tt></a>), it also turns off <b class="APPLICATION">UMP</b>
+recovery. In order to control Late Join behavior, <b class="APPLICATION">UMP</b> provides
+a mechanism for a receiver to control the low sequence number. See <a
+href="designing-persistent-applications.html#RECOVERY-MANAGEMENT"><i>Recovery
+Management</i></a>.</p>
+
+<p>Not all failures are recoverable. For application developers it usually pays in the
+long run to identify what types of errors are non-recoverable and how best to handle them
+when possible. Such an exercise establishes the precise boundaries of expected versus
+abnormal operating conditions.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> <b class="APPLICATION">UMP</b> does not acknowledge messages that are
+lost. If the store is unable to recover a lost message, any receivers attempting to
+recover this message from the store will experience unrecoverable loss as well. Sources
+can pay attention to any gaps in stability or confirmed delivery acknowledgements as
+these most likely represent unrecoverable loss at the store or receivers,
+respectively.</p>
+</blockquote>
+</div>
+
+<p>This section discussed the following recovery topics.</p>
+
+<ul>
+<li>
+<p><a href="designing-persistent-applications.html#SOURCE-RECOVERY"><i>Source
+Recovery</i></a></p>
+</li>
+
+<li>
+<p><a href="designing-persistent-applications.html#RECEIVER-RECOVERY"><i>Receiver
+Recovery</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCE-RECOVERY" name="SOURCE-RECOVERY">7.2.1. Source
+Recovery</a></h3>
+
+<p>The following shows the basic steps of source recovery.</p>
+
+<ol type="1">
+<li>
+<p>Re-register with the store.</p>
+</li>
+
+<li>
+<p>Determine the highest sequence number that the store has from the source.</p>
+</li>
+
+<li>
+<p>Resume sending with the next sequence number.</p>
+</li>
+</ol>
+
+<p>Because <b class="APPLICATION">UMP</b> allows you to stream messages and not wait
+until a message is stable at the persistent store before sending the next message, the
+main task of source recovery is to determine what messages the persistent store(s) have
+and what they don't. Therefore, when a source re-registers with a store during recovery,
+the store tells the source what sequence number it has as the most recent from the
+source. The registration event informs the application of this sequence number. See <a
+href="designing-persistent-applications.html#SOURCE-EVENT-HANDLER"><i>Source Event
+Handler</i></a>.</p>
+
+<p>In addition, a mechanism exists (<tt
+class="LITERAL">LBM_SRC_EVENT_SEQUENCE_NUMBER_INFO</tt>) that allows the application to
+know the sequence number assigned to every piece of data it sends. The combination of
+registration and sequence number information allows an application to know exactly what a
+store does have and what it does not and where it should pick up sending. An application
+designed to stream data in this way should consider how best to maintain this
+information.</p>
+
+<p>When QC is in use, <b class="APPLICATION">UMP</b> uses the consensus of the group(s)
+to determine what sequence number to use in the first message it will send. This is
+necessary as not all stores can be expected to be in total agreement about what was sent
+in a distributed system. The application can configure the source with the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMECONSENSUSSEQUENCENUMBERBEHAVIOR "
+ target="doccontent"><tt class="LITERAL">ume_consensus_sequence_number_behavior</tt></a> to use
+the lowest sequence number of the latest group of sequence numbers seen from any store,
+the highest, or the majority. In most cases, the majority, which is the default, makes
+the most sense as the consensus. The lowest is a very conservative setting. And the
+highest is somewhat optimistic. Your application has the flexibility to handle this in
+any way needed.</p>
+
+<p>If streaming is not what an application desires due to complexity, then it is very
+simple to use the <b class="APPLICATION">UMP</b> events (<a
+href="ume-ops-operational-view.html#UME-OPS-UME-EVENTS"><i>UMP and UMQ Events</i></a>)
+delivered to the application to mimic the behavior of restricting a source to having only
+one unstable message at a time.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVER-RECOVERY" name="RECEIVER-RECOVERY">7.2.2. Receiver
+Recovery</a></h3>
+
+<p>The following shows the basic steps of receiver recovery.</p>
+
+<ol type="1">
+<li>
+<p>Re-register with the store.</p>
+</li>
+
+<li>
+<p>Determine the low sequence number.</p>
+</li>
+
+<li>
+<p>Request retransmission of messages starting with the low sequence number.</p>
+</li>
+</ol>
+
+<p><b class="APPLICATION">UMP</b> provides extensive options for controlling how
+receivers handle recovery. By default, receivers want to restart after the last piece of
+data that was consumed prior to failure or graceful suspension. Since <b
+class="APPLICATION">UMP</b> persists receiver state at the store, receivers request this
+state from the store as part of re-registration and recovery.</p>
+
+<p>The actual sequence number that a receiver uses as the first topic level message to
+resume reception with is called the "low sequence number". <b class="APPLICATION">UMP</b>
+provides a means of modifying this sequence number if desired. An application can decide
+to use the sequence number as is, to use an even older sequence number, to use a more
+recent sequence number, or to simply use the most recent sequence number from the source.
+See <a href="designing-persistent-applications.html#RECOVERY-MANAGEMENT"><i>Recovery
+Management</i></a> and <a
+href="designing-persistent-applications.html#SETTING-CALLBACK-FOR-RECOVERY-SEQUENCE-NUMBER">
+<i>Setting Callback Function to Set Recovery Sequence Number</i></a>. This allows
+receivers great flexibility on a per source basis when recovering. New receivers,
+receivers with no pre-existing registration, also have the same flexibility in
+determining the sequence number to begin data reception.</p>
+
+<p>Like sources, when QC is in use, <b class="APPLICATION">UMP</b> uses the consensus of
+the group(s) to determine the low sequence number. And as with sources, this is necessary
+as not all stores can be expected to be in total agreement about what was acknowledged.
+The application can configure the receiver with <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMECONSENSUSSEQUENCENUMBERBEHAVIOR"
+ target="doccontent"><tt class="LITERAL">ume_consensus_sequence_number_behavior</tt></a> to use
+the lowest sequence number of the latest group of sequence numbers seen from any store,
+the highest, or the majority. In most cases, the majority, which is the default, makes
+the most sense as the consensus. The lowest is a very conservative setting. And the
+highest is somewhat optimistic. In addition, this sequence number may be modified by the
+application after the consensus is determined.</p>
+
+<p>For QC, <b class="APPLICATION">UMP</b> load balances receiver retransmission requests
+among the available stores. In addition, if requests are unanswered, retransmissions of
+the actual requests will use different stores. This means that as long as a single store
+has a message, then it is possible for that message to be retransmitted to a requesting
+receiver.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Receivers need to consider if the use of arrival order delivery is
+appropriate. See <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a>. <b
+class="APPLICATION">UMP</b> stores save the highest sequence number acknowledged by a
+receiver. When receivers using arrival order delivery receive - and thereby acknowledge -
+messages out of order, recovery problems may arise because stores will not have earlier
+messages not acknowledged by the receiver.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="demonstrating-ume-persistence.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="enabling-queuing.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Demonstrating Persistence</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Enabling Queuing</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

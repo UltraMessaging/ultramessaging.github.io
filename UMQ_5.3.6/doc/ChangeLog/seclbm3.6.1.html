@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.6.1 - February 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.6.2 / UME 3.0 - February 2010"
+href="seclbm3.6.2-ume3.0.html" />
+<link rel="NEXT" title="Release LBM 3.6 - December 2009" href="seclbm3.6-ume2.3.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.6.2-ume3.0.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.6-ume2.3.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.6.1" name="SECLBM3.6.1">39. Release LBM 3.6.1 -
+February 2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.6.1" name="LBM3.6.1">39.1. LBM 3.6.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6.1-NEW" name="LBM3.6.1-NEW">39.1.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Changed the naming of <tt class="LITERAL">lbmmon</tt> statistics to refer to datagrams
+rather than messages. For example, the LBT-RM transport receiver statistic for <b
+class="APPLICATION">bytes received</b> is now labeled, <b class="APPLICATION">datagram
+bytes received</b> because the statistic includes datagram overhead bytes in addition to
+application message bytes.</p>
+</li>
+
+<li>
+<p>Implemented backward compatibility for LBMMON statistics packets for <b
+class="APPLICATION">LBM</b> Version 3.6.1 and later by enhancing LBMMON internal message
+processing. Backward statistics compatibility does not apply to prior <b
+class="APPLICATION">LBM</b> versions.</p>
+</li>
+
+<li>
+<p>Added support for multiple outstanding asynchronous AcceptEx calls when using <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; IO
+completion ports. This allows multiple incoming connections to be serviced more quickly
+when using completion ports. The number of outstanding AcceptEx calls can be controlled
+by the <a
+href="../Config/transporttcpoperationoptions.html#SOURCETRANSPORTTCPLISTENBACKLOG"
+target="doccontent"><tt class="LITERAL">transport_tcp_listen_backlog</tt></a> and <a
+href="../Config/requestoperationoptions.html#CONTEXTREQUESTTCPLISTENBACKLOG"
+target="doccontent"><tt class="LITERAL">request_tcp_listen_backlog</tt></a> configuration
+options.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now logs the originating IP and port number of all
+non-LBM packets received.</p>
+</li>
+
+<li>
+<p>Changed the previously internal message <tt class="LITERAL">timestamp</tt> field to a
+public field in the <a href="../API/structlbm__msg__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_msg_t</tt></a> structure. Also added the <tt
+class="LITERAL">timestampSeconds()</tt> and <tt
+class="LITERAL">timestampMicroseconds()</tt> methods to .NET and Java LBMMessage
+classes.</p>
+</li>
+
+<li>
+<p>Added the following methods to the Java API and the .NET API.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">LBMContext sendc(char [] target, char [] topicname, byte [] data,
+int datalen, int flags)</tt> for sending unicast immediate messages where both <tt
+class="LITERAL">target</tt> and <tt class="LITERAL">topicname</tt> are character
+arrays.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMContext sendc(char [] topicname, byte data, int datalen, int
+flags)</tt> for sending multicast immediate messages where the <tt
+class="LITERAL">topicname</tt> is a character array.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMContext sendTopicless(byte [] data, int datalen, int
+flags)</tt> for sending topicless multicast immediate messages.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMContext sendTopicless(String target, byte [] data, int datalen,
+int flags)</tt> for sending topicless unicast messages using a string as the target.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMContext sendTopicless(char [] target, byte [] data, int
+datalen, int flags)</tt> for sending topicless unicast messages using a <tt
+class="LITERAL">char []</tt> as the target.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMMessage char [] sourceAsCharArray()</tt> for returning the
+source of a message as a character array.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMMessage char [] topicNameAsCharArray()</tt> for returning the
+<tt class="LITERAL">topicname</tt> of a message as a character array.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">LBMMessage char [] originalSourceAsCharArray()</tt> for returning
+the original source (if message was from LBM Gateway) as a character array.</p>
+</li>
+</ul>
+
+<br />
+<br />
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6.1-FIXES" name="LBM3.6.1-FIXES">39.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem with fragmented MIM messages sent to a topic and received by a
+receiver configured for Arrival Order ( <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTMIMORDEREDDELIVERY"
+ target="doccontent"><tt class="LITERAL">mim_ordered_delivery</tt></a> = 0). The MIM message
+fragments were not properly delivered to the topic receiver.</p>
+</li>
+
+<li>
+<p>Clarification: In the <tt class="LITERAL">toString</tt> method for the Java and .Net
+<tt class="LITERAL">LBMSDMRawTimestamp</tt> object, the value returned by <tt
+class="LITERAL">LBMSDMRawTimestamp</tt> is not intended to be a floating point
+representation of the time. The value is simply formatted as <tt
+class="LITERAL">seconds.microseconds</tt>.</p>
+</li>
+
+<li>
+<p>Added support on HP-UX for the EAGAIN error during message sends by treating it as an
+EWOULDBLOCK.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the LBM Gateway that caused the LBM Gateway to assert after
+receiving a <tt class="LITERAL">topic leave message</tt> from a receiver shutting down
+normally. Now the LBM Gateway does not assert or deadlock on normal receiver
+shutdowns.</p>
+</li>
+
+<li>
+<p>Corrected a problem with how the length passed to <tt
+class="LITERAL">lbm_transport_source_parse()</tt> and <tt
+class="LITERAL">lbm_transport_source_format()</tt> was interpreted. The incorrect
+interpretation caused these functions to return an error.</p>
+</li>
+
+<li>
+<p>Corrected an output labeling problem with <tt class="LITERAL">lbmmon.cs</tt> and <tt
+class="LITERAL">lbmmon.java</tt>. LBT-RM receiver datagram statistics were displayed as
+LBT-RU statistics.</p>
+</li>
+
+<li>
+<p>Corrected errors in the <tt class="LITERAL">source string</tt> of the <a
+href="../API/structlbm__src__transport__stats__lbtru__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_lbtru_t</tt></a> structure. Statistics were
+reported correctly, but the source was not properly identified. This error has also been
+observed and corrected for Immediate Messaging source statistics.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the LBMMON API the resulted in several fields in the LBT-RM
+and LBT-RU receiver statistics to be handled improperly.</p>
+</li>
+
+<li>
+<p>The <a href="../API/lbmaux_8h.html" target="doccontent"><tt class="LITERAL">lbmaux library
+APIs</tt></a> for loading attributes directly from <b class="APPLICATION">29West</b>
+Configuration Files was updated to use common code with the <b
+class="APPLICATION">LBM</b> library. This resolves a problem where some configuration
+options were not parsed correctly in <a href="../API/lbmaux_8h.html" target="doccontent"><tt
+class="LITERAL">lbmaux library APIs</tt></a> but parsed correctly in <b
+class="APPLICATION">LBM</b>.</p>
+</li>
+
+<li>
+<p>Fixed a potential deadlock when context creation fails for an embedded mode context
+using <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>
+Completion Ports.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6.1-KNOWNISSUES" name="LBM3.6.1-KNOWNISSUES">39.1.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>Shutting down a source-side LBM Gateway with Control-C can cause the Gateway to become
+dead locked. <b class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>If a source LBM Gateway was shutdown and then the receiving Gateway was shutdown as
+quickly as possible while still carrying traffic, a fatal assert occurs. (<tt
+class="LITERAL">MUL_FATAL_ASSERT(Table!=NULL);</tt>) <b class="APPLICATION">29West</b> is
+investigating this issue.</p>
+</li>
+
+<li>
+<p>With <b class="APPLICATION">LBM</b> 3.6 we have seen increased memory utilization in
+varying degrees across all platforms. This increase can be mitigated by the use of
+SmartHeap. <b class="APPLICATION">29West</b> is working to decrease this memory
+utilization.</p>
+</li>
+
+<li>
+<p>When turning on Automatic Monitoring, be sure that your application does not have any
+existing <tt class="LITERAL">lbmmon</tt> monitoring capability active. Using both
+Automatic Monitoring and <tt class="LITERAL">lbmmon</tt> functions results in confusion
+with internal monitoring fields and pointers. This issue will be addressed in a future
+release.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.6.2-ume3.0.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.6-ume2.3.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.6.2 / UME 3.0 - February
+2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.6 - December 2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

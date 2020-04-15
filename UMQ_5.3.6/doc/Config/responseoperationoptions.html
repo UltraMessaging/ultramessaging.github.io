@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Response Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Request Operation Options"
+href="requestoperationoptions.html" />
+<link rel="NEXT" title="Implicit Batching Options" href="implicitbatchingoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="requestoperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="implicitbatchingoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="RESPONSEOPERATIONOPTIONS"
+name="RESPONSEOPERATIONOPTIONS">4.24. Response Operation Options</a></h1>
+
+<p>See also <a href="../Design/fundamental-concepts.html#REQUEST-RESPONSE"
+target="_top">Request/Response</a> for more information about this feature.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESPONSESESSIONMAXIMUMBUFFER"
+name="CONTEXTRESPONSESESSIONMAXIMUMBUFFER">4.24.1. <span class="lbm-option-name"><span
+class="PHRASE">response_session_maximum_buffer (context)</span></span></a></h2>
+
+<p>Value used to control the maximum amount of data buffered in <b
+class="APPLICATION">UM</b> for each response session (unicast connection to a
+requester).</p>
+
+<div class="INFORMALTABLE"><a id="AEN13195" name="AEN13195"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">65536</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESPONSESESSIONSENDERSOCKETBUFFER"
+name="CONTEXTRESPONSESESSIONSENDERSOCKETBUFFER">4.24.2. <span
+class="lbm-option-name"><span class="PHRASE">response_session_sender_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set the <code class="CONSTANT">SO_SNDBUF</code> value of the response
+session (unicast connection to a requester). In some cases the OS will not allow all of
+this value to be used. A value of 0 instructs <b class="APPLICATION">UM</b> to use the OS
+defaults. See the section on <a href="reference.html#SOCKETBUFFERSIZE">socket buffer
+sizes</a> for platform-dependent information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13244" name="AEN13244"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS
+defaults)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESPONSETCPDELETIONTIMEOUT"
+name="CONTEXTRESPONSETCPDELETIONTIMEOUT">4.24.3. <span class="lbm-option-name"><span
+class="PHRASE">response_tcp_deletion_timeout (context)</span></span></a></h2>
+
+<p>After <b class="APPLICATION">UM</b> deletes a TCP response, this is the timeout period
+after which <b class="APPLICATION">UM</b> closes the connection and reclaims its memory.
+NOTE: When using Off-Transport Recovery, this value must be longer than <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTMAXIMUMINTERVAL">otr_request_maximum_interval</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13287" name="AEN13287"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">2000 (2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESPONSETCPINTERFACE"
+name="CONTEXTRESPONSETCPINTERFACE">4.24.4. <span class="lbm-option-name"><span
+class="PHRASE">response_tcp_interface (context)</span></span></a></h2>
+
+<p>Specifies the network interface over which <b class="APPLICATION">UM</b> initiates TCP
+connections for responses. You can specify the full IP address of interface, or just the
+network part (see <a href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a>
+for details). Default is set to INADDR_ANY, meaning that it will not bind to a specific
+interface. You can also modify the default by setting the option to 0.0.0.0/0 which
+produces the same result.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13329" name="AEN13329"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESPONSETCPNODELAY"
+name="CONTEXTRESPONSETCPNODELAY">4.24.5. <span class="lbm-option-name"><span
+class="PHRASE">response_tcp_nodelay (context)</span></span></a></h2>
+
+<p>Whether the TCP sockets used for sending responses should set <code
+class="CONSTANT">TCP_NODELAY</code> or not. (Setting TCP_NODELAY disables Nagle's
+algorithm.)</p>
+
+<div class="INFORMALTABLE"><a id="AEN13369" name="AEN13369"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN13388" name="AEN13388"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>TCP response sockets should set <code class="CONSTANT">TCP_NODELAY</code> (disable
+Nagle).</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>TCP response sockets should not set <code class="CONSTANT">TCP_NODELAY</code> (leave
+Nagle enabled). <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="requestoperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="implicitbatchingoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Request Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Implicit Batching Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

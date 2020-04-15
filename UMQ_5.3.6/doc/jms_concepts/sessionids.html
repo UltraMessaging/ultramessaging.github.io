@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Session IDs</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="Message Selectors" href="messageselectors.html" />
+<link rel="NEXT" title="Request/Reply Sample Applications"
+href="request-replysample-apps.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="messageselectors.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="request-replysample-apps.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SESSIONIDS" name="SESSIONIDS">8. Session IDs</a></h1>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="sessionids.html#SESSIONIDSUMP"><i>UMP Session IDs</i></a></p>
+</li>
+
+<li>
+<p><a href="sessionids.html#SESSIONIDSUMQ"><i>UMQ Session IDs</i></a></p>
+</li>
+</ul>
+
+<p>When using <b class="APPLICATION">UMP</b> stores or <b class="APPLICATION">UMQ</b>
+queues, <b class="APPLICATION">UM</b> objects such as sources, receivers, and/or contexts
+must register with the stores or queues, at which time they acquire registration IDs. You
+can use Session IDs to manage these registration IDs.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SESSIONIDSUMP" name="SESSIONIDSUMP">8.1. <b
+class="APPLICATION">UMP</b> Session IDs</a></h2>
+
+<p>A <b class="APPLICATION">UMP</b> Session ID allows stores to identify an application's
+sources and receivers by automatically assigning them registration IDs. With session IDs,
+you do not need to directly assign registration IDs. You assign a <b
+class="APPLICATION">UMP</b> session ID by first setting option <a
+href="../Config/ultramessagingjmsoptions.html#CONNECTIONFACTORYUSEUMPSESSIONIDS"
+target="doccontent"><tt class="LITERAL">use_ump_session_ids</tt></a> to <tt
+class="LITERAL">True</tt>, then assigning the session ID with the <tt
+class="LITERAL">setClientID()</tt> method, or by setting the <a
+href="../Config/ultramessagingjmsoptions.html#CONNECTIONFACTORYCLIENTID"
+target="doccontent"><tt class="LITERAL">client_id</tt></a> option. Note that with this option
+enabled, <b class="APPLICATION">UM</b> ignores attempts to maintain registration IDs
+directly.</p>
+
+<p>When using this option, we recommend that you call the <tt
+class="LITERAL">setClientID()</tt> function after creating a Connection rather than
+setting the <tt class="LITERAL">client_id</tt> option, to ensure that each created
+connection has a unique client identifier .</p>
+
+<p>For more information about <b class="APPLICATION">UMP</b> registration IDs and session
+IDs, see <a href="../UME/ume.html#REGISTRATION-IDENTIFIERS" target="doccontent">Registration
+Identifiers</a>, and more specifically, <a
+href="../UME/designing-persistent-applications.html#SESSION-IDS" target="doccontent">Managing
+RegIDs with Session IDs</a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SESSIONIDSUMQ" name="SESSIONIDSUMQ">8.2. <b
+class="APPLICATION">UMQ</b> Session IDs</a></h2>
+
+<p>You can use <b class="APPLICATION">UMQ</b> Session IDs to manage context registration
+IDs and receiver assignment IDs. For expanded information on <b
+class="APPLICATION">UMQ</b> Session IDs, see <a href="../UME/ume.html#QUEUE-SES-IDS"
+target="doccontent">Queue Session IDs</a>.</p>
+
+<p>In configurations where a queue must always send messages, in order, to a specific
+assigned receiver, use <b class="APPLICATION">UMQ</b> Session IDs, as described in the
+next paragraphs. This ensures that if a receiver fails, the queue retains messages for
+that receiver until it recovers.</p>
+
+<p>To configure this scenario, perform the following steps:</p>
+
+<ol type="1">
+<li>
+<p>Set option <tt class="LITERAL">message-reassignment-timeout</tt> (see <a
+href="../UME/ume.html#UMESTORED-TOPIC-OPTIONS" target="doccontent">Options for a Topic's
+ume-attributes Element</a>) for the queue to a value of 0.</p>
+</li>
+
+<li>
+<p>Set option <a href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQSESSIONID"
+target="doccontent"><tt class="LITERAL">umq_session_id</tt></a> to a unique value. Do not
+replicate this value elsewhere, even for sending applications.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="messageselectors.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="request-replysample-apps.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Message Selectors</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Request/Reply Sample Applications</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

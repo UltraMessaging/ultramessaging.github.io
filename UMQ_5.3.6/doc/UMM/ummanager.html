@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Manager</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="NEXT" title="Using the UMM GUI" href="umm-gui.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Manager Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umm-gui.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMMANAGER" name="UMMANAGER">2. Ultra Messaging
+Manager</a></h1>
+
+<p>Some of the highlights of the <b class="APPLICATION">UM</b> Manager include the
+following.</p>
+
+<ul>
+<li>
+<p>Implements <b class="APPLICATION">UM</b> configuration with an XML file(s).</p>
+</li>
+
+<li>
+<p>Provides a graphical interface (GUI) to create and edit XML configuration files.</p>
+</li>
+
+<li>
+<p>Allows configuration by topic name, context name, event queue name, or wildcard
+pattern.</p>
+</li>
+
+<li>
+<p>Allows restriction of option values to a range or ranges of values.</p>
+</li>
+
+<li>
+<p>Allows you to restrict the creation of <b class="APPLICATION">UM</b> objects such as
+contexts, source topics, receiver topics, event queue names, or wildcard patterns.</p>
+</li>
+
+<li>
+<p>Lets you define configuration templates, which can overlap and override one
+another.</p>
+</li>
+
+<li>
+<p>Provides arbitrary strings of application-data at strategic points in the
+configuration.</p>
+</li>
+
+<li>
+<p>Retrieves configuration from a ummd, or via an API call, or via an environment
+variable (in that order).</p>
+</li>
+
+<li>
+<p>Preserves the existing <b class="APPLICATION">UM</b> configuration APIs (<code
+class="FUNCTION">lbm_config()</code>, <code class="FUNCTION">*_attr_setopt()</code>,
+etc).</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UM</b> Manager currently supports all <b
+class="APPLICATION">UM</b> features except the <a href="../Design/lbm-features.html#HFX"
+target="doccontent">Hot Failover Across Multiple Contexts</a> (HFX) feature.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UM</b> Manager does not provide policy
+enforcement for <a href="../Design/lbm-features.html#SPECTRUM" target="doccontent">Spectrum
+channels</a>. <b class="APPLICATION">UMM</b> rules apply to topic names, but not to
+Spectrum channels within a topic name. Moreover, you assign receivers to Spectrum
+channels with API calls and not <b class="APPLICATION">UM</b> configuration options.</p>
+</blockquote>
+</div>
+
+<div class="FIGURE"><a id="UMM-ARCHITECTURE" name="UMM-ARCHITECTURE"></a>
+<p><b>Figure 1. Ultra Messaging Manager Architecture</b></p>
+
+<img src="UMM_Architecture_JMS.png" align="CENTER" /></div>
+
+<p>UMM consists of the following components.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">UMM</b> GUI - Graphical user interface for creating and editing
+XML configuration files. The <b class="APPLICATION">UMM</b> GUI requires Java Version
+1.6.x. Communicates with <tt class="LITERAL">ummd</tt> via the UMM GUI API. See <a
+href="umm-gui.html"><i>Using the UMM GUI</i></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMM</b> GUI API - Used to create the UM GUI and provides all
+access to the configuration database. You can use the API to programmatically create and
+store configuration templates and application configurations, bypassing the <b
+class="APPLICATION">UMM</b> GUI. See <a href="umm-api.html"><i>Using the UMM API</i></a>
+and <a href="../UMMJavaAPI/html/index.html" target="doccontent">UMM Java API</a>.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">ummd</tt> - Serves XML configuration information and <b
+class="APPLICATION">UM</b> license information to <b class="APPLICATION">UM</b> and Ultra
+Messaging JMS applications. Communication between <tt class="LITERAL">ummd</tt> and your
+applications can be secured with SSL. See <a href="umm-daemon.html"><i>UM Manager
+Daemon</i></a>.</p>
+</li>
+
+<li>
+<p>Configuration Database - Database that stores all XML configuration files created in
+the UMM GUI or created programmatically. <b class="APPLICATION">UMM</b> supports <span
+class="TRADEMARK">MySQL</span>&#8482; and <span class="TRADEMARK">Oracle</span>&reg;
+databases using JDBC. See <a href="umm-daemon.html#UMM-DB"><i>Configuring the</i> UMM
+Database</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umm-gui.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Manager Guide</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Using the UMM GUI</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>tnwgd</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="The UM Gateway" href="index.html" />
+<link rel="UP" title="Running the UM Gateway" href="runningthegateway.html" />
+<link rel="PREVIOUS" title="Running the UM Gateway" href="runningthegateway.html" />
+<link rel="NEXT" title="UM Gateway Configuration" href="configuration.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="REFENTRY" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The UM Gateway</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="runningthegateway.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="configuration.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<h1><a id="TNWGD" name="TNWGD"></a>tnwgd</h1>
+
+<div class="REFNAMEDIV"><a id="AEN415" name="AEN415"></a>
+<h2>Name</h2>
+
+tnwgd&nbsp;--&nbsp;UM Gateway Daemon</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN418" name="AEN418"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">tnwgd</tt> [<code class="OPTION">-d</code>] [<code
+class="OPTION">--dump-dtd</code>] [<code class="OPTION">-h</code>] [<code
+class="OPTION">--help</code>] [<code class="OPTION">-f</code>] [<code
+class="OPTION">--detach</code>] [<code class="OPTION">-v</code>] [<code
+class="OPTION">--validate</code>] <tt class="REPLACEABLE"><i>configfile</i></tt></p>
+</div>
+
+<div class="REFSECT1"><a id="AEN439" name="AEN439"></a>
+<h2>Description</h2>
+
+<p>Gateway services are provided by <tt class="COMMAND">tnwgd</tt>. A gateway
+configuration file is required. The contents and format of the configuration file are
+documented separately.</p>
+
+<p>The DTD used to validate a configuration file will be dumped to standard output with
+<code class="OPTION">-d</code> or <code class="OPTION">--dump-dtd</code>. After dumping
+the DTD, <tt class="COMMAND">tnwgd</tt> exits instead of providing gateway services as
+usual.</p>
+
+<p>The configuration file will be validated against the DTD if either the <code
+class="OPTION">-v</code> or <code class="OPTION">--validate</code> options are given.
+After attempting validation, <tt class="COMMAND">tnwgd</tt> exits instead of providing
+gateway services as usual. The exit status will be 0 for a configuration file
+successfully validated by the DTD, and non-zero otherwise.</p>
+
+<p><tt class="COMMAND">tnwgd</tt> normally remains attached to the controlling terminal
+and runs until interrupted. If the <code class="OPTION">-f</code> or <code
+class="OPTION">--detach</code> options are given, <tt class="COMMAND">tnwgd</tt> instead
+forks, detaches the child from the controlling terminal, and the parent exits
+immediately.</p>
+
+<p>Command line help is available with <code class="OPTION">-h</code> or <code
+class="OPTION">--help</code>.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN459" name="AEN459"></a>
+<h2>Exit Status</h2>
+
+<p>The exit status from <tt class="COMMAND">tnwgd</tt> is 0 for success and some non-zero
+value for failure.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="runningthegateway.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="configuration.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Running the UM Gateway</td>
+<td width="34%" align="center" valign="top"><a href="runningthegateway.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">UM Gateway Configuration</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

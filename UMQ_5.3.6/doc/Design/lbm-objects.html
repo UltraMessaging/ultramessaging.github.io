@@ -1,0 +1,1449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>UM Objects</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="PREVIOUS" title="Fundamental Concepts" href="fundamental-concepts.html" />
+<link rel="NEXT" title="Architecture" href="architecture.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Concepts</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="fundamental-concepts.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="architecture.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="LBM-OBJECTS" name="LBM-OBJECTS">3. <b
+class="APPLICATION">UM</b> Objects</a></h1>
+
+<p>Many <b class="APPLICATION">UM</b> documents use the term <i
+class="FIRSTTERM">object</i>. Be aware that with the C API, they do <span
+class="emphasis"><i class="EMPHASIS">not</i></span> refer to formal objects as supported
+by C++ (i.e. class instances). The term is used here in an informal sense to denote an
+entity that can be created, used, and (usually) deleted, has functionality and data
+associated with it, and is managed through the API. The <i class="FIRSTTERM">handle</i>
+that is used to refer to an object is usually implemented as a pointer to a data
+structure (defined in <tt class="FILENAME">lbm.h</tt>), but the internal structure of an
+object is said to be <i class="FIRSTTERM">opaque</i>, meaning that application code
+should not read or write the structure directly.</p>
+
+<p>However, the <b class="APPLICATION">UM</b> Java JNI and C# .NET APIs <span
+class="emphasis"><i class="EMPHASIS">are</i></span> object oriented, with formal Java/C#
+objects. See the <a href="../JavaAPI/html/index.html" target="doccontent">Java
+documentation</a> and <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+documentation</a> for more information.</p>
+
+<p>This section discusses the following objects.</p>
+
+<ul>
+<li>
+<p><a href="lbm-objects.html#CONTEXT-OBJECT"><i>Context Object</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TOPIC-OBJECT"><i>Topic Object</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#SOURCE-OBJECT"><i>Source Object</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#RECEIVER-OBJECT"><i>Receiver Object</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#EVENT-QUEUE-OBJECT"><i>Event Queue Object</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-OBJECTS"><i>Transport Objects</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXT-OBJECT" name="CONTEXT-OBJECT">3.1. Context
+Object</a></h2>
+
+<p>A <b class="APPLICATION">UM</b> <i class="FIRSTTERM">context</i> object conceptually
+is an environment in which <b class="APPLICATION">UM</b> runs. An application creates a
+context, typically during initialization, and uses it for most other <b
+class="APPLICATION">UM</b> operations. In the process of creating the context, <b
+class="APPLICATION">UM</b> normally starts an independent thread (the <i
+class="FIRSTTERM">context thread</i>) to do the necessary background processing such as
+the following.</p>
+
+<ul>
+<li>
+<p>Topic resolution</p>
+</li>
+
+<li>
+<p>Enforce rate controls for sending messages</p>
+</li>
+
+<li>
+<p>Manage timers</p>
+</li>
+
+<li>
+<p>Manage state</p>
+</li>
+
+<li>
+<p>Implement <b class="APPLICATION">UM</b> protocols</p>
+</li>
+
+<li>
+<p>Manage transport sessions</p>
+</li>
+</ul>
+
+<p>You create a context with <code class="FUNCTION">lbm_context_create()</code>. Your
+application can give a context a name with <code
+class="FUNCTION">lbm_context_set_name()</code>. Context names are optional but should be
+unique. <b class="APPLICATION">UM</b> does not enforce uniqueness, rather issues a log
+warning if it encounters duplicate context names. Each context maintains a cache of other
+contexts it learns about through context advertisements, which <b
+class="APPLICATION">UM</b> sends according to <a
+href="../Config/majoroptions.html#CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_context_advertisement_interval</tt></a>.
+Context advertisement contains the context's name (if assigned), IP address, request port
+( <a href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPPORT" target="doccontent"><tt
+class="LITERAL">request_tcp_port</tt></a>) and a Context Instance ID - an internal value
+assigned by <b class="APPLICATION">UM</b>. If a context needs to know about a context
+that is not in its cache, it sends a context query, which the "unknown" context replies
+to with a context advertisement. This mechanism for naming and advertising <b
+class="APPLICATION">UM</b> contexts facilitates UM Gateway operation especially for <b
+class="APPLICATION">UMP</b> .</p>
+
+<p>One of the more important functions of a context is to hold configuration information
+that is of <i class="FIRSTTERM">context scope</i>. See the <a href="../Config/index.html"
+target="doccontent"><b class="APPLICATION">UM</b> Configuration Guide</a> for options that are
+of context scope.</p>
+
+<p>Most <b class="APPLICATION">UM</b> applications create a single context. However,
+there are some specialized circumstances where an application would create multiple
+contexts. For example, with appropriate configuration options, two contexts can provide
+separate topic name spaces. Also, multiple contexts can be used to portion available
+bandwidth across topic sub-spaces (in effect allocating more bandwidth to high-priority
+topics).</p>
+
+<div class="WARNING">
+<blockquote class="WARNING">
+<p><b>Warning</b> Regardless of the number of contexts created by your application, a
+good practice is to keep them open throughout the life of your application. Do not close
+them until you close the application.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TOPIC-OBJECT" name="TOPIC-OBJECT">3.2. Topic Object</a></h2>
+
+<p>A <b class="APPLICATION">UM</b> <i class="FIRSTTERM">topic</i> object is conceptually
+very simple; it is little more than a string (the topic name). However, <b
+class="APPLICATION">UM</b> uses the topic object to hold a variety of state information
+used by <b class="APPLICATION">UM</b> for internal processing. It is conceptually
+contained within a context. Topic objects must be bound to source or receiver
+objects.</p>
+
+<p>A data source creates a topic by calling <code
+class="FUNCTION">lbm_src_topic_alloc()</code>. A data receiver doesn't explicitly create
+topic objects; <b class="APPLICATION">UM</b> does that as topics are discovered and
+cached. Instead, the receiving application calls <code
+class="FUNCTION">lbm_rcv_topic_lookup()</code> to find the topic object.</p>
+
+<p>Unlike other objects, the topic object is not created or deleted by the application.
+<b class="APPLICATION">UM</b> creates, manages and deletes them internally as needed.
+However, the application does use them, so the API has functions that give the
+application access to them when needed (<code
+class="FUNCTION">lbm_src_topic_alloc()</code> and <code
+class="FUNCTION">lbm_rcv_topic_lookup()</code>).</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCE-OBJECT" name="SOURCE-OBJECT">3.3. Source
+Object</a></h2>
+
+<p>A <b class="APPLICATION">UM</b> <i class="FIRSTTERM">source</i> object is used to send
+messages to the topic that it is bound to. It is conceptually contained within a
+context.</p>
+
+<p>You create a source object by calling <code class="FUNCTION">lbm_src_create()</code>.
+One of its parameters is a topic object that must have been previously allocated. A
+source object can be bound to only one topic. (A topic object, however, can be bound to
+many sources provided the sources exist in separate contexts.)</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MESSAGEPROPERTIESOBJECT" name="MESSAGEPROPERTIESOBJECT">3.3.1.
+Message Properties Object</a></h3>
+
+<p>The message properties object allows your application to insert named, typed metadata
+in topic messages, and to implement functionality that depends on the message properties.
+<b class="APPLICATION">UM</b> allows eight property types: boolean, byte, short, int,
+long, float, double, and string.</p>
+
+<p>To use message properties, create a message properties object with <code
+class="FUNCTION">lbm_msg_properties_create()</code>. Then send topic messages with <code
+class="FUNCTION">lbm_src_send_ex()</code> (or <code
+class="FUNCTION">LBMSource.send()</code> in the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> or <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a>) passing the message properties object through <code
+class="FUNCTION">lbm_src_send_ex_info_t</code> object. Set the
+LBM_SRC_SEND_EX_FLAG_PROPERTIES flag on the <code
+class="FUNCTION">lbm_src_send_ex_info_t</code> object to indicate that it includes
+properties.</p>
+
+<p>Upon a receipt of a message with properties, your application can access the
+properties directly through the messages properties field, which is null if no properties
+are present. You can retrieve individual property values directly by name, or you can
+iterate over the collection of properties to determine which properties are present at
+runtime.</p>
+
+<p>The <b class="APPLICATION">UM</b> message property object supports the standard JMS
+message properties specification.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Message Properties Object does not support receivers using the
+arrival order without reassembly setting (option value = 0) of <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a>.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="PROPSPERFORMANCE" name="PROPSPERFORMANCE">3.3.1.1. Message
+Properties Performance Considerations</a></h4>
+
+<p>UM sends property names on the wire with every message. To reduce bandwidth
+requirements, minimize the length and number of properties.</p>
+
+<p>When coding sources, consider the following sequence of guidelines:</p>
+
+<ol type="1">
+<li>
+<p>Allocate a data structure to store message properties objects. This can be a
+thread-local structure if you use a relatively small number of threads, or a thread-safe
+pool of objects.</p>
+</li>
+
+<li>
+<p>Before sending, retrieve a message properties object from the pool. If an object is
+not available, create a new object.</p>
+</li>
+
+<li>
+<p>Set properties for the message.</p>
+</li>
+
+<li>
+<p>Send the message using the appropriate API call, passing in the properties object.</p>
+</li>
+
+<li>
+<p>After the send completes, clear the message properties object and return it to the
+pool.</p>
+</li>
+</ol>
+
+<p>When coding receivers in Java or .NET, call Dispose() on messages before returning
+from the application callback. This allows UM to internally recycle objects, and limits
+object allocation.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCE-CONFIG-TRANSPORT-SESSIONS"
+name="SOURCE-CONFIG-TRANSPORT-SESSIONS">3.3.2. Source Configuration and Transport
+Sessions</a></h3>
+
+<p>As with contexts, a source holds configuration information that is of <i
+class="FIRSTTERM">source scope</i>. This includes network options, operational options
+and reliability options for LBT-RU and LBT-RM. For example, each source can use a
+different transport and would therefore configure a different network address to which to
+send topic messages. See the <a href="../Config/index.html" target="doccontent"><b
+class="APPLICATION">UM</b> Configuration Guide</a> for source configuration options.</p>
+
+<p>As stated in <a href="fundamental-concepts.html#TRANSPORTS"><i>Transports</i></a>,
+many topics (and therefore sources) can be mapped to a single transport. Many of the
+configuration options for sources actually control or influence transport session
+activity. If many sources are sending topic messages over a single transport session
+(TCP, LBT-RU or LBT-RM), <b class="APPLICATION">UM</b> only uses the configuration
+options for the first source assigned to the transport.</p>
+
+<p>For example, if the first source to use a LBT-RM transport session sets the <a
+href="../Config/transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMTRANSMISSIONWINDOWSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_transmission_window_size</tt></a> to
+24 MB and the second source sets the same option to 2 MB, UMS assigns 24 MB to the
+transport session's <a
+href="../Config/transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMTRANSMISSIONWINDOWSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_transmission_window_size</tt></a>.</p>
+
+<p>The <a href="../Config/index.html" target="doccontent"><b class="APPLICATION">UM</b>
+Configuration Guide</a> identifies the source configuration options that may be ignored
+when <b class="APPLICATION">UM</b> assigns the source to an existing transport session.
+Log file warnings also appear when <b class="APPLICATION">UM</b> ignores source
+configuration options.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ZOD-SOURCE" name="ZOD-SOURCE">3.3.3. Zero Object Delivery
+(Source)</a></h3>
+
+<p>The Zero Object Delivery (ZOD) feature for Java and .NET lets sources deliver events
+to an application with no per-event object creation. (ZOD can also be utilized with
+context source events.) See <a href="lbm-objects.html#ZOD-RECEIVER"><i>Zero Object
+Delivery (ZOD)</i></a> for information on how to employ ZOD.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVER-OBJECT" name="RECEIVER-OBJECT">3.4. Receiver
+Object</a></h2>
+
+<p>A <b class="APPLICATION">UM</b> <i class="FIRSTTERM">receiver</i> object is used to
+receive messages from the topic that it is bound to. It is conceptually contained within
+a context. Messages are delivered to the application by an application callback function,
+specified when the receiver object is created.</p>
+
+<p>You create a receiver object by calling <code
+class="FUNCTION">lbm_rcv_create()</code>. One of its parameters is a topic object that
+must have been previously looked up. A receiver object can be bound to only one topic.
+Multiple receiver objects can be created for the same topic.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVER-CONFIG-TRANSPORT-SESSIONS"
+name="RECEIVER-CONFIG-TRANSPORT-SESSIONS">3.4.1. Receiver Configuration and Transport
+Sessions</a></h3>
+
+<p>A receiver holds configuration information that is of <i class="FIRSTTERM">receiver
+scope</i>. This includes network options, operational options and reliability options for
+LBT-RU and LBT-RM. See the <a href="../Config/index.html" target="doccontent"><b
+class="APPLICATION">UM</b> Configuration Guide</a> for receiver configuration
+options.</p>
+
+<p>As stated above in <a
+href="lbm-objects.html#SOURCE-CONFIG-TRANSPORT-SESSIONS"><i>Source Configuration and
+Transport Sessions</i></a>, many topics (and therefore receivers) can be mapped to a
+single transport. As with source configuration options, many receiver configuration
+options control or influence transport session activity. If many receivers are receiving
+topic messages over a single transport session (TCP, LBT-RU or LBT-RM), <b
+class="APPLICATION">UM</b> only uses the configuration options for the first receiver
+assigned to the transport.</p>
+
+<p>For example, if the first receiver to use a LBT-RM transport session sets the <a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_nak_generation_interval</tt></a> to 10
+seconds and the second receiver sets the same option to 2 seconds, UMS assigns 10 seconds
+to the transport session's <a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_nak_generation_interval</tt></a>.</p>
+
+<p>The <a href="../Config/index.html" target="doccontent"><b class="APPLICATION">UM</b>
+Configuration Guide</a> identifies the receiver configuration options that may be ignored
+when <b class="APPLICATION">UM</b> assigns the receiver to an existing transport session.
+Log file warnings also appear when <b class="APPLICATION">UM</b> ignores receiver
+configuration options.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="WILDCARD-RECEIVER" name="WILDCARD-RECEIVER">3.4.2. Wildcard
+Receiver</a></h3>
+
+<p>A wildcard receiver object is created by calling <code
+class="FUNCTION">lbm_wildcard_rcv_create()</code>. Instead of a topic object, the caller
+supplies a pattern which is used by <b class="APPLICATION">UM</b> to match multiple
+topics. Since the application doesn't explicitly lookup the topics, the topic attribute
+is passed into <code class="FUNCTION">lbm_wildcard_rcv_create()</code> so that options
+can be set. Also, wildcarding has its own set of options (e.g. pattern type).</p>
+
+<p>The pattern supplied for wildcard matching is normally a general regular expression.
+There are two types of supported regular expressions that differ somewhat in the syntax
+of the patterns (see the <code class="PARAMETER">wildcard_receiver pattern_type</code>
+option in the <a href="../Config/index.html" target="doccontent"><b class="APPLICATION">UM</b>
+Configuration Guide</a>). Those types are:</p>
+
+<ol type="1">
+<li>
+<p><code class="PARAMETER">PCRE</code> - (recommended) the same form of regular
+expressions recognized by Perl; see <a href="http://perldoc.perl.org/perlrequick.html"
+target="doccontent">http://perldoc.perl.org/perlrequick.html</a> for details, or</p>
+</li>
+
+<li>
+<p><code class="PARAMETER">regex</code> - POSIX extended regular expressions; see <a
+href="http://www.freebsd.org/cgi/man.cgi?query=re_format&amp;section=7"
+target="doccontent">http://www.freebsd.org/cgi/man.cgi?query=re_format&amp;section=7</a> for
+details. Note that <code class="PARAMETER">regex</code> is not supported on all
+platforms.</p>
+</li>
+</ol>
+
+<p>A third type of wildcarding is <code class="PARAMETER">appcb</code>, in which the
+application defines its own algorithm to select topic names. When <code
+class="PARAMETER">appcb</code> is configured, the <code class="PARAMETER">pattern</code>
+parameter of <code class="FUNCTION">lbm_wildcard_rcv_create()</code> is ignored. Instead,
+an application callback function is configured (see the <code
+class="PARAMETER">wildcard_receiver pattern_callback</code> option in the <a
+href="../Config/index.html" target="doccontent"><b class="APPLICATION">UM</b> Configuration
+Guide</a>). <b class="APPLICATION">UM</b> then calls that application function with a
+topic name and the function can use whatever method is appropriate to decide if the topic
+should be included with the receiver.</p>
+
+<p>Be aware that some platforms may not support all of the regular expression wildcard
+types. For example, <b class="APPLICATION">UM</b> does not support the use of Unicode
+PCRE characters in wildcard receiver patterns on any system that communicates with a
+HP-UX or AIX system. See the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">UM</b> Knowledgebase</a> article, <b
+class="APPLICATION">Platform-Specific Dependencies</b> for details. Also note that if <b
+class="APPLICATION">UM</b> topic resolution is configured to turn off source
+advertisements, then wildcard receivers <span class="emphasis"><i
+class="EMPHASIS">must</i></span> be configured for <code class="PARAMETER">PCRE</code>.
+The other wildcard types do not support receiver queries for topic resolution.</p>
+
+<p>For an example of wildcard usage, see <a href="../example/lbmwrcv.c"
+target="doccontent">lbmwrcv.c</a></p>
+
+<p>Users of <span class="TRADEMARK">TIBCO</span>&reg; <b class="APPLICATION"><span
+class="TRADEMARK">SmartSockets</span>&#8482;</b> will want to look at the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">UM</b> Knowledgebase</a> article, <b
+class="APPLICATION">Wildcard Topic Regular Expressions</b>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ZOD-RECEIVER" name="ZOD-RECEIVER">3.4.3. Zero Object Delivery
+(ZOD)</a></h3>
+
+<p>The Zero Object Delivery (ZOD) feature for Java and .NET lets receivers (and sources)
+deliver messages and events to an application with no per-message or per-event object
+creation. This facilitates source/receiver applications that would require little to no
+garbage collection at runtime, producing lower and more consistent message latencies.</p>
+
+<p>To take advantage of this feature, you must call <code
+class="FUNCTION">dispose()</code> on a message to mark it as available for reuse. To
+access data from the message when using ZOD, you use a specific pair of LBMMessage-class
+methods (see below) to extract message data directly from the message, rather than the
+standard <code class="FUNCTION">data()</code> method. Using the latter method creates a
+byte array, and consequently, an object. It is the subsequent garbage collecting to
+recycle those objects that can affect performance.</p>
+
+<p>For using ZOD, the LBMMessage class methods are:</p>
+
+<ul>
+<li>
+<p>Java: <code class="FUNCTION">dispose()</code>, <code
+class="FUNCTION">dataBuffer()</code>, and <code class="FUNCTION">dataLength()</code></p>
+</li>
+
+<li>
+<p>.NET: <code class="FUNCTION">dispose()</code>, <code
+class="FUNCTION">dataPointer()</code>, and <code class="FUNCTION">length()</code></p>
+</li>
+</ul>
+
+<p>On the other hand, you may need to keep the message as an object for further use after
+callback. In this case, ZOD is not appropriate and you must call <code
+class="FUNCTION">promote()</code> on the message, and also you can use <code
+class="FUNCTION">data()</code> to extract message data.</p>
+
+<p>For more details see the <a href="../JavaAPI/html/index.html" target="doccontent">Java API
+Overview</a> or the <a
+href="../DotNetAPI/doc/html/76efb44a-dc57-b7bc-b916-37d41144adc4.htm" target="doccontent">.Net
+LBMMessage Class description</a>. This feature does not apply to the C API.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENT-QUEUE-OBJECT" name="EVENT-QUEUE-OBJECT">3.5. Event Queue
+Object</a></h2>
+
+<p>A <b class="APPLICATION">UM</b> <i class="FIRSTTERM">event queue</i> object is
+conceptually a managed data and control buffer. <b class="APPLICATION">UM</b> delivers
+events (including received messages) to your application by means of application callback
+functions. Without event queues, these callback functions are called from the <b
+class="APPLICATION">UM</b> context thread, which places the following restrictions on the
+application function being called:</p>
+
+<ol type="1">
+<li>
+<p>The application function is not allowed to make certain API calls (mostly having to do
+with creating or deleting <b class="APPLICATION">UM</b> objects).</p>
+</li>
+
+<li>
+<p>The application function must execute very quickly <span class="emphasis"><i
+class="EMPHASIS">without</i></span> blocking.</p>
+</li>
+
+<li>
+<p>The application does not have control over when the callback executes. It can't
+prevent callbacks during critical sections of application code.</p>
+</li>
+</ol>
+
+<p>Some circumstances require the use of <b class="APPLICATION">UM</b> event queues. As
+mentioned above, if the receive callback needs to use <b class="APPLICATION">UM</b>
+functions that create or delete objects. Or if the receive callback performs operations
+that potentially block. You may also want to use an event queue if the receive callback
+is CPU intensive and can make good use of multiple CPU hardware. Not using an event queue
+provides the lowest latency, however, high message rates or extensive message processing
+can negate the low latency benefit if the context thread continually blocks.</p>
+
+<p>Of course, your application can create its own queues, which can be bounded, blocking
+queues or unbounded, non-blocking queues. For transports that are flow-controlled, a
+bounded, blocking application queue preserves flow control in your messaging layer
+because the effect of a filled or blocked queue extends through the message path all the
+way to source. The speed of the application queue becomes the speed of the source.</p>
+
+<p><b class="APPLICATION">UM</b> event queues are unbounded, non-blocking queues and
+provide the following unique features.</p>
+
+<ol type="1">
+<li>
+<p>Your application can set a queue size threshold with <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUESIZEWARNING"
+target="doccontent">queue_size_warning</a> and be warned when the queue contains too many
+messages.</p>
+</li>
+
+<li>
+<p>Your application can set a delay threshold with <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUEDELAYWARNING"
+target="doccontent">queue_delay_warning</a> and be warned when events have been in the queue
+for too long.</p>
+</li>
+
+<li>
+<p>The application callback function has no <b class="APPLICATION">UM</b> API
+restrictions.</p>
+</li>
+
+<li>
+<p>Your application can control exactly when <b class="APPLICATION">UM</b> delivers
+queued events with <code class="FUNCTION">lbm_event_dispatch()</code>. And you can have
+control return to your application either when specifically asked to do so (by calling
+<code class="FUNCTION">lbm_event_dispatch_unblock()</code>), or optionally when there are
+no events left to deliver.</p>
+</li>
+
+<li>
+<p>Your application can take advantage of parallel processing on multiple processor
+hardware since <b class="APPLICATION">UM</b> processes asynchronously on a separate
+thread from your application's processing of received messages. By using multiple
+application threads to dispatch an event queue, or by using multiple event queues, each
+with its own dispatch thread, your application can further increase parallelism.</p>
+</li>
+</ol>
+
+<p>You create an <b class="APPLICATION">UM</b> event queue in the <a
+href="../API/index.html" target="doccontent">C API</a> by calling <code
+class="FUNCTION">lbm_event_queue_create()</code>. In the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>, use the <tt
+class="LITERAL">LBMEventQueue</tt> class. An event queue object also holds configuration
+information that is of <i class="FIRSTTERM">event queue scope</i>. See <a
+href="../Config/eventqueueoptions.html" target="doccontent">Event Queue Options</a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TRANSPORT-OBJECTS" name="TRANSPORT-OBJECTS">3.6. Transport
+Objects</a></h2>
+
+<p></p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-TCP"><i>Transport TCP</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-TCP-LB"><i>Transport TCP-LB</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-LBT-RU"><i>Transport LBT-RU</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-LBT-RM"><i>Transport LBT-RM</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-LBT-IPC"><i>Transport LBT-IPC</i></a></p>
+</li>
+
+<li>
+<p><a href="lbm-objects.html#TRANSPORT-LBT-RDMA"><i>Transport LBT-RDMA</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-TCP" name="TRANSPORT-TCP">3.6.1. Transport
+TCP</a></h3>
+
+<p>The <i class="FIRSTTERM">TCP UMS transport</i> uses normal TCP connections to send
+messages from sources to receivers. This is the default transport when it's not
+explicitly set. TCP is a good choice when:</p>
+
+<ol type="1">
+<li>
+<p>Flow control is desired. I.e. when one or more receivers cannot keep up, it is desired
+to slow down the source. This is a "better late than never" philosophy.</p>
+</li>
+
+<li>
+<p>Equal bandwidth sharing with other TCP traffic is desired. I.e. when it is desired
+that the source slow down when general network traffic becomes heavy.</p>
+</li>
+
+<li>
+<p>There are few receivers listening to each topic. Multiple receivers for a topic
+requires multiple transmissions of each message, which places a scaling burden on the
+source machine and the network.</p>
+</li>
+
+<li>
+<p>The application is not sensitive to latency. Use of TCP as a messaging transport can
+result in unbounded latency.</p>
+</li>
+
+<li>
+<p>The messages must pass through a restrictive firewall which does not pass multicast
+traffic.</p>
+</li>
+</ol>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> TCP transports may be distributed to receiving threads. See <a
+href="fundamental-concepts.html#MULTITHREADED-TRANSPORTS"><i>Multi-Transport
+Threads</i></a> for more information.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-TCP-LB" name="TRANSPORT-TCP-LB">3.6.2. Transport
+TCP-LB</a></h3>
+
+<p>The <i class="FIRSTTERM">TCP-LB UMS transport</i> is a variation on the TCP transport
+which adds latency-bounded behavior. The source is not flow-controlled as a result of
+network congestion or slow receivers. So, for applications that require a "better never
+than late" philosophy, TCP-LB can be a better choice.</p>
+
+<p>However, latency cannot be controlled as tightly as with UDP-based transports (see
+below). In particular, latency can still be introduced because TCP-LB shares bandwidth
+equally with other TCP traffic. It also has the same scaling issues as TCP when multiple
+receivers are present for each topic.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> TCP-LB transports may be distributed to receiving threads. See <a
+href="fundamental-concepts.html#MULTITHREADED-TRANSPORTS"><i>Multi-Transport
+Threads</i></a> for more information.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-LBT-RU" name="TRANSPORT-LBT-RU">3.6.3. Transport
+LBT-RU</a></h3>
+
+<p>The <i class="FIRSTTERM">LBT-RU UMS transport</i> adds reliable delivery to unicast
+UDP to send messages from sources to receivers. This provides greater flexibility in the
+control of latency. For example, the application can further limit latency by allowing
+the use of <i class="FIRSTTERM">arrival order delivery</i>. See the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">UM</b> Knowledgebase</a> FAQ, <span
+class="emphasis"><i class="EMPHASIS">Why can't I have low-latency delivery and in-order
+delivery?</i></span>. Also, LBT-RU is less sensitive to overall network load; it uses
+source rate controls to limit its maximum send rate.</p>
+
+<p>Since it is based on unicast addressing, LBT-RU can pass through most firewalls.
+However, it has the same scaling issues as TCP when multiple receivers are present for
+each topic.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> LBT-RU can use Datagram Bypass Layer (DBL) acceleration in conjunction
+with DBL-enabled <a href="http://www.myri.com" target="doccontent"><span
+class="TRADEMARK">Myricom</span>&reg;</a> 10-Gigabit Ethernet NICs for Linux and <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg;. DBL
+is a kernel-bypass technology that accelerates sending and receiving UDP traffic. See <a
+href="../Config/transportaccelerationoptions.html" target="doccontent">Transport Acceleration
+Options</a> for more information.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> LBT-RU transports may be distributed to receiving threads. See <a
+href="fundamental-concepts.html#MULTITHREADED-TRANSPORTS"><i>Multi-Transport
+Threads</i></a> for more information.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-LBT-RM" name="TRANSPORT-LBT-RM">3.6.4. Transport
+LBT-RM</a></h3>
+
+<p>The <i class="FIRSTTERM">LBT-RM UMS transport</i> adds <i class="FIRSTTERM">reliable
+multicast</i> to UDP to send messages. This provides the maximum flexibility in the
+control of latency. In addition, LBT-RM can scale effectively to large numbers of
+receivers per topic using network hardware to duplicate messages only when necessary at
+wire speed. One limitation is that multicast is often blocked by firewalls.</p>
+
+<p>LBT-RM is a UDP-based, reliable multicast protocol designed with the use of <b
+class="APPLICATION">UM</b> and its target applications specifically in mind. The protocol
+is very similar to <a href="http://www.ietf.org/rfc/rfc3208.txt" target="doccontent">PGM</a>,
+but with changes to aid low latency messaging applications.</p>
+
+<ul>
+<li>
+<p>Topic Mapping - Several topics may map onto the same LBT-RM session. Thus a
+multiplexing mechanism to LBT-RM is used to distinguish topic level concerns from LBT-RM
+session level concerns (such as retransmissions, etc.). Each message to a topic is given
+a sequence number in addition to the sequence number used at the LBT-RM session level for
+packet retransmission.</p>
+</li>
+
+<li>
+<p>Negative Acknowledgments (NAKs) - LBT-RM uses NAKs as PGM does. NAKs are unicast to
+the sender. For simplicity, LBT-RM uses a similar NAK state management approach as PGM
+specifies.</p>
+</li>
+
+<li>
+<p>Time Bounded Recovery - LBT-RM allows receivers to specify a a maximum time to wait
+for a lost piece of data to be retransmitted. This allows a recovery time bound to be
+placed on data that has a definite lifetime of usefulness. If this time limit is exceeded
+and no retransmission has been seen, then the piece of data is marked as an unrecoverable
+loss and the application is informed. The data stream may continue and the unrecoverable
+loss will be ordered as a discrete event in the data stream just as a normal piece of
+data.</p>
+</li>
+
+<li>
+<p>Flexible Delivery Ordering - LBT-RM receivers have the option to have the data for an
+individual topic delivered "in order" or "arrival order". Messages delivered "in order"
+will arrive in sequence number order to the application. Thus loss may delay messages
+from being delivered until the loss is recovered or unrecoverable loss is determined.
+With "arrival-order" delivery, messages will arrive at the application as they are
+received by the LBT-RM session. Duplicates are ignored and lost messages will have the
+same recovery methods applied, but the ordering may not be preserved. Delivery order is a
+topic level concern. Thus loss of messages in one topic will not interfere or delay
+delivery of messages in another topic.</p>
+</li>
+
+<li>
+<p>Session State Advertisements - In PGM, SPM packets are used to advertise session state
+and to perform PGM router assist in the routers. For LBT-RM, these advertisements are
+only used when data is not flowing. Once data stops on a session, advertisements are sent
+with an exponential back-off (to a configurable maximum interval) so that the bandwidth
+taken up by the session is minimal.</p>
+</li>
+
+<li>
+<p>Sender Rate Control - LBT-RM can control a sender's rate of injection of data into the
+network by use of a rate limiter. This rate is configurable and will back pressure the
+sender, not allowing the application to exceed the rate limit it has specified. In
+addition, LBT-RM senders have control over the rate of retransmissions separately from
+new data. This allows sending application to guarantee a minimum transmission rate even
+in the face of massive loss at some or all receivers.</p>
+</li>
+
+<li>
+<p>Low Latency Retransmissions - LBT-RM senders do not mandate the use of NCF packets as
+PGM does. Because low latency retransmissions is such an important feature, LBT-RM
+senders by default send retransmissions immediately upon receiving a NAK. After sending a
+retransmission, the sender ignores additional NAKs for the same data and does not
+repeatedly send NCFs. The oldest data being requested in NAKs has priority over newer
+data so that if retransmissions are rate controlled, then LBT-RM sends the most important
+retransmissions as fast as possible.</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> LBT-RM can use Datagram Bypass Layer (DBL) acceleration in conjunction
+with DBL-enabled <a href="http://www.myri.com" target="doccontent"><span
+class="TRADEMARK">Myricom</span></a> 10-Gigabit Ethernet NICs for Linux and <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>. DBL is a
+kernel-bypass technology that accelerates sending and receiving UDP traffic. See <a
+href="../Config/transportaccelerationoptions.html" target="doccontent">Transport Acceleration
+Options</a> for more information.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> LBT-RM transports may be distributed to receiving threads. See <a
+href="fundamental-concepts.html#MULTITHREADED-TRANSPORTS"><i>Multi-Transport
+Threads</i></a> for more information.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-LBT-IPC" name="TRANSPORT-LBT-IPC">3.6.5. Transport
+LBT-IPC</a></h3>
+
+<p>The LBT-IPC transport is an Interprocess Communication (IPC) <b
+class="APPLICATION">UM</b> transport that allows sources to publish topic messages to a
+shared memory area managed as a static ring buffer from which receivers can read topic
+messages. Message exchange takes place at memory access speed which can greatly improve
+throughput when sources and receivers can reside on the same host. LBT-IPC can be either
+source-paced or receiver-paced.</p>
+
+<p>The LBT-IPC transport uses a "lock free" design that eliminates calls to the Operating
+System and allows receivers quicker access to messages. An internal validation method
+enacted by receivers while reading messages from the Shared Memory Area ensures message
+data integrity. The validation method compares IPC header information at different times
+to ensure consistent, and therefore, valid message data. Sources can send individual
+messages or a batch of messages, each of which possesses an IPC header.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Transport LBT-IPC is not supported on the <span class="TRADEMARK">HP
+NonStop</span>&reg; platform.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="LBT-IPCSHAREDMEMORYAREA"
+name="LBT-IPCSHAREDMEMORYAREA">3.6.5.1. LBT-IPC Shared Memory Area</a></h4>
+
+<p>The following diagram illustrates the Shared Memory Area used for LBT-IPC.</p>
+
+<div class="FIGURE"><a id="LBT-IPC-SHARED-MEMORY-LAYOUT"
+name="LBT-IPC-SHARED-MEMORY-LAYOUT"></a>
+<p><b>Figure 1. LBT-IPC Shared Memory Layout</b></p>
+
+<p><img src="IPC_Shared_Memory_Layout.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="LBT-IPC-HEADER" name="LBT-IPC-HEADER">3.6.5.1.1.
+Header</a></h5>
+
+<p>The Header contains information about the shared memory area resource.</p>
+
+<ul>
+<li>
+<p>Shared Lock - shared receiver pool semaphore (mutex on <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>) to ensure
+mutually exclusive access to the receiver pool.</p>
+</li>
+
+<li>
+<p>Version - LBT-IPC version number which is independent of any <b
+class="APPLICATION">UM</b> product version number.</p>
+</li>
+
+<li>
+<p>Buffer Length - size of shared memory area.</p>
+</li>
+
+<li>
+<p>Receiver Map Size - Number of entries available in the Receiver Pool which you
+configure with the source option, <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCMAXIMUMRECEIVERSPERTRANSPORT"
+ target="doccontent"><tt
+class="LITERAL">transport_lbtipc_maximum_receivers_per_transport</tt></a>.</p>
+</li>
+
+<li>
+<p>New Client Flag - set by the receiver after setting its Receiver Pool entry and before
+releasing the Shared Lock. Indicates to the source that a new receiver has joined the
+transport.</p>
+</li>
+
+<li>
+<p>Receiver Paced - Indicates if you've configured the transport for receiver-pacing.</p>
+</li>
+
+<li>
+<p>Old Message Start - pointer indicating messages that may be reclaimed.</p>
+</li>
+
+<li>
+<p>New Message Start - pointer indicating messages that may be read.</p>
+</li>
+
+<li>
+<p>New Message End - pointer indicating the end of messages that may be read, which may
+not be the same as the Old Message Start pointer.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="LBT-IPC-RECEIVER-POOL" name="LBT-IPC-RECEIVER-POOL">3.6.5.1.2.
+Receiver Pool</a></h5>
+
+<p>The receiver pool is a collection of receiver connections maintained in the Shared
+Memory Area. The source reads this information if you've configured receiver-pacing to
+determine if a message can be reclaimed or to monitor a receiver. Each receiver is
+responsible for finding a free entry in the pool and marking it as used.</p>
+
+<ul>
+<li>
+<p>In Use flag - set by receiver while holding the Shared Lock, which effectively
+indicates the receiver has joined the transport session. Using the Shared Lock ensures
+mutually exclusive access to the receiver connection pool.</p>
+</li>
+
+<li>
+<p>Oldest Message Start - set by receiver after reading a message. If you enable
+receiver-pacing the source reads it to determine if message memory can be reclaimed.</p>
+</li>
+
+<li>
+<p>Monitor Shared Lock - checked by the source to monitor a receiver. (semaphore on
+Linux, event on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span>) See <a
+href="lbm-objects.html#RECEIVER-HEALTH"><i>Receiver Monitoring</i></a>.</p>
+</li>
+
+<li>
+<p>Signal Shared Lock - Set by source to notify receiver that new data has been written.
+(semaphore on Linux, mutex on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span>) If you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCRECEIVERTHREADBEHAVIOR"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_receiver_thread_behavior</tt></a> to
+<tt class="LITERAL">busy_wait</tt>, the receiver sets this semaphore to zero and the
+source does not notify.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="LBT-IPC-MESSAGE-BUFFER"
+name="LBT-IPC-MESSAGE-BUFFER">3.6.5.1.3. Source-to-Receiver Message Buffer</a></h5>
+
+<p>This area contains message data. You specify the size of the shared memory area with a
+source option, <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCTRANSMISSIONWINDOWSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_transmission_window_size</tt></a>.
+The size of the shared memory area cannot exceed your platform's shared memory area
+maximum size. <b class="APPLICATION">UM</b> stores the memory size in the shared memory
+area's header. The Old Message Start and New Message Start point to positions in this
+buffer.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCES-LBT-IPC" name="SOURCES-LBT-IPC">3.6.5.2. Sources and
+LBT-IPC</a></h4>
+
+<p>When you create a source with <tt class="LITERAL">lbm_src_create()</tt> and you've set
+the transport option to IPC, <b class="APPLICATION">UM</b> creates a shared memory area
+object. <b class="APPLICATION">UM</b> assigns one of the transport IDs to this area
+specified with the <b class="APPLICATION">UM</b> context configuration options, <a
+href="../Config/transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDHIGH"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_id_high</tt></a> and <a
+href="../Config/transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDLOW"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_id_low</tt></a>. You can also specify
+a shared memory location outside of this range with a source configuration option, <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCID"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_id</tt></a>, to prioritize certain
+topics, if needed.</p>
+
+<p><b class="APPLICATION">UM</b> names the shared memory area object according to the
+format, <tt class="LITERAL">LBTIPC_%x_%d</tt> where <tt class="LITERAL">%x</tt> is the
+hexadecimal Session ID and <tt class="LITERAL">%d</tt> is the decimal Transport ID.
+Examples names are <tt class="LITERAL">LBTIPC_42792ac_20000 or
+LBTIPC_66e7c8f6_20001</tt>. Receivers access a shared memory area with this object name
+to receive (read) topic messages.</p>
+
+<p>Using the configuration option, <a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a>, you can choose <tt
+class="LITERAL">source-paced</tt> or <tt class="LITERAL">receiver-paced</tt> message
+transport. See <a href="../Config/transportlbt-ipcoperationoptions.html"
+target="doccontent">Transport LBT-IPC Operation Options</a>.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="SENDING-LBT-IPC" name="SENDING-LBT-IPC">3.6.5.2.1. Sending
+over LBT-IPC</a></h5>
+
+<p>To send on a topic (write to the shared memory area) the source writes to the Shared
+Memory Area starting at the Oldest Message Start position. It then increments each
+receiver's Signal Lock if the receiver has not set this to zero.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVERS-LBT-IPC" name="RECEIVERS-LBT-IPC">3.6.5.3. Receivers
+and LBT-IPC</a></h4>
+
+<p>Receivers operate identically to receivers for all other <b class="APPLICATION">UM</b>
+transports. A receiver can actually receive topic messages from a source sending on its
+topic over TCP, LBT-RU or LBT-RM and from a second source sending on LBT-IPC with out any
+special configuration. The receiver learns what it needs to join the LBT-IPC session
+through the topic advertisement.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="TOPIC-RESOLUTION-LBT-IPC"
+name="TOPIC-RESOLUTION-LBT-IPC">3.6.5.3.1. Topic Resolution and LBT-IPC</a></h5>
+
+<p>Topic resolution operates identically with LBT-IPC as other <b
+class="APPLICATION">UM</b> transports albeit with a new advertisement type, <tt
+class="LITERAL">LBMIPC</tt>. Advertisements for LBT-IPC contain the Transport ID, Session
+ID and Host ID. Receivers obtain LBT-IPC advertisements in the normal manner (resolver
+cache, advertisements received on the multicast resolver address:port and responses to
+queries.) Advertisements for topics from LBT-IPC sources can reach receivers on different
+machines if they use the same topic resolution configuration, however, those receivers
+silently ignore those advertisements since they cannot join the IPC transport. See <a
+href="lbm-objects.html#SENDING-BOTH-RECEIVERS"><i>Sending to Both Local and Remote
+Receivers</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="RECEIVER-PACING" name="RECEIVER-PACING">3.6.5.3.2. Receiver
+Pacing</a></h5>
+
+<p>Although receiver pacing is a source behavior option, some different things must
+happen on the receiving side to ensure that a source does not reclaim (overwrite) a
+message until all receivers have read it. When you use the default <a
+href="../Config/transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> (<tt
+class="LITERAL">source-paced</tt>), each receiver's Oldest Message Start position in the
+Shared Memory Area is private to each receiver. The source writes to the Shared Memory
+Area independently of receivers' reading. For receiver-pacing, however, all receivers
+share their Oldest Message Start position with the source. The source will not reclaim a
+message until all receivers have successfully read that message.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="RECEIVER-HEALTH" name="RECEIVER-HEALTH">3.6.5.3.3. Receiver
+Monitoring</a></h5>
+
+<p>To ensure that a source does not wait on a receiver that is not running, the source
+monitors a receiver via the Monitor Shared Lock allocated to each receiving context.
+(This lock is in addition to the semaphore already allocated for signaling new data.) A
+new receiver takes and holds the Monitor Shared Lock and releases the resource when it
+dies. If the source is able to obtain the resource, it knows the receiver has died. The
+source then clears the receiver's In Use flag in it's Receiver Pool Connection.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SIMILARITIES-LBM-TRANSPORTS"
+name="SIMILARITIES-LBM-TRANSPORTS">3.6.5.4. Similarities with Other UM
+Transports</a></h4>
+
+<p>Although no actual network transport occurs, <b class="APPLICATION">UM</b> functions
+in much the same way as if you send packets across the network as with other <b
+class="APPLICATION">UM</b> transports.</p>
+
+<ul>
+<li>
+<p>If you use a range of LBT-IPC transport IDs, <b class="APPLICATION">UM</b> assigns
+multiple topics sent by multiple sources to all the transport sessions in a round robin
+manner just like other <b class="APPLICATION">UM</b> transports.</p>
+</li>
+
+<li>
+<p>Transport sessions assume the configuration option values of the first source assigned
+to the transport session.</p>
+</li>
+
+<li>
+<p>Sources are subject to message batching.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="DIFFERENCES-LBM-TRANSPORTS"
+name="DIFFERENCES-LBM-TRANSPORTS">3.6.5.5. Differences from Other UM Transports</a></h4>
+
+<ul>
+<li>
+<p>Unlike LBT-RM which uses a transmission window to specify a buffer size to retain
+messages in case they must be retransmitted, LBT-IPC uses the transmission window option
+to establish the size of the shared memory.</p>
+</li>
+
+<li>
+<p>LBT-IPC does not retransmit messages. Since LBT-IPC transport is essentially a memory
+write/read operation, messages should not be be lost in transit. However, if the shared
+memory area fills up, new messages overwrite old messages and the loss is absolute. No
+retransmission of old messages that have been overwritten occurs.</p>
+</li>
+
+<li>
+<p>Receivers also do not send NAKs when using LBT-IPC.</p>
+</li>
+
+<li>
+<p>LBT-IPC does not support Ordered Delivery options. However, if you set <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> <tt class="LITERAL"><b
+class="APPLICATION">1</b></tt> or <tt class="LITERAL"><b class="APPLICATION">-1</b></tt>,
+LBT-IPC reassembles any large messages.</p>
+</li>
+
+<li>
+<p>LBT-IPC does not support Rate Control.</p>
+</li>
+
+<li>
+<p>LBT-IPC creates a separate receiver thread in the receiving context.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SENDING-BOTH-RECEIVERS" name="SENDING-BOTH-RECEIVERS">3.6.5.6.
+Sending to Both Local and Remote Receivers</a></h4>
+
+<p>A source application that wants to support both local and remote receivers should
+create two <b class="APPLICATION">UM</b> Contexts with different topic resolution
+configurations, one for IPC sends and one for sends to remote receivers. Separate
+contexts allows you to use the same topic for both IPC and network sources. If you simply
+created two source objects (one IPC, one say LBT-RM) in the same <b
+class="APPLICATION">UM</b> Context, you would have to use separate topics and suffer
+possible higher latency because the sending thread would be blocked for the duration of
+two send calls.</p>
+
+<p>A <b class="APPLICATION">UM</b> source will never automatically use IPC when the
+receivers are local and a network transport for remote receivers because the discovery of
+a remote receiver would hurt the performance of local receivers. An application that
+wants transparent switching can implement it in a simple wrapper.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="LBT-IPC-OBJECT-DIAGRAM" name="LBT-IPC-OBJECT-DIAGRAM">3.6.5.7.
+LBT-IPC Object Diagram</a></h4>
+
+<p>The following diagram illustrates how sources and receivers interact with the shared
+memory area used in the LBT-IPC transport.</p>
+
+<div class="FIGURE"><a id="IPC-OBJECTS" name="IPC-OBJECTS"></a>
+<p><b>Figure 2. Sending and Receiving with LBT-IPC</b></p>
+
+<p><img src="IPC_Objects.png" align="CENTER" /></p>
+</div>
+
+<p>In the diagram above, 3 sources send (write) to two Shared Memory Areas while four
+receivers in two different contexts receive (read) from the areas. The diagram also shows
+the <b class="APPLICATION">UM</b> configuration options that set up this scenario. The
+assignment of sources to Shared Memory Areas demonstrate <b class="APPLICATION">UM</b>'s
+round robin method. <b class="APPLICATION">UM</b> assigns the source sending on Topic A
+to Transport 20001, the source sending on Topic B to Transport 20002 and the source
+sending on Topic C back to the top of the transport ID range, 20001. The memory area
+size, although the default value, appears for illustration.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="IPC-REQUIRED-AUTHORITIES"
+name="IPC-REQUIRED-AUTHORITIES">3.6.5.8. Required Authorities</a></h4>
+
+<p>LBT-IPC requires no special operating system authorities, except on <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows Vista</span>&reg; and
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> Server
+2008, which require Administrator privileges. In addition, on <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> XP,
+applications must be started by the same user, however, the user is not required to have
+administrator privileges. In order for applications to communicate with a service, the
+service must use a user account that has Administrator privileges.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="IPC-RESOURCE-USAGE-LIMITS"
+name="IPC-RESOURCE-USAGE-LIMITS">3.6.5.9. Host Resource Usage and Limits</a></h4>
+
+<p>LBT-IPC contexts and sources consume host resources as follows.</p>
+
+<ul>
+<li>
+<p>Per Source - 1 shared memory segment, 1 shared lock (semaphore on Linux, mutex on
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>)</p>
+</li>
+
+<li>
+<p>Per Receiving Context - 2 shared locks (semaphores on Linux, one event and one mutex
+on <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>)</p>
+</li>
+</ul>
+
+<p>Across most operating system platforms, these resources have the following limits.</p>
+
+<ul>
+<li>
+<p>4096 shared memory segments, though some platforms use different limits</p>
+</li>
+
+<li>
+<p>32,000 shared semaphores (128 shared semaphore sets * 250 semaphores per set)</p>
+</li>
+</ul>
+
+<p>Consult your operating system documentation for specific limits per type of resource.
+Resources may be displayed and reclaimed using the <a
+href="lbm-objects.html#LBT-IPC-RESOURCE-MANAGER"><i>LBT-IPC Resource Manager</i></a>. See
+also <a href="https://communities.informatica.com/infakb/faq/5/Pages/80201.aspx"
+target="doccontent">Managing LBT-IPC Host Resources</a>.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="LBT-IPC-RESOURCE-MANAGER"
+name="LBT-IPC-RESOURCE-MANAGER">3.6.5.10. LBT-IPC Resource Manager</a></h4>
+
+<p>Deleting an IPC source with <tt class="LITERAL">lbm_src_delete()</tt> or deleting an
+IPC receiver with <tt class="LITERAL">lbm_rcv_delete()</tt> reclaims the shared memory
+area and locks allocated by the IPC source or receiver. However, if a less than graceful
+exit from a process occurs, global resources remain allocated but unused. To address this
+possibility, the LBT-IPC Resource Manager maintains a resource allocation database with a
+record for each global resource (memory or semaphore) allocated or freed. You can use the
+LBT-IPC Resource Manager to discover and reclaim resources. See the three example outputs
+below.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="DISPLAYING-RESOURCES" name="DISPLAYING-RESOURCES">3.6.5.10.1.
+Displaying Resources</a></h5>
+
+<pre class="PROGRAMLISTING">
+$&#62; lbtipc_resource_manager 
+Displaying Resources (to reclaim you must type '-reclaim' exactly)
+
+--Memory Resources--
+ Memory resource: Process ID: 24441 SessionID: ab569cec XportID: 20001
+
+--Semaphore Resources--
+ Semaphore key: 0x68871d75
+    Semaphore resource Index 0: reserved
+    Semaphore resource: Process ID: 24441 Sem Index: 1
+    Semaphore resource: Process ID: 24436 Sem Index: 2
+</pre>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="RECLAIMING-RESOURCES" name="RECLAIMING-RESOURCES">3.6.5.10.2.
+Reclaiming Unused Resources</a></h5>
+
+<pre class="PROGRAMLISTING">
+$&#62; lbtipc_resource_manager -reclaim
+
+Reclaiming Resources
+ Process 24441 not found: reclaiming Memory resource (SessionID: ab569cec XPortID: 20001)
+ Process 24441 not found: reclaiming Semaphore resource: Key: 0x68871d75 Sem Index: 1
+ Process 24436 not found: reclaiming Semaphore resource: Key: 0x68871d75 Sem Index: 2
+</pre>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="DISCOVERING-RESOURCES"
+name="DISCOVERING-RESOURCES">3.6.5.10.3. Discovering Resources In Use</a></h5>
+
+<pre class="PROGRAMLISTING">
+$&#62; lbtipc_resource_manager -reclaim
+
+Reclaiming Resources
+ Process 24441 still active! Memory resource not reclaimed (SessionID: ab569cec XPortID: 20001)
+ Process 24441 still active! Semaphore resource not reclaimed (Key: 0x68871d75 Sem Index: 1)
+ Process 24436 still active! Semaphore resource not reclaimed (Key: 0x68871d75 Sem Index: 2)
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TRANSPORT-LBT-RDMA" name="TRANSPORT-LBT-RDMA">3.6.6. Transport
+LBT-RDMA</a></h3>
+
+<p>The LBT-RDMA transport is Remote Direct Memory Access (RDMA) <b
+class="APPLICATION">UM</b> transport that allows sources to publish topic messages to a
+shared memory area from which receivers can read topic messages. LBT-RDMA runs across
+InfiniBand and 10 Gigabit Ethernet hardware.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Use of the LBT-RDMA transport requires the purchase and installation of
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">RDMA Transport Module</b>. See your <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> representative for licensing specifics.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Transport LBT-RDMA is not supported on the <span class="TRADEMARK">HP
+NonStop</span> platform.</p>
+</blockquote>
+</div>
+
+<p>When you create a source with <tt class="LITERAL">lbm_src_create()</tt> and you've set
+the transport option to RDMA, <b class="APPLICATION">UM</b> creates a shared memory area
+object on the sending machine's Host Channel Adapter (HCA) card. <b
+class="APPLICATION">UM</b> assigns one of the RDMA transport ports to this area specified
+with the <b class="APPLICATION">UM</b> context configuration options, <a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_lbtrdma_port_high</tt></a> and <a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_lbtrdma_port_low</tt></a>. You can also
+specify a shared memory location outside of this range with a source configuration
+option, <a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAPORT"
+target="doccontent"><tt class="LITERAL">transport_lbtrdma_port</tt></a>, to prioritize certain
+topics, if needed.</p>
+
+<p>When you create a receiver with <tt class="LITERAL">lbm_rcv_create()</tt> for a topic
+being sent over LBT-RDMA, <b class="APPLICATION">UM</b> creates a shared memory area on
+the receiving machine's HCA card. The network hardware immediately copies any new data
+from the sending HCA to the receiving HCA. <b class="APPLICATION">UM</b> receivers
+monitor the receiving shared memory area for new topic messages. You configure receiver
+monitoring with <a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMARECEIVERTHREADBEHAVIOR"
+ target="doccontent"><tt
+class="LITERAL">transport_lbtrdma_receiver_thread_behavior</tt></a>.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="LBT-RDMA-OBJECT-DIAGRAM"
+name="LBT-RDMA-OBJECT-DIAGRAM">3.6.6.1. LBT-RDMA Object Diagram</a></h4>
+
+<p>The following diagram illustrates how sources and receivers interact with the shared
+memory area used in the LBT-RDMA transport.</p>
+
+<div class="FIGURE"><a id="RDMA-OBJECTS" name="RDMA-OBJECTS"></a>
+<p><b>Figure 3. Sending and Receiving with LBT-RDMA</b></p>
+
+<p><img src="RDMA_Objects.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RDMA-SIMILARITIES-LBM-TRANSPORTS"
+name="RDMA-SIMILARITIES-LBM-TRANSPORTS">3.6.6.2. Similarities with Other UMS
+Transports</a></h4>
+
+<p><b class="APPLICATION">UM</b> functions in much the same way as if you send packets
+across a traditional Ethernet network as with other <b class="APPLICATION">UM</b>
+transports.</p>
+
+<ul>
+<li>
+<p>If you use a range of ports, <b class="APPLICATION">UM</b> assigns multiple topics
+that have been sent by multiple sources in a round robin manner to all the transport
+sessions configured my the port range.</p>
+</li>
+
+<li>
+<p>Transport sessions assume the configuration option values of the first source assigned
+to the transport session.</p>
+</li>
+
+<li>
+<p>Sources are subject to message batching.</p>
+</li>
+
+<li>
+<p>Topic resolution operates identically with LBT-RDMA as other <b
+class="APPLICATION">UM</b> transports albeit with a new advertisement type, <tt
+class="LITERAL">LBMRDMA</tt>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RDMA-DIFFERENCES-LBM-TRANSPORTS"
+name="RDMA-DIFFERENCES-LBM-TRANSPORTS">3.6.6.3. Differences from Other UMS
+Transports</a></h4>
+
+<ul>
+<li>
+<p>Unlike LBT-RM which uses a transmission window to specify a buffer size to retain
+messages in case they must be retransmitted, LBT-RDMA uses the transmission window option
+to establish the size of the shared memory.</p>
+</li>
+
+<li>
+<p>LBT-RDMA does not retransmit messages. Since LBT-RDMA transport is essentially a
+memory write/read operation, messages should not be be lost in transit. However, if the
+shared memory area fills up, new messages overwrite old messages and the loss is
+absolute. No retransmission of old messages that have been overwritten occurs.</p>
+</li>
+
+<li>
+<p>Receivers also do not send NAKs when using LBT-RDMA.</p>
+</li>
+
+<li>
+<p>LBT-RDMA does not support Ordered Delivery. However, if you set <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> <tt class="LITERAL"><b
+class="APPLICATION">1</b></tt> or <tt class="LITERAL"><b class="APPLICATION">-1</b></tt>,
+LBT-RDMA reassembles any large messages.</p>
+</li>
+
+<li>
+<p>LBT-RDMA does not support Rate Control.</p>
+</li>
+
+<li>
+<p>LBT-RDMA creates a separate receiver thread in the receiving context.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="fundamental-concepts.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="architecture.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Fundamental Concepts</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Architecture</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

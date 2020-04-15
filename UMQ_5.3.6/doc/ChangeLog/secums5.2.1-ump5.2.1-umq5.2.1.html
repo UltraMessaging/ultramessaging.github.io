@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.2.1 / UMP 5.2.1 / UMQ 5.2.1 - February 2012</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UMS 5.2.2 / UMP 5.2.2 / UMQ 5.2.2 - March - 2012"
+href="secums5.2.2-ump5.2.2-umq5.2.2.html" />
+<link rel="NEXT" title="Release LBM 4.2.11 / UME 3.2.11 / UMQ 2.1.11 - February 2012"
+href="seclbm4.2.11-ume3.2.11-umq2.1.11.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="secums5.2.2-ump5.2.2-umq5.2.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="seclbm4.2.11-ume3.2.11-umq2.1.11.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.2.1-UMP5.2.1-UMQ5.2.1"
+name="SECUMS5.2.1-UMP5.2.1-UMQ5.2.1">10. Release UMS 5.2.1 / UMP 5.2.1 / UMQ 5.2.1 -
+February 2012</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.2.1" name="UMS5.2.1">10.1. UMS 5.2.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.2.1-UPDATES" name="UMS5.2.1-UPDATES">10.1.1. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Changed Topic Resolution behavior to more fairly distribute topic advertisements (TIR)
+when <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTSENDIMMEDIATERESPONSE"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_send_immediate_response</tt></a> has been
+disabled. Previously, not sending immediate responses to queries and wildcard queries
+resulted in some topics being un-advertised for long periods of time.</p>
+</li>
+
+<li>
+<p>Added an error log message to indicate when a response operation cannot be completed
+because <a href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPBINDREQUESTPORT"
+target="doccontent"><tt class="LITERAL">request_tcp_bind_request_port</tt></a> has been set to
+0 (zero). This occurs for features that use the response channel, such as Late Join,
+Request/Response, Unicast Immediate Messages, <b class="APPLICATION">UMP</b> and <b
+class="APPLICATION">UMQ</b>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.2.1-FIXES" name="UMS5.2.1-FIXES">10.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem with the UM Gateway that resulted in wildcard receivers deafness
+when a wildcard receiver application stopped and restarted before the gateway's proxy
+wildcard receiver restarted. This could result in the loss of gateway proxy receivers for
+the individual topics matching the wildcard receiver pattern. The UM Gateway now ensures
+that an individual topic proxy receiver exists for a proxy wildcard receiver after it
+receives any topic advertisement (TIR) for the topic instead of just the first TIR.</p>
+</li>
+
+<li>
+<p>Corrected an incompatibility with <b class="APPLICATION">UMDS</b> 1.1.1 introduced in
+<b class="APPLICATION">UMS</b>/<b class="APPLICATION">UMP</b>/<b
+class="APPLICATION">UMQ</b> 5.2 that prevented UMDS Receivers from using Late Join. <b
+class="APPLICATION">UMDS</b> 1.1.1 may now be used with <b class="APPLICATION">UMS</b>/<b
+class="APPLICATION">UMP</b>/<b class="APPLICATION">UMQ</b> 5.2.1.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.2.1-KNOWNISSUES" name="UMS5.2.1-KNOWNISSUES">10.1.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using the <a href="../Design/lbm-objects.html#LBT-IPC-RESOURCE-MANAGER"
+target="doccontent">LBT-IPC Resource Manager</a> tool to view the currently allocated IPC
+transport sessions, the Session ID is presented in the reverse byte order from what is
+given to the application via the source string.</p>
+</li>
+
+<li>
+<p>Hot Failover is not currently supported with Multitransport Threads.</p>
+</li>
+
+<li>
+<p>Configuring sources with LBT-RU, source-side filtering, and adaptive batching may
+cause a crash. All three options must be set to cause the problem. Informatica is working
+to address this issue.</p>
+</li>
+
+<li>
+<p>When using the UM Gateway Informatica recommends that you <b class="APPLICATION">do
+not</b> enable the Multitransport Threads feature. Informatica does not support nor test
+the operation of Multitransport Threads across the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multitransport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or queues (<b class="APPLICATION">UMQ</b>).</p>
+</li>
+
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Sending LBT-IPC messages larger than 65,535 bytes is not supported when <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero) unless you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt>.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">UMS</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">UMS</b> may leave a monitoring thread running after
+context deletion. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bt applications using
+the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a 32-bit
+application using LBT-IPC. It can only interact with a 64-bit application. Likewise, a
+32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support gateway failover, MIM, persistence, queuing,
+JMS, or Ultra Load Balancing. Gateway support of these features is in development.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support a four gateway "full-mesh" configuration
+(i.e., all gateways connected).</p>
+</li>
+
+<li>
+<p>If using LBT-RDMA across the UM Gateway and you exit the gateway with <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>, you may see a segfault. Informatica is
+aware of this and has not observed any ill effects from this segfault.</p>
+</li>
+
+<li>
+<p>Informatica recommends against configuring UM Gateways in a ring of peer portals - use
+configurations utilizing gateway endpoints (parallel paths) to break the ring.</p>
+</li>
+
+<li>
+<p>Informatica recommends not stopping and restarting UM Gateways within the transport's
+activity timeout period (<tt class="LITERAL">transport_*_activity_timeout</tt> defaults
+to 60 seconds for LBTRU and LBTRM).</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.2.1-INCOMPATIBILITIES"
+name="UMS5.2.1-INCOMPATIBILITIES">10.1.4. Version Compatibilities</a></h3>
+
+<ul>
+<li>
+<p>Although <b class="APPLICATION">UMS</b> 5.0 applications should run well with <b
+class="APPLICATION">LBM</b> 4.2 UM Gateways, all Gateways should always run the same
+version.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.2.1" name="UMP5.2.1">10.2. UMP 5.2.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.2.1-FIXES" name="UMP5.2.1-FIXES">10.2.1. Bug
+Fixes</a></h3>
+
+<p>No specific <b class="APPLICATION">UMP</b> problems were discovered.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.2.1-KNOWNISSUES" name="UMP5.2.1-KNOWNISSUES">10.2.2.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>A <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>, may
+crash if you enable proxy sources and the daemon is configured with a very restrictive
+port range, ( <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_low</tt></a> - <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_high</tt></a>, <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_low</tt></a> - <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_high</tt></a>, etc.). Informatica
+recommends that you use a wide port range (at least 1000 ports) in your <b
+class="APPLICATION">UM</b> configuration file if you enable proxy sources for <tt
+class="LITERAL">umestored</tt>. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>,
+stops persisting messages to disk if the store has a loss condition which is not resolved
+prior to an EOS event. As a workaround, Informatica recommends that you enable <tt
+class="LITERAL">receiver</tt> <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a> <tt
+class="LITERAL">2500</tt> in the <b class="APPLICATION">UM</b> configuration file, not
+the <tt class="LITERAL">umestored</tt> XML configuration file. The value of 2500 assumes
+the default <tt class="LITERAL">*_nak_generaltion_interval</tt>. See <a
+href="../Config/grouprelated.html#PREVENTUNDETECTEDLOSS2" target="doccontent">Preventing
+Undetected Loss</a> for more information. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>If a source application stops and you restart it before the receiving application
+declares the EOS event, the receiving application does not send a new keepalive message.
+The source requires a keepalive message in order to declare a receiver "alive."
+Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UMP</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. Informatica is
+working on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.2.1" name="UMQ5.2.1">10.3. UMQ 5.2.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.2.1-FIXES" name="UMQ5.2.1-FIXES">10.3.1. Bug
+Fixes</a></h3>
+
+<p>No specific <b class="APPLICATION">UMQ</b> problems were discovered.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.2.1-KNOWNISSUES" name="UMQ5.2.1-KNOWNISSUES">10.3.2.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>The <b class="APPLICATION">UM</b> configuration file specified for a queue cannot also
+contain source attributes for a store such as, <tt class="LITERAL">source ume_store
+127.0.0.1:14567</tt> or <tt class="LITERAL">source ume_store_name NYstore2</tt>.</p>
+</li>
+
+<li>
+<p>When using multiple sending threads, a Queue (<tt class="LITERAL">umestored</tt>) can
+deadlock. As a workaround, Informatica suggests that you specify only a single sending
+thread. Note that 1 sending thread is the current default.</p>
+</li>
+
+<li>
+<p></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="secums5.2.2-ump5.2.2-umq5.2.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a
+href="seclbm4.2.11-ume3.2.11-umq2.1.11.html" accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UMS 5.2.2 / UMP 5.2.2 / UMQ 5.2.2 -
+March - 2012</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.2.11 / UME 3.2.11 / UMQ 2.1.11 -
+February 2012</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

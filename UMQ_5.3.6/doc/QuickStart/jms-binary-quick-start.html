@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging JMS Quick Start</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Quick Start Guide" href="index.html" />
+<link rel="PREVIOUS" title="Unicast-Only Operation" href="unicast-only.html" />
+<link rel="NEXT" title="Ultra Messaging JMS Programming Quick Start"
+href="jms-programming-quick-start.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Quick Start Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="unicast-only.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="jms-programming-quick-start.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="JMS-BINARY-QUICK-START" name="JMS-BINARY-QUICK-START">5. Ultra
+Messaging JMS Quick Start</a></h1>
+
+<p><b class="APPLICATION">UMQ</b> also includes a Ultra Messaging JMS evaluation package.
+You can run pre-compiled commands from an Ultra Messaging JMS distribution to get some
+quick performance numbers in your environment. (A subsequent section guides you through
+creation of simple programs for local compilation.)</p>
+
+<div class="IMPORTANT">
+<blockquote class="IMPORTANT">
+<p><b>Important:</b> The application demonstrations described below assume that you will
+use a single machine. If you plan to test multiple machines communicating with each
+other, the machines will need multicast connectivity between them. Contact your network
+administrator for information on multicast connectivity.</p>
+</blockquote>
+</div>
+
+<p>An Ultra Messaging JMS evaluation package includes the following.</p>
+
+<ul>
+<li>
+<p>Ultra Messaging JMS jar file that contains the Ultra Messaging JMS and compiled
+example applications. (See the <tt class="FILENAME">jmsclient/lib</tt> directory.)</p>
+</li>
+
+<li>
+<p>JMS jar file and other 3rd party jar files (See the <tt
+class="FILENAME">jmsclient/lib</tt> directory.)</p>
+</li>
+
+<li>
+<p>Example source code (see the <tt class="FILENAME">doc/jms_example/*.java</tt>
+directory)</p>
+</li>
+
+<li>
+<p><a href="../jms_concepts/index.html" target="doccontent">The Ultra Messaging JMS
+Guide</a></p>
+</li>
+
+<li>
+<p><a href="../JMSAPI/html/index.html" target="doccontent">JMS Application Programmer's
+Interface</a></p>
+</li>
+</ul>
+
+<p>The Ultra Messaging JMS code and documentation are copyrighted and confidential
+information owned by Informatica Corporation and are covered under the terms of our
+Software License Agreement or Non-Disclosure Agreement as appropriate. Use of this code
+and documentation without a valid Non-Disclosure Agreement or Software License Agreement
+with Informatica, Inc. is strictly prohibited. If this code and documentation is being
+supplied under the terms of a Non Disclosure Agreement, all copies, in any form, must be
+returned or destroyed at the end of the evaluation period or as requested by Informatica
+Corporation.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> For Windows installations, you must also install the Microsoft Visual C++
+2005 Service Pack 1 Redistributable Package MFC Security Update, which is available on
+the download page and contains runtime components of the Visual C++ Libraries.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Ultra Messaging JMS JAR installation is not compatible with <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; due
+to a new dependency on <tt class="FILENAME">libeay32.dll</tt>. As a workaround, set <tt
+class="LITERAL">use_native_loader=false</tt> and load the dependencies from the PATH.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIGURE-JMS" name="CONFIGURE-JMS">5.1. Configure Your
+Environment to Run Ultra Messaging JMS Examples</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONFIGURE-JMS-UNIX" name="CONFIGURE-JMS-UNIX">5.1.1. Configure
+Ultra Messaging JMS for Unix</a></h3>
+
+<p>Perform the following steps to configure Ultra Messaging JMS for a Unix
+environment.</p>
+
+<ol type="1">
+<li>
+<p>Edit the <tt class="LITERAL">bin/env.sh</tt> file to configure your environment. You
+must set the following two variables.</p>
+
+<pre class="SCREEN">
+export JAVA_HOME="/usr/local/jdk1.6.0_16"
+export LBM_LICENSE_FILENAME=/home/user/lbm.lic
+           
+</pre>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">startJMS.sh</tt>. You can now run any of the example
+applications with the appropriate script. See <a
+href="jms-binary-quick-start.html#WIDOWS-OR-UNIX"><i>Microsoft Windows or
+Unix</i></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you make any changes to the config.xml file to test different aspects
+of Ultra Messaging JMS, you must re-run the "config.sh" script. This re-creates a <tt
+class="LITERAL">.bindings</tt> file from the <a href="../jms_example/config.xml"
+target="doccontent">config.xml</a> file that all example programs use.</p>
+</blockquote>
+</div>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONFIGURE-JMS-WINDOWS" name="CONFIGURE-JMS-WINDOWS">5.1.2.
+Configure Ultra Messaging JMS for <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;</a></h3>
+
+<p>The following steps assume that <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> is installed in the standard place.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> It is critical that you set the <span class="TRADEMARK">Microsoft</span>
+<span class="TRADEMARK">Windows</span> <tt class="LITERAL">PATH</tt> environment variable
+to include the location of the <b class="APPLICATION">UMQ</b> product installation bin
+directory. In particular, <tt class="FILENAME">iconv.dll</tt> from the <tt
+class="LITERAL">bin</tt> directory must be in the executable's <tt
+class="LITERAL">dll</tt> search path at runtime.</p>
+</blockquote>
+</div>
+
+<ol type="1">
+<li>
+<p>Set the following three environment variables.</p>
+
+<pre class="SCREEN">
+set JAVA_HOME=C:\Program Files\Java\jdk1.6
+set JAVA_BIN=%JAVA_HOME%\bin
+set LBM_LICENSE_FILENAME=C:\lbm.lic
+           
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Your Java directory may be different, such as <tt
+class="LITERAL">jre6</tt>. Also, your license file path or name may vary.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">startJMS.bat</tt>. You can now run any of the example
+applications with the appropriate script.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you make any changes to the config.xml file to test different aspects
+of Ultra Messaging JMS, you must re-run the "config.bat" script. This re-creates a <tt
+class="LITERAL">.bindings</tt> file from the <a href="../jms_example/config.xml"
+target="doccontent">config.xml</a> file that all example programs use.</p>
+</blockquote>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WIDOWS-OR-UNIX" name="WIDOWS-OR-UNIX">5.2. <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> or
+Unix</a></h2>
+
+<p>All source for the following example applications is Java.</p>
+
+<ul>
+<li>
+<p>If you are running on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> you will execute a <tt class="LITERAL">.bat</tt>
+file.</p>
+</li>
+
+<li>
+<p>If you are running a Unix system, you will execute a <tt class="LITERAL">.sh</tt>
+file.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DEMO-REQUEST-REPLY" name="DEMO-REQUEST-REPLY">5.3.
+Demonstrating Request/Reply</a></h2>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS request/reply. This
+demonstration uses <a href="../jms_example/Reply.java" target="doccontent">Reply.java</a> and
+<a href="../jms_example/Request.java" target="doccontent">Request.java</a> source files and
+requires a UME server.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt class="LITERAL">reply.sh</tt>
+or <tt class="LITERAL">reply.bat</tt> for <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">request.sh</tt> or <tt class="LITERAL">request.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>You will see output that indicates the message has been sent back and forth. Press <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill either application.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DEMO-SYNCH-ASYNCH" name="DEMO-SYNCH-ASYNCH">5.4. Demonstrating
+Synch and Async Reads</a></h2>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS synchronous and asynchronous
+message delivery. This demonstration uses <a href="../jms_example/AsyncConsumer.java"
+target="doccontent">AsyncConsumer.java</a>, <a href="../jms_example/Producer.java"
+target="doccontent">Producer.java</a> and <a href="../jms_example/SyncConsumer.java"
+target="doccontent">SyncConsumer.java</a> source files.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt
+class="LITERAL">AsyncConsumer.sh</tt> or <tt class="LITERAL">AsyncConsumer.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">Producer.sh</tt> or <tt class="LITERAL">Producer.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a third command prompt window and enter the command <tt
+class="LITERAL">SyncConsumer.sh</tt> or <tt class="LITERAL">SyncConsumer.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+</ol>
+
+<p>For the <tt class="LITERAL">Producer</tt>, you will see output similar to the
+following.</p>
+
+<pre class="SCREEN">
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+   
+</pre>
+
+<p>For the <tt class="LITERAL">AsyncConsumer</tt> and the <tt
+class="LITERAL">SyncConsumer</tt>, you will see output similar to the following.</p>
+
+<pre class="SCREEN">
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test *********** 
+   
+</pre>
+
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill any application.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DEMO-DURABLE-CONUMER" name="DEMO-DURABLE-CONUMER">5.5.
+Demonstrating A Durable Consumer</a></h2>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS durable consumer messaging.
+This demonstration uses <a href="../jms_example/DurableConsumer.java"
+target="doccontent">DurableConsumer.java</a> and <a href="../jms_example/DurableProducer.java"
+target="doccontent">DurableProducer.java</a> source files and requires a UME server.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt
+class="LITERAL">DurableConsumer.sh</tt> or <tt class="LITERAL">DurableConsumer.bat</tt>
+for <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">DurableProducer.sh</tt> or <tt class="LITERAL">DurableProducer.bat</tt>
+for <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>. The
+<tt class="LITERAL">DurableProducer</tt> sends 20 messages.</p>
+</li>
+
+<li>
+<p>In the command prompt window for the <tt class="LITERAL">DurableConsumer</tt>, you
+should see output similar to the following.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 1
+Reading message: This is message 2
+Reading message: This is message 3
+Reading message: This is message 4
+Reading message: This is message 5
+Reading message: This is message 6
+Reading message: This is message 7
+Reading message: This is message 8
+   
+</pre>
+</li>
+
+<li>
+<p>After message 8, press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill the
+<tt class="LITERAL">DurableConsumer</tt>. Then restart the consumer. The remaining 12
+messages sent by the <tt class="LITERAL">DurableProducer</tt> appear in the window.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 9
+Reading message: This is message 10
+Reading message: This is message 11
+Reading message: This is message 12
+Reading message: This is message 13
+Reading message: This is message 14
+Reading message: This is message 15
+Reading message: This is message 16
+Reading message: This is message 17
+Reading message: This is message 18
+Reading message: This is message 19
+Reading message: This is message 20
+   
+</pre>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DEMO-UMQ" name="DEMO-UMQ">5.6. Demonstrating UMQ</a></h2>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS queuing. This demonstration
+uses <a href="../jms_example/QueueReceiver.java" target="doccontent">QueueReceiver.java</a> and
+<a href="../jms_example/QueueSender.java" target="doccontent">QueueSender.java</a>.java source
+files and requires a UMQ server.</p>
+
+<ol type="1">
+<li>
+<p>Open two command prompt windows and in each window, enter the command <tt
+class="LITERAL">QueueReceiver.sh</tt> or <tt class="LITERAL">QueueReceiver.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a third command prompt window and enter the command <tt
+class="LITERAL">QueueSender.sh</tt> or <tt class="LITERAL">QueueSender.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>. The <tt
+class="LITERAL">QueueSender</tt> sends 15 messages; odd numbered messages go to the <tt
+class="LITERAL">QueueReceiver</tt> in Window 1 and even numbered messages to <tt
+class="LITERAL">QueueReceiver</tt> in Window 2.</p>
+
+<p>Output for <tt class="LITERAL">QueueReceiver</tt> in Window 1.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 1
+Reading message: This is message 3
+Reading message: This is message 5
+Reading message: This is message 7
+Reading message: This is message 9
+Reading message: This is message 11
+Reading message: This is message 13
+Reading message: This is message 15
+   
+</pre>
+
+<p>Output for <tt class="LITERAL">QueueReceiver</tt> in Window 2.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 2
+Reading message: This is message 4
+Reading message: This is message 6
+Reading message: This is message 8
+Reading message: This is message 10
+Reading message: This is message 12
+Reading message: This is message 14 
+   
+</pre>
+</li>
+</ol>
+
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill any application.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="OTHER-APPS" name="OTHER-APPS">5.7. Other Example
+Applications</a></h2>
+
+<p></p>
+
+<ol type="1">
+<li>
+<p><a href="../jms_example/MyExceptionListener.java"
+target="doccontent">MyExceptionListener.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/MyListener.java" target="doccontent">MyListener.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/Ping.java" target="doccontent">Ping.java</a></p>
+
+<p>To achieve lower latency for this example application, you should change the value of
+<tt class="LITERAL">implicit_batching_minimum_length</tt> from 2000 to 1 in the <a
+href="../jms_example/config.xml" target="doccontent">config.xml</a> file.</p>
+</li>
+
+<li>
+<p><a href="../jms_example/Pong.java" target="doccontent">Pong.java</a></p>
+
+<p>To achieve lower latency for this example application, you should change the value of
+<tt class="LITERAL">implicit_batching_minimum_length</tt> from 2000 to 1 in the <a
+href="../jms_example/config.xml" target="doccontent">config.xml</a> file.</p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleBytePublisher.java"
+target="doccontent">SimpleBytePublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleByteSubscriber.java"
+target="doccontent">SimpleByteSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleDestinationPublisher.java"
+target="doccontent">SimpleDestinationPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleDestinationSubscriber.java"
+target="doccontent">SimpleDestinationSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleMapPublisher.java"
+target="doccontent">SimpleMapPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleMapSubscriber.java"
+target="doccontent">SimpleMapSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleObjectPublisher.java"
+target="doccontent">SimpleObjectPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleObjectSubscriber.java"
+target="doccontent">SimpleObjectSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleTopicPublisher.java"
+target="doccontent">SimpleTopicPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleTopicSubscriber.java"
+target="doccontent">SimpleTopicSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/Version.java" target="doccontent">Version.java</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="unicast-only.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="jms-programming-quick-start.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Unicast-Only Operation</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Ultra Messaging JMS Programming Quick
+Start</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

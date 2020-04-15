@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.1 / UME 3.1 / UMQ 1.1 - August 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 4.1.1 / UME 3.1.1 / UMQ 1.1.1 - October 2010"
+href="seclbm4.1.1-ume3.1.1-umq1.1.1.html" />
+<link rel="NEXT" title="Release LBM 4.0.1 - June 2010" href="seclbm4.0.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm4.1.1-ume3.1.1-umq1.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm4.0.1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.1-UME3.1-UMQ1.1" name="SECLBM4.1-UME3.1-UMQ1.1">32.
+Release LBM 4.1 / UME 3.1 / UMQ 1.1 - August 2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.1" name="LBM4.1">32.1. LBM 4.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1-NEW" name="LBM4.1-NEW">32.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">New Transport.</b> Added the LBT-RDMA transport, which is a
+Remote Direct Memory Access (RDMA) <b class="APPLICATION">LBM</b> transport that allows
+sources to publish topic messages to a shared memory area from which receivers can read
+topic messages. LBT-RDMA runs across InfiniBand and 10 Gigabit Ethernet hardware. See <a
+href="../Design/lbm-objects.html#TRANSPORT-LBT-RDMA" target="doccontent">LBT-RDMA</a> for more
+information.</p>
+</li>
+
+<li>
+<p>Added the following three new configuration options that cap the total amount of
+memory that a transport transmission window uses, which includes data and overhead.</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMTRANSMISSIONWINDOWLIMIT"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_transmission_window_limit</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rureliabilityoptions.html#SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWLIMIT"
+ target="doccontent"><tt class="LITERAL">transport_lbtru_transmission_window_limit</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMTRANSMISSIONWINDOWLIMIT"
+ target="doccontent"><tt class="LITERAL">mim_transmission_window_limit</tt></a></p>
+</li>
+</ul>
+
+The default for all three is 0 (zero) which does not impose any limit. <br />
+<br />
+</li>
+
+<li>
+<p><b class="APPLICATION">Accelerated Multicast support.</b> Added another transport
+acceleration option to <b class="APPLICATION">LBM</b> with support for Accelerated
+Multicast which applies to LBT-RM. You turn this acceleration on with the <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> option. This features requires
+InfiniBand or 10 Gigabit Ethernet hardware.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1-UPDATES" name="LBM4.1-UPDATES">32.1.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Redesigned UM Gateway</b> The Gateway has been redesigned to
+allow full bidirectional forwarding, multi-hop forwarding, tunnel compression,
+encryption, and more. <b class="APPLICATION">This new design requires a configuration
+change.</b> For more see <a href="../Gateway/index.html" target="doccontent">the new UM Gateway
+user guide</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Multi-Transport Threads</b> <b class="APPLICATION">LBM</b> has
+added the ability to distribute data delivery across multiple CPUs by using a receiving
+thread pool. Receivers created with the configuration option, <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> set to <b class="APPLICATION">1</b> use a
+thread from the thread pool instead of the context thread. The option, <a
+href="../Config/majoroptions.html#CONTEXTRECEIVETHREADPOOLSIZE" target="doccontent"><tt
+class="LITERAL">receive_thread_pool_size</tt></a> controls the pool size. See <a
+href="../Design//fundamental-concepts.html#MULTITHREADED-TRANSPORTS"
+target="doccontent">Multi-Transport Threads</a>.</p>
+</li>
+
+<li>
+<p>Added a sequential mode for LBT-IPC which is controlled by <a
+href="../Config/transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCRECEIVEROPERATIONALMODE"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_receiver_operational_mode</tt></a>.
+This mode requires your application to call <tt
+class="LITERAL">lbm_context_process_lbtipc_messages()</tt> to process LBT-IPC messages
+instead of <b class="APPLICATION">LBM</b> automatically spawning a thread to do so.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">New Monitoring Statistics:</b> Added monitoring statistics for
+the new LBT-RDMA transport in the <a
+href="../API/structlbm__rcv__transport__stats__lbtrdma__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_rcv_transport_stats_lbtrdma_t_stct</tt></a> and <a
+href="../API/structlbm__src__transport__stats__lbtrdma__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_src_transport_stats_lbtrdma_t_stct</tt></a> structures. These
+statistics are available to the <a href="../API/index.html" target="doccontent">C API</a>, the
+<a href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>. The new statistics have
+also been added to the <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> <b class="APPLICATION">MIB</b> and the InterMapper probe files.
+In addition, all example applications support the statistics.</p>
+</li>
+
+<li>
+<p>Added the ability to name a context with <code
+class="FUNCTION">lbm_context_set_name()</code> and advertise it's existence at the <a
+href="../Config/majoroptions.html#CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_context_advertisement_interval</tt></a>. <code
+class="FUNCTION">lbm_context_get_name()</code> was also added. This mechanism for naming
+and advertising <b class="APPLICATION">LBM</b> contexts facilitates UM Gateway operation
+especially for <b class="APPLICATION">UME</b> and <b class="APPLICATION">UMQ</b> .</p>
+</li>
+
+<li>
+<p>Zero Object Delivery (ZOD) has been implemented for .NET, which allows .NET messaging
+receivers to deliver messages to an application with no per-message object creation. For
+more information, see <a
+href="https://communities.informatica.com/infakb/faq/5/Pages/80233.aspx"
+target="doccontent">Zero Object Delivery (ZOD)</a> in the <b class="APPLICATION">29West</b>
+Knowledgebase.</p>
+</li>
+
+<li>
+<p>Zero Incoming Copy (ZIC) has been implemented for .NET, which provides access to
+message data directly through a byte pointer returned by the <tt
+class="LITERAL">LBMMessage.dataPointer()</tt> method. For more information see <a
+href="https://communities.informatica.com/infakb/faq/5/Pages/80279.aspx"
+target="doccontent">Zero Incoming Copy (ZIC)</a> in the <b class="APPLICATION">29West</b>
+Knowledgebase.</p>
+</li>
+
+<li>
+<p>TCP-LB has now been enhanced to allow fragmented messages to be delivered as fragments
+when you set <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> to zero.</p>
+</li>
+
+<li>
+<p>Daemons built on 32-bit Linux previously linked with Smartheap 8.1 are now linked with
+Smartheap 9.0.1.</p>
+</li>
+
+<li>
+<p>Added the following five new configuration options that establish independent datagram
+size limits for each transport. Deprecated <a
+href="../Config/majoroptions.html#CONTEXTTRANSPORTDATAGRAMMAXSIZE" target="doccontent"><tt
+class="LITERAL">transport_datagram_max_size</tt></a>.</p>
+
+<ul>
+<li>
+<p><a
+href="../Config/transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMDATAGRAMMAXSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtrm_datagram_max_size</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ruoperationoptions.html#CONTEXTTRANSPORTLBTRUDATAGRAMMAXSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtru_datagram_max_size</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transporttcpoperationoptions.html#CONTEXTTRANSPORTTCPDATAGRAMMAXSIZE"
+target="doccontent"><tt class="LITERAL">transport_tcp_datagram_max_size</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCDATAGRAMMAXSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtipc_datagram_max_size</tt></a></p>
+</li>
+
+<li>
+<p><a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMADATAGRAMMAXSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtrdma_datagram_max_size</tt></a></p>
+</li>
+</ul>
+
+The minimum size is 500 bytes for all datagram size options including <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERDATAGRAMMAXSIZE"
+target="doccontent"><tt class="LITERAL">resolver_datagram_max_size</tt></a>. <br />
+<br />
+</li>
+
+<li>
+<p>Added the ability to continually report statistics based on a saved search term, such
+as <tt class="LITERAL">transport ID</tt> to the example application, <b
+class="APPLICATION">lbmmoncache.c</b>. Also updated the example applications, <b
+class="APPLICATION">lbmmoncache.c</b> and <b class="APPLICATION">lbmmon.c</b> to accept
+the <tt class="LITERAL">-c config</tt> argument. Also added <code
+class="FUNCTION">lbm_context_topic_resolution_request()</code> to <b
+class="APPLICATION">lbmmoncache.c</b> to help resolve any quiescent topics.</p>
+</li>
+
+<li>
+<p>Updated event processing to prevent short timers, or a large number of timers expiring
+at the same time from starving network processing. Network processing is now interspersed
+with timer expirations under such conditions.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1-FIXES" name="LBM4.1-FIXES">32.1.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected an incompatibility problem between <b class="APPLICATION">LBM</b> 4.0 and
+pre-4.0 versions. When running <b class="APPLICATION">LBM</b> 4.0, any pre4.0 receivers
+were unable to discover multiple sources of the same topic. 4.0 receivers were able to
+discover all sources sending on the same topic. <b class="APPLICATION">LBM</b> 4.1
+resolves this problem so all receivers discover all sources sending on the same
+topic.</p>
+</li>
+
+<li>
+<p>Corrected a condition where a particular sequence of <tt
+class="LITERAL">lbm_src_topic_alloc</tt>, <tt class="LITERAL">lbm_src_delete</tt>, and
+<tt class="LITERAL">lbm_src_create</tt> API calls would result in a fatal assertion.</p>
+</li>
+
+<li>
+<p>Corrected a condition that caused a seg fault when using LBT-IPC to send large,
+fragmented messages (approximately over 65,000 bytes) and <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> was set to 0 (zero).</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused spurious context source wakeup events to be delivered
+for Unicast Immediate Messaging (UIM) when the immediate messaging had never actually
+been blocked.</p>
+</li>
+
+<li>
+<p>Corrected a problem that sometimes resulted in a seg fault if you delete a source
+immediately after sending a message. The seg fault occurred when <b
+class="APPLICATION">LBM</b> flushed the messages for that source out of the batch.</p>
+</li>
+
+<li>
+<p>Changed <code class="FUNCTION">lbm_context_topic_resolution_request()</code> to
+implement 0 (zero) for the <tt class="LITERAL">duration_sec</tt> parameter which results
+in only one request sent.</p>
+</li>
+
+<li>
+<p>Changed the handling of arrival order and arrival order reassembly to expire records
+about lost packets under some conditions. This change rectifies cases where the last set
+of lost packets on a stream would not be reported as unrecoverably lost before the loss
+disappeared. With arrival order reassembly, unrecoverable loss was rarely reported.</p>
+</li>
+
+<li>
+<p>Fixed some issues with Java context statistics methods that could result in invalid
+memory being accessed.</p>
+</li>
+
+<li>
+<p>Fixed an issue where calling the <tt
+class="LITERAL">LBMContext.getReceiverStatistics()</tt> could cause an access
+violation.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1-KNOWNISSUES" name="LBM4.1-KNOWNISSUES">32.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using LBT-IPC, a seg fault can occur when sending messages larger than 65,535
+bytes when <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero). The
+seg fault occurs when fragments are lost. Setting <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt> avoids the seg fault by eliminating loss. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. 29West is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">LBM</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.1" name="UME3.1">32.2. UME 3.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1-UPDATES" name="UME3.1-UPDATES">32.2.1. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Updated the <tt class="LITERAL">umestored</tt> &lt;interface&#62; attribute of a
+&lt;store&#62; or &lt;queue&#62; element to use CIDR notation, i.e., 10.29.3.0/24.</p>
+</li>
+
+<li>
+<p>Both <b class="APPLICATION">UME</b> and <b class="APPLICATION">UMQ</b> now deliver the
+<tt class="LITERAL">Registration Complete</tt> source event every time a quorum is
+established instead of only once. More than one event delivery indicates quorum was lost
+and re-established.</p>
+</li>
+
+<li>
+<p>Implemented an internal function to offload all non-critical log messages to a
+separate thread to avoid blocking I/O on critical threads inside the <tt
+class="LITERAL">umestored</tt> and <tt class="LITERAL">umestoreds</tt> daemons.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1-FIXES" name="UME3.1-FIXES">32.2.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem that caused a <b class="APPLICATION">UME</b> source to erroneously
+register with one more configured store than needed after a failover when using
+quorum/consensus and the number of stores configured in the group is greater than the
+configured group size.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1-KNOWNISSUES" name="UME3.1-KNOWNISSUES">32.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ1.1" name="UMQ1.1">32.3. UMQ 1.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ1.1-NEW" name="UMQ1.1-NEW">32.3.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Added a new feature called Ultra Load Balancing (ULB) that provides Once And Only Once
+(OAOO) delivery to receiving applications, but without a queue. The lack of a queue or
+broker in the message path adds ultra low latency to the load balancing abilities of this
+<b class="APPLICATION">UMQ</b> feature. Sources perform message assignment, delivery is
+receiver-paced and messages are not persisted. For more, see <a href="../UME/index.html"
+target="doccontent">The Ultra Messaging, Queuing Edition User Guide</a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMQ</b> now supports messages with user-supplied, chained
+application headers.</p>
+</li>
+
+<li>
+<p>Added support for user-defined message headers, called <b
+class="APPLICATION">application headers</b>, to the C and Java APIs. Application headers
+are optional and reside outside the normal message payload.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ1.1-FIXES" name="UMQ1.1-FIXES">32.3.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a condition that caused the Unicast Topic Resolver (<tt
+class="LITERAL">lbmrd</tt>) to segfault when processing <b class="APPLICATION">UMQ</b>
+store advertisements.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm4.1.1-ume3.1.1-umq1.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.0.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 4.1.1 / UME 3.1.1 / UMQ 1.1.1 -
+October 2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.0.1 - June 2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

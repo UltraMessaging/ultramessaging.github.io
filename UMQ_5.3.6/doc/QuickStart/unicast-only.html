@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Unicast-Only Operation</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Quick Start Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Programming Quick Start"
+href="lbm-programming-quick-start.html" />
+<link rel="NEXT" title="Ultra Messaging JMS Quick Start"
+href="jms-binary-quick-start.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Quick Start Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lbm-programming-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="jms-binary-quick-start.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UNICAST-ONLY" name="UNICAST-ONLY">4. Unicast-Only
+Operation</a></h1>
+
+<p>One of <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b>'s great strengths is its use of the network hardware and
+protocols to achieve very high performance and scalability. By default, <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> uses multicast for
+topic resolution so that data sources and receivers can find each other.</p>
+
+<p>In general, we recommend the use of multicast whenever possible because it provides
+the best performance and scalability. However, we recognize that it is not always
+possible to provide multicast connectivity between the machines. For those cases, we
+support unicast-only operation.</p>
+
+<p>There are two parts to unicast-only operation. One is to use a unicast form of
+transport. <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> uses
+TCP by default for transport, but LBT-RU is also available and has some performance
+advantages. For initial "quick start" testing, we recommend not changing the default
+TCP.</p>
+
+<p>The second part of unicast-only operation is to use the <tt class="COMMAND">lbmrd</tt>
+(<b class="APPLICATION">UM</b> Resolver Daemon) for topic resolution. (NOTE: this does
+<span class="emphasis"><i class="EMPHASIS">not</i></span> route message data through a
+daemon. This is a helper process that lets data sources and receivers find each other.)
+To enable unicast topic resolution, do the following:</p>
+
+<ol type="1">
+<li>
+<p>Choose one machine to host the resolver daemon and enter the <tt
+class="COMMAND">lbmrd</tt> command (use <tt class="COMMAND">lbmrd -h</tt> for full
+instructions).</p>
+</li>
+
+<li>
+<p>Create a <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+configuration file containing:</p>
+
+<pre class="PROGRAMLISTING">
+context resolver_unicast_daemon <tt
+class="REPLACEABLE"><i>[Iface[:Src_Port]-&gt;]IP:Dest_Port</i></tt>
+</pre>
+
+<p>where</p>
+
+<ul>
+<li>
+<p><tt class="REPLACEABLE"><i>Iface</i></tt> is the interface to use (previously set with
+<a href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE"
+target="doccontent"><tt class="LITERAL">resolver_unicast_interface</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>Src_Port</i></tt> is the source port to use (previously set
+with <a href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT"
+target="doccontent"><tt class="LITERAL">resolver_unicast_port</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>IP</i></tt> is the resolver daemon's IP address (previously
+set with <a href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTADDRESS"
+target="doccontent"><tt class="LITERAL">resolver_unicast_address</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>Dest_Port</i></tt> is the resolver daemon's UDP port
+(previously set with <a
+href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTDESTINATIONPORT"
+target="doccontent"><tt class="LITERAL">resolver_unicast_destination_port</tt></a>).</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Run the test applications with the option <tt class="COMMAND">-c</tt> <tt
+class="REPLACEABLE"><i>filename</i></tt> where <tt
+class="REPLACEABLE"><i>filename</i></tt> is the configuration file created in step 2.</p>
+</li>
+</ol>
+
+<p>See also <a
+href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTDAEMON"
+target="doccontent"><tt class="LITERAL">resolver_unicast_daemon</tt></a>.</p>
+
+<p>Due to the fact that the minimal source programs presented in this document (<tt
+class="FILENAME">minsrc.c</tt> and <tt class="FILENAME">minrcv.c</tt>) do not allow the
+use of a configuration file, it is not possible to configure them for unicast-only
+operation. If multicast operation is not possible on your network, then please use the
+binary test programs (described in <a href="lbm-binary-quick-start.html">Section 2</a>)
+which which <span class="emphasis"><i class="EMPHASIS">do</i></span> allow unicast-only
+configuration.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lbm-programming-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="jms-binary-quick-start.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Programming Quick Start</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Ultra Messaging JMS Quick Start</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

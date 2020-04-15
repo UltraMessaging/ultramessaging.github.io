@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Example Configuration Scenarios</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="PREVIOUS" title="Retrieving Current Option Values"
+href="retrievingcurrentoptionvalues.html" />
+<link rel="NEXT" title="Lowest Latency" href="lowestlatency.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="CHAPTER" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="retrievingcurrentoptionvalues.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="lowestlatency.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="CHAPTER">
+<h1><a id="EXAMPLES" name="EXAMPLES"></a>Chapter 2. Example Configuration Scenarios</h1>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>2.1. <a href="examples.html#HIGHESTTHROUGHPUT">Highest Throughput</a></dt>
+
+<dt>2.2. <a href="lowestlatency.html">Lowest Latency</a></dt>
+
+<dt>2.3. <a href="multicastsource.html">Creating Multicast Sources</a></dt>
+
+<dt>2.4. <a href="disable-topic-res.html">Disabling Aspects of Topic Resolution</a></dt>
+
+<dt>2.5. <a href="unicastresolver.html">Unicast Resolver</a></dt>
+
+<dt>2.6. <a href="previousports.html">Configure Previous Port Defaults</a></dt>
+
+<dt>2.7. <a href="newports.html">Configure New Port Defaults</a></dt>
+
+<dt>2.8. <a href="grouprelated.html">Interrelated Configuration Options</a></dt>
+</dl>
+</div>
+
+<p>This chapter contains some example configuration scenarios.</p>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="HIGHESTTHROUGHPUT" name="HIGHESTTHROUGHPUT">2.1. Highest
+Throughput</a></h1>
+
+<p>The following configuration option tunes <b class="APPLICATION">UMS</b> for the
+highest possible throughput.</p>
+
+<pre class="SCREEN">
+#
+# LBM can be configured to make efficient use of CPU time, leading
+# to the highest-possible throughput (bytes per second or messages
+# per second).  This may come at the expense of latency at low
+# message rates.  The following line configures LBM to accumulate
+# 8KB of messages (or for wait implicit_batching_interval) before sending.
+#
+source implicit_batching_minimum_length 8192
+</pre>
+
+<p>You may <a href="Examples/HighestThroughput.cfg" target="_top">download the file</a>.
+Most browsers let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="retrievingcurrentoptionvalues.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="lowestlatency.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Retrieving Current Option Values</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Lowest Latency</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Fault Tolerance</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Designing Queuing Applications"
+href="designing-queuing-applications.html" />
+<link rel="NEXT" title="Man Pages" href="umestored-manpage.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="designing-queuing-applications.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umestored-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UME-FAULT-TOLERANCE" name="UME-FAULT-TOLERANCE">10. Fault
+Tolerance</a></h1>
+
+<p>This section discusses the following.</p>
+
+<ul>
+<li>
+<p><a
+href="ume-fault-tolerance.html#CONFIGURING-FOR-PERSISTENCE-AND-RECOVERY"><i>Configuring
+for Persistence and Recovery</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#PROXYSOURCES"><i>Proxy Sources</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#QUEUE-REDUNDANCY"><i>Queue Redundancy</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#QUEUE-FAILOVER"><i>Queue Failover</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIGURING-FOR-PERSISTENCE-AND-RECOVERY"
+name="CONFIGURING-FOR-PERSISTENCE-AND-RECOVERY">10.1. Configuring for Persistence and
+Recovery</a></h2>
+
+<p>Deployment decisions play a huge role in the success of any persistent system.
+Configuration in <b class="APPLICATION">UMP</b> has a number of options that aid in
+performance, fault recovery, and overall system stability. It is not possible, or at
+least not wise, to totally divorce configuration from application development for high
+performance systems. This is true not only for persistent systems, but for practically
+all distributed systems. When designing systems, deployment considerations need to be
+taken into account. This section discusses the following deployment considerations.</p>
+
+<ul>
+<li>
+<p><a href="ume-fault-tolerance.html#SOURCE-CONSIDERATIONS"><i>Source
+Considerations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#RECEIVER-CONSIDERATIONS"><i>Receiver
+Considerations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#STORE-CONFIGURATION-CONSIDERATIONS"><i>Store
+Configuration Considerations</i></a></p>
+</li>
+
+<li>
+<p><a href="ume-fault-tolerance.html#UME-CONFIGURATIONS"><i>UMP Configuration
+Examples</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCE-CONSIDERATIONS" name="SOURCE-CONSIDERATIONS">10.1.1.
+Source Considerations</a></h3>
+
+<p>Performance of sources is heavily impacted by:</p>
+
+<ul>
+<li>
+<p>the release policy that the source uses</p>
+</li>
+
+<li>
+<p>streaming methods of the source</p>
+</li>
+
+<li>
+<p>the throughput and latency requirements of the data</p>
+</li>
+</ul>
+
+<p>Source release settings have a direct impact on memory usage. As messages are
+retained, they consume memory. You reclaim memory when you release messages. Message
+stability, delivery confirmation and retention size all interact to create your release
+policies. <b class="APPLICATION">UMP</b> provides a hard limit on the memory usage. When
+exceeded, a Forced Reclamation event is delivered. Thus applications that anticipate
+forced reclamations can handle them appropriately. See also <a
+href="designing-persistent-applications.html#SOURCE-MESSAGE-RETENTION-AND-RELEASE"><i>Source
+Message Retention and Release</i></a>.</p>
+
+<p>How the source streams data has a direct impact on latency and throughput. One
+streaming method sets a maximum, outstanding count of messages. Once reached, the source
+does not send any more until message stability notifications come in to reduce the number
+of outstanding messages. The <a href="../example/umesrc.c" target="doccontent"><tt
+class="LITERAL">umesrc</tt></a> example program uses this mechanism to limit the speed of
+a source to something a store can handle comfortably. This also provides a maximum bound
+on recovery that can simplify handling of streaming source recovery.</p>
+
+<p>The throughput and latency requirements of the data are normal <b
+class="APPLICATION">UM</b> concerns. See <a href="../Design/index.html" target="doccontent"><b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">Concepts</b></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVER-CONSIDERATIONS"
+name="RECEIVER-CONSIDERATIONS">10.1.2. Receiver Considerations</a></h3>
+
+<p>In addition to the following, receiver performance shares the same considerations as
+receivers during normal operation.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="ACKNOWLEDGEMENT-GENERATION"
+name="ACKNOWLEDGEMENT-GENERATION">10.1.2.1. Acknowledgement Generation</a></h4>
+
+<p>Receivers in a persistence implementation of <b class="APPLICATION">UMP</b> send an a
+message consumption acknowledgement to stores and the message source. Some applications
+may want to control this acknowledgement explicitly themselves. In this case, <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEEXPLICITACKONLY"
+target="doccontent"><tt class="LITERAL">ume_explicit_ack_only</tt></a> can be used.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONTROLLING-RETRANSMISSION"
+name="CONTROLLING-RETRANSMISSION">10.1.2.2. Controlling Retransmission</a></h4>
+
+<p>Receivers in <b class="APPLICATION">UMP</b> during fault recovery are another matter
+entirely. Receivers send retransmission requests and receive and process retransmissions.
+Control over this process is crucial when handling very long recoveries, such as hundreds
+of thousands or millions of messages. A receiver only sends a certain number of
+retransmission requests at a time.</p>
+
+<p>This means that a receiver will not, unless configured to with <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTOUTSTANDINGMAXIMUM"
+target="doccontent"><tt class="LITERAL">retransmit_request_outstanding_maximum</tt></a>,
+request everything at once. The value of the low sequence number (<a
+href="designing-persistent-applications.html#RECEIVER-RECOVERY"><i>Receiver
+Recovery</i></a>) has a direct impact on how many requests need to be handled. A
+receiving application can decide to only handle the last X number of messages instead of
+recovering them all using the option, <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM" target="doccontent"><tt
+class="LITERAL">retransmit_request_maximum</tt></a>. The timeout used between requests,
+if the retransmission does not arrive, is totally controllable with <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTINTERVAL" target="doccontent"><tt
+class="LITERAL">retransmit_request_interval</tt></a>. And the total time given to recover
+all messages is also controllable.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECOVERY-PROCESS" name="RECOVERY-PROCESS">10.1.2.3. Recovery
+Process</a></h4>
+
+<p>Theoretically, receivers can handle up to roughly 2 billion messages during recovery.
+This limit is implied from the sequence number arithmetic and not from any other
+limitation. For recovery, the crucial limiting factor is how a receiver processes and
+handles retransmissions which come in as fast as <b class="APPLICATION">UMP</b> can
+request them and a store can retransmit them. This is perhaps much faster than an
+application can handle them. In this case, it is crucial to realize that as recovery
+progresses, the source may still be transmitting new data. This data will be buffered
+until recovery is complete and then handed to the application. It is prudent to
+understand application processing load when planning on how much recovery is going to be
+needed and how it may need to be configured within <b class="APPLICATION">UMP</b> .</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="STORE-CONFIGURATION-CONSIDERATIONS"
+name="STORE-CONFIGURATION-CONSIDERATIONS">10.1.3. Store Configuration
+Considerations</a></h3>
+
+<p><b class="APPLICATION">UMP</b> stores have numerous configuration options. See <a
+href="umestored-config.html"><i>Configuration Reference for Umestored</i></a>. This
+section presents issues relating to these options.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONFIGURING-STORE-USAGE-PER-SOURCE"
+name="CONFIGURING-STORE-USAGE-PER-SOURCE">10.1.3.1. Configuring Store Usage per
+Source</a></h4>
+
+<p>A store handles persisted state on a per topic per source basis. Based on the load of
+topics and sources, it may be prudent to spread the topic space, or just source space,
+across stores as a way to handle large loads. As configuration of store usage is per
+source, this is extremely easy to do. It is easy to spread CPU load via multi-threading
+as well as hard disk usage across stores. A single store process can have a set of
+virtual stores within it, each with their own thread.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="DISK-VS.-MEMORY" name="DISK-VS.-MEMORY">10.1.3.2. Disk vs.
+Memory</a></h4>
+
+<p>As mentioned previously in <a
+href="designing-persistent-applications.html#UME-STORES"><i>UMP Stores</i></a>, stores
+can be memory based or disk based. Disk stores also have the ability to spread hard disk
+usage across multiple physical disks by using multiple virtual stores within a single
+store process. This gives great flexibility on a per source basis for spreading data
+reception and persistent data load.</p>
+
+<p><b class="APPLICATION">UMP</b> stores provide settings for controlling memory usage
+and for caching messages for retransmission in memory as well as on disk. See <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>. All messages in a store, whether in memory or on disk,
+have some small memory state. This is roughly about 72 bytes per message. For very large
+caches of messages, this can become non-trivial in size.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="ACTIVITY-TIMEOUTS" name="ACTIVITY-TIMEOUTS">10.1.3.3. Activity
+Timeouts</a></h4>
+
+<p><b class="APPLICATION">UMP</b> stores are NOT archives and are not designed for
+archival. Stores persist source and receiver state with the aim of providing fault
+recovery. Central to this is the concept that a source or receiver has an activity
+timeout attached to it. Once a source or receiver suspends operation or has a failure, it
+has a set time before the store will forget about it. This activity timeout needs to be
+long enough to handle the recovery demands of sources and receivers. However, it can not
+and should not be infinite. Each source takes up memory and disk space, therefore an
+appropriate timeout should be chosen that meets the requirements of recovery, but is not
+excessively long so that the limited resources of the store are exhausted.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME-CONFIGURATIONS" name="UME-CONFIGURATIONS">10.1.4. <b
+class="APPLICATION">UMP</b> Configuration Examples</a></h3>
+
+<p>The following example configurations are offered to illustrate some of the many
+options available to configuring <b class="APPLICATION">UMP</b> .</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UME-CONFIGURATION-NAT-FIREWALL"
+name="UME-CONFIGURATION-NAT-FIREWALL">10.1.4.1. <b class="APPLICATION">UMP</b>
+Configuration with NAT/Firewall</a></h4>
+
+<p>Although the diagram, <a
+href="ume-ops-operational-view.html#UME-OPS-NORMAL-OPERATION"><i>Normal
+Operation</i></a>, demonstrates the typical message interaction in <b
+class="APPLICATION">UMP</b> , sources, receivers, and stores may be arranged in almost
+limitless configurations. Some configurations make more sense than others for certain
+situations. One of those situations involves a Network Address Translation configuration
+(NAT) and/or Firewall. In such configurations, the source is the key element behind the
+NAT or Firewall. Although not the only viable NAT/Firewall configuration for <b
+class="APPLICATION">UMP</b> , the figure below demonstrates one approach to such an
+arrangement.</p>
+
+<div class="FIGURE"><a id="UMECONFIGFIREWALL" name="UMECONFIGFIREWALL"></a>
+<p><b>Figure 17. UMP Configuration with NAT/Firewall</b></p>
+
+<p><img src="UMEConfigFirewall.png" align="CENTER" /></p>
+</div>
+
+<p>The <tt class="LITERAL">lbmrd</tt> (29west Resolution Daemon) is an optional piece,
+but used in most situations where a NAT or Firewall is involved. It provides unicast
+support for topic resolution. The <tt class="LITERAL">lbmrd</tt> and the store are placed
+on the outside (or at least are non-NATed or on a DMZ). Important characteristics of this
+configuration are:</p>
+
+<ul>
+<li>
+<p>The LBMRD acts as a proxy for the topic resolution information.</p>
+</li>
+
+<li>
+<p>The store is accessible by the source and receiver directly.</p>
+</li>
+</ul>
+
+<p>In this situation, receivers and stores unicast control information back to the
+source, therefore the NAT or Firewall router needs to port forward information back to
+the source.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QC-CONFIG-SINGLE-LOCATION-GROUPS"
+name="QC-CONFIG-SINGLE-LOCATION-GROUPS">10.1.4.2. Quorum/Consensus - Single Location
+Groups</a></h4>
+
+<p>Quorum/Consensus provides a huge set of options for store arrangements in <b
+class="APPLICATION">UMP</b> . Between backups and groups, the number of viable approaches
+is practically limitless. Below are two approaches using single location groups and
+multiple location groups.</p>
+
+<p>In short, as long as one of the groups in the figure maintains quorum, then the source
+can continue. See <a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a> to view a <b
+class="APPLICATION">UM</b> configuration file for this example.</p>
+
+<div class="FIGURE"><a id="QCCONFIGLOC" name="QCCONFIGLOC"></a>
+<p><b>Figure 18. Quorum/Consensus - Single Location Groups</b></p>
+
+<p><img src="QCConfigLoc.png" align="CENTER" /></p>
+</div>
+
+<p>The above figure shows three groups arranged on a location basis. Each group is a
+single location. Just SOME possible failure scenarios are:</p>
+
+<ul>
+<li>
+<p>Failure of any 3 stores in Group 0</p>
+</li>
+
+<li>
+<p>Failure of any 1 store in Group 1</p>
+</li>
+
+<li>
+<p>Failure of any 2 stores in Group 2</p>
+</li>
+
+<li>
+<p>Failure of all stores in Group 0 and 1</p>
+</li>
+
+<li>
+<p>Failure of all stores in Group 1 and 2</p>
+</li>
+
+<li>
+<p>Failure of all stores in Group 0 and 2</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QC-CONFIG-MIXED-LOCATION-GROUPS"
+name="QC-CONFIG-MIXED-LOCATION-GROUPS">10.1.4.3. Quorum/Consensus - Mixed Location
+Groups</a></h4>
+
+<p>Groups of stores can be configured across locations. Such an arrangement would ensure
+continued operation in the event of a site-wide failure at any location.</p>
+
+<div class="FIGURE"><a id="QCCONFIGMIXEDLOC" name="QCCONFIGMIXEDLOC"></a>
+<p><b>Figure 19. Quorum/Consensus - Mixed Location Groups</b></p>
+
+<p><img src="QCConfigMixedLoc.png" align="CENTER" /></p>
+</div>
+
+<p>The figure above shows two groups arranged in a mixed location manner. Essentially,
+one location can totally fail and a source can continue sending because the other
+location has a group with a quorum. See below for an <b class="APPLICATION">UM</b>
+configuration file for this example.</p>
+
+<pre class="PROGRAMLISTING">
+source ume_store 10.16.3.77:10313:101000:0
+source ume_store 10.16.3.78:11313:110000:1
+source ume_store 10.16.3.79:12313:120000:1
+source ume_store 192.168.0.44:15313:150000:1
+source ume_store 192.168.0.45:16313:160000:0
+source ume_store 192.168.0.46:17313:170000:0
+
+source ume_message_stability_notification 1
+source ume_store_behavior qc
+
+source ume_store_group 0:3
+source ume_store_group 1:3
+
+source ume_retention_intragroup_stability_behavior quorum
+source ume_retention_intergroup_stability_behavior any
+       
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PROXYSOURCES" name="PROXYSOURCES">10.2. Proxy Sources</a></h2>
+
+<p>The Proxy Source capability allows you to configure stores to automatically continue
+sending the source's topic advertisements which contain store information used by new
+receivers. Without the store RegID, address and TCP port contained in the source's Topic
+Information Records (TIR), new receivers cannot register with the store or request
+retransmissions. After the source returns, the store automatically stops acting as a
+proxy source.</p>
+
+<p>Some other features of Proxy Sources include:</p>
+
+<ul>
+<li>
+<p>Requires a Quorum/Consensus store configuration.</p>
+</li>
+
+<li>
+<p>Normal store failover operation also initiates a new proxy source.</p>
+</li>
+
+<li>
+<p>A store can be running more than one proxy source if more than one source has
+failed.</p>
+</li>
+
+<li>
+<p>A store can be running multiple proxy sources for the same topic.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="OPERATING-PROXYSOURCE" name="OPERATING-PROXYSOURCE">10.2.1.
+How Proxy Sources Operate</a></h3>
+
+<p>The following sequence illustrates the life of a proxy source.</p>
+
+<ol type="1">
+<li>
+<p>A source configured for Proxy Source sends to receivers and a group of
+Quorum/Consensus stores.</p>
+</li>
+
+<li>
+<p>The source fails.</p>
+</li>
+
+<li>
+<p>The source's <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a> or the store's <tt
+class="LITERAL">source-activity-timeout</tt> expires.</p>
+</li>
+
+<li>
+<p>The Quorum/Consensus stores elect a single store to run the proxy source.</p>
+</li>
+
+<li>
+<p>The elected store creates a proxy source and sends topic advertisements.</p>
+</li>
+
+<li>
+<p>The failed source reappears.</p>
+</li>
+
+<li>
+<p>The store deletes the proxy source and the original source resumes activity.</p>
+</li>
+</ol>
+
+<p>If the store running the proxy source fails, the other stores in the Quorum/Consensus
+group detect a source failure again and elect a new store to initiate a proxy source.</p>
+
+<p>If a loss of quorum occurs, the proxy source can continue to send advertisements, but
+cannot send messages until a quorum is re-established.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ACTIVITY-TIMEOUT-STATE-LIFETIME"
+name="ACTIVITY-TIMEOUT-STATE-LIFETIME">10.2.2. Activity Timeout and State Lifetime
+Options</a></h3>
+
+<p><b class="APPLICATION">UMP</b> provides activity and state lifetime timers for sources
+and receivers that operate in conjunction with the proxy source option or independently.
+This section explains how these timers work together and how they work with proxy
+sources.</p>
+
+<p>The <a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a> options determine how
+long a source or receiver must be inactive before a store allows another source or
+receiver to register using that RegID. This prevents a second source or receiver from
+<span class="emphasis"><i class="EMPHASIS">stealing</i></span> a RegID from an existing
+source or receiver. An activity timeout can be configured for the source/receiver with
+the <b class="APPLICATION">UM</b> Configuration Option cited above or with a topic's <tt
+class="LITERAL">ume-attribute</tt> configured in the <tt class="LITERAL">umestored</tt>
+XML configuration file. The following diagram illustrates the default activity timeout
+behavior, which uses <tt class="LITERAL">source-state-lifetime</tt> in the <tt
+class="LITERAL">umestored</tt> XML configuration file. (See <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>.)</p>
+
+<div class="FIGURE"><a id="ACTIVITY-TIMEOUT-DEFAULT" name="ACTIVITY-TIMEOUT-DEFAULT"></a>
+<p><b>Figure 20. Source Activity Timeout Default</b></p>
+
+<p><img src="Activity_Timeout_Default.png" align="CENTER" /></p>
+</div>
+
+<p>In addition to the activity timeout, you can also configure sources and receivers with
+a state lifetime timer using the following options.</p>
+
+<ul>
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">(source) ume_state_lifetime</tt></a></p>
+</li>
+
+<li>
+<p><a href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">(receiver) ume_state_lifetime</tt></a></p>
+</li>
+
+<li>
+<p>The topic's ume-attributes options, <tt class="LITERAL">source-state-lifetime</tt> and
+<tt class="LITERAL">receiver-state-lifetime</tt>. See <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>.</p>
+</li>
+</ul>
+
+<p>The <a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">ume_state_lifetime</tt></a>, when used in conjunction
+with the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a> options, determines at
+what point <b class="APPLICATION">UMP</b> removes the source or receiver state. <b
+class="APPLICATION">UMP</b> does not check the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">ume_state_lifetime</tt></a> until <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a> expires. The following
+diagram illustrates this behavior.</p>
+
+<div class="FIGURE"><a id="SRC-RCV-STATE-LIFETIME" name="SRC-RCV-STATE-LIFETIME"></a>
+<p><b>Figure 21. Source or Receiver State Lifetime</b></p>
+
+<p><img src="Src_Rcv_State_Lifetime.png" align="CENTER" /></p>
+</div>
+
+<p>If you have enabled the Proxy Source option, the Activity Timeout triggers the
+creation of the proxy source. The following diagram illustrates this behavior.</p>
+
+<div class="FIGURE"><a id="SRC-ACTIVITY-STATE-PROXY-SOURCE"
+name="SRC-ACTIVITY-STATE-PROXY-SOURCE"></a>
+<p><b>Figure 22. Source Activity and State Timers with the Proxy Source Option</b></p>
+
+<p><img src="Src_Activity_State_Proxy_Source.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ENABLING-PROXYSOURCE" name="ENABLING-PROXYSOURCE">10.2.3.
+Enabling the Proxy Source Option</a></h3>
+
+<p>You must configure both the source and the stores to enable the Proxy Source
+option.</p>
+
+<ul>
+<li>
+<p>Configure the source in a <b class="APPLICATION">UM</b> Configuration File with the
+source configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEPROXYSOURCE"
+target="doccontent"><tt class="LITERAL">ume_proxy_source</tt></a>.</p>
+</li>
+
+<li>
+<p>Configure the stores in the <tt class="LITERAL">umestored</tt> XML configuration file
+with the Store Element Option, <tt class="LITERAL">allow-proxy-source</tt>. See <a
+href="umestored-config.html#UMESTORED-STORE-OPTIONS"><i>Options for a Store's
+ume-attributes Element</i></a> for more information.</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Proxy sources operate with Session IDs as well as Reg IDs. See <a
+href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with Session
+IDs</i></a></p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-REDUNDANCY" name="QUEUE-REDUNDANCY">10.3. Queue
+Redundancy</a></h2>
+
+<p>Queues can use the same Quorum/Consensus configuration as <b
+class="APPLICATION">UMQ</b> stores.</p>
+
+<ul>
+<li>
+<p>Sources submit queue messages to each queue instance.</p>
+</li>
+
+<li>
+<p>You configure queue instances into groups using the <a
+href="umestored-config.html#QUEUE-GROUPS-ELEMENT"><i>Queue Groups Element</i></a> of the
+queue's <tt class="LITERAL">umestored</tt> XML configuration file. You can configure all
+queue instances for a queue in a single <tt class="LITERAL">umestored</tt> XML
+configuration file or a separate file for each instance.</p>
+</li>
+
+<li>
+<p>A message is considered stable once it has satisfied the stability requirements you
+configure with <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"
+ target="doccontent"><tt class="LITERAL">umq_retention_*_stability_behavior</tt></a>.</p>
+</li>
+
+<li>
+<p>Receivers send Consumption Reports to all queue instances so they all are aware of
+message reception status.</p>
+</li>
+</ul>
+
+<p><a href="ume-fault-tolerance.html#QUEUEFAILOVERCONFIG">Figure 23</a> shows how
+multiple instances of a Queue can be configured and some of the communication between
+contexts, sources, receivers and Queue instances.</p>
+
+<div class="FIGURE"><a id="QUEUEFAILOVERCONFIG" name="QUEUEFAILOVERCONFIG"></a>
+<p><b>Figure 23. Sample Configuration of Redundant Queues for Failover</b></p>
+
+<p><img src="Queue_Failover_Config.png" align="CENTER" /></p>
+</div>
+
+<ul>
+<li>
+<p><b class="APPLICATION">RegID</b> - Application contexts register with the Queue using
+a RegID in order to send messages to the Queue or receive messages from the Queue. See <a
+href="designing-queuing-applications.html#QUEUE-REG-IDS"><i>Queue Registration
+IDs</i></a> and <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQQUEUEREGISTRATIONID"
+target="doccontent"><tt class="LITERAL">umq_queue_registration_id</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Queue Master</b> - A Queue Instance that has been elected the
+master Queue. Only the master Queue sends messages to receivers. The master sends
+Instance List Notifications (ILN) periodically to QSIs and registered contexts.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Queue Slave Instance (QSI)</b> - Slave Queue Instances
+initiated for Queue Failover. Should the master Queue fail, any QSI can assume master
+Queue activities following election. Each QSI and the master Queue require a separate <b
+class="APPLICATION">UM</b> Configuration File and <tt class="LITERAL">umestored</tt>
+configuration.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">QIR (Queue Information Record)</b> - Queue advertisement sent
+by the master Queue to registered contexts which enable sources and receivers to resolve
+queue names to lists of queue instances (ILN). QIRs contain each queue instances' IP
+address, port, index, and group index as well as flags indicating if the instance is the
+Queue Election Master, current master or Post Election Master. The QIR also contains
+versioning information for instances partitioned due to previous failures.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">ILN (Instance List Notification)</b> - List of active instances
+in the Queue used by instances to manage themselves. For each instance the list contains
+the instance's IP address, port, index, group index and flags indicating if the instance
+is the Queue Election Master, current master or Post Election Master.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">CR (Consumption Report)</b> - Indication sent to each Queue
+Instance that a message has been consumed.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="Q-MASTER-ELECTION-PROCESS"
+name="Q-MASTER-ELECTION-PROCESS">10.3.1. Queue Master Election Process</a></h3>
+
+<p>Queue instances use an internal election process to determine a master queue
+responsible for making assignments and handling any dissemination requirements. The
+master is also responsible for tracking queue instance liveness and handling queue
+resolution duties. Those queue instances that are not the master (slaves) simply act as
+passive observers of queue activities. Slaves may fail and come online without seriously
+impacting operations. When a master fails, though, an election occurs. Once the election
+process establishes a new master, queue operation can proceed.</p>
+
+<p>A queue instance is elected master based on the three values shown below and presented
+in order of importance.</p>
+
+<ol type="1">
+<li>
+<p>The QSI's <tt class="LITERAL">queue-management-election-bias</tt> configured in it's
+<tt class="LITERAL">umestored</tt> XML configuration file.</p>
+</li>
+
+<li>
+<p>The QSI's age computed from the number of messages received and submitted by the QSI.
+<b class="APPLICATION">UMQ</b> uses the QSI age if all QSI bias values are equal.</p>
+</li>
+
+<li>
+<p>An internal QSI index. <b class="APPLICATION">UMQ</b> uses the QSI index if all QSI
+bias and age values are equal.</p>
+</li>
+</ol>
+
+<p><b class="APPLICATION">UMQ</b>'s default behavior assigns the same election bias to
+every QSI, which often results in the "oldest", active QSI being elected the master
+queue. If you wish finer control of the election process, you can configure each Queue
+Instance with an election bias. You could assign the higher election bias values to the
+Queue Instances you know are running on the more powerful machines or those with the
+lowest latency. See <a href="umestored-config.html#QUEUE-MANAGEMENT-OPTIONS"><i>Queue
+Management Options for a Queue's ume-attributes Element</i></a> for more information.</p>
+
+<p>The following summarizes the Queue Master Election Process.</p>
+
+<ol type="1">
+<li>
+<p>A Queue Slave Instance (QSI) detects the loss of the master if the <tt
+class="LITERAL">queue_management_master_activity_timeout</tt> expires without any
+Instance Lists having been sent during the timeout period.</p>
+</li>
+
+<li>
+<p>The QSI that detected the loss of the master names itself Queue Election Master
+(QEM).</p>
+</li>
+
+<li>
+<p>The QEM sends an Election Call to all QSIs, which also identifies itself as the new
+QEM.</p>
+</li>
+
+<li>
+<p>All QSIs reply to the Election Call with their "instance vote" which contains their
+own election bias and "age".</p>
+</li>
+
+<li>
+<p>The QEM selects the QSI with the highest election bias as the master. If two or more
+QSIs have the highest bias, the QEM selects the "oldest" of the QSIs with the highest
+bias. The QSI with the most messages received and submitted is considered the oldest. A
+third tie breaker is an internal QSI index.</p>
+</li>
+
+<li>
+<p>The QEM sends out another ILN naming the elected QSI as the Post Election Master
+(PEM).</p>
+</li>
+
+<li>
+<p>QSIs confirm receipt of the ILN.</p>
+</li>
+
+<li>
+<p>QEM sends a Resume Operation message to the PEM.</p>
+</li>
+
+<li>
+<p>The PEM resumes operation of the Queue (assigning messages to receivers, managing
+dissemination requirements, tracking QSI health, handling queue resolution traffic) and
+sends a Instance List Notification flagging itself as the current master.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-FAILOVER" name="QUEUE-FAILOVER">10.4. Queue
+Failover</a></h2>
+
+<p>The following sections discuss various queue failover scenarios.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="FAILOVERLOSSQUORUM" name="FAILOVERLOSSQUORUM">10.4.1. Failover
+from Loss of Quorum</a></h3>
+
+<p>If the loss of a QSI results in the loss of quorum, the master Queue stops advertising
+(QIR). As a result, sources lose their registration and subsequent messages sent by the
+sources return an LBM_EUMENOREG event. (If a source is connected to both a store and a
+queue, subsequent message sends return an LBM_ENO_QUEUE_REG event.) When quorum is
+regained by the recovery of the lost QSI or the addition of a new QSI, the master Queue
+advertises again. Sending and receiving <b class="APPLICATION">UM</b> contexts can then
+resolve the Queue again and re-register.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="FAILOVERLOSSMASTER" name="FAILOVERLOSSMASTER">10.4.2. Failover
+from Loss of Master</a></h3>
+
+<p>If the master Queue fails, the following two events occur.</p>
+
+<ul>
+<li>
+<p>Sources lose their registration and subsequent messages sent by the sources return an
+LBM_EUMENOREG event. (If a source is connected to both a store and a queue, subsequent
+message sends return an LBM_ENO_QUEUE_REG event.)</p>
+</li>
+
+<li>
+<p>The first QSI to detect the loss of the master calls an election. See <a
+href="ume-fault-tolerance.html#Q-MASTER-ELECTION-PROCESS"><i>Queue Master Election
+Process</i></a>. After wards, the new master Queue starts advertising, allowing sending
+and receiving <b class="APPLICATION">UM</b> contexts to resolve the Queue and
+re-register.</p>
+</li>
+</ul>
+
+<p>If, due to a series of failures, a QSI notices that it has stored messages that the
+master queue never saw, it attempts to resubmit them to the master queue. The master
+queue either accepts these when it determines that it never saw them, or it rejects the
+resubmission attempt. If the master queue accepts the resubmit, it marks the message as a
+resubmission when it assigns the message to a receiver, informing the receiver that it
+was resubmitted from a QSI.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="OTHER-SCENARIOS" name="OTHER-SCENARIOS">10.4.3. Other
+Scenarios</a></h3>
+
+<p>If a receiver fails unexpectedly, the queue does not become aware of this until <tt
+class="LITERAL">receiver-activity-timeout</tt> expires. In the mean time, the queue
+continues to assign messages to the receiver until the receiver's portion size is met.
+When the <tt class="LITERAL">message-reassignment-timeout</tt> expires, the queue
+reassigns the message to a different receiver and sets the message's reassigned flag to
+inform the receiving application that the message may have been seen by a different
+receiver.</p>
+
+<p>Receivers can call <code class="FUNCTION">lbm_rcv_umq_deregister()</code> or <code
+class="FUNCTION">lbm_wildcard_rcv_umq_deregister()</code> to gracefully deregister from
+the queue. The queue does not assign any new messages to it.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="FAILOVERLOSSQSI" name="FAILOVERLOSSQSI">10.4.4. Failover from
+Loss of Slave (QSI)</a></h3>
+
+<p>Assuming the master queue is running and assuming quorum has been maintained, QSIs
+coming and going have little to no impact on queue operation. QSIs are largely passive
+bystanders. As QSIs come and go from the queue, the master queue notifies the <b
+class="APPLICATION">UM</b> contexts registered with the queue via instance list
+notifications (ILN). These notifications inform the contexts which QSI was added or
+removed.</p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="designing-queuing-applications.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umestored-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Designing Queuing Applications</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Man Pages</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

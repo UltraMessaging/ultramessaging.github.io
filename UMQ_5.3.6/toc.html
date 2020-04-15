@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	<title>Ultra Messaging Documentation Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="doc/Search/search.css">
+	<script type="text/javascript" src="doc/Search/settings.js"></script>
+	<script type="text/javascript" src="doc/Search/search.js"></script>
+	<script type="text/javascript" src="doc/Search/zoom_index.js"></script>
+	<script type="text/javascript" src="doc/Search/zoom_pageinfo.js"></script>
+	<script type="text/javascript" src="doc/Search/util.js"></script>
+<script type="text/javascript" src="doc/Search/jquery-1.5.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Immediately hide/show for responsiveness
+		$("#navigation > li > a.collapsed + ul").hide();
+		$("#navigation > li > a.expanded + ul").show();
+		// Highlight active link, and remove highlight from previous active link
+		$("ul li ul li").click(function() {
+			$(this).addClass("active");
+			// Remove active from any of my siblings in this section
+			$(this).siblings().removeClass("active");
+			// Remove active from other sections
+			$(this).parent().parent().siblings().children("ul").children("li").removeClass("active");
+		});
+		// Expand or collapse a section
+		setTimeout(function() {
+			$("#navigation > li > a").click(function() {
+				$(this).toggleClass("expanded").toggleClass("collapsed").parent().find("> ul").toggle();
+				// Toggle the image indicating collapsed or expanded
+				$(this).children().toggleClass("section_image_collapse").toggleClass("section_image_expand");
+				if ($(this).hasClass('expanded')) {
+					$(this).children().attr("src", "doc/Search/collapse.png");
+				} else {
+					$(this).children().attr("src", "doc/Search/expand.png");
+				}
+			});
+		}, 250);
+	});
+</script>
+	<script type="text/javascript" src="doc/Search/highlight.js"></script>
+</head>
+<body>
+	<div id="toc_body">
+	<script type="text/javascript">addCloseFrame();</script>
+	<p><img src="UM-logo.png" alt="29West/Informatica logo" class="center"></p>
+	<ul id="navigation">
+<li>
+<a class="expanded section_title">
+<img src="doc/Search/collapse.png" alt="expand/collapse indicator" class="section_image_collapse">Design Concepts and Guides</a>
+<ul>		<li class="doc_link_no_border"><a href="doc/QuickStart/index.html" target="doccontent" title="Step-by-step guide to running binary evaluation tools and to building minimal programs.">
+Quick Start Guide
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/Design/index.html" target="doccontent" title="Fundamental concepts behind Ultra Messaging.">
+Ultra Messaging Concepts
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/UME/index.html" target="doccontent" title="Concepts, tutorials and configuration information for UMP and UMQ , along with discussions about designing persistent or queuing applications.">
+The Ultra Messaging Guide for Persistence and Queuing
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/UMM/index.html" target="doccontent" title="Information about using the UMM GUI to create configuration templates, application configurations and assign applications to users. Also contains information about running the UMM daemon, ummd.">
+Ultra Messaging Manager Guide
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/jms_concepts/index.html" target="doccontent" title="Conceptual, operational and configuration information about Ultra Messaging JMS.">
+The Ultra Messaging JMS Guide
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/Config/index.html" target="doccontent" title="A guide to the configuration options for Ultra Messaging and examples.">
+UM Configuration Guide
+</a></li>
+		<li class="doc_link_with_border"><a href="https://communities.informatica.com/infakb/kbexternal/default.aspx" target="doccontent" title="A collection of notes on Ultra Messaging. Includes a list of frequently asked questions (FAQ), articles answering common support questions, new hardware issues, source code examples and more.">
+UM Knowledgebase
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/Gateway/index.html" target="doccontent" title="Documentation for the Ultra Messaging Gateway.">
+UM Gateway
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/Operations/index.htm" target="_blank" title="Contains monitoring strategies, troubleshooting information and error message descriptions for supporting the operation of Ultra Messaging.">
+UM Operations Guide
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/ChangeLog/index.html" target="doccontent" title="A list of changes organized by product release.">
+Change Log
+</a></li>
+	</ul></li><li>
+<a class="collapsed section_title"><img src="doc/Search/expand.png" alt="expand/collapse indicator" class="section_image_expand">Application Programming Interfaces</a>
+<ul>		<li class="doc_link_no_border"><a href="doc/API/index.html" target="doccontent" title="Documentation for the UM C API">
+C API
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/JavaAPI/html/index.html" target="doccontent" title="Documentation for the UM Java API">
+Java API
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/DotNetAPI/doc/Index.html" target="doccontent" title="Documentation for the UM .NET API (Note - the Windows doc package also contains a standard Windows help package for the .Net API. See LBMCS in the LBM program group.)">
+.NET API
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/JMSAPI/html/index.html" target="doccontent" title="Reference that shows which classes Ultra Messaging JMS supports.">
+JMS API
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/UMMJavaAPI/html/index.html" target="doccontent" title="Documentation for the UM Manager Java API">
+UMM Java API
+</a></li>
+</ul></li><li>
+<a class="collapsed section_title"><img src="doc/Search/expand.png" alt="expand/collapse indicator" class="section_image_expand">Source Code Examples</a>
+<ul>		<li class="doc_link_no_border"><a href="doc/example/index.html" target="doccontent" title="Source code for many complete example programs using the UM C API.">
+C Example Source Code
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/java_example/" target="doccontent" title="Source code for many complete example programs using the UM Java API.">
+Java Example Source Code
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/dotnet_example/" target="doccontent" title="Source code for many complete example programs using the UM .NET API.">
+C# Example Source Code
+</a></li>
+		<li class="doc_link_with_border"><a href="doc/jms_example" target="doccontent" title="Source code for JMS example programs.">
+JMS Example Source Code
+</a></li>
+</ul></li>	</ul>
+	<div id="results_body">
+	<div class="section_title">Search</div>
+	<script type="text/javascript">ZoomSearch();</script>
+	<noscript>You must have JavaScript enabled to use this version of the search engine.</noscript>
+	</div>
+	</div>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>

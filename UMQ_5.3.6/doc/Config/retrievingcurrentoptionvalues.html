@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Retrieving Current Option Values</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="PREVIOUS" title="Modifying Current Attributes"
+href="modifyingcurrentattributes.html" />
+<link rel="NEXT" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="modifyingcurrentattributes.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="10%" align="right" valign="bottom"><a href="examples.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="RETRIEVINGCURRENTOPTIONVALUES"
+name="RETRIEVINGCURRENTOPTIONVALUES">1.7. Retrieving Current Option Values</a></h1>
+
+<p>Most <b class="APPLICATION">UM</b> objects allow their current attributes' option
+values to be retrieved during operation. <b class="APPLICATION">UM</b> API functions
+supporting such actions operate on the object itself.</p>
+
+<p>The <b class="APPLICATION">UM</b> objects which support these actions are <span
+class="TYPE">lbm_src_t</span>, <span class="TYPE">lbm_rcv_t</span>, <span
+class="TYPE">lbm_context_t</span>, and <span class="TYPE">lbm_event_queue_t</span>. For
+each such object, there are corresponding API functions to get an option as a binary
+value, and get an option as a string value. These function names are based on the object
+name, suffixed with <code class="FUNCTION">_getopt()</code>, and <code
+class="FUNCTION">_str_getopt()</code>. As an illustration of this convention, the API
+functions for working with <span class="TYPE">lbm_event_queue_t</span> objects are shown
+in the following table.</p>
+
+<div class="TABLE"><a id="AEN1694" name="AEN1694"></a>
+<p><b>Table 1-4. UM API Functions For Retrieving Option Values from <span
+class="TYPE">lbm_event_queue_t</span> Objects</b></p>
+
+<table border="1" class="CALSTABLE">
+<col width="264" title="COL1" />
+<col width="216" title="COL2" />
+<thead>
+<tr>
+<th align="CENTER">Action</th>
+<th align="CENTER"><b class="APPLICATION">UM</b> API function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Get Option as a Binary Value</td>
+<td><code class="FUNCTION">lbm_event_queue_getopt()</code></td>
+</tr>
+
+<tr>
+<td>Get Option as a String Value</td>
+<td><code class="FUNCTION">lbm_event_queue_str_getopt()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The following sections describe in detail the use of these <b
+class="APPLICATION">UM</b> API functions. The functions related to <span
+class="TYPE">lbm_event_queue_t</span> objects are used for the purpose of illustration,
+but the instructions (if not the specifics) apply to all such <b
+class="APPLICATION">UM</b> objects.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RETRIEVINGCURRENTOPTIONVALUESGET"
+name="RETRIEVINGCURRENTOPTIONVALUESGET">1.7.1. Getting An Option as a Binary
+Value</a></h2>
+
+<p>Getting an option as a binary value is very similar to setting an option from a binary
+value: it requires knowledge of not only the option name, but its type as well. The final
+two parameters in the call to <code class="FUNCTION">lbm_event_queue_getopt()</code> are
+a pointer to a variable to receive the current option value, and a pointer to a variable
+of type <span class="TYPE">size_t</span> which contains the length of the option value
+variable. This length must be be correct for the specified option.</p>
+
+<p>In the example code below, the option value for the queue size warning is
+retrieved.</p>
+
+<pre class="SCREEN">
+unsigned long int optval;
+size_t optlen;
+lbm_event_queue_t evq; /* must be previously created */
+int rc;
+
+/* Get the queue size warning value */
+optlen = sizeof(optval);
+rc = lbm_event_queue_getopt(&amp;evq, "queue_size_warning", &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains the value of queue_size_warning, which should be 5000 */
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RETRIEVINGCURRENTOPTIONVALUESGETSTRING"
+name="RETRIEVINGCURRENTOPTIONVALUESGETSTRING">1.7.2. Getting An Option as a String
+Value</a></h2>
+
+<p>Getting an option as a string value effectively does the same thing that getting an
+option as a binary value does. However, the option value is returned as a null-terminated
+string, just as you would specify the option value in a configuration file. The final two
+parameters in the call to <code class="FUNCTION">lbm_event_queue_str_getopt()</code> are
+a pointer to a string variable to receive the current option value, and a pointer to a
+variable of type <span class="TYPE">size_t</span> which contains the maximum size of the
+option value string variable.</p>
+
+<p>In the example code below, the option value for the queue size warning is
+retrieved.</p>
+
+<pre class="SCREEN">
+char optval_string[256];
+size_t optlen;
+lbm_event_queue_t evq; /* must be previously created */
+int rc;
+
+/* Get the queue size warning value */
+optlen = sizeof(optval_string);
+rc = lbm_event_queue_str_getopt(&amp;evq, "queue_size_warning", optval_string, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains the value of queue_size_warning, which should be "5000" */
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="modifyingcurrentattributes.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="examples.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Modifying Current Attributes</td>
+<td width="34%" align="center" valign="top"><a href="configuringoptions.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Example Configuration Scenarios</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

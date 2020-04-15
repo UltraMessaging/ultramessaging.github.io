@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Automatic Monitoring Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Hot Failover Operation Options"
+href="hotfailoveroperationoptions.html" />
+<link rel="NEXT" title="Deprecated Options" href="deprecatedoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="hotfailoveroperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="deprecatedoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="AUTOMATICMONITORINGOPTIONS"
+name="AUTOMATICMONITORINGOPTIONS">4.33. Automatic Monitoring Options</a></h1>
+
+<p>The Monitoring Options below apply to a given <b class="APPLICATION">UMS</b> context.
+You can override the default values of these options and apply monitoring option values
+to all <b class="APPLICATION">UMS</b> contexts (transports and event queues) with the
+following environment variables.</p>
+
+<ul>
+<li>
+<p>LBM_MONITOR_INTERVAL</p>
+</li>
+
+<li>
+<p>LBM_MONITOR_TRANSPORT</p>
+</li>
+
+<li>
+<p>LBM_MONITOR_TRANSPORT_OPTS</p>
+</li>
+
+<li>
+<p>LBM_MONITOR_APPID</p>
+</li>
+</ul>
+
+<p>These variables will not override any Monitoring Options you specifically set. The
+environment variables only override Monitoring Options default values.</p>
+
+<p>If you do not specify any monitoring options either in an <b
+class="APPLICATION">UMS</b> configuration file or via <tt
+class="LITERAL">lbm_context_attr_setopt()</tt> calls, no monitoring will occur. However,
+if you then set the LBM_MONITOR_INTERVAL environment variable to 5, you will turn on
+automatic monitoring for every <b class="APPLICATION">UMS</b> context your application
+creates at 5 second intervals. If you then set <tt class="LITERAL">monitor_interval</tt>
+to 10 for a particular context, all transport sessions in that context will be monitored
+every 10 seconds.</p>
+
+<p>See also <a href="../Design/monitoring.html#AUTOMONITOR" target="_top">Automatic
+Monitoring</a> for more information about this feature.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMONITORAPPID" name="CONTEXTMONITORAPPID">4.33.1. <span
+class="lbm-option-name"><span class="PHRASE">monitor_appid
+(context)</span></span></a></h2>
+
+<p>An application ID string used by automatic monitoring to identify the application
+generating the statistics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21116" name="AEN21116"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENTQUEUEMONITORAPPID" name="EVENTQUEUEMONITORAPPID">4.33.2.
+<span class="lbm-option-name"><span class="PHRASE">monitor_appid
+(event_queue)</span></span></a></h2>
+
+<p>An application ID string used by automatic monitoring to identify the application
+generating the statistics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21148" name="AEN21148"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">event_queue</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMONITORINTERVAL" name="CONTEXTMONITORINTERVAL">4.33.3.
+<span class="lbm-option-name"><span class="PHRASE">monitor_interval
+(context)</span></span></a></h2>
+
+<p>Interval at which automatic monitoring retrieves the statistics for all transport
+sessions on a context. Setting this option to zero (the default) disables the automatic
+monitoring of a context's transport sessions.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21180" name="AEN21180"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENTQUEUEMONITORINTERVAL"
+name="EVENTQUEUEMONITORINTERVAL">4.33.4. <span class="lbm-option-name"><span
+class="PHRASE">monitor_interval (event_queue)</span></span></a></h2>
+
+<p>Interval at which automatic monitoring retrieves the statistics for an event queue.
+Setting this option to zero (the default) disables the automatic monitoring of an event
+queue. When monitoring Event Queue statistics you must enable the Event Queue <b
+class="APPLICATION">UM</b> Configuration Options, <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUEAGEENABLED" target="_top"><tt
+class="LITERAL">queue_age_enabled</tt></a>, <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUECOUNTENABLED" target="_top"><tt
+class="LITERAL">queue_count_enabled</tt></a> and <a
+href="../Config/eventqueueoptions.html#EVENTQUEUEQUEUESERVICETIMEENABLED"
+target="_top"><tt class="LITERAL">queue_service_time_enabled</tt></a> . <b
+class="APPLICATION">UM</b> disables these options by default, which produces no event
+queue statistics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21229" name="AEN21229"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">event_queue</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMONITORTRANSPORT"
+name="CONTEXTMONITORTRANSPORT">4.33.5. <span class="lbm-option-name"><span
+class="PHRASE">monitor_transport (context)</span></span></a></h2>
+
+<p>The LBMMON transport module to be used for automatic monitoring.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21270" name="AEN21270"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN21293" name="AEN21293"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">lbm</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_MON_TRANSPORT_LBM</code></td>
+<td>Use the LBMMON lbm transport module. <span class="bold"><b class="EMPHASIS">Default
+for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbmsnmp</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_MON_TRANSPORT_LBMSNMP</code></td>
+<td>Use the LBMMON lbmsnmp transport module. This value is required if you use the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">SNMP Agent</b>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENTQUEUEMONITORTRANSPORT"
+name="EVENTQUEUEMONITORTRANSPORT">4.33.6. <span class="lbm-option-name"><span
+class="PHRASE">monitor_transport (event_queue)</span></span></a></h2>
+
+<p>The LBMMON transport module to be used for automatic monitoring.</p>
+
+<div class="INFORMALTABLE"><a id="AEN21329" name="AEN21329"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">event_queue</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN21352" name="AEN21352"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">lbm</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_MON_TRANSPORT_LBM</code></td>
+<td>Use the LBMMON lbm transport module. <span class="bold"><b class="EMPHASIS">Default
+for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbmsnmp</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_MON_TRANSPORT_LBMSNMP</code></td>
+<td>Use the LBMMON lbmsnmp transport module. This value is required if you use the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">SNMP Agent</b>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMONITORTRANSPORTOPTS"
+name="CONTEXTMONITORTRANSPORTOPTS">4.33.7. <span class="lbm-option-name"><span
+class="PHRASE">monitor_transport_opts (context)</span></span></a></h2>
+
+<p>An option string to be passed to the LBMMON transport module for automatic monitoring.
+See <a href="../Design/monitoring.html#LBM-TRANSPORT-MODULE" target="_top">The <b
+class="APPLICATION">UM</b> Transport Module</a> for more information about Transport
+Options. (Options for the <tt class="LITERAL">lbm</tt> transport module and the <tt
+class="LITERAL">lbmsnmp</tt> transport module are identical.)</p>
+
+<div class="INFORMALTABLE"><a id="AEN21392" name="AEN21392"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENTQUEUEMONITORTRANSPORTOPTS"
+name="EVENTQUEUEMONITORTRANSPORTOPTS">4.33.8. <span class="lbm-option-name"><span
+class="PHRASE">monitor_transport_opts (event_queue)</span></span></a></h2>
+
+<p>An option string to be passed to the LBMMON transport module for automatic monitoring.
+See <a href="../Design/monitoring.html#LBM-TRANSPORT-MODULE" target="_top">The <b
+class="APPLICATION">UM</b> Transport Module</a> for more information about Transport
+Options. (Options for the <tt class="LITERAL">lbm</tt> transport module and the <tt
+class="LITERAL">lbmsnmp</tt> transport module are identical.)</p>
+
+<div class="INFORMALTABLE"><a id="AEN21428" name="AEN21428"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">event_queue</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="hotfailoveroperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="deprecatedoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Hot Failover Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Deprecated Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Unicast Resolver Network Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Multicast Resolver Network Options"
+href="multicastresolvernetworkoptions.html" />
+<link rel="NEXT" title="Transport TCP Network Options"
+href="transporttcpnetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="multicastresolvernetworkoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="transporttcpnetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UNICASTRESOLVERNETWORKOPTIONS"
+name="UNICASTRESOLVERNETWORKOPTIONS">4.5. Unicast Resolver Network Options</a></h1>
+
+<div class="FIGURE"><a id="FIGRESOLVER-UNICAST" name="FIGRESOLVER-UNICAST"></a>
+<p><b>Figure 4-2. Unicast resolver network options</b></p>
+
+<p><img src="reference/Resolver-Unicast.png" align="CENTER" /></p>
+</div>
+
+<p>This diagram shows a single unicast resolver daemon configured with <tt
+class="LITERAL">resolver_unicast_daemon</tt>.</p>
+
+<p>If using multiple <tt class="LITERAL">lbmrd</tt> instances with a single context, you
+can configure <tt class="LITERAL">resolver_unicast_interface</tt> and <tt
+class="LITERAL">resolver_unicast_port_low/high</tt> and omit the <tt
+class="LITERAL">Interface:LocalPort</tt> section of <tt
+class="LITERAL">resolver_unicast_daemon</tt>.</p>
+
+<p>See also <a href="../Design/architecture.html#UNICAST-TOPIC-RESOLUTION"
+target="_top">Unicast Topic Resolution</a> for more information.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTDAEMON"
+name="CONTEXTRESOLVERUNICASTDAEMON">4.5.1. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_daemon (context)</span></span></a></h2>
+
+<p>Add a unicast resolver daemon specification to the list of unicast resolver daemons.
+Unlike most other <b class="APPLICATION">UM</b> settings, every time this setting is
+called, it adds another daemon specification to the list and does NOT overwrite previous
+specifications. Each entry contains the interface, source port, resolver IP, and
+destination port for a single daemon. For the configuration file as well as string
+versions of setting this option, the string value is formatted as <tt
+class="LITERAL">[Iface[:Src_Port]-&gt;]IP:Dest_Port</tt>. <tt class="LITERAL">Iface</tt>
+is the interface to use (previously set via <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE">resolver_unicast_interface</a>).
+<tt class="LITERAL">Src_Port</tt> is the source port to use (previously <a
+href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT">resolver_unicast_port</a>). <tt
+class="LITERAL">IP</tt> is the resolver daemon's IP address (previously <a
+href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTADDRESS">resolver_unicast_address</a>),
+<tt class="LITERAL">Dest_Port</tt> is the resolver daemon's UDP port (previously <a
+href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTDESTINATIONPORT">resolver_unicast_destination_port</a>).
+Either the <tt class="LITERAL">Src_Port</tt> or both the <tt class="LITERAL">Iface</tt>
+and <tt class="LITERAL">Src_Port</tt> may be omitted, in which case the default <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE">resolver_unicast_interface</a>
+and <a href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT">resolver_unicast_port</a>
+settings are used. Because each entry adds a new daemon specification and does not
+overwrite previous values, an entry or string with the IP address of 0.0.0.0 and TCP port
+of 0 removes all previous daemon specifications. At least one daemon specification means
+the context does not use multicast topic resolution. Possible formats of this option are:
+<tt class="LITERAL">Interface:LocalPort-&gt;DaemonIP:RemotePort</tt>, <tt
+class="LITERAL">Interface-&gt;DaemonIP:RemotePort</tt> or <tt
+class="LITERAL">DaemonIP:RemotePort</tt>. <tt class="LITERAL">Interface</tt> may be
+specified in any of the ways described in <a
+href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5794" name="AEN5794"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ucast_resolver_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTINTERFACE"
+name="CONTEXTRESOLVERUNICASTINTERFACE">4.5.2. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_interface (context)</span></span></a></h2>
+
+<p>Specifies the network interface over which <b class="APPLICATION">UM</b> receives
+unicast Topic Resolution messages. Can specify full IP address of interface, or just
+network part (see <a href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a>
+for details). Default is set to INADDR_ANY, meaning that it will accept unicast Topic
+Resolution messages on any interface.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5831" name="AEN5831"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTPORTHIGH"
+name="CONTEXTRESOLVERUNICASTPORTHIGH">4.5.3. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_port_high (context)</span></span></a></h2>
+
+<p>The highest local UDP port in a range of ports used for unicast topic resolution
+messages. The <b class="APPLICATION">UM</b> resolution daemon (lbmrd) sends unicast topic
+resolution messages to the UDP port range defined by this option and <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTLOW">resolver_unicast_port_low</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5875" name="AEN5875"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14406</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTPORTLOW"
+name="CONTEXTRESOLVERUNICASTPORTLOW">4.5.4. <span class="lbm-option-name"><span
+class="PHRASE">resolver_unicast_port_low (context)</span></span></a></h2>
+
+<p>The lowest local UDP port in a range of ports used for unicast topic resolution
+messages. The <b class="APPLICATION">UM</b> resolution daemon (lbmrd) sends unicast topic
+resolution messages to the UDP port range defined by this option and <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTHIGH">resolver_unicast_port_high</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5920" name="AEN5920"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14402</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUNICASTRECEIVERSOCKETBUFFER"
+name="CONTEXTRESOLVERUNICASTRECEIVERSOCKETBUFFER">4.5.5. <span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_receiver_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set <code class="CONSTANT">SO_RCVBUF</code> value of the UDP receivers
+for unicast topic resolution messages. In some cases the OS will not allow all of this
+value to be used. A value of 0 instructs <b class="APPLICATION">UM</b> to use the default
+OS values. See the section on <a href="reference.html#SOCKETBUFFERSIZE">socket buffer
+sizes</a> for platform-dependent information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5969" name="AEN5969"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS
+default)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="multicastresolvernetworkoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="transporttcpnetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Multicast Resolver Network Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport TCP Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

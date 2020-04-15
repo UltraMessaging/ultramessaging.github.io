@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Multicast Resolver Network Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Resolver Operation Options"
+href="resolveroperationoptions.html" />
+<link rel="NEXT" title="Unicast Resolver Network Options"
+href="unicastresolvernetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="resolveroperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="unicastresolvernetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MULTICASTRESOLVERNETWORKOPTIONS"
+name="MULTICASTRESOLVERNETWORKOPTIONS">4.4. Multicast Resolver Network Options</a></h1>
+
+<div class="FIGURE"><a id="FIGRESOLVER-MULTICAST" name="FIGRESOLVER-MULTICAST"></a>
+<p><b>Figure 4-1. Multicast resolver network options</b></p>
+
+<p><img src="reference/Resolver-Multicast.png" align="CENTER" /></p>
+</div>
+
+<p>See also <a href="../Design/architecture.html#TOPIC-RESOLUTION" target="_top">Topic
+Resolution</a> for more information.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTADDRESS"
+name="CONTEXTRESOLVERMULTICASTADDRESS">4.4.1. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_address (context)</span></span></a></h2>
+
+<p>Multicast address used for Topic Resolution. This option automatically sets the values
+for <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGADDRESS">resolver_multicast_incoming_address</a>
+and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS">resolver_multicast_outgoing_address</a>
+as evidenced by the default values for all three options, which are the same.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5375" name="AEN5375"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">224.9.10.11</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTINCOMINGADDRESS"
+name="CONTEXTRESOLVERMULTICASTINCOMINGADDRESS">4.4.2. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_incoming_address (context)</span></span></a></h2>
+
+<p>Incoming multicast address used for finer control of Topic Resolution. For example, if
+you want the context to listen on a different address/port than the <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS">resolver_multicast_address</a>,
+set this option and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGPORT">resolver_multicast_incoming_port</a>
+to different values. This value may be set to 0.0.0.0 (<code
+class="CONSTANT">INADDR_ANY</code>), to switch off listening to topic resolution
+messages. This means that queries from receivers or advertisements from sources will not
+be handled. See also <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS">resolver_multicast_outgoing_address</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5418" name="AEN5418"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">224.9.10.11</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTINCOMINGPORT"
+name="CONTEXTRESOLVERMULTICASTINCOMINGPORT">4.4.3. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_incoming_port (context)</span></span></a></h2>
+
+<p>Incoming multicast port used for finer control of Topic Resolution. For example, if
+you want the context to listen on a different address/port than the <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT">resolver_multicast_port</a>,
+set this option and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGADDRESS">resolver_multicast_incoming_address</a>
+to different values. See also <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGPORT">resolver_multicast_outgoing_port</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5460" name="AEN5460"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">12965</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTINTERFACE"
+name="CONTEXTRESOLVERMULTICASTINTERFACE">4.4.4. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_interface (context)</span></span></a></h2>
+
+<p>Specifies which network interface <b class="APPLICATION">UM</b> sends/receives all
+multicast traffic (Topic Resolution, LBT-RM, Multicast Immediate Messaging). Can specify
+full IP address of interface, or just network part (see <a
+href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a> for details).
+Default is set to default multicast interface as determined by <b
+class="APPLICATION">UM</b> (the first multicast-capable, non-loopback interface).</p>
+
+<div class="INFORMALTABLE"><a id="AEN5503" name="AEN5503"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS"
+name="CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS">4.4.5. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_outgoing_address (context)</span></span></a></h2>
+
+<p>Outgoing multicast address used for finer control of Topic Resolution. For example, if
+you want the context to send on a different address/port than the <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS">resolver_multicast_address</a>,
+set this option and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGPORT">resolver_multicast_outgoing_port</a>
+to different values. See also <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGADDRESS">resolver_multicast_incoming_address</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5545" name="AEN5545"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">struct in_addr</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">224.9.10.11</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTOUTGOINGPORT"
+name="CONTEXTRESOLVERMULTICASTOUTGOINGPORT">4.4.6. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_outgoing_port (context)</span></span></a></h2>
+
+<p>Outgoing multicast port used for finer control of Topic Resolution. For example, if
+you want the context to send on a different address/port than the <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT">resolver_multicast_port</a>,
+set this option and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS">resolver_multicast_outgoing_address</a>
+to different values. See also <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGPORT">resolver_multicast_incoming_port</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5587" name="AEN5587"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">12965</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTPORT"
+name="CONTEXTRESOLVERMULTICASTPORT">4.4.7. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_port (context)</span></span></a></h2>
+
+<p>Multicast port used for Topic Resolution. This option automatically sets the values
+for <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGPORT">resolver_multicast_incoming_port</a>
+and <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGPORT">resolver_multicast_outgoing_port</a>
+as evidenced by the default values for all three options, which are the same.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5632" name="AEN5632"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">12965</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTRECEIVERSOCKETBUFFER"
+name="CONTEXTRESOLVERMULTICASTRECEIVERSOCKETBUFFER">4.4.8. <span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_receiver_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set <code class="CONSTANT">SO_RCVBUF</code> value of the resolver
+receivers. In some cases the OS will not allow all of this value to be used. A value of 0
+instructs <b class="APPLICATION">UM</b> to use the default OS values. See the section on
+<a href="reference.html#SOCKETBUFFERSIZE">socket buffer sizes</a> for platform-dependent
+information. See also our white paper <a
+href="http://vip.informatica.com/content/Downloads?docid=1568&amp;=NA-Ongoing-2011Q1-JP-UM_Topics_in_High_Performance_WP_www"
+ target="_top">Topics in High Performance Messaging</a> for background and guidelines on
+UDP buffer sizing.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5682" name="AEN5682"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS
+default)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERMULTICASTTTL"
+name="CONTEXTRESOLVERMULTICASTTTL">4.4.9. <span class="lbm-option-name"><span
+class="PHRASE">resolver_multicast_ttl (context)</span></span></a></h2>
+
+<p>The IP TTL (hop count) to use for a Topic Resolution packet. A value of 1 confines the
+packet to the local network (but may also cause high CPU usage on some routers). Also
+controls TTL on LBT-RM packets.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5722" name="AEN5722"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint8_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">16</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>May be set during operation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="resolveroperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="unicastresolvernetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Resolver Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Unicast Resolver Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

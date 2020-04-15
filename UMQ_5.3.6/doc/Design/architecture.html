@@ -1,0 +1,1540 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Architecture</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="PREVIOUS" title="UM Objects" href="lbm-objects.html" />
+<link rel="NEXT" title="UMS Features" href="lbm-features.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Concepts</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lbm-objects.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="lbm-features.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ARCHITECTURE" name="ARCHITECTURE">4. Architecture</a></h1>
+
+<p><b class="APPLICATION">UM</b> is designed to be a flexible architecture. Unlike many
+messaging systems, <b class="APPLICATION">UM</b> does not require an intermediate daemon
+to handle routing issues or protocol processing. This increases the performance of <b
+class="APPLICATION">UM</b> and returns valuable computation time and memory back to
+applications that would normally be consumed by messaging daemons.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="architecture.html#EMBEDDED-MODE"><i>Embedded Mode</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#SEQUENTIAL-MODE"><i>Sequential Mode</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#TOPIC-RESOLUTION"><i>Topic Resolution</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#MESSAGE-BATCHING"><i>Message Batching</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#ORDERED-DELIVERY"><i>Ordered Delivery</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EMBEDDED-MODE" name="EMBEDDED-MODE">4.1. Embedded
+Mode</a></h2>
+
+<p>When you create a context (<tt class="LITERAL">lbm_context_create()</tt>) with the <a
+href="../Config/majoroptions.html#CONTEXTOPERATIONALMODE" target="doccontent"><tt
+class="LITERAL">operational_mode</tt></a> set to <tt class="LITERAL">embedded</tt> (the
+default), <b class="APPLICATION">UM</b> creates an independent thread, called the <i
+class="FIRSTTERM">context thread</i>, which handles timer and socket events, and does
+protocol-level processing, like retransmission of dropped packets.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SEQUENTIAL-MODE" name="SEQUENTIAL-MODE">4.2. Sequential
+Mode</a></h2>
+
+<p>When you create a context (<tt class="LITERAL">lbm_context_create()</tt>) with the <a
+href="../Config/majoroptions.html#CONTEXTOPERATIONALMODE" target="doccontent"><tt
+class="LITERAL">operational_mode</tt></a> set to <tt class="LITERAL">sequential</tt>, the
+context thread is NOT created. It becomes the application's responsibility to donate a
+thread to <b class="APPLICATION">UM</b> by calling <code
+class="FUNCTION">lbm_context_process_events()</code> regularly, typically in a tight
+loop. Use Sequential mode for circumstances where your application wants control over the
+attributes of the context thread. For example, some applications raise the priority of
+the context thread so as to obtain more consistent latencies. In sequential mode, no
+separate thread is spawned when a context is created.</p>
+
+<p>You enable Sequential mode with the following configuration option.</p>
+
+<pre class="SCREEN">
+context operational_mode sequential
+ 
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TOPIC-RESOLUTION" name="TOPIC-RESOLUTION">4.3. Topic
+Resolution</a></h2>
+
+<p>Topic resolution is the discovery of a topic's transport session information by a
+receiver to enable the receipt of topic messages. By default, <b
+class="APPLICATION">UM</b> relies on multicast requests and responses to resolve topics
+to transport sessions. (You can also use Unicast requests and responses, if needed.) <b
+class="APPLICATION">UM</b> receivers multicast their topic requests, or queries, to an IP
+multicast address and UDP port ( <a
+href="../Config/multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS"
+target="doccontent"><tt class="LITERAL">resolver_multicast_address</tt></a> and <a
+href="../Config/multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT"
+target="doccontent"><tt class="LITERAL">resolver_multicast_port</tt></a>). <b
+class="APPLICATION">UM</b> sources also multicast their advertisements and responses to
+receiver queries to the same multicast address and UDP port.</p>
+
+<p>Topic Resolution offers 3 distinct phases that can be implemented.</p>
+
+<ul>
+<li>
+<p>Initial Phase - Period that allows you to resolve a topic aggressively. Can be used to
+resolve all known topics before message sending begins. This phase can be configured to
+run differently from the defaults or completely disabled.</p>
+</li>
+
+<li>
+<p>Sustaining Phase - Period that allows new receivers to resolve a topic after the
+Initial Phase. Can also be the primary period of topic resolution if you disable the
+Initial Phase. This phase can also be configured to run differently from the defaults or
+completely disabled.</p>
+</li>
+
+<li>
+<p>Quiescent Phase - The "steady state" period during which a topic is resolved and <b
+class="APPLICATION">UM</b> uses no system resources for topic resolution.</p>
+</li>
+</ul>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="architecture.html#MULTICAST-TOPIC-RESOLUTION"><i>Multicast Topic
+Resolution</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#TR-PHASES"><i>Topic Resolution Phases</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#TOPIC-RESOLUTION-CONFIG-OPTIONS"><i>Topic Resolution
+Configuration Options</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#UNICAST-TOPIC-RESOLUTION"><i>Unicast Topic
+Resolution</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#UNICAST-TOPIC-RES-NAT"><i>Unicast Topic Resolution Across
+Administrative Domains</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MULTICAST-TOPIC-RESOLUTION"
+name="MULTICAST-TOPIC-RESOLUTION">4.3.1. Multicast Topic Resolution</a></h3>
+
+<p>The following diagram depicts the <b class="APPLICATION">UM</b> topic resolution using
+multicast.</p>
+
+<div class="FIGURE"><a id="TOPICRESOLUTION" name="TOPICRESOLUTION"></a>
+<p><b>Figure 4. Topic Resolution via Multicast</b></p>
+
+<p><img src="TopicResolution.png" align="CENTER" /></p>
+</div>
+
+<p><b class="APPLICATION">UM</b> performs topic resolution automatically. Your
+application does not need to call any API functions to initiate topic resolution,
+however, you can influence topic resolution with <a
+href="architecture.html#TOPIC-RESOLUTION-CONFIG-OPTIONS"><i>Topic Resolution
+Configuration Options</i></a>. Moreover, you can set configuration options for individual
+topics by using the <tt class="LITERAL">lbm_*_attr_setopt()</tt> functions in your
+application. See <a href="architecture.html#DIFFERENT-OPTIONS"><i>Assigning Different
+Configuration Options to Individual Topics</i></a></p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Multicast topic resolution traffic can use Datagram Bypass Layer (DBL)
+acceleration in conjunction with DBL-enabled <a href="http://www.myri.com"
+target="doccontent"><span class="TRADEMARK">Myricom</span>&reg;</a> 10-Gigabit Ethernet NICs
+for Linux and <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;. DBL is a kernel-bypass technology that accelerates
+sending and receiving UDP traffic. See <a
+href="../Config/transportaccelerationoptions.html" target="doccontent">Transport Acceleration
+Options</a> for more information.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Multicast Topic Resolution is not supported directly on the <span
+class="TRADEMARK">HP NonStop</span>&reg; platform, but can be run a different host within
+your network supplying topic resolution services to sources and receivers running on
+<span class="TRADEMARK">HP NonStop</span> platform.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCES-ADVERTISE" name="SOURCES-ADVERTISE">4.3.1.1. Sources
+Advertise</a></h4>
+
+<p><b class="APPLICATION">UM</b> sources help <b class="APPLICATION">UM</b> receivers
+discover transport information in the following ways.</p>
+
+<ul>
+<li>
+<p>Advertise Active Topics - Each source advertises its active topic first upon its
+creation and subsequently according to the <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMAXIMUMINITIALINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_advertisement_*_interval</tt></a>
+configuration options for the Initial and Sustaining Phases. Sources advertise by sending
+a Topic Information Record (TIR). (You can prevent a source from sending an advertisement
+upon creation with <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERSENDINITIALADVERTISEMENT"
+target="doccontent"><tt class="LITERAL">resolver_send_initial_advertisement</tt></a>.)</p>
+</li>
+
+<li>
+<p>Respond to Topic Queries - Each source responds immediately to queries from receivers
+about its topic.</p>
+</li>
+</ul>
+
+<p>Both a topic advertisement and a query response contain the topic's transport session
+information. Based on the transport type, a receiver can join the appropriate multicast
+group (for LBT-RM), send a connection request (for LBT-RU), connect to the source (for
+TCP) or access a shared memory area (for LBT-IPC). The address and port information
+potentially contained within a TIR includes:</p>
+
+<ul>
+<li>
+<p>For a TCP transport, the source address and TCP port.</p>
+</li>
+
+<li>
+<p>For an LBT-RM transport, the unicast UDP port (to which NAKs are sent) and the UDP
+destination port.</p>
+</li>
+
+<li>
+<p>For an LBT-RU transport, the source address and UDP port.</p>
+</li>
+
+<li>
+<p>For an LBT-IPC transport, the Host ID, LBT-IPC Session ID and Transport ID.</p>
+</li>
+
+<li>
+<p>For the UM Gateway, the context instance and Domain ID of the original source plus the
+Hop Count and Portal Cost. See <a href="../Gateway/concepts.html#FORWARDING-COSTS"
+target="doccontent">Forwarding Costs</a></p>
+</li>
+
+<li>
+<p>For various <b class="APPLICATION">UMP</b> options, the store address and TCP port,
+and the source address and TCP port (to which receivers send delivery confirmations).</p>
+</li>
+
+<li>
+<p>For <b class="APPLICATION">UMQ</b>, the Queue Name, which allows the receiver to then
+resolve the Queue in order to receive queued messages.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVERS-QUERY" name="RECEIVERS-QUERY">4.3.1.2. Receivers
+Query</a></h4>
+
+<p>Receivers can discover transport information in the following ways.</p>
+
+<ul>
+<li>
+<p>Search advertisements collected in the resolver cache maintained by the <b
+class="APPLICATION">UM</b> context.</p>
+</li>
+
+<li>
+<p>Listen for source advertisements on the <tt
+class="LITERAL">resolver_multicast_address:port</tt>.</p>
+</li>
+
+<li>
+<p>Send a topic query (TQR).</p>
+</li>
+</ul>
+
+<p>A new receiver queries for its topic according to the <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMAXIMUMINITIALINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_query_*_interval</tt></a> configuration
+options for the Initial and Sustaining Phases.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_initial_interval</tt></a>
+actually begins after you call <tt class="LITERAL">lbm_rcv_topic_lookup()</tt> prior to
+creating the receiver. If you have disabled the Initial Phase for the topic's resolution,
+the <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYSUSTAININTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_query_sustaining_interval</tt></a> begins
+after you call <tt class="LITERAL">lbm_rcv_topic_lookup()</tt>.</p>
+</blockquote>
+</div>
+
+<p>A Topic Query Record (TQR) consists primarily of the topic string. Receivers continue
+querying on a topic until they discover the number of sources configured by <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLUTIONNUMBEROFSOURCESQUERYTHRESHOLD"
+ target="doccontent"><tt class="LITERAL">resolution_number_of_sources_query_threshold</tt></a>.
+However the large default of this configuration option (10,000,000) allows a receiver to
+continue to query until both the initial and sustaining phase of topic resolution
+complete.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="WILDCARD" name="WILDCARD">4.3.1.3. Wildcard Receivers</a></h4>
+
+<p>Wildcard receivers can discover transport information in the following ways.</p>
+
+<ul>
+<li>
+<p>Search advertisements collected in the resolver cache maintained by the <b
+class="APPLICATION">UM</b> context.</p>
+</li>
+
+<li>
+<p>Listen for source advertisements on the <tt
+class="LITERAL">resolver_multicast_address:port</tt>.</p>
+</li>
+
+<li>
+<p>Send a wildcard receiver topic query (WC-TQR).</p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">UM</b> implements only one phase of wildcard receiver queries,
+sending wildcard receiver queries according to wildcard receiver <a
+href="../Config/wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERQUERYMAXIMUMINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_query_*_interval</tt></a> configuration
+options until the topic pattern has been queried for the <a
+href="../Config/wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERQUERYMINIMUMDURATION"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_duration</tt></a>. The wildcard
+receiver topic query (WC-TQR) contains the topic pattern and the <a
+href="../Config/wildcardreceiveroptions.html#WILDCARDRECEIVERPATTERNTYPE"
+target="doccontent"><tt class="LITERAL">pattern_type</tt></a>.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TR-PHASES" name="TR-PHASES">4.3.2. Topic Resolution
+Phases</a></h3>
+
+<p>The phases of topic resolution pertain to individual topics. Therefore if your system
+has 100 topics, 100 different topic resolution advertisement and query phases may be
+running concurrently. This describes the three phases of <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> topic resolution.</p>
+
+<ul>
+<li>
+<p><a href="architecture.html#INITIAL-PHASE"><i>Initial Phase</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#SUSTAIN-PHASE"><i>Sustaining Phase</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#QUIESCENT-PHASE"><i>Quiescent Phase</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="INITIAL-PHASE" name="INITIAL-PHASE">4.3.2.1. Initial
+Phase</a></h4>
+
+<p>The initial topic resolution phase for a topic is an aggressive phase that can be used
+to resolve all topics before sending any messages. During the initial phase, network
+traffic and CPU utilization might actually be higher. You can completely disable this
+phase, if desired. See <a href="../Config/disable-topic-res.html" target="doccontent"><tt
+class="LITERAL">Disabling Aspects of Topic Resolution</tt></a>.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="INITIAL-PHASE-ADS" name="INITIAL-PHASE-ADS">4.3.2.1.1.
+Advertising in the Initial Phase</a></h5>
+
+<p>For the initial phase default settings, the resolver issues the first advertisement as
+soon as the scheduler can process it. The resolver issues the second advertisement 10 ms
+later, or at the <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMINITIALINTERVAL"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_minimum_initial_interval</tt></a>. For each
+subsequent advertisement, <b class="APPLICATION">UM</b> doubles the interval between
+advertisements. The source sends an advertisement at 20 ms, 40 ms, 80 ms, 160 ms, 320 ms
+and finally at 500 ms, or the <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMAXIMUMINITIALINTERVAL"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_maximum_initial_interval</tt></a>. These 8
+advertisements require a total of 1130 ms. The interval between advertisements remains at
+the maximum 500 ms, resulting in 7 more advertisements before the total duration of the
+initial phase reaches 5000 ms, or the <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMINITIALDURATION"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_minimum_initial_duration</tt></a>. This concludes
+the initial advertisement phase for the topic.</p>
+
+<div class="FIGURE"><a id="INITIAL-PHASE-TIR" name="INITIAL-PHASE-TIR"></a>
+<p><b>Figure 5. Initial Advertisement Phase</b></p>
+
+<p><img src="Resolver_Initial_Phase_TIR.png" align="CENTER" /></p>
+</div>
+
+<p>The initial phase for a topic can take longer than the <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMINITIALDURATION"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_minimum_initial_duration</tt></a> if many topics
+are in resolution at the same time. The configuration options, <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERINITIALADVERTISEMENTSPERSECOND"
+ target="doccontent"><tt class="LITERAL">resolver_initial_advertisements_per_second</tt></a>
+and <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERINITIALADVERTISEMENTBPS"
+target="doccontent"><tt class="LITERAL">resolver_initial_advertisement_bps</tt></a> enforce a
+rate limit on topic advertisements for the entire <b class="APPLICATION">UM</b> context.
+A large number of topics in resolution - in any phase - or long topic names may exceed
+these limits.</p>
+
+<p>If a source advertising in the initial phase receives a topic query, it responds with
+a topic advertisement. <b class="APPLICATION">UM</b> recalculates the next advertisement
+interval from that point forward as if the advertisement was sent at the nearest
+interval.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="INITIAL-PHASE-QUERY" name="INITIAL-PHASE-QUERY">4.3.2.1.2.
+Querying in the Initial Phase</a></h5>
+
+<p>Querying activity by receivers in the initial phase operates in similar fashion to
+advertising activity, although with different interval defaults. The <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_initial_interval</tt></a>
+default is 20 ms. Subsequent intervals double in length until the interval reaches 200
+ms, or the <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMAXIMUMINITIALINTERVAL"
+ target="doccontent"><tt class="LITERAL">resolver_query_maximum_initial_interval</tt></a>. The
+query interval remains at 200 ms until the initial querying phase reaches 5000 ms, or the
+<a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALDURATION"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_initial_duration</tt></a>.</p>
+
+<div class="FIGURE"><a id="INITIAL-PHASE-TQR" name="INITIAL-PHASE-TQR"></a>
+<p><b>Figure 6. Initial Query Phase</b></p>
+
+<p><img src="Resolver_Initial_Phase_TQR.png" align="CENTER" /></p>
+</div>
+
+<p>The initial query phase completes when it reaches the <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALDURATION"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_initial_duration</tt></a>. The
+initial query phase also has <b class="APPLICATION">UM</b> context-wide rate limit
+controls ( <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERINITIALQUERIESPERSECOND"
+target="doccontent"><tt class="LITERAL">resolver_initial_queries_per_second</tt></a> and <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERINITIALQUERYBPS"
+target="doccontent"><tt class="LITERAL">resolver_initial_query_bps</tt></a>) that can result in
+the extension of a phase's duration in the case of a large number of topics or long topic
+names.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SUSTAIN-PHASE" name="SUSTAIN-PHASE">4.3.2.2. Sustaining
+Phase</a></h4>
+
+<p>The sustaining topic resolution phase follows the initial phase and can be a less
+active phase in which a new receiver resolves its topic. It can also act as the sole
+topic resolution phase if you disable the initial phase. The sustaining phase defaults
+use less network resources than the initial phase and can also be modified or disabled
+completely. See <a href="../Config/disable-topic-res.html" target="doccontent"><tt
+class="LITERAL">Disabling Aspects of Topic Resolution</tt></a>.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="SUSTAIN-PHASE-ADS" name="SUSTAIN-PHASE-ADS">4.3.2.2.1.
+Advertising in the Sustaining Phase</a></h5>
+
+<p>For the sustaining phase defaults, a source sends an advertisement every second ( <a
+href="../Config/resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTSUSTAININTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_advertisement_sustain_interval</tt></a>) for 1
+minute ( <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERADVERTISEMENTMINIMUMSUSTAINDURATION"
+ target="doccontent"><tt
+class="LITERAL">resolver_advertisement_minimum_sustain_duration</tt></a>). When this
+duration expires, the sustaining phase of advertisement for a topic ends. If a source
+receives a topic query, the sustaining phase resumes for the topic and the source
+completes another duration of advertisements.</p>
+
+<div class="FIGURE"><a id="SUSTAIN-PHASE-TIR" name="SUSTAIN-PHASE-TIR"></a>
+<p><b>Figure 7. Sustaining Advertisement Phase</b></p>
+
+<p><img src="Resolver_Sustain_Phase_TIR.png" align="CENTER" /></p>
+</div>
+
+<p>The sustaining advertisement phase has <b class="APPLICATION">UM</b> context-wide rate
+limit controls ( <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINADVERTISEMENTSPERSECOND"
+ target="doccontent"><tt class="LITERAL">resolver_sustain_advertisements_per_second</tt></a>
+and <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINADVERTISEMENTBPS"
+target="doccontent"><tt class="LITERAL">resolver_sustain_advertisement_bps</tt></a>) that can
+result in the extension of a phase's duration in the case of a large number of topics or
+long topic names.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="SUSTAIN-PHASE-QUERY" name="SUSTAIN-PHASE-QUERY">4.3.2.2.2.
+Querying in the Sustaining Phase</a></h5>
+
+<p>Default sustaining phase querying operates the same as advertising. Unresolved
+receivers query every second ( <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYSUSTAININTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_query_sustain_interval</tt></a>) for 1 minute
+( <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMSUSTAINDURATION"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_sustain_duration</tt></a>).
+When this duration expires, the sustaining phase of querying for a topic ends.</p>
+
+<div class="FIGURE"><a id="SUSTAIN-PHASE-TQR" name="SUSTAIN-PHASE-TQR"></a>
+<p><b>Figure 8. Sustaining Query Phase</b></p>
+
+<p><img src="Resolver_Sustain_Phase_TQR.png" align="CENTER" /></p>
+</div>
+
+<p>Sustaining phase queries stop when one of the following events occurs.</p>
+
+<ul>
+<li>
+<p>The receiver discovers multiple sources that equal <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLUTIONNUMBEROFSOURCESQUERYTHRESHOLD"
+ target="doccontent"><tt
+class="LITERAL">resolution_number_of_sources_query_threshold</tt></a>.</p>
+</li>
+
+<li>
+<p>The sustaining query phase reaches the <a
+href="../Config/resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMSUSTAINDURATION"
+ target="doccontent"><tt class="LITERAL">resolver_query_minimum_sustain_duration</tt></a>.</p>
+</li>
+</ul>
+
+<p>The sustaining query phase also has <b class="APPLICATION">UM</b> context-wide rate
+limit controls ( <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINQUERIESPERSECOND"
+target="doccontent"><tt class="LITERAL">resolver_sustain_queries_per_second</tt></a> and <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINQUERYBPS"
+target="doccontent"><tt class="LITERAL">resolver_sustain_query_bps</tt></a>) that can result in
+the extension of a phase's duration in the case of a large number of topics or long topic
+names.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUIESCENT-PHASE" name="QUIESCENT-PHASE">4.3.2.3. Quiescent
+Phase</a></h4>
+
+<p>This phase is the absence of topic resolution activity for a given topic. It is
+possible that some topics may be in the quiescent phase at the same time other topics are
+in initial or sustaining phases of topic resolution. This phase ends if either of the
+following occurs.</p>
+
+<ul>
+<li>
+<p>A new receiver sends a query.</p>
+</li>
+
+<li>
+<p>Your application calls <tt class="LITERAL">lbm_context_topic_resolution_request()</tt>
+that provokes the sending of topic queries for any receiver or wildcard receiver in this
+state.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TOPIC-RESOLUTION-CONFIG-OPTIONS"
+name="TOPIC-RESOLUTION-CONFIG-OPTIONS">4.3.3. Topic Resolution Configuration
+Options</a></h3>
+
+<p>Refer to the <b class="APPLICATION">UM</b> Configuration Guide for specific
+information about Topic Resolution Configuration Options.</p>
+
+<ul>
+<li>
+<p><a href="../Config/resolveroperationoptions.html" target="doccontent">Resolver Operation
+Options</a></p>
+</li>
+
+<li>
+<p><a href="../Config/multicastresolvernetworkoptions.html" target="doccontent">Multicast
+Resolver Network Options</a></p>
+</li>
+
+<li>
+<p><a href="../Config/unicastresolvernetworkoptions.html" target="doccontent">Unicast Resolver
+Network Options</a></p>
+</li>
+
+<li>
+<p><a href="../Config/wildcardreceiveroptions.html" target="doccontent">Wildcard Receiver
+Options</a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="DIFFERENT-OPTIONS" name="DIFFERENT-OPTIONS">4.3.3.1. Assigning
+Different Configuration Options to Individual Topics</a></h4>
+
+<p>You can assign different configuration option values to individual topics by accessing
+the topic attribute table (<tt class="LITERAL">lbm_*_topic_attr_t_stct</tt>) before
+creating the source, receiver or wildcard receiver.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="DIFFERENT-OPTIONS-SOURCE"
+name="DIFFERENT-OPTIONS-SOURCE">4.3.3.1.1. Creating a Source with Different Topic
+Resolution Options</a></h5>
+
+<ol type="1">
+<li>
+<p>Call <tt class="LITERAL">lbm_src_topic_attr_setopt()</tt> to set new option value</p>
+</li>
+
+<li>
+<p>Call <tt class="LITERAL">lbm_src_topic_alloc()</tt></p>
+</li>
+
+<li>
+<p>Call <tt class="LITERAL">lbm_src_create()</tt></p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="DIFFERENT-OPTIONS-RECEIVER"
+name="DIFFERENT-OPTIONS-RECEIVER">4.3.3.1.2. Creating a Receiver with Different Topic
+Resolution Options</a></h5>
+
+<ol type="1">
+<li>
+<p>Call <tt class="LITERAL">lbm_rcv_topic_attr_setopt()</tt> to set new option value</p>
+</li>
+
+<li>
+<p>Call <tt class="LITERAL">lbm_rcv_topic_lookup()</tt></p>
+</li>
+
+<li>
+<p>Call <tt class="LITERAL">lbm_rcv_create()</tt></p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="DIFFERENT-OPTIONS-WILDCARD"
+name="DIFFERENT-OPTIONS-WILDCARD">4.3.3.1.3. Creating a Wildcard Receiver with Different
+Topic Resolution Options</a></h5>
+
+<ol type="1">
+<li>
+<p>Call <tt class="LITERAL">lbm_wildcard_rcv_attr_setopt()</tt> to set new wildcard
+receiver option value</p>
+</li>
+
+<li>
+<p>Call <tt class="LITERAL">lbm_wildcard_rcv_create()</tt></p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MULTICAST-NETWORK" name="MULTICAST-NETWORK">4.3.3.2. Multicast
+Network Options</a></h4>
+
+<p>Essentially, the <tt class="LITERAL">_incoming</tt> and <tt
+class="LITERAL">_outgoing</tt> versions of <tt
+class="LITERAL">resolver_multicast_address/port</tt> provide more fine-grained control of
+topic resolution. By default, the <a
+href="../Config/multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS"
+target="doccontent"><tt class="LITERAL">resolver_multicast_address</tt></a> and <a
+href="../Config/multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT"
+target="doccontent"><tt class="LITERAL">resolver_multicast_port</tt></a> and the <tt
+class="LITERAL">_incoming</tt> and <tt class="LITERAL">_outgoing</tt> address and port
+are set to the same value. If you want your context to listen to a particular multicast
+address/port and send on another address/port, then you can set the <tt
+class="LITERAL">_incoming</tt> and <tt class="LITERAL">_outgoing</tt> configuration
+options to different values.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UNICAST-TOPIC-RESOLUTION"
+name="UNICAST-TOPIC-RESOLUTION">4.3.4. Unicast Topic Resolution</a></h3>
+
+<p>This section also discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="architecture.html#UNICAST-TOPIC-RES-RESILIENCE"><i>Unicast Topic Resolution
+Resilience</i></a></p>
+</li>
+
+<li>
+<p><a href="architecture.html#UNICAST-TOPIC-RES-NAT"><i>Unicast Topic Resolution Across
+Administrative Domains</i></a></p>
+</li>
+</ul>
+
+<p>By default <b class="APPLICATION">UM</b> expects multicast connectivity between all
+sources and receivers. When only unicast connectivity is available, you may configure all
+sources and receivers to use unicast topic resolution. This requires that you run one or
+more <b class="APPLICATION">UM</b> unicast topic resolution daemon(s) (<a
+href="lbmrd-manpage.html"><i>Manpage for lbmrd</i></a>), which perform the same topic
+resolution activities as multicast topic resolution. You configure each instance of the
+unicast topic resolution daemon with <a
+href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTDAEMON"
+target="doccontent"><tt class="LITERAL">resolver_unicast_daemon</tt></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Unicast Topic Resolver <tt class="LITERAL">lbmrd</tt> is not
+supported on the <span class="TRADEMARK">HP NonStop</span> platform.</p>
+</blockquote>
+</div>
+
+<p>The <tt class="LITERAL">lbmrd</tt> can run on any machine, including the source or
+receiver (enter <tt class="LITERAL">lbmrd</tt> -h for instructions). Of course, sources
+will also have to select a transport protocol that uses unicast addressing (e.g. TCP,
+TCP-LB, or LBT-RU). The <tt class="LITERAL">lbmrd</tt> maintains a table of clients
+(address and port pairs) from which it has received a topic resolution message, which can
+be any of the following.</p>
+
+<ul>
+<li>
+<p>Topic Information Records (TIR) - also known as topic advertisements</p>
+</li>
+
+<li>
+<p>Topic Query Records (TQR)</p>
+</li>
+
+<li>
+<p>keepalive messages, which are only used in unicast topic resolution</p>
+</li>
+</ul>
+
+<p>After <tt class="LITERAL">lbmrd</tt> receives a TQR or TIR, it forwards it to all
+known clients. If a client (i.e. source or receiver) is not sending either TIRs or TQRs,
+it sends a keepalive message to <tt class="LITERAL">lbmrd</tt> according to the <a
+href="../Config/resolveroperationoptions.html#CONTEXTRESOLVERUNICASTKEEPALIVEINTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_unicast_keepalive_interval</tt></a>. This
+registration with the <tt class="LITERAL">lbmrd</tt> allows the client to receive
+advertisements or queries from <tt class="LITERAL">lbmrd</tt>. <tt
+class="LITERAL">lbmrd</tt> maintains no state about topics, only about clients.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UNICAST-TOPIC-RES-TIR" name="UNICAST-TOPIC-RES-TIR">4.3.4.1.
+Topic Information Records</a></h4>
+
+<p>Of all topic resolution messages, only the TIR contains address and port information.
+This tells a receiver how it can get the data being published. Based on the transport
+type, a receiver can join the appropriate multicast group (for LBT-RM), send a connection
+request (for LBT-RU), or connect to the source (for TCP).</p>
+
+<p>The TIR contains additional blocks of information to define <b
+class="APPLICATION">UMP</b> capabilities, indicating the address and port of the source
+and store.</p>
+
+<p>The address and port information potentially contained within a TIR includes:</p>
+
+<ul>
+<li>
+<p>For a TCP transport, the source address and TCP port.</p>
+</li>
+
+<li>
+<p>For an LBT-RM transport, the unicast UDP port (to which NAKs are sent) and the UDP
+destination port.</p>
+</li>
+
+<li>
+<p>For an LBT-RU transport, the source address and UDP port.</p>
+</li>
+
+<li>
+<p>For various <b class="APPLICATION">UMP</b> options, the store address and TCP port,
+and the source address and TCP port (to which delivery confirmations are sent).</p>
+</li>
+
+<li>
+<p>For <b class="APPLICATION">UMQ</b>, the Queue Name and TCP port.</p>
+</li>
+</ul>
+
+<p>For unicast-based transports (TCP and LBT-RU), the TIR source address is 0.0.0.0, not
+the actual source address. This allows some minimal functionality within a Network
+Address Translation (NAT) environment.</p>
+
+<p>Topic resolution messages (whether received by the application via multicast, or by
+the unicast topic resolution daemon via unicast) are always UDP datagrams. They are
+received via a <tt class="LITERAL">recvfrom()</tt> call, which also obtains the address
+and port from which the datagrams were received. If the address 0.0.0.0 (INADDR_ANY)
+appears for one of the addresses, <tt class="LITERAL">lbmrd</tt> replaces it with the
+address from which the datagram is received. The net effect is as if the actual source
+address had originally been put into the TIR.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UNICAST-TOPIC-RES-RESILIENCE"
+name="UNICAST-TOPIC-RES-RESILIENCE">4.3.4.2. Unicast Topic Resolution Resilience</a></h4>
+
+<p>Running multiple instances of <tt class="LITERAL">lbmrd</tt> allows your applications
+to continue operation in the face of a <tt class="LITERAL">lbmrd</tt> failure. Your
+applications' sources and receivers send topic resolution messages as usual, however,
+rather than sending every message to each <tt class="LITERAL">lbmrd</tt> instance, <b
+class="APPLICATION">UM</b> directs messages to <tt class="LITERAL">lbmrd</tt> instances
+in a round-robin fashion. Since the <tt class="LITERAL">lbmrd</tt> does not maintain any
+resolver state, as long as one <tt class="LITERAL">lbmrd</tt> instance is running, <b
+class="APPLICATION">UM</b> continues to forward LBMR packets to all connected clients. <b
+class="APPLICATION">UM</b> switches to the next active <tt class="LITERAL">lbmrd</tt>
+instance every 250-750 ms.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UNICAST-TOPIC-RES-NAT" name="UNICAST-TOPIC-RES-NAT">4.3.4.3.
+Unicast Topic Resolution Across Administrative Domains</a></h4>
+
+<p>If your network architecture includes remote or local LANs that use Network Address
+Translation (NAT), you can implement an <tt class="LITERAL">lbmrd</tt> configuration file
+to translate IP addresses/ports across administrative domains. Without translation, <tt
+class="LITERAL">lbmrd</tt> clients (sources and receivers) across NAT boundaries cannot
+connect to each other in response to topic advertisements due to NAT restrictions.</p>
+
+<p>By default, topic advertisements forwarded by <tt class="LITERAL">lbmrd</tt> contain
+the private (or inside) address/port of the source. Routers implementing NAT prevent
+connection to these private addresses from receivers outside the LAN.</p>
+
+<p>The <tt class="LITERAL">lbmrd</tt> configuration file allows <tt
+class="LITERAL">lbmrd</tt> to insert a translation or outside address/port for the
+private address/port of the source in the topic advertisement. This outside or
+translation address must already be configured in the router's static NAT table. When the
+receiver attempts to connect to the source by using the source address/port in the topic
+advertisement, the NAT router automatically translates the outside address/port to the
+private address/port, thereby allowing the connection.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Request/Response model and the Late Join feature only work with (<tt
+class="LITERAL">lbmrd</tt>) across local LANs that use Network Address Translation (NAT)
+if you use the default value (0.0.0.0) for <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPINTERFACE" target="doccontent"><tt
+class="LITERAL">request_tcp_interface</tt></a>.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="LBMRD-NAT-CONFIG" name="LBMRD-NAT-CONFIG">4.3.4.3.1. lbmrd
+Configuration File</a></h5>
+
+<p>This section presents the syntax of the <tt class="LITERAL">lbmrd</tt> configuration
+file, which is an XML file. Descriptions of elements also appear below. See <a
+href="../Config/unicastresolver.html" target="doccontent">Unicast Resolver Example
+Configuration</a> for an example <tt class="LITERAL">lbmrd</tt> configuration file.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;lbmrd version="1.0"&#62;
+    &lt;domains&#62;
+     &lt;domain name="domain-name-1"&#62;
+         &lt;network&#62;network-specification&lt;/network&#62;
+     &lt;/domain&#62;
+     &lt;domain name="domain-name-2"&#62;
+         &lt;network&#62;network-specification&lt;/network&#62;
+     &lt;/domain&#62;
+    &lt;/domains&#62;
+    &lt;transformations&#62;
+     &lt;transform source="source-domain-name"
+         destination="destination-domain-name"&#62;
+         &lt;rule&#62;
+          &lt;match address="original-address" port="original-port"/&#62;
+          &lt;replace address="replacement-address" port="replacement-port"/&#62;
+         &lt;/rule&#62;
+     &lt;/transform&#62;
+    &lt;/transformations&#62;
+&lt;/lbmrd&#62;
+</pre>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-LBMRD"
+name="LBMRD-NAT-CONFIG-LBMRD">4.3.4.3.1.1. &lt;lbmrd&#62; Element</a></h6>
+
+<p>The &lt;lbmrd&#62; element is the root element. It requires a single attribute,
+version, which defines the version of the DTD to be used. Currently, only version 1.0 is
+supported. The &lt;lbmrd&#62; element must contain a single &lt;domains&#62; element and
+a single &lt;transformations&#62; element.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-DOMAINS"
+name="LBMRD-NAT-CONFIG-DOMAINS">4.3.4.3.1.2. &lt;domains&#62; Element</a></h6>
+
+<p>The &lt;domains&#62; element defines the set of network domains. The &lt;domains&#62;
+element may contain one or more &lt;domain&#62; elements. Each defines a separate
+domain.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-DOMAIN"
+name="LBMRD-NAT-CONFIG-DOMAIN">4.3.4.3.1.3. &lt;domain&#62; Element</a></h6>
+
+<p>The &lt;domain&#62; element defines a single network domain. Each domain must be named
+via the name attribute. This name is referenced in &lt;map&#62; elements, which are
+discussed below. Each domain name must be unique. The &lt;domain&#62; element may contain
+one or more &lt;network&#62; elements.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-NETWORK"
+name="LBMRD-NAT-CONFIG-NETWORK">4.3.4.3.1.4. &lt;network&#62; Element</a></h6>
+
+<p>The &lt;network&#62; element defines a single network specification which is to be
+considered part of the enclosing &lt;domain&#62;. The network specification must contain
+either an IP address, or a network specification in CIDR form.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-TRANSFORMATIONS"
+name="LBMRD-NAT-CONFIG-TRANSFORMATIONS">4.3.4.3.1.5. &lt;transformations&#62;
+Element</a></h6>
+
+<p>The &lt;transformations&#62; element defines and contains the set of transformations
+to be applied to the TIRs. The &lt;transformations&#62; element contains one or more
+&lt;transform&#62; elements, described below.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-TRANSFORM"
+name="LBMRD-NAT-CONFIG-TRANSFORM">4.3.4.3.1.6. &lt;transform&#62; Element</a></h6>
+
+<p>The &lt;transform&#62; element defines a set of transformation tuples. Each tuple
+applies to a TIR sent from a specific network domain (specified using the source
+attribute), and destined for a specific network domain (specified using the destination
+attribute). The source and destination attributes must specify a network domain name as
+defined by the &lt;domain&#62; elements. The &lt;transform&#62; element contains one or
+more &lt;rule&#62; elements, described below.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-RULE"
+name="LBMRD-NAT-CONFIG-RULE">4.3.4.3.1.7. &lt;rule&#62; Element</a></h6>
+
+<p>Each &lt;rule&#62; element is associated with the enclosing &lt;transform&#62;
+element, and completes the transformation tuple. The &lt;rule&#62; element must contain
+one &lt;match&#62; element, and one &lt;replace&#62; element, described below.</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-MATCH"
+name="LBMRD-NAT-CONFIG-MATCH">4.3.4.3.1.8. &lt;match&#62; Element</a></h6>
+
+<p>The &lt;match&#62; element defines the address and port to match within the TIR. The
+attributes address and port specify the address and port. address must specify a full IP
+address (a network specification is not permitted). port specifies the port in the TIR.
+To match any port, specify port="*" (which is the default).</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-REPLACE"
+name="LBMRD-NAT-CONFIG-REPLACE">4.3.4.3.1.9. &lt;replace&#62; Element</a></h6>
+
+<p>The &lt;replace&#62; element defines the address and port which are to replace those
+matched in the TIR. The attributes address and port specify the address and port. address
+must specify a full IP address (a network specification is not permitted). To leave the
+TIR port unchanged, specify port="*" (which is the default).</p>
+</div>
+
+<div class="SECTION">
+<h6 class="SECTION"><a id="LBMRD-NAT-CONFIG-NOTES"
+name="LBMRD-NAT-CONFIG-NOTES">4.3.4.3.1.10. Notes on the &lt;match&#62; and
+&lt;replace&#62; Elements</a></h6>
+
+<p>It is valid to specify port="*" for both &lt;match&#62; and &lt;replace&#62;. This
+effectively matches all ports for the given address and changes only the address. It is
+important to note that TIR addresses and ports are considered together. For example, the
+Ultra Messaging R for the Enterprise option in the TIR contains the source address and
+port, and the store address and port. When processing a transformation tuple, the source
+address and source port are considered (and transformed) together, and the store address
+and store port are considered (and transformed) together.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MESSAGE-BATCHING" name="MESSAGE-BATCHING">4.4. Message
+Batching</a></h2>
+
+<p>Batching many small messages into fewer network packets decreases the per-message CPU
+load, thereby increasing throughput. Let's say it costs 2 microseconds of CPU to fully
+process a message. If you process 10 messages per second, you won't notice the load. If
+you process half a million messages per second, you saturate the CPU. So to achieve high
+message rates, you have to reduce the per-message CPU cost with some form of message
+batching. These per-message costs apply to both the sender and the receiver. However, the
+implementation of batching is almost exclusively the realm of the sender.</p>
+
+<p>Many people are under the impression that while batching improves CPU load, it
+increases message latency. While it is true that there are circumstances where this can
+happen, it is also true that careful use of batching can result in small latency
+increases or none at all. In fact, there are circumstances where batching can actually
+reduce latency.</p>
+
+<p><b class="APPLICATION">UM</b> allows the following methods for batching messages.</p>
+
+<ul>
+<li>
+<p><a href="architecture.html#IMPLICIT-BATCHING"><i>Implicit Batching</i></a> - the
+default behavior, batching messages for individual transport sessions.</p>
+</li>
+
+<li>
+<p><a href="architecture.html#ADAPTIVE-BATCHING"><i>Adaptive Batching</i></a> - a
+convenience feature of <b class="APPLICATION">UM</b> that monitors sending activity and
+automatically determines the optimum time to flush the Implicit Batch buffer.</p>
+</li>
+
+<li>
+<p><a href="architecture.html#INTELLIGENT-BATCHING"><i>Intelligent Batching</i></a> - a
+method that makes use of your application's knowledge of the messages it must send,
+clearing the Implicit Batching buffer when sending the only remaining message.</p>
+</li>
+
+<li>
+<p><a href="architecture.html#EXPLICIT-BATCHING"><i>Explicit Batching</i></a> - provides
+greater control to your application through <tt class="LITERAL">lbm_src_send()</tt>
+message flags and also operates in conjunction with the Implicit Batching mechanism.</p>
+</li>
+
+<li>
+<p><a href="architecture.html#APPLICATION-BATCHING"><i>Application Batching</i></a> -
+your application groups messages and sends them in a single batch.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="IMPLICIT-BATCHING" name="IMPLICIT-BATCHING">4.4.1. Implicit
+Batching</a></h3>
+
+<p><b class="APPLICATION">UM</b> automatically batches smaller messages into transport
+session datagrams. The implicit batching options, <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">implicit_batching_interval</tt></a> (default = 200
+milliseconds) and <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> (default =
+2048 bytes) govern <b class="APPLICATION">UM</b> implicit message batching. Although
+these are source options, they actually apply to the transport session to which the
+source was assigned. See also <a
+href="lbm-objects.html#SOURCE-CONFIG-TRANSPORT-SESSIONS"><i>Source Configuration and
+Transport Sessions</i></a>.</p>
+
+<p><b class="APPLICATION">UM</b> establishes the implicit batching parameters when it
+creates the transport session. Any sources assigned to that transport session use the
+implicit batching limits set for that transport session, and the limits apply to any and
+all sources subsequently assigned to that transport session. This means that batched
+transport datagrams can contain messages on multiple topics. See <a
+href="architecture.html#EXPLICIT-BATCHING"><i>Explicit Batching</i></a> for information
+about topic-level message batching.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="IMPLICIT-BATCHING-OPERATION"
+name="IMPLICIT-BATCHING-OPERATION">4.4.1.1. Implicit Batching Operation</a></h4>
+
+<p>Implicit Batching buffers messages until:</p>
+
+<ul>
+<li>
+<p>the buffer size exceeds the configured <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> or</p>
+</li>
+
+<li>
+<p>the oldest message in the buffer has been in the buffer for <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">implicit_batching_interval</tt></a> milliseconds.</p>
+</li>
+</ul>
+
+<p>When either condition is met, <b class="APPLICATION">UM</b> flushes the buffer,
+pushing the messages onto the network.</p>
+
+<p>It may appear this design introduces significant latencies for low-rate topics.
+However, remember that Implicit Batching operates on a transport session basis. Typically
+many low-rate topics map to the same transport session, providing a high aggregate rate.
+The <a href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">implicit_batching_interval</tt></a> option is a last
+resort to prevent messages from becoming stuck in the Implicit Batching buffer. If your
+<b class="APPLICATION">UM</b> deployment frequently uses the <tt
+class="LITERAL">implicit_batching_interval</tt> to push out the data (i.e. if the entire
+transport session has periods of inactivity longer than the value of <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">implicit_batching_interval</tt></a> (defaults to 200
+ms), then either the implicit batching options need to be fine-tuned (reducing one or
+both), or you should consider an alternate form of batching. See <a
+href="architecture.html#INTELLIGENT-BATCHING"><i>Intelligent Batching</i></a>.</p>
+
+<p>The minimum value for the <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"
+target="doccontent"><tt class="LITERAL">implicit_batching_interval</tt></a> is 3 milliseconds.
+The actual minimum amount of time that data stays in the buffer depends on your Operating
+System and its scheduling clock interval. For example, on a Solaris 8 machine, the actual
+time is approximately 20 milliseconds. On <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> machines, the time is probably 16 milliseconds. On a
+Linux 2.6 kernel, the actual time is 3 milliseconds. Using a <tt
+class="LITERAL">implicit_batching_interval</tt> value of 3 guarantees the minimum
+possible wait for whichever operating system you are using.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="IMPLICIT-BATCHING-EXAMPLE"
+name="IMPLICIT-BATCHING-EXAMPLE">4.4.1.2. Implicit Batching Example</a></h4>
+
+<p>The following example demonstrates how the <tt
+class="LITERAL">implicit_batching_minimum_length</tt> is actually a trigger or floor, for
+sending batched messages. It is sometimes misconstrued as a ceiling or upper limit.</p>
+
+<pre class="SCREEN">
+  implicit_batching_minimum_length = 2000
+       
+</pre>
+
+<ol type="1">
+<li>
+<p>The first <span class="emphasis"><i class="EMPHASIS">send</i></span> by your
+application puts 1900 bytes into the batching buffer, which is below the minimum, so <b
+class="APPLICATION">UM</b> holds it.</p>
+</li>
+
+<li>
+<p>The second <span class="emphasis"><i class="EMPHASIS">send</i></span> fills the
+batching buffer to 3800 bytes, well over the minimum. <b class="APPLICATION">UM</b> sends
+it down to the transport layer, which builds a 3800-byte (plus overhead) datagram and
+sends it.</p>
+</li>
+
+<li>
+<p>The Operating System fragments the datagram into packets independently of <b
+class="APPLICATION">UM</b> and reassembles them on the receiving end.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> reads the datagram from the socket at the receiver.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> parses out the two messages and delivers them to the
+appropriate topic levels, which deliver the data.</p>
+</li>
+</ol>
+
+<p>The proper setting of the implicit batching parameters often represents a tradeoff
+between latency and efficiency, where efficiency affects the highest throughput
+attainable. In general, a large minimum length setting increases efficiency and allows a
+higher peak message rate, but at low message rates a large minimum length can increase
+latency. A small minimum length can lower latency at low message rates, but does not
+allow the message rate to reach the same peak levels due to inefficiency. An intelligent
+use of implicit batching and application-level flushing can be used to implement an
+adaptive form of batching known as <a
+href="architecture.html#INTELLIGENT-BATCHING"><i>Intelligent Batching</i></a> which can
+provide low latency and high throughput with a single setting.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ADAPTIVE-BATCHING" name="ADAPTIVE-BATCHING">4.4.2. Adaptive
+Batching</a></h3>
+
+<p>Adaptive Batching is a convenience batching feature that attempts to send messages
+immediately during periods of low volume and automatically batch messages during periods
+of higher volume. The goal of Adaptive Batching is to automatically optimize throughput
+and latency by monitoring such things as the time between calls to <code
+class="FUNCTION">lbm_src_send()</code>, the time messages spend in the Implicit Batching
+queue, the Rate Controller queue, and other sending activities. With this information,
+Adaptive Batching determines if sending batched messages now or later produces the least
+latency.</p>
+
+<p>Adaptive Batching will not satisfy everyone's requirements of throughput and latency.
+You only need to turn it on and determine if it produces satisfactory performance. If it
+does, you need do nothing more. If you are not satisfied with the results, simply turn it
+off.</p>
+
+<p>You enable Adaptive Batching by setting <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGTYPE"
+target="doccontent"><tt class="LITERAL">implicit_batching_type</tt></a> to <tt
+class="LITERAL">adaptive</tt>. When using Adaptive Batching, it is advisable to increase
+the <a href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> option to a
+higher value.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INTELLIGENT-BATCHING" name="INTELLIGENT-BATCHING">4.4.3.
+Intelligent Batching</a></h3>
+
+<p>Intelligent Batching uses Implicit Batching along with your application's knowledge of
+the messages it must send. It is a form of dynamic adaptive batching that automatically
+adjusts for different message rates. Intelligent Batching can provide significant savings
+of CPU resources without adding any noticeable latency.</p>
+
+<p>For example, your application might receive input events in a batch, and therefore
+know that it must produce a corresponding batch of output messages. Or the message
+producer works off of an input queue, and it can detect messages in the queue.</p>
+
+<p>In any case, if the application knows that it has more messages to send without going
+to sleep, it simply does normal sends to <b class="APPLICATION">UM</b>, letting Implicit
+Batching send only when the buffer meets the <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> threshold.
+However, when the application detects that it has no more messages to send after it sends
+the current message, it sets the FLUSH flag (LBM_MSG_FLUSH) when sending the message
+which instructs <b class="APPLICATION">UM</b> to flush the implicit batching buffer
+immediately by sending all messages to the transport layer. Refer to <tt
+class="LITERAL">lbm_src_send()</tt> in the UMS API documentation (<a
+href="../API/index.html" target="doccontent"><b class="APPLICATION">UM</b> C API</a>, <a
+href="../JavaAPI/html/index.html" target="doccontent"><b class="APPLICATION">UM</b> Java
+API</a> or <a href="../DotNetAPI/doc/Index.html" target="doccontent"><b
+class="APPLICATION">UM</b> .NET API</a>) for all the available send flags.</p>
+
+<p>When using Intelligent Batching, it is usually advisable to increase the <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> option to 10
+times the size of the average message, to a maximum value of 8196. This tends to strike a
+good balance between batching length and flushing frequency, giving you low latencies
+across a wide variation of message rates.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="EXPLICIT-BATCHING" name="EXPLICIT-BATCHING">4.4.4. Explicit
+Batching</a></h3>
+
+<p><b class="APPLICATION">UM</b> allows you to batch messages for a particular topic with
+explicit batching. When your application sends a message (<tt
+class="LITERAL">lbm_src_send()</tt>) it may flag the message as being the start of a
+batch (LBM_MSG_START_BATCH) or the end of a batch (LBM_MSG_END_BATCH). All messages sent
+between the start and end are grouped together. The flag used to indicate the end of a
+batch also signals <b class="APPLICATION">UM</b> to send the message immediately to the
+implicit batching buffer. At this point, <a
+href="architecture.html#IMPLICIT-BATCHING"><i>Implicit Batching</i></a> completes the
+batching operation. <b class="APPLICATION">UM</b> includes the start and end flags in the
+message so receivers can process the batched messages effectively.</p>
+
+<p>Unlike Intelligent Batching which allows intermediate messages to trigger flushing
+according to the <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> option,
+explicit batching holds all messages until the batch is completed. This feature is useful
+if you configure a relatively small <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> and your
+application has a batch of messages to send that exceeds the <tt
+class="LITERAL">implicit_batching_minimum_length</tt>. By releasing all the messages at
+once, Implicit Batching maximizes the size of the network datagrams.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="EXPLICIT-BATCHING-EXAMPLE"
+name="EXPLICIT-BATCHING-EXAMPLE">4.4.4.1. Explicit Batching Example</a></h4>
+
+<p>The following example demonstrates explicit batching.</p>
+
+<pre class="SCREEN">
+implicit_batching_minimum_length = 8000
+       
+</pre>
+
+<ol type="1">
+<li>
+<p>Your application performs 10 <span class="emphasis"><i
+class="EMPHASIS">sends</i></span> of 100 bytes each as a single explicit batch.</p>
+</li>
+
+<li>
+<p>At the 10th <span class="emphasis"><i class="EMPHASIS">send</i></span> (which
+completes the batch), <b class="APPLICATION">UM</b> delivers the 1000 bytes of messages
+to the implicit batch buffer.</p>
+</li>
+
+<li>
+<p>Let's assume that the buffer already has 7899 bytes of data in it from other topics on
+the same transport session</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> adds the first 100-byte message to the buffer, bringing
+it to 7999.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> adds the second 100-byte message, bringing it up to 8099
+bytes, which exceeds <tt class="LITERAL">implicit_batching_minimum_length</tt> but is
+below the 8192 maximum datagram size.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> sends the 8099 bytes (plus overhead) datagram.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> adds the third through tenth messages to the implicit
+batch buffer. These messages will be sent when either <tt
+class="LITERAL">implicit_batching_minimum_length</tt> is again exceeded, or the <tt
+class="LITERAL">implicit_batching_interval</tt> is met, or a message arrives in the
+buffer with the flush flag (LBM_MSG_FLUSH) set.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="APPLICATION-BATCHING" name="APPLICATION-BATCHING">4.4.5.
+Application Batching</a></h3>
+
+<p>In all of the above situations, your application sends individual messages to <b
+class="APPLICATION">UM</b> and lets <b class="APPLICATION">UM</b> decide when to push the
+data onto the wire (often with application help). With application batching, your
+application buffers messages itself and sends a group of messages to <b
+class="APPLICATION">UM</b> with a single send. Thus, <b class="APPLICATION">UM</b> treats
+the send as a single message. On the receiving side, your application needs to know how
+to dissect the <b class="APPLICATION">UM</b> message into individual application
+messages.</p>
+
+<p>This approach is most useful for Java or .NET applications where there is a higher
+per-message cost in delivering an <b class="APPLICATION">UM</b> message to the
+application. It can also be helpful when using an event queue to deliver received
+messages. This imposes a thread switch cost for each <b class="APPLICATION">UM</b>
+message. At low message rates, this extra overhead is not noticeable. However, at high
+message rates, application batching can significantly reduce CPU overhead.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ORDERED-DELIVERY" name="ORDERED-DELIVERY">4.5. Ordered
+Delivery</a></h2>
+
+<p>With the Ordered Delivery feature, a receiver's delivery controller can deliver
+messages to your application in sequence number order or arrival order. This feature can
+also reassemble fragmented messages or leave reassembly to the application. Ordered
+Delivery can be set via <b class="APPLICATION">UM</b> configuration option to one of
+three modes:</p>
+
+<ul>
+<li>
+<p>Sequence Number Order, Fragments Reassembled</p>
+</li>
+
+<li>
+<p>Arrival Order, Fragments Not Reassembled</p>
+</li>
+
+<li>
+<p>Arrival Order, Fragments Reassembled</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SQN-ORDER" name="SQN-ORDER">4.5.1. Sequence Number Order,
+Fragments Reassembled (Default Mode)</a></h3>
+
+<p>In this mode, a receiver's delivery controller delivers messages in sequence number
+order (the same order in which they are sent). This feature also guarantees reassembly of
+fragmented large messages. To enable sequence number ordered delivery, set the <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> configuration option as shown:</p>
+
+<pre class="SCREEN">
+receiver ordered_delivery 1
+</pre>
+
+<p>Please note that ordered delivery can introduce latency when packets are lost.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ARR-ORDER-NO-REASSEMBLY" name="ARR-ORDER-NO-REASSEMBLY">4.5.2.
+Arrival Order, Fragments Not Reassembled</a></h3>
+
+<p>This mode allows messages to be delivered to the application in the order they are
+received. If a message is lost, <b class="APPLICATION">UM</b> will retransmit the
+message. In the meantime, any subsequent messages received are delivered immediately to
+the application, followed by the dropped packet when its retransmission is received. This
+mode guarantees the lowest latency.</p>
+
+<p>With this mode, the receiver delivers messages larger than the transport's maximum
+datagram size as individual fragments. (See <tt
+class="LITERAL">transport_*_datagram_max_size</tt> in the Ultra Messaging Configuration
+Guide.) The C API function, <code
+class="FUNCTION">lbm_msg_retrieve_fragment_info()</code> returns fragmentation
+information for the message you pass to it, and can be used to reassemble large messages.
+(In Java and .NET, <code class="FUNCTION">LBMMessage</code> provides methods to return
+the same fragment information.) Note that reassembly is not required for small
+messages.</p>
+
+<p>To enable this no-reassemble arrival-order mode, set the following configuration
+option as shown:</p>
+
+<pre class="SCREEN">
+receiver ordered_delivery 0
+</pre>
+
+<p>When developing message reassembly code, consider the following:</p>
+
+<ul>
+<li>
+<p>Message fragments don't necessarily arrive in sequence number order.</p>
+</li>
+
+<li>
+<p>Some message fragments may never arrive (unrecoverable loss), so you must time out
+partial messages.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ARR-ORDER-WITH-REASSEMBLY"
+name="ARR-ORDER-WITH-REASSEMBLY">4.5.3. Arrival Order, Fragments Reassembled</a></h3>
+
+<p>This mode delivers messages in the order they are received, except for fragmented
+messages, which <b class="APPLICATION">UM</b> reassembles before delivering to your
+application. Your application can then use the <tt class="LITERAL">sequence_number</tt>
+field of <tt class="LITERAL">lbm_msg_t</tt> objects to order or discard messages.</p>
+
+<p>To enable this arrival-order-with-reassembly mode, set the following configuration
+option as shown:</p>
+
+<pre class="SCREEN">
+receiver ordered_delivery -1
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TSNIS" name="TSNIS">4.6. Loss Detection Using TSNIs</a></h2>
+
+<p>When a source enters a period during which it has no data traffic to send, that source
+issues timed Topic Sequence Number Info (TSNI) messages. The TSNI lets receivers know
+that the source is still active and also reminds receivers of the sequence number of the
+last message. This helps receivers become aware of any lost messages between TSNIs.</p>
+
+<p>Sources send TSNIs over the same transport and on the same topic as normal data
+messages. You can set a time value of the TSNI interval with configuration option <a
+href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"
+target="doccontent"><tt class="LITERAL">transport_topic_sequence_number_info_interval</tt></a>.
+You can also set a time value for the duration that the source sends contiguous TSNIs
+with configuration option <a
+href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOACTIVETHRESHOLD"
+target="doccontent"><tt
+class="LITERAL">transport_topic_sequence_number_info_active_threshold</tt></a>, after
+which time the source stops issuing TSNIs.</p>
+
+<div class="FIGURE"><a id="TSNI-TIMING" name="TSNI-TIMING"></a>
+<p><b>Figure 9. TSNI Timing</b></p>
+
+<p><img src="TSNIs.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SMS" name="SMS">4.7. Receiver Keepalive Using Sesssion
+Messages</a></h2>
+
+<p>When an LBT-RM, LBT-RU, or LBT-IPC transport session enters a period during which it
+has no data traffic to send, UM issues timed Session Messages (SMs). For example, suppose
+all topics in a session stop sending data. One by one, they then send TSNIs, and if there
+is still no data to send, their TSNI periods eventually expire. After the last quiescent
+topic's TSNIs stop, UM begins transmitting SMs.</p>
+
+<p>You can set time values for SM interval and duration with configuration options
+specific to their transport type.</p>
+
+<div class="FIGURE"><a id="SM-TIMING" name="SM-TIMING"></a>
+<p><b>Figure 10. Session Message Timing</b></p>
+
+<p><img src="SMs.png" align="CENTER" /></p>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lbm-objects.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="lbm-features.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION">UM</b> Objects</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">UMS Features</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

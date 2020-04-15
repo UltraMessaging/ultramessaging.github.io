@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="umestored,tnwgd,lbmrd,startup,shutdown,Topic Resolution,UM Monitoring,resolver_initial_advertisements_per_second,resolver_initial_advertisement_bps,CPU usage,bandwidth,application startup errors,application shutdown,Process ID,PID,Application Log,End Of Session,EOS,LBM_MSG_EOS,LBM_SRC_EVENT_DISCONNECT,lbmrd,daemon,unicast resolver,XML configuration file,UMP Store,umestored,PID,Cache file,State file,restart a store,XML configuration file,tnwgd,UM Gateway,PID,start a,restart a,Topic Resolution" />
+    <title>Startup/Shutdown Procedures 5.3</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html#3_5_14_1">Monitoring UM Statistics, Logs and Daemons</a> &gt; Startup/Shutdown Procedures 5.3</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_5_14_1">Startup/Shutdown Procedures 5.3</a></div>
+      <div class="Short_Description"><a name="3_5_14_2">In a multicast environment, only the applications and monitoring tools need to be started. If using UMP (Persistence) the store daemon (</a><span class="Keyword">umestored</span>) also needs to be started. Likewise, use of the UM Gateway requires starting the UM Gateway daemon (<span class="Keyword">tnwgd</span>).</div>
+      <div class="Body"><a name="3_5_14_4_2">In a unicast-only environment, one or more resolver daemons (</a><span class="Keyword">lbmrd</span>) are typically required. It is recommended that you start the lbmrd before starting the applications.</div>
+      <div class="Body"><a name="3_5_14_4_4">Informatica recommends that you shutdown applications using UM sources and receivers cleanly, even though UM is able to cope with the ungraceful shutdown and restart of applications and UM daemons.</a></div>
+      <div class="Body"><a name="3_5_14_4_6">A failed assertion could lead to immediate application shutdown. If opting to restart a UM client or </a><span class="Keyword">lbmrd</span>, no other components need be restarted. Failed assertions should be logged with Informatica support.</div>
+      <div class="Heading_2"><a name="3_5_14_7_1">Topic Resolution</a></div>
+      <div class="Short_Description"><a name="3_5_14_7_2">Your UM development or administration team should anticipate the time and bandwidth required to resolve all topics when all applications initially start. This team should also establish any restarting restrictions. Operations staff should not have any direct topic resolution tasks aside from monitoring the increased CPU and bandwidth usage.</a></div>
+      <div class="Body"><a name="3_5_14_7_4_2">Topic resolution is the discovery of a topic's transport session information by a receiver to enable the receipt of topic messages. Although in a multicast environment, topic resolution does not need to be started or shutdown, it does use network resources and can cause deaf receivers and other problems if not operating properly. See </a><span class="Italic">Topic Resolution</span> in the <span class="Italic">UM Concepts Guide </span>for more detailed information.</div>
+      <div class="Body"><a name="3_5_14_7_4_4">Applications cannot deliver messages until topic resolution completes. UM monitoring statistics are active before all topics resolve. In a large topic space approximately 10,000 topics) topic resolution messages may be 'staggered' or rate controlled, taking potentially several seconds to complete.</a></div>
+      <div class="Body"><a name="3_5_14_7_4_6">For example, 10,000 topics at the default 1,000</a><span class="Keyword"> resolver_initial_advertisements_per_second</span> will take 10 seconds to send out an advertisement for every topic. If all receiving applications have been started first, fully resolving all topics may not take much more than 10 seconds. The rate of topic resolution can also be controlled with the<span class="Keyword"> resolver_initial_advertisement_bps</span> configuration option. Topic advertisements contain the topic string and approximately 110 bytes overhead. Topic queries from receivers contain no overhead, only the topic string.</div>
+      <div class="Heading_2"><a name="3_5_14_9_1">UM Applications</a></div>
+      <div class="Short_Description"><a name="3_5_14_9_2">Your UM development team should provide you with the application names, resident machines and startup parameters, along with a sequence of application/daemon startups and shutdowns.</a></div>
+      <div class="Body"><a name="3_5_14_9_4_2">The following lists typical application startup errors.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_4_2">Lack of resources</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_4_4">License not configured - </a><span class="msgph">LOG Level 3: CRITICAL: LBM license invalid [LBM_LICENSE_FILENAME nor LBM_LICENSE_INFO are set]</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_4_6">Cannot bind port - </a><span class="msgph">lbm_context_create: could not find open TCP server port in range.</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body_1"><a name="3_5_14_9_4_4_6_7">Too many applications may be running using the UM context's configured port range on this machine. This possibility should be escalated to your UM development team.</a></div>
+      <div class="Body_1"><a name="3_5_14_9_4_4_6_9">Application is possibly already running. It is possible to start more than one instance of the same UM application.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_4_8">Invalid network interface name / mask - </a><span class="msgph">lbm_config: line 1: no interfaces matching criteria</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_4_10">Multiple interfaces detected - </a><span class="msgph">LOG Level 5: WARNING: Host has multiple multicast-capable interfaces; going to use [en1][10.10.10.102]</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body_1"><a name="3_5_14_9_4_4_10_7">This message appears for multi-homed machines. UM is not explicitly configured to use a single interface. This may not cause an issue but requires configuration review by your UM development team.</a></div>
+      <div class="Section_Title"><a name="3_5_14_9_4_6_2">Indications of Possible Application Shutdown</a></div>
+      <div class="Body"><a name="3_5_14_9_4_6_4">A UM application shutdown may not be obvious immediately, especially if you are monitoring scores of applications. The following lists events that may indicate an application has shutdown.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_6_6_2">The Process ID disappears. Consider a method to monitor all process IDs (PIDs).</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_6_6_4">You notice the existence of a core dump file on the machine.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_6_6_6">UM statistics appear to reduce in volume or stop flowing.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_6_6_8">In an Application Log, one or more End Of Session (EOS) events signaling the cessation of a transport session. This may indicate a source application may have shut down. Your UM development team must explicitly log LBM_MSG_EOS events. Some EOS events may be delayed for some transports.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_9_4_6_6_10">In an Application Log, disconnect events (LBM_SRC_EVENT_DISCONNECT) for unicast transports (if implemented) indicate UM receiver applications have shutdown.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_14_11_1">Unicast Topic Resolver (lbmrd)</a></div>
+      <div class="Short_Description"><a name="3_5_14_11_2">If not using multicast topic resolution, one or more instances of </a><span class="Keyword">lbmrd</span> must be started prior to stating applications. Unicast resolver daemons require an XML configuration file and multiple resolver daemons can be specified by your UM development team for resiliency. See <span class="Italic">UM Concepts Guide</span>, <span class="Italic">Unicast Topic Resolution</span> for more details.</div>
+      <div class="Body"><a name="3_5_14_11_4_2">Execute the following command on the appropriate machine to start a unicast topic resolver ( </a><span class="Keyword">lbmrd</span> ).</div>
+      <div class="Body"><span class="Keyword"><a name="3_5_14_11_4_4">lbmrd --interface=ADDR -L daemon_logfile.out -p PORT lbmrd.cfg</a></span></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_11_4_6_2">To stop the resolver, use the </a><span class="Keyword">kill</span> command.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_11_4_6_4">If a unicast resolver daemon terminates, restart it.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_11_4_6_6">Observe the </a><span class="Keyword">lbmrd</span> logfile for errors and warnings</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_14_11_4_8">If running multiple s and an </a><span class="Keyword">lbmrd</span> in the list becomes inactive, the following log message appears.</div>
+      <div class="Body"><span class="msgph"><a name="3_5_14_11_4_10">unicast resolver &lt;ip&gt;:&lt;port&gt; went inactive</a></span></div>
+      <div class="Body"><a name="3_5_14_11_4_12">If all unicast resolver daemons become inactive, the following log message appears,</a></div>
+      <div class="Body"><span class="msgph"><a name="3_5_14_11_4_14">No active resolver instances, sending via inactive instance</a></span></div>
+      <div class="Body"><a name="3_5_14_11_4_16">After all topics are resolved, daemons do not strictly need to be running unless you restart applications. Resolver daemons do not cache or persist state and do not require other shutdown maintenance.</a></div>
+      <div class="Heading_2"><a name="3_5_14_13_1">UMP Store (umestored)</a></div>
+      <div class="Short_Description"><a name="3_5_14_13_2">Stores can operate in disk-backed or memory-only mode specified in the store's XML configuration file. Disk backed stores are subject to the limitations of the disk hardware. Stores should not be run on virtual machines and each store should have a dedicated disk. UM holds messages in memory until written to disk.</a></div>
+      <div class="Section_Title"><a name="3_5_14_13_4_2_2">Starting a Store</a></div>
+      <div class="Body"><a name="3_5_14_13_4_2_4">Execute the following command on the appropriate machine to start a (</a><span class="Keyword">umestored</span>).</div>
+      <div class="Body"><span class="Keyword"><a name="3_5_14_13_4_2_6">umestored config-file.xml</a></span></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_2_8_2">Record umestored PID</a> to monitor process presence for failure detection.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_2_8_4">On </a><span class="Trademark__0028reg_0029">Microsoft Windows</span><span class="Trademark__0028reg_0029">®</span>, monitor the umestored service.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_2_8_6_5">Observe the </a><span class="Keyword">umestored</span> logfile for errors and warnings</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_14_13_4_2_10">In disk mode, stores create two types of files.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_2_12_2">Cache file</a> - contains the actual persisted messages, and can grow to be very large over time. It is important to ensure that there is enough disk space to record the appropriate amount of persisted data.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_2_12_4">State file</a> - contains information about the current state of each client connection and is much smaller.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_14_13_4_2_14">Stores do not create any files in memory-only mode.</a></div>
+      <div class="Section_Title"><a name="3_5_14_13_4_4_2">Restarting a Store</a></div>
+      <div class="Body"><a name="3_5_14_13_4_4_4">Perform the following procedure to restart a store.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_13_4_4_6_2">If the store is still running, kill the PID (Linux) or use the </a><span class="Trademark__0028reg_0029">Windows Service Manager</span><span class="Trademark__0028reg_0029">®</span> to stop the Windows service.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_13_4_4_6_4">If you want a clean "start-of-day" start, delete the cache and state files. The location of these files is specified in the store's XML configuration file.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_13_4_4_6_6">Wait 20-30 seconds to let timeouts expire. Due to its use of connectionless protocols, UMP depends upon timeouts. Therefore, do not rapidly restart the store.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">4. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_13_4_4_6_8">Run the command: </a><span class="Keyword">umestored config-file.xml</span><span class="Keyword">umestored</span> automatically uses the existing cache and state files after a graceful shutdown and resumes as part of the current messaging stream at its last known position.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Section_Title"><a name="3_5_14_13_4_6_2">Common Startup and Shutdown Issues</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_6_4_2">Cache and state directories don't exist.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_6_4_4">Disk space - Cache files contain the actual persisted messages, and can grow to be very large over time. It is important to ensure that there is enough disk space to record the appropriate amount of persisted data.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_6_4_6">Configuration error - UM parses a store's XML configuration file at startup, reporting errors to standard error.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_6_4_8">Configuration error - UM reports other configuration errors the store's log file.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_13_4_6_4_10">Missing license details.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_14_15_1">UM Gateway (tnwgd)</a></div>
+      <div class="Short_Description"><a name="3_5_14_15_2">When a UM Gateway starts it discovers all sources and receivers in the topic resolution domains to which it connects. This results in a measurable increase and overall volume of topic resolution traffic and can take some time to complete depending upon the number of sources, receivers, and topics. The rate limits set on topic resolution also affect the time to resolve all topics.</a></div>
+      <div class="Body"><a name="3_5_14_15_4_2">See also </a><span class="xref"><a href="javascript:WWHClickedPopup('GUID-A5236314-8998-420A-876C-97EB134F2283', 'GUID-A5236314-8998-420A-876C-97EB134F2283.1.9.html#3_5_14_7_1', '');">Topic Resolution</a></span> above.</div>
+      <div class="Section_Title"><a name="3_5_14_15_4_4_2">Starting a UM Gateway</a></div>
+      <div class="Body"><a name="3_5_14_15_4_4_4">Execute the following command on the appropriate machine to start a UM Gateway (</a><span class="Keyword">tnwgd</span>).</div>
+      <div class="Body"><span class="Keyword"><a name="3_5_14_15_4_4_6">tnwgd config-file.xml</a></span></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_15_4_4_8_2">Record </a><span class="Keyword">tnwgd</span> PID to monitor process presence for failure detection.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_14_15_4_4_8_4">Observe the </a><span class="Keyword">tnwgd</span> logfile for errors and warnings.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Section_Title"><a name="3_5_14_15_4_6_2">Restarting a UM Gateway</a></div>
+      <div class="Body"><a name="3_5_14_15_4_6_4">Perform the following procedure to restart a UM Gateway.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_15_4_6_6_2">If the UM Gateway is still running, kill the PID.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_15_4_6_6_4">Wait 20-30 seconds to let timeouts expire. After a restart new proxy sources and receivers must be created on the UM Gateway. Applications will not use the new proxies until the transport timeout setting expires for the old connections. Until this happens, applications may appear to be "deaf" since they are still considering themselves as connected to the "old" UM Gateway proxies. Therefore, do not rapidly restart the UM Gateway.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_14_15_4_6_6_6">Run the command: </a><span class="Keyword">tnwgd config-file.xml</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

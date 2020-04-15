@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.3.6 / UME 2.0.4 - August 2008</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.3.7 / UME 2.0.5 - September 2008"
+href="seclbm3.3.7-ume2.0.5.html" />
+<link rel="NEXT" title="Release LBM 3.3.5 / UME 2.0.3 - June 2008"
+href="seclbm3.3.5-ume2.0.3.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.3.7-ume2.0.5.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.3.5-ume2.0.3.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.3.6-UME2.0.4" name="SECLBM3.3.6-UME2.0.4">55. Release
+LBM 3.3.6 / UME 2.0.4 - August 2008</a></h1>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Known Issue:</b> When using Event Queues with the Java API on
+Mac OS X kernel 9.4, core dumps have occurred. Mac OS X kernel versions prior to 9.4 have
+not produced this behavior. 29West is investigating this issue.</p>
+</li>
+
+<li>
+<p>Added LBMMessage class source and topic string caching to improve memory utilization
+dynamics (.NET and Java).</p>
+</li>
+
+<li>
+<p>Added new extended Hot Failover send capability in order to receive sequence number
+information to C, .NET, and Java APIs.</p>
+</li>
+
+<li>
+<p>Fixed memory corruption problem related to the use of <tt class="LITERAL">select</tt>
+file descriptor management when registering a large number of file descriptors at the
+same time.</p>
+</li>
+
+<li>
+<p>Simplified LBMMessage creation within the Java API layer to avoid holding a reference
+to a C layer message for certain message types (e.g., requests).</p>
+</li>
+
+<li>
+<p>Fixed Java API access violation exception that appeared when performing a send using
+an LBMSourceSendExInfo object without setting the client object information.</p>
+</li>
+
+<li>
+<p>Fixed segfault caused by using <tt class="LITERAL">lbmsdm_msg_clear()</tt>.</p>
+</li>
+
+<li>
+<p>Fixed <tt class="LITERAL">lbm_fd_cancel</tt> processing of file descriptors managed by
+<tt class="LITERAL">epoll</tt> to avoid fatal assertion.</p>
+</li>
+
+<li>
+<p>Implemented .NET string caching.</p>
+</li>
+
+<li>
+<p>Implemented .NET data marshalling performance enhancements.</p>
+</li>
+
+<li>
+<p>Added error messages to <tt class="LITERAL">lbmrd</tt> that indicate certain
+configuration file errors.</p>
+</li>
+
+<li>
+<p>The .NET API now allows the reuse of LBMSourceSendExInfo.</p>
+</li>
+
+<li>
+<p>Cleaned-up the <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg; build to ensure that the <tt
+class="LITERAL">lbm.dll</tt> has dependencies on only one Microsoft runtime DLL to avoid
+problems caused by attempting to use different memory heaps.</p>
+</li>
+
+<li>
+<p>Made the maximum datagram size configurable. See <a
+href="../Config/majoroptions.html#CONTEXTTRANSPORTDATAGRAMMAXSIZE" target="doccontent"><tt
+class="LITERAL">context transport_datagram_max_size</tt></a>.</p>
+</li>
+
+<li>
+<p>&#13;</p>
+</li>
+
+<li>
+<p>Fixed Gateway fatal assertion (<tt
+class="LITERAL">[Source-&#62;topic-&#62;source!=NULL] at line 769 in
+../../../../src/lbmgwd/lbmgwod.c</tt>) resulting from an attempt to use the outbound side
+before it is completely initialized.</p>
+</li>
+
+<li>
+<p>Prevent premature garbage collection of LBMTimer .NET objects.</p>
+</li>
+
+<li>
+<p>Fixed problem causing sources to advertise topics in response to a non-matching
+wildcard query.</p>
+</li>
+
+<li>
+<p>Fixed condition causing a fatal assertion (<tt class="LITERAL">[epoll_err==0] at line
+1494 in ../../../../src/lib/lbm/lbmfds.c</tt>) when a source is deleted on a non-context
+thread.</p>
+</li>
+
+<li>
+<p>Fixed Java response support for topicless request messages.</p>
+</li>
+
+<li>
+<p>Made the construction of SDM (Self Describing Messaging) name tree optional to allow
+better performance.</p>
+</li>
+
+<li>
+<p>Fixed SDM deserialization of nested messages.</p>
+</li>
+
+<li>
+<p>Fixed .NET API structure alignment problem during <b class="APPLICATION">UME</b>
+receiver registration that sometimes caused an <tt
+class="LITERAL">ArgumentOutOfRangeException</tt>.</p>
+</li>
+
+<li>
+<p>Receiver registrations are now ignored at the store until a topic resolution
+advertisement has been received from the corresponding source. This avoids a window that
+causes the receiver to request invalid retransmissions from the store.</p>
+</li>
+
+<li>
+<p>Fixed receiver's incorrect handling of the retransmission request target for
+round-robin store failover that manifests itself when a store fails during recovery of
+that receiver.</p>
+</li>
+</ul>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.3.7-ume2.0.5.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.3.5-ume2.0.3.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.3.7 / UME 2.0.5 - September
+2008</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.3.5 / UME 2.0.3 - June 2008</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

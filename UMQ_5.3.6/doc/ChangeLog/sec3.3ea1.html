@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.3EA1 2007-11-15</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.2.3 / UME 1.2.1 2007-11-27"
+href="sec1.2.1.html" />
+<link rel="NEXT" title="Release UME 1.2.1EA1 2007-10-30" href="sec1.2.1ea1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec1.2.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec1.2.1ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC3.3EA1" name="SEC3.3EA1">65. Release LBM 3.3EA1
+2007-11-15</a></h1>
+
+<ul>
+<li>
+<p>Corrected improper locking of the Retransmission Queue which caused the following
+assertion in lbtrm_txw_purge_rdata(): [bvec!=NULL] at line 245 in
+../../../../src/lib/lbm/lbtrm/lbtrmtxw.c</p>
+</li>
+
+<li>
+<p>Corrected problem with the premature deletion of the socket support in a context
+thread that caused the following assertion [1e40:1f98|2140.696]:failed assertion
+[lookup_mapentry!=NULL] at line 2330 in lbm\lbmfds.c</p>
+</li>
+
+<li>
+<p>Corrected problem with sources using Windows completion ports and sending low message
+counts over TCP that caused the source to hang and restart after receivers are
+stopped.</p>
+</li>
+
+<li>
+<p>Corrected condition that prevented receivers from getting messages due to TCP
+connections closing without proper end of session activity.</p>
+</li>
+
+<li>
+<p>Ensure that C API functions do set return object pointer until corresponding object
+has been completely created.</p>
+</li>
+
+<li>
+<p>Added debug flag to log a message every time an <b class="APPLICATION">LBM</b> API
+function is called.</p>
+</li>
+
+<li>
+<p>Added the logging of gateway (lbmgwd) configuration data once the configuration has
+been processed, but prior to the start of inbound and outbound components.</p>
+</li>
+
+<li>
+<p>Add generation count to timer IDs to prevent accidental cancellation of a timer that
+has already expired.</p>
+</li>
+
+<li>
+<p>Improve efficiency of timer cancellation to avoid searching for a timer on an event
+queue if the timer has not yet expired.</p>
+</li>
+
+<li>
+<p>Fixed problem with SDM that prevented the re-addition of fields to the name tree by
+ensuring the deletion of field entries from the name tree after removal.</p>
+</li>
+
+<li>
+<p>Added lbm_debug_mask() and lbm_debug_filename() to the <b class="APPLICATION">LBM</b>
+API which allows an application to initialize the debug settings that previously could
+only be set via environmental variables.</p>
+</li>
+
+<li>
+<p>Corrected problem with the handling of disallowed topics in the <b
+class="APPLICATION">LBM</b> Gateway using filter mode.</p>
+</li>
+
+<li>
+<p>Fixed problem with <b class="APPLICATION">LBM</b> Gateway monitoring that resulted in
+empty application-ID field.</p>
+</li>
+
+<li>
+<p>Added support for recurring timers with new API function,
+lbm_schedule_timer_recurring().</p>
+</li>
+
+<li>
+<p>Corrected denial of service problems as the result of receiving unusual messages sent
+to the topic resolution multicast group.</p>
+</li>
+
+<li>
+<p>Addressed multiple restart issues by changing the initial topic index value to a
+random value for TCP, LBT-RM, and LBT-RU. For TCP and LBT-RU, the initial value is random
+at context creation. For LBT-RM, each initial transport creation uses a random value.</p>
+</li>
+
+<li>
+<p>Addressed thread safety issue by synchronizing access to callback lists within the
+.NET API.</p>
+</li>
+
+<li>
+<p>Corrected problems with duplicate sources for the same topic on either side of the <b
+class="APPLICATION">LBM</b> Gateway which resulted in inaccurate topic state information
+after receivers are stopped. The Gateway will now ignore Leave Topic messages for topics
+that do not have a proxy source.</p>
+</li>
+
+<li>
+<p>Corrected problem with calls to lbm_errmsg() and lbm_errnum() that produced error
+messages consisting of the text "no error". Uninitialized error strings will now display
+"no error message set".</p>
+</li>
+
+<li>
+<p>Added a notification from lbm_context_delete to the context thread to prevent an
+unnecessary 500ms delay when no events are occurring on the context that is being
+deleted.</p>
+</li>
+
+<li>
+<p>Added support for Late Join in <b class="APPLICATION">LBM</b> independent of UME.</p>
+</li>
+
+<li>
+<p>Corrected problems with non-blocking TCP connections on Solaris that caused either
+message loss or the following assertion: FATAL: failed assertion [dmux!=NULL] at line
+1083 in ../../../../src/lib/lbm/lbmrcv.c.</p>
+</li>
+</ul>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec1.2.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec1.2.1ea1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.2.3 / UME 1.2.1 2007-11-27</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UME 1.2.1EA1 2007-10-30</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

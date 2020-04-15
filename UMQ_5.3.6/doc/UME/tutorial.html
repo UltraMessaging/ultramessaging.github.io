@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Enabling Persistence</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Operational View" href="ume-ops-operational-view.html" />
+<link rel="NEXT" title="Demonstrating Persistence"
+href="demonstrating-ume-persistence.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="ume-ops-operational-view.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="demonstrating-ume-persistence.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TUTORIAL" name="TUTORIAL">5. Enabling Persistence</a></h1>
+
+<p>In this section, we explain how to build a persistence messaging application by
+starting with a minimum source and receiver and then adding <b
+class="APPLICATION">UMP</b> features incrementally. With the help of example source, this
+section explains the following operations.</p>
+
+<ul>
+<li>
+<p><a href="tutorial.html#TUTORIAL-UMESTORE"><i>Adding the</i> UMP Store to a
+Source</a></p>
+</li>
+
+<li>
+<p><a href="tutorial.html#TUTORIAL-ADDINGFAULTRECOVERY"><i>Adding Fault Recovery with
+Registration IDs</i></a></p>
+</li>
+
+<li>
+<p><a href="tutorial.html#TUTORIAL-PERSISTENCESOURCESTORE"><i>Enabling Persistence
+Between the Source and Store</i></a></p>
+</li>
+
+<li>
+<p><a href="tutorial.html#TUTORIAL-PERSISTENCESOURCE"><i>Enabling Persistence in the
+Source</i></a></p>
+</li>
+
+<li>
+<p><a href="tutorial.html#TUTORIAL-PERSISTENCERECEIVER"><i>Enabling Persistence in the
+Receiver</i></a></p>
+</li>
+</ul>
+
+<p>Prerequisite: You should understand basic <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> concepts such as Sources and Receivers
+and the basic methods for configuring them.</p>
+
+<p>The following table lists all source files used in this section. You can also find
+links to them in the appropriate task. The files can also be found in the <tt
+class="FILENAME">/doc/UME</tt> directory.</p>
+
+<div class="INFORMALTABLE"><a id="AEN1824" name="AEN1824"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="192" />
+<thead>
+<tr>
+<th>Object</th>
+<th>Filename</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Source Application</td>
+<td><a href="ume-example-src.c" target="doccontent">ume-example-src.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application</td>
+<td><a href="ume-example-rcv.c" target="doccontent">ume-example-rcv.c</a></td>
+</tr>
+
+<tr>
+<td>Source Application 2</td>
+<td><a href="ume-example-src-2.c" target="doccontent">ume-example-src-2.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application 2</td>
+<td><a href="ume-example-rcv-2.c" target="doccontent">ume-example-rcv-2.c</a></td>
+</tr>
+
+<tr>
+<td>Source Application 3</td>
+<td><a href="ume-example-src-3.c" target="doccontent">ume-example-src-3.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application 3</td>
+<td><a href="ume-example-rcv-3.c" target="doccontent">ume-example-rcv-3.c</a></td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UMP</b> Store Configuration File</td>
+<td><a href="ume-example-config.xml" target="doccontent">ume-example-config.xml</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-STARTINGCONFIGURATION"
+name="TUTORIAL-STARTINGCONFIGURATION">5.1. Starting Configuration</a></h2>
+
+<p>We begin with the minimal source and receiver used by the <a
+href="../QuickStart/index.html" target="doccontent">QuickStart Guide</a>. To more easily
+demonstrate the <b class="APPLICATION">UMP</b> features we are interested in, we have
+modified the QuickStart source and receiver in the following ways.</p>
+
+<ul>
+<li>
+<p>Modified the source to send 20 messages with a one second pause between each
+message</p>
+</li>
+
+<li>
+<p>Modified the receiver to anticipate 20 messages instead of just one</p>
+</li>
+
+<li>
+<p>Assigned the topic, UME Queue Example, to both the source and receiver</p>
+</li>
+
+<li>
+<p>Modified the receiver to not exit on unexpected receiver events</p>
+</li>
+</ul>
+
+<p>The last change allows us to better demonstrate basic operation and evolve our
+receiver slowly without having to anticipate all the options that <b
+class="APPLICATION">UMP</b> provides up front.</p>
+
+<p>Example files for our exercise are:</p>
+
+<div class="INFORMALTABLE"><a id="AEN1879" name="AEN1879"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="192" />
+<thead>
+<tr>
+<th>Object</th>
+<th>File</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Source Application</td>
+<td><a href="ume-example-src.c" target="doccontent">ume-example-src.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application</td>
+<td><a href="ume-example-rcv.c" target="doccontent">ume-example-rcv.c</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Be sure to build <tt class="LITERAL">ume-example-rcv.c</tt> and <tt
+class="LITERAL">ume-example-src.c</tt>. Instructions for building them are at the
+beginning of the source files.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-UMESTORE" name="TUTORIAL-UMESTORE">5.2. Adding the <b
+class="APPLICATION">UMP</b> Store to a Source</a></h2>
+
+<p>The fundamental component of a <b class="APPLICATION">UMP</b> persistence solution is
+the persistent store. To use a store, a source needs to be configured to use one by
+setting <a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTORE"
+target="doccontent"><tt class="LITERAL">ume_store</tt></a> for the source. We can do that with
+the following piece of code.</p>
+
+<pre class="SCREEN">
+err = lbm_src_topic_attr_str_setopt(&amp;attr, "ume_store", "127.0.0.1:14567");
+</pre>
+
+<p>This sets the <b class="APPLICATION">UMP</b> persistent store for the source to the
+store running at 127.0.0.1 on port 14567.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you desire to run a store on a different machine than where the source
+and receiver are run, then you should replace 127.0.0.1 with the IP address (not
+hostname) of the machine running the <b class="APPLICATION">UMP</b> persistent store.</p>
+</blockquote>
+</div>
+
+<p>Example files for our exercise are:</p>
+
+<div class="INFORMALTABLE"><a id="AEN1914" name="AEN1914"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="192" />
+<thead>
+<tr>
+<th>Object</th>
+<th>Filename</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Source Application</td>
+<td><a href="ume-example-src.c" target="doccontent">ume-example-src.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application</td>
+<td><a href="ume-example-rcv.c" target="doccontent">ume-example-rcv.c</a></td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UMP</b> Store Configuration File</td>
+<td><a href="ume-example-config.xml" target="doccontent">ume-example-config.xml</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>After adding the ume-store specification to the source, perform the following
+steps.</p>
+
+<ol type="1">
+<li>
+<p>Create the cache and state directories. <tt class="LITERAL">$ mkdir umestored-cache ;
+mkdir umestored-state</tt></p>
+</li>
+
+<li>
+<p>Start up the store. <tt class="LITERAL">$ umestored ume-example-config.xml</tt></p>
+</li>
+
+<li>
+<p>Start the Receiver. <tt class="LITERAL">$ ume-example-rcv</tt></p>
+</li>
+
+<li>
+<p>Start the Source. <tt class="LITERAL">$ ume-example-src</tt></p>
+</li>
+</ol>
+
+<p>You should see a message on the source that says:</p>
+
+<pre class="SCREEN">
+INFO: Source "UME Example" Late Join not set, but UME store specified. Setting Late Join.
+</pre>
+
+<p>This is an informational message from <b class="APPLICATION">UMP</b> and merely means
+Late Join was not set and that <b class="APPLICATION">UMP</b> is going to set it.</p>
+
+<p>Notice that the receiver was not configured with any store information. That is
+because setting it on the source is all that is needed. The receiver learns <b
+class="APPLICATION">UMP</b> store settings from the source through the normal <b
+class="APPLICATION">UM</b> topic resolution process. Receivers don't need to do anything
+special to leverage the usage of a store by a source.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-ADDINGFAULTRECOVERY"
+name="TUTORIAL-ADDINGFAULTRECOVERY">5.3. Adding Fault Recovery with Registration
+IDs</a></h2>
+
+<p>If the source or receiver crashes, how does the source and receiver tell the store
+that they have restarted and wish to resume where they left off? We need to add in some
+sort of identifiers to the source and receiver so that the store knows which sources and
+receivers they are.</p>
+
+<p>In <b class="APPLICATION">UMP</b> , these identifiers are called Registration IDs or
+RegIDs. <b class="APPLICATION">UMP</b> allows the application to control the use of
+RegIDs as it wishes. This allows applications to migrate sources and receivers not just
+between systems, but between locations with true, unprecedented freedom. However, <b
+class="APPLICATION">UMP</b> requires an application to be careful of how it uses RegIDs.
+Specifically, an application must not use the same RegID for multiple sources and/or
+receivers at the same time.</p>
+
+<p>Now let's look at how we can use RegIDs to provide complete fault recovery of sources
+and receivers. We'll first handle RegIDs in the simplest manner by using static IDs for
+our source and receiver. For the source, the RegID of 1000 can be added to the existing
+store specification by changing the string to</p>
+
+<pre class="SCREEN">
+127.0.0.1:14567:1000
+</pre>
+
+<p>This yields the source code in <a href="ume-example-src-2.c"
+target="doccontent">ume-example-src-2.c</a></p>
+
+<p>For the receiver, we accomplish this in two steps.</p>
+
+<ol type="1">
+<li>
+<p>Set a callback function to be called when we desire to set the RegID to 1100. This is
+done by declaring the callback function, <tt class="LITERAL">app_rcv_regid_callback</tt>,
+which will return the RegID value 1100 to <b class="APPLICATION">UMP</b> .</p>
+</li>
+
+<li>
+<p>Inform the <b class="APPLICATION">UMP</b> configuration for the receiver to use this
+callback function. That is accomplished by setting the <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEREGISTRATIONEXTENDEDFUNCTION"
+ target="doccontent"><tt class="LITERAL">ume_registration_extended_function</tt></a> similar to
+example code below.</p>
+</li>
+</ol>
+
+<pre class="SCREEN">
+lbm_ume_rcv_regid_ex_func_t id;      /* structure to hold registration function information */
+id.func = app_rcv_regid_callback;    /* the callback function to call */
+id.clientd = NULL;                   /* the value to pass in the clientd to the function */
+err = lbm_rcv_topic_attr_setopt(&amp;attr, "ume_registration_extended_function", &amp;id, sizeof(id));
+         
+</pre>
+
+<p>Once this is done, the receiver has the ability to control what RegID it will use.
+This yields the source code in <a href="ume-example-rcv-2.c"
+target="doccontent">ume-example-rcv-2.c</a>.</p>
+
+<p>With these in place, you can experiment with killing the receiver and bringing it back
+(as long as you bring it back before the source is finished), as well as killing the
+source and bringing it back.</p>
+
+<p>The restriction to this initial approach to RegIDs is that the RegIDs 1000 and 1100
+may not be used by any other objects at the same time. If you run additional sources or
+receivers, they must be assigned new RegIDs, not 1000 or 1100. Let's now take a more
+sophisticated approach to RegIDs that will allow much more flexibility</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-PERSISTENCESOURCESTORE"
+name="TUTORIAL-PERSISTENCESOURCESTORE">5.4. Enabling Persistence Between the Source and
+Store</a></h2>
+
+<p>Let's refine our source to include some desired behavior following a crash. Upon
+restart, we want our source to resume with the first unsent message. For example, if the
+source sent 10 messages and crashed, we want our source to resume with the 11th message
+and continue until it has sent the 20th message.</p>
+
+<p>Accomplishing this graceful resumption requires us to ensure that our source is the
+only source that uses the RegID assigned to it. The same RegID should be used as long as
+the source has not sent the 20th message regardless of any crashes that may occur. We can
+do this with the following changes to the store:</p>
+
+<ol type="1">
+<li>
+<p>Configure the store to assign a RegID when the source starts.</p>
+</li>
+
+<li>
+<p>Configure the store to save the RegID to disk so that it can be used after a
+crash.</p>
+</li>
+</ol>
+
+<p>In addition to these two changes to the store's configuration, the following two
+sections explain the changes needed for the source and receiver, which become fairly easy
+due to the events that <b class="APPLICATION">UMP</b> delivers to the application during
+<b class="APPLICATION">UMP</b> operation.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> While the following sections are instructive about how <b
+class="APPLICATION">UMP</b> uses RegIDs to provide persistence, RegIDs can also be
+managed easily with the use of Session IDs. See <a
+href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with Session
+IDs</i></a>.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-PERSISTENCESOURCE"
+name="TUTORIAL-PERSISTENCESOURCE">5.5. Enabling Persistence in the Source</a></h2>
+
+<p>With the above mentioned behaviors in mind, let's turn to looking at how they may be
+implemented with <b class="APPLICATION">UMP</b> , starting with the source. We can
+summarize the changes we need by the following list.</p>
+
+<ol type="1">
+<li>
+<p>At source startup, use any saved RegID information found in the file by setting
+information in the <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTORE" target="doccontent"><tt
+class="LITERAL">ume_store</tt></a> configuration variable.</p>
+</li>
+
+<li>
+<p>After the store registration is successful, if a new RegID was assigned to the source,
+save the RegID to the file.</p>
+</li>
+
+<li>
+<p>Set the message number to begin sending. Refer to the explanation below.</p>
+</li>
+
+<li>
+<p>Send until message number 20 has been sent.</p>
+</li>
+
+<li>
+<p>After message 20 has been sent, delete the saved RegID file.</p>
+</li>
+</ol>
+
+<p>For Step 3, if the source has just been initialized, the application starts with
+message number 1. If the source has been restarted after a crash, the application looks
+to <b class="APPLICATION">UMP</b> to establish the beginning message number because <b
+class="APPLICATION">UMP</b> will use the next sequence number. For this simple example,
+we can make the assumption that each message is one sequence number for <b
+class="APPLICATION">UMP</b> and that <b class="APPLICATION">UMP</b> starts with sequence
+number 0. Thus the application can set the message number it begins resending with the
+value of the <b class="APPLICATION">UMP</b> sequence number + 1.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Using sequence numbers to set the message number is a good practice if
+you send messages smaller than 8K.</p>
+</blockquote>
+</div>
+
+<p>These changes yield the source code in <a href="ume-example-src-3.c"
+target="doccontent">ume-example-src-3.c</a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TUTORIAL-PERSISTENCERECEIVER"
+name="TUTORIAL-PERSISTENCERECEIVER">5.6. Enabling Persistence in the Receiver</a></h2>
+
+<p>Let's also refine the receiver to resume where it left off after a crash. Just as with
+the source, the receiver can have the store assign it a RegID if the receiver is just
+beginning. Once the receiver receives the 20th message from the source, it can get rid of
+the RegID and exit. Because the receiver can receive some messages, crash, and come back,
+we should only need to look at a message and check if it is the 20th message based on the
+message contents or sequence number. <b class="APPLICATION">UMP</b> provides all the
+events to the application that we need to create these behaviors in the receiver.</p>
+
+<p>The receiver changes are summarized below.</p>
+
+<ol type="1">
+<li>
+<p>At receiver startup, use any saved RegID information found in the file for callback
+information when needed.</p>
+</li>
+
+<li>
+<p>When RegID callback is called: Check to see if the source RegID matches the saved
+source RegID. If it does, return the saved receiver RegID. RegID matches the saved source
+RegID if so, return the saved receiver RegID.</p>
+</li>
+
+<li>
+<p>After store registration is successful: If not using a previously saved RegID, then
+save the RegID assigned by the store to the source to a file, as well as the store
+information and the source RegID.</p>
+</li>
+
+<li>
+<p>After the last message is received (message number 20 or <b
+class="APPLICATION">UMP</b> sequence number 19), end the application and delete the saved
+RegID file.</p>
+</li>
+</ol>
+
+<p>RegIDs in <b class="APPLICATION">UMP</b> can be considered to be per source and per
+topic. Thus the receiver does not want to use the wrong RegID for a different source on
+the same topic. To avoid this, we save the source RegID and even store information so
+that the <tt class="LITERAL">app_rcv_regid_callback</tt> can make sure to use the correct
+RegID for the given source RegID. These changes yield the source code in <a
+href="ume-example-rcv-3.c" target="doccontent">ume-example-rcvc-3.c</a></p>
+
+<p>The above sources and receivers are simplified for illustration purposes and do have
+some limitations. The receiver will only keep the information for one source at a time
+saved to the file. This is fine for illustration purposes, but would be lacking in
+completeness for production applications unless it was assured that a single source for
+any topic would be in use. To extend the receiver to include several sources is simply a
+matter of saving each to the file, reading them in at startup, and being able to search
+for the correct one for each callback invoked.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ume-ops-operational-view.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="demonstrating-ume-persistence.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Operational View</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Demonstrating Persistence</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,2658 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Configuration Guide</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="NEXT" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="BOOK" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="BOOK"><a id="CONFIGURATION" name="CONFIGURATION"></a>
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Configuration Guide</a></h1>
+
+<p><img src="UM-logo.png" /></p>
+
+<p class="COPYRIGHT"><a href="INFACOPYRIGHT.html">Copyright</a> &copy; 2004 - 2014
+Informatica Corporation</p>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="config.html">Single HTML</a> / <a href="config.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="configuringoptions.html">Configuring <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</a></dt>
+
+<dd>
+<dl>
+<dt>1.1. <a href="configuringoptions.html#MAINOVERVIEW">Overview</a></dt>
+
+<dd>
+<dl>
+<dt>1.1.1. <a href="configuringoptions.html#ASSIGNMENTMETHODS">Assignment
+Methods</a></dt>
+
+<dt>1.1.2. <a href="configuringoptions.html#ASSIGNMENTFLOW">Assignment Flow</a></dt>
+
+<dt>1.1.3. <a href="configuringoptions.html#DEFINITIONS">Definitions</a></dt>
+
+<dt>1.1.4. <a href="configuringoptions.html#WHICHMETHODTOUSE">Which Method Should I
+Use?</a></dt>
+
+<dt>1.1.5. <a href="configuringoptions.html#CONFIGURATIONFILES">Configuration
+Files</a></dt>
+</dl>
+</dd>
+
+<dt>1.2. <a href="plaintextconfigurationfiles.html">Plain Text Configuration
+Files</a></dt>
+
+<dd>
+<dl>
+<dt>1.2.1. <a
+href="plaintextconfigurationfiles.html#READINGPLAINTEXTCONFIGURATIONFILES">Reading Plain
+Text Configuration Files</a></dt>
+
+<dt>1.2.2. <a
+href="plaintextconfigurationfiles.html#PLAINTEXTCONFIGURATIONFILEFORMAT">Plain Text
+Configuration File Format</a></dt>
+</dl>
+</dd>
+
+<dt>1.3. <a href="xmlconfigurationfiles.html">XML Configuration Files</a></dt>
+
+<dd>
+<dl>
+<dt>1.3.1. <a href="xmlconfigurationfiles.html#READINGXMLCONFIGURATIONFILES">Reading XML
+Configuration Files</a></dt>
+
+<dt>1.3.2. <a href="xmlconfigurationfiles.html#GETTINGSTARTEDXMLCONFIG">Using XML
+Configuration Files With a UM Application</a></dt>
+
+<dt>1.3.3. <a href="xmlconfigurationfiles.html#XMLCONFIGURATIONFILEFORMAT">XML
+Configuration File Format</a></dt>
+
+<dt>1.3.4. <a href="xmlconfigurationfiles.html#SAMPLE-XML-CONFIG">Sample XML
+Configuration File</a></dt>
+
+<dt>1.3.5. <a href="xmlconfigurationfiles.html#CONFIG-DTD">XML Configuration File
+DTD</a></dt>
+</dl>
+</dd>
+
+<dt>1.4. <a href="configurationfilerestrictions.html">Configuration File
+Restrictions</a></dt>
+
+<dt>1.5. <a href="attributesobjects.html">Attributes Objects</a></dt>
+
+<dd>
+<dl>
+<dt>1.5.1. <a href="attributesobjects.html#ATTRIBUTESOBJECTCREATE">Creating An Attributes
+Object</a></dt>
+
+<dt>1.5.2. <a href="attributesobjects.html#ATTRIBUTESOBJECTSET">Setting an Option from a
+Binary Value</a></dt>
+
+<dt>1.5.3. <a href="attributesobjects.html#ATTRIBUTESOBJECTSETSTRING">Setting an Option
+from a String Value</a></dt>
+
+<dt>1.5.4. <a href="attributesobjects.html#ATTRIBUTESOBJECTGET">Getting an Option as a
+Binary Value</a></dt>
+
+<dt>1.5.5. <a href="attributesobjects.html#ATTRIBUTESOBJECTGETSTRING">Getting an Option
+as a String Value</a></dt>
+
+<dt>1.5.6. <a href="attributesobjects.html#ATTRIBUTEOBJECTSDELETE">Deleting an Attributes
+Object</a></dt>
+
+<dt>1.5.7. <a
+href="attributesobjects.html#ATTRIBUTESOBJECTRESTRICTIONS">Restrictions</a></dt>
+</dl>
+</dd>
+
+<dt>1.6. <a href="modifyingcurrentattributes.html">Modifying Current Attributes</a></dt>
+
+<dd>
+<dl>
+<dt>1.6.1. <a href="modifyingcurrentattributes.html#MODCURRENTATTRIBUTESSET">Setting An
+Option from a Binary Value</a></dt>
+
+<dt>1.6.2. <a
+href="modifyingcurrentattributes.html#MODCURRENTATTRIBUTESSETSTRING">Setting An Option
+from a String Value</a></dt>
+
+<dt>1.6.3. <a
+href="modifyingcurrentattributes.html#MODCURRENTATTRIBUTESRESTRICTIONS">Restrictions</a></dt>
+</dl>
+</dd>
+
+<dt>1.7. <a href="retrievingcurrentoptionvalues.html">Retrieving Current Option
+Values</a></dt>
+
+<dd>
+<dl>
+<dt>1.7.1. <a
+href="retrievingcurrentoptionvalues.html#RETRIEVINGCURRENTOPTIONVALUESGET">Getting An
+Option as a Binary Value</a></dt>
+
+<dt>1.7.2. <a
+href="retrievingcurrentoptionvalues.html#RETRIEVINGCURRENTOPTIONVALUESGETSTRING">Getting
+An Option as a String Value</a></dt>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt>2. <a href="examples.html">Example Configuration Scenarios</a></dt>
+
+<dd>
+<dl>
+<dt>2.1. <a href="examples.html#HIGHESTTHROUGHPUT">Highest Throughput</a></dt>
+
+<dt>2.2. <a href="lowestlatency.html">Lowest Latency</a></dt>
+
+<dt>2.3. <a href="multicastsource.html">Creating Multicast Sources</a></dt>
+
+<dt>2.4. <a href="disable-topic-res.html">Disabling Aspects of Topic Resolution</a></dt>
+
+<dd>
+<dl>
+<dt>2.4.1. <a href="disable-topic-res.html#DISABLE-TOPIC-ADS">Disabling Topic
+Advertisements</a></dt>
+
+<dt>2.4.2. <a href="disable-topic-res.html#DISABLE-TOPIC-QUERIES">Disabling Receiver
+Topic Queries</a></dt>
+
+<dt>2.4.3. <a href="disable-topic-res.html#DISABLE-WRCV-QUERIES">Disabling Wildcard Topic
+Queries</a></dt>
+
+<dt>2.4.4. <a href="disable-topic-res.html#MINIMUM-TR">Disabling All But the Minimum
+Topic Resolution Traffic</a></dt>
+
+<dt>2.4.5. <a href="disable-topic-res.html#PRE40-TR">Re-establish Pre-4.0 Topic
+Resolution</a></dt>
+</dl>
+</dd>
+
+<dt>2.5. <a href="unicastresolver.html">Unicast Resolver</a></dt>
+
+<dd>
+<dl>
+<dt>2.5.1. <a href="unicastresolver.html#UNICAST-RESOLVER-NAT-EXAMPLE">Unicast Resolution
+Across Administrative Domains</a></dt>
+</dl>
+</dd>
+
+<dt>2.6. <a href="previousports.html">Configure Previous Port Defaults</a></dt>
+
+<dt>2.7. <a href="newports.html">Configure New Port Defaults</a></dt>
+
+<dt>2.8. <a href="grouprelated.html">Interrelated Configuration Options</a></dt>
+
+<dd>
+<dl>
+<dt>2.8.1. <a href="grouprelated.html#PREVENTNAKSTORMS">Preventing NAK Storms with NAK
+Interval Options</a></dt>
+
+<dt>2.8.2. <a href="grouprelated.html#PREVENTTAILLOSS">Preventing Tail Loss With TSNI and
+NAK Interval Options</a></dt>
+
+<dt>2.8.3. <a href="grouprelated.html#PREVENTIPCRCVRDEAFNESS">Preventing IPC Receiver
+Deafness With Keepalive Options</a></dt>
+
+<dt>2.8.4. <a href="grouprelated.html#PREVENTLBTRMRUSESSIONTIMEOUTS">Preventing Erroneous
+LBT-RM/LBT-RU Session Timeouts</a></dt>
+
+<dt>2.8.5. <a href="grouprelated.html#PREVENTMULTICASTADDRESSREVERSAL">Preventing Errors
+Due to Bad Multicast Address Ranges</a></dt>
+
+<dt>2.8.6. <a href="grouprelated.html#PREVENTSTORETIMEOUTS">Preventing Store or Queue
+Timeouts</a></dt>
+
+<dt>2.8.7. <a href="grouprelated.html#PREVENTULBTIMEOUTS">Preventing ULB
+Timeouts</a></dt>
+
+<dt>2.8.8. <a href="grouprelated.html#PREVENTLBMRDTIMEOUTS">Preventing Unicast Resolver
+Daemon Timeouts</a></dt>
+
+<dt>2.8.9. <a href="grouprelated.html#PREVENTUNDETECTEDLOSS">Preventing Undetected Late
+Join Loss</a></dt>
+
+<dt>2.8.10. <a href="grouprelated.html#PREVENTUNDETECTEDLOSS2">Preventing Undetected
+Loss</a></dt>
+</dl>
+</dd>
+</dl>
+</dd>
+
+<dt>3. <a href="commontasks.html">Common Tasks</a></dt>
+
+<dd>
+<dl>
+<dt>3.1. <a href="commontasks.html#MULTIHOMEDHOSTS">Configuring Multi-Homed
+Hosts</a></dt>
+
+<dt>3.2. <a href="firewalltraversal.html">Traversing a Firewall</a></dt>
+
+<dt>3.3. <a href="multipleapplications.html">Running Multiple Applications</a></dt>
+</dl>
+</dd>
+
+<dt>4. <a href="reference.html">Reference</a></dt>
+
+<dd>
+<dl>
+<dt>4.1. <a href="reference.html#REFERENCEINTRODUCTION">Introduction</a></dt>
+
+<dd>
+<dl>
+<dt>4.1.1. <a href="reference.html#CASESENSITIVITY">Case Sensitivity</a></dt>
+
+<dt>4.1.2. <a href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a></dt>
+
+<dt>4.1.3. <a href="reference.html#SOCKETBUFFERSIZE">Socket Buffer Sizes</a></dt>
+
+<dt>4.1.4. <a href="reference.html#REFERENCEENTRYFORMAT">Reference Entry Format</a></dt>
+
+<dt>4.1.5. <a href="reference.html#NETWORKCOMPATIBILITY">Network Compatibility
+Mode</a></dt>
+</dl>
+</dd>
+
+<dt>4.2. <a href="majoroptions.html">Major Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.2.1. <a href="majoroptions.html#CONTEXTCONTEXTEVENTFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">context_event_function
+(context)</span></span></a></dt>
+
+<dt>4.2.2. <a href="majoroptions.html#CONTEXTCONTEXTNAME"><span
+class="lbm-option-name"><span class="PHRASE">context_name
+(context)</span></span></a></dt>
+
+<dt>4.2.3. <a href="majoroptions.html#CONTEXTFDMANAGEMENTTYPE"><span
+class="lbm-option-name"><span class="PHRASE">fd_management_type
+(context)</span></span></a></dt>
+
+<dt>4.2.4. <a href="majoroptions.html#RECEIVERMESSAGESELECTOR"><span
+class="lbm-option-name"><span class="PHRASE">message_selector
+(receiver)</span></span></a></dt>
+
+<dt>4.2.5. <a href="majoroptions.html#CONTEXTNETWORKCOMPATIBILITYMODE"><span
+class="lbm-option-name"><span class="PHRASE">network_compatibility_mode
+(context)</span></span></a></dt>
+
+<dt>4.2.6. <a href="majoroptions.html#CONTEXTOPERATIONALMODE"><span
+class="lbm-option-name"><span class="PHRASE">operational_mode
+(context)</span></span></a></dt>
+
+<dt>4.2.7. <a href="majoroptions.html#RECEIVERORDEREDDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">ordered_delivery
+(receiver)</span></span></a></dt>
+
+<dt>4.2.8. <a href="majoroptions.html#RECEIVERRCVSYNCCACHE"><span
+class="lbm-option-name"><span class="PHRASE">rcv_sync_cache
+(receiver)</span></span></a></dt>
+
+<dt>4.2.9. <a href="majoroptions.html#RECEIVERRCVSYNCCACHETIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">rcv_sync_cache_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.2.10. <a href="majoroptions.html#CONTEXTRECEIVETHREADPOOLSIZE"><span
+class="lbm-option-name"><span class="PHRASE">receive_thread_pool_size
+(context)</span></span></a></dt>
+
+<dt>4.2.11. <a href="majoroptions.html#CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_context_advertisement_interval
+(context)</span></span></a></dt>
+
+<dt>4.2.12. <a href="majoroptions.html#CONTEXTRESOLVERSOURCENOTIFICATIONFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_source_notification_function
+(context)</span></span></a></dt>
+
+<dt>4.2.13. <a href="majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">source_cost_evaluation_function
+(context)</span></span></a></dt>
+
+<dt>4.2.14. <a href="majoroptions.html#CONTEXTSOURCEEVENTFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">source_event_function
+(context)</span></span></a></dt>
+
+<dt>4.2.15. <a href="majoroptions.html#CONTEXTSOURCEINCLUDESTOPICINDEX"><span
+class="lbm-option-name"><span class="PHRASE">source_includes_topic_index
+(context)</span></span></a></dt>
+
+<dt>4.2.16. <a href="majoroptions.html#SOURCETRANSPORT"><span
+class="lbm-option-name"><span class="PHRASE">transport (source)</span></span></a></dt>
+
+<dt>4.2.17. <a href="majoroptions.html#RECEIVERTRANSPORTDEMUXTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">transport_demux_tablesz
+(receiver)</span></span></a></dt>
+
+<dt>4.2.18. <a
+href="majoroptions.html#CONTEXTTRANSPORTSESSIONMULTIPLESENDINGTHREADS"><span
+class="lbm-option-name"><span class="PHRASE">transport_session_multiple_sending_threads
+(context)</span></span></a></dt>
+
+<dt>4.2.19. <a href="majoroptions.html#SOURCETRANSPORTSOURCESIDEFILTERINGBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">transport_source_side_filtering_behavior
+(source)</span></span></a></dt>
+
+<dt>4.2.20. <a
+href="majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOACTIVETHRESHOLD"><span
+class="lbm-option-name"><span
+class="PHRASE">transport_topic_sequence_number_info_active_threshold
+(source)</span></span></a></dt>
+
+<dt>4.2.21. <a
+href="majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"><span
+class="lbm-option-name"><span
+class="PHRASE">transport_topic_sequence_number_info_interval
+(source)</span></span></a></dt>
+
+<dt>4.2.22. <a href="majoroptions.html#SOURCEUSEEXTENDEDRECLAIMNOTIFICATIONS"><span
+class="lbm-option-name"><span class="PHRASE">use_extended_reclaim_notifications
+(source)</span></span></a></dt>
+
+<dt>4.2.23. <a href="majoroptions.html#RECEIVERUSETRANSPORTTHREAD"><span
+class="lbm-option-name"><span class="PHRASE">use_transport_thread
+(receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.3. <a href="resolveroperationoptions.html">Resolver Operation Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.3.1. <a href="resolveroperationoptions.html#MIN-INTERVAL-VALUES">Minimum Values for
+Advertisement and Query Intervals</a></dt>
+
+<dt>4.3.2. <a
+href="resolveroperationoptions.html#CONTEXTDISABLEEXTENDEDTOPICRESOLUTIONMESSAGEOPTIONS"><span
+ class="lbm-option-name"><span
+class="PHRASE">disable_extended_topic_resolution_message_options
+(context)</span></span></a></dt>
+
+<dt>4.3.3. <a
+href="resolveroperationoptions.html#RECEIVERRESOLUTIONNOSOURCENOTIFICATIONTHRESHOLD"><span
+ class="lbm-option-name"><span class="PHRASE">resolution_no_source_notification_threshold
+(receiver)</span></span></a></dt>
+
+<dt>4.3.4. <a
+href="resolveroperationoptions.html#RECEIVERRESOLUTIONNUMBEROFSOURCESQUERYTHRESHOLD"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolution_number_of_sources_query_threshold
+(receiver)</span></span></a></dt>
+
+<dt>4.3.5. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMAXIMUMINITIALINTERVAL"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_maximum_initial_interval
+(source)</span></span></a></dt>
+
+<dt>4.3.6. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMINITIALDURATION"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_initial_duration
+(source)</span></span></a></dt>
+
+<dt>4.3.7. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMINITIALINTERVAL"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_initial_interval
+(source)</span></span></a></dt>
+
+<dt>4.3.8. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTMINIMUMSUSTAINDURATION"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_minimum_sustain_duration
+(source)</span></span></a></dt>
+
+<dt>4.3.9. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTSENDIMMEDIATERESPONSE"><span
+ class="lbm-option-name"><span
+class="PHRASE">resolver_advertisement_send_immediate_response
+(source)</span></span></a></dt>
+
+<dt>4.3.10. <a
+href="resolveroperationoptions.html#SOURCERESOLVERADVERTISEMENTSUSTAININTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_advertisement_sustain_interval
+(source)</span></span></a></dt>
+
+<dt>4.3.11. <a href="resolveroperationoptions.html#CONTEXTRESOLVERCACHE"><span
+class="lbm-option-name"><span class="PHRASE">resolver_cache
+(context)</span></span></a></dt>
+
+<dt>4.3.12. <a href="resolveroperationoptions.html#CONTEXTRESOLVERDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">resolver_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.3.13. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERINITIALADVERTISEMENTBPS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_initial_advertisement_bps
+(context)</span></span></a></dt>
+
+<dt>4.3.14. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERINITIALADVERTISEMENTSPERSECOND"><span
+class="lbm-option-name"><span class="PHRASE">resolver_initial_advertisements_per_second
+(context)</span></span></a></dt>
+
+<dt>4.3.15. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERINITIALQUERIESPERSECOND"><span
+class="lbm-option-name"><span class="PHRASE">resolver_initial_queries_per_second
+(context)</span></span></a></dt>
+
+<dt>4.3.16. <a href="resolveroperationoptions.html#CONTEXTRESOLVERINITIALQUERYBPS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_initial_query_bps
+(context)</span></span></a></dt>
+
+<dt>4.3.17. <a
+href="resolveroperationoptions.html#RECEIVERRESOLVERQUERYMAXIMUMINITIALINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_maximum_initial_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.3.18. <a
+href="resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALDURATION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_initial_duration
+(receiver)</span></span></a></dt>
+
+<dt>4.3.19. <a
+href="resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMINITIALINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_initial_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.3.20. <a
+href="resolveroperationoptions.html#RECEIVERRESOLVERQUERYMINIMUMSUSTAINDURATION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_sustain_duration
+(receiver)</span></span></a></dt>
+
+<dt>4.3.21. <a
+href="resolveroperationoptions.html#RECEIVERRESOLVERQUERYSUSTAININTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_sustain_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.3.22. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERRECEIVERMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">resolver_receiver_map_tablesz
+(context)</span></span></a></dt>
+
+<dt>4.3.23. <a
+href="resolveroperationoptions.html#SOURCERESOLVERSENDINITIALADVERTISEMENT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_send_initial_advertisement
+(source)</span></span></a></dt>
+
+<dt>4.3.24. <a href="resolveroperationoptions.html#CONTEXTRESOLVERSOURCEMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">resolver_source_map_tablesz
+(context)</span></span></a></dt>
+
+<dt>4.3.25. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSTRINGHASHFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_string_hash_function
+(context)</span></span></a></dt>
+
+<dt>4.3.26. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSTRINGHASHFUNCTIONEX"><span
+class="lbm-option-name"><span class="PHRASE">resolver_string_hash_function_ex
+(context)</span></span></a></dt>
+
+<dt>4.3.27. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINADVERTISEMENTBPS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_sustain_advertisement_bps
+(context)</span></span></a></dt>
+
+<dt>4.3.28. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINADVERTISEMENTSPERSECOND"><span
+class="lbm-option-name"><span class="PHRASE">resolver_sustain_advertisements_per_second
+(context)</span></span></a></dt>
+
+<dt>4.3.29. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINQUERIESPERSECOND"><span
+class="lbm-option-name"><span class="PHRASE">resolver_sustain_queries_per_second
+(context)</span></span></a></dt>
+
+<dt>4.3.30. <a href="resolveroperationoptions.html#CONTEXTRESOLVERSUSTAINQUERYBPS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_sustain_query_bps
+(context)</span></span></a></dt>
+
+<dt>4.3.31. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERUNICASTACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_activity_timeout
+(context)</span></span></a></dt>
+
+<dt>4.3.32. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERUNICASTCHANGEINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_change_interval
+(context)</span></span></a></dt>
+
+<dt>4.3.33. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERUNICASTCHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_check_interval
+(context)</span></span></a></dt>
+
+<dt>4.3.34. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERUNICASTFORCEALIVE"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_force_alive
+(context)</span></span></a></dt>
+
+<dt>4.3.35. <a
+href="resolveroperationoptions.html#CONTEXTRESOLVERUNICASTKEEPALIVEINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_keepalive_interval
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.4. <a href="multicastresolvernetworkoptions.html">Multicast Resolver Network
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.4.1. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_address
+(context)</span></span></a></dt>
+
+<dt>4.4.2. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_incoming_address
+(context)</span></span></a></dt>
+
+<dt>4.4.3. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINCOMINGPORT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_incoming_port
+(context)</span></span></a></dt>
+
+<dt>4.4.4. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_interface
+(context)</span></span></a></dt>
+
+<dt>4.4.5. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_outgoing_address
+(context)</span></span></a></dt>
+
+<dt>4.4.6. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTOUTGOINGPORT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_outgoing_port
+(context)</span></span></a></dt>
+
+<dt>4.4.7. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_port
+(context)</span></span></a></dt>
+
+<dt>4.4.8. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTRECEIVERSOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">resolver_multicast_receiver_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.4.9. <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTTTL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_multicast_ttl
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.5. <a href="unicastresolvernetworkoptions.html">Unicast Resolver Network
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.5.1. <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTDAEMON"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_daemon
+(context)</span></span></a></dt>
+
+<dt>4.5.2. <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_interface
+(context)</span></span></a></dt>
+
+<dt>4.5.3. <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_port_high
+(context)</span></span></a></dt>
+
+<dt>4.5.4. <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_port_low
+(context)</span></span></a></dt>
+
+<dt>4.5.5. <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTRECEIVERSOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">resolver_unicast_receiver_socket_buffer
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.6. <a href="transporttcpnetworkoptions.html">Transport TCP Network Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.6.1. <a href="transporttcpnetworkoptions.html#RECEIVERTRANSPORTTCPINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_interface
+(receiver)</span></span></a></dt>
+
+<dt>4.6.2. <a href="transporttcpnetworkoptions.html#SOURCETRANSPORTTCPINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_interface
+(source)</span></span></a></dt>
+
+<dt>4.6.3. <a
+href="transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPMAXIMUMPORTS"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_maximum_ports
+(context)</span></span></a></dt>
+
+<dt>4.6.4. <a href="transporttcpnetworkoptions.html#SOURCETRANSPORTTCPPORT"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_port
+(source)</span></span></a></dt>
+
+<dt>4.6.5. <a href="transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_port_high
+(context)</span></span></a></dt>
+
+<dt>4.6.6. <a href="transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_port_low
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.7. <a href="transporttcpoperationoptions.html">Transport TCP Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.7.1. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTSESSIONMAXIMUMBUFFER"><span
+class="lbm-option-name"><span class="PHRASE">transport_session_maximum_buffer
+(source)</span></span></a></dt>
+
+<dt>4.7.2. <a
+href="transporttcpoperationoptions.html#RECEIVERTRANSPORTTCPACTIVITYMETHOD"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_activity_method
+(receiver)</span></span></a></dt>
+
+<dt>4.7.3. <a
+href="transporttcpoperationoptions.html#RECEIVERTRANSPORTTCPACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.7.4. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPCOALESCETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_coalesce_threshold
+(source)</span></span></a></dt>
+
+<dt>4.7.5. <a
+href="transporttcpoperationoptions.html#CONTEXTTRANSPORTTCPDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.7.6. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPEXCLUSIVEADDR"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_exclusiveaddr
+(source)</span></span></a></dt>
+
+<dt>4.7.7. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPLISTENBACKLOG"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_listen_backlog
+(source)</span></span></a></dt>
+
+<dt>4.7.8. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPMULTIPLERECEIVERBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_multiple_receiver_behavior
+(source)</span></span></a></dt>
+
+<dt>4.7.9. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPMULTIPLERECEIVERSENDORDER"><span
+ class="lbm-option-name"><span class="PHRASE">transport_tcp_multiple_receiver_send_order
+(source)</span></span></a></dt>
+
+<dt>4.7.10. <a href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPNODELAY"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_nodelay
+(source)</span></span></a></dt>
+
+<dt>4.7.11. <a
+href="transporttcpoperationoptions.html#CONTEXTTRANSPORTTCPRECEIVERSOCKETBUFFER"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_receiver_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.7.12. <a href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPREUSEADDR"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_reuseaddr
+(source)</span></span></a></dt>
+
+<dt>4.7.13. <a
+href="transporttcpoperationoptions.html#SOURCETRANSPORTTCPSENDERSOCKETBUFFER"><span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_sender_socket_buffer
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.8. <a href="transportlbt-rmnetworkoptions.html">Transport LBT-RM Network
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.8.1. <a
+href="transportlbt-rmnetworkoptions.html#SOURCETRANSPORTLBTRMDESTINATIONPORT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_destination_port
+(source)</span></span></a></dt>
+
+<dt>4.8.2. <a
+href="transportlbt-rmnetworkoptions.html#SOURCETRANSPORTLBTRMMULTICASTADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_multicast_address
+(source)</span></span></a></dt>
+
+<dt>4.8.3. <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMMULTICASTADDRESSHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_multicast_address_high
+(context)</span></span></a></dt>
+
+<dt>4.8.4. <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMMULTICASTADDRESSLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_multicast_address_low
+(context)</span></span></a></dt>
+
+<dt>4.8.5. <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_source_port_high
+(context)</span></span></a></dt>
+
+<dt>4.8.6. <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_source_port_low
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.9. <a href="transportlbt-rmreliabilityoptions.html">Transport LBT-RM Reliability
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.9.1. <a href="transportlbt-rmreliabilityoptions.html#LBT-RM-LOSS">LBT-RM Datagram
+Loss Resulting in Unrecovered Message Loss</a></dt>
+
+<dt>4.9.2. <a href="transportlbt-rmreliabilityoptions.html#LBT-RM-IGNORE">LBT-RM Source
+Ignoring NAKs for Efficiency</a></dt>
+
+<dt>4.9.3. <a href="transportlbt-rmreliabilityoptions.html#LBT-RM-SUPPRESSION">LBT-RM
+Receiver Suppressing NAK Generation</a></dt>
+
+<dt>4.9.4. <a
+href="transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMIGNOREINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_ignore_interval
+(source)</span></span></a></dt>
+
+<dt>4.9.5. <a
+href="transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKBACKOFFINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_nak_backoff_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.9.6. <a
+href="transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_nak_generation_interval (receiver)</span></span></a></dt>
+
+<dt>4.9.7. <a
+href="transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKINITIALBACKOFFINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_nak_initial_backoff_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.9.8. <a
+href="transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKSUPPRESSINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_nak_suppress_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.9.9. <a
+href="transportlbt-rmreliabilityoptions.html#CONTEXTTRANSPORTLBTRMRECEIVERSOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_receiver_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.9.10. <a
+href="transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMSENDNAKS"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_send_naks
+(receiver)</span></span></a></dt>
+
+<dt>4.9.11. <a
+href="transportlbt-rmreliabilityoptions.html#CONTEXTTRANSPORTLBTRMSOURCESOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_source_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.9.12. <a
+href="transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMTRANSMISSIONWINDOWLIMIT">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrm_transmission_window_limit (source)</span></span></a></dt>
+
+<dt>4.9.13. <a
+href="transportlbt-rmreliabilityoptions.html#SOURCETRANSPORTLBTRMTRANSMISSIONWINDOWSIZE"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_transmission_window_size
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.10. <a href="transportlbt-rmoperationoptions.html">Transport LBT-RM Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.10.1. <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.10.2. <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMCOALESCETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_coalesce_threshold
+(source)</span></span></a></dt>
+
+<dt>4.10.3. <a
+href="transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMDATARATELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_data_rate_limit
+(context)</span></span></a></dt>
+
+<dt>4.10.4. <a
+href="transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.10.5. <a
+href="transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMPREACTIVITYTIMEOUT"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_preactivity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.10.6. <a
+href="transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMRATEINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_rate_interval
+(context)</span></span></a></dt>
+
+<dt>4.10.7. <a
+href="transportlbt-rmoperationoptions.html#CONTEXTTRANSPORTLBTRMRETRANSMITRATELIMIT"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrm_retransmit_rate_limit
+(context)</span></span></a></dt>
+
+<dt>4.10.8. <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMAXIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_sm_maximum_interval
+(source)</span></span></a></dt>
+
+<dt>4.10.9. <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMSMMINIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_sm_minimum_interval
+(source)</span></span></a></dt>
+
+<dt>4.10.10. <a
+href="transportlbt-rmoperationoptions.html#SOURCETRANSPORTLBTRMTGSZ"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrm_tgsz
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.11. <a href="transportlbt-runetworkoptions.html">Transport LBT-RU Network
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.11.1. <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_interface
+(receiver)</span></span></a></dt>
+
+<dt>4.11.2. <a
+href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_interface
+(source)</span></span></a></dt>
+
+<dt>4.11.3. <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUMAXIMUMPORTS"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_maximum_ports
+(context)</span></span></a></dt>
+
+<dt>4.11.4. <a href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUPORT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_port
+(source)</span></span></a></dt>
+
+<dt>4.11.5. <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_port_high
+(context)</span></span></a></dt>
+
+<dt>4.11.6. <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_port_high
+(receiver)</span></span></a></dt>
+
+<dt>4.11.7. <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_port_low
+(context)</span></span></a></dt>
+
+<dt>4.11.8. <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_port_low
+(receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.12. <a href="transportlbt-rureliabilityoptions.html">Transport LBT-RU Reliability
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.12.1. <a
+href="transportlbt-rureliabilityoptions.html#SOURCETRANSPORTLBTRUIGNOREINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_ignore_interval
+(source)</span></span></a></dt>
+
+<dt>4.12.2. <a
+href="transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKBACKOFFINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_nak_backoff_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.12.3. <a
+href="transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKGENERATIONINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_nak_generation_interval (receiver)</span></span></a></dt>
+
+<dt>4.12.4. <a
+href="transportlbt-rureliabilityoptions.html#RECEIVERTRANSPORTLBTRUNAKSUPPRESSINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_nak_suppress_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.12.5. <a
+href="transportlbt-rureliabilityoptions.html#CONTEXTTRANSPORTLBTRURECEIVERSOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_receiver_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.12.6. <a
+href="transportlbt-rureliabilityoptions.html#CONTEXTTRANSPORTLBTRUSOURCESOCKETBUFFER"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_source_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.12.7. <a
+href="transportlbt-rureliabilityoptions.html#SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWLIMIT">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_transmission_window_limit (source)</span></span></a></dt>
+
+<dt>4.12.8. <a
+href="transportlbt-rureliabilityoptions.html#SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWSIZE"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_transmission_window_size
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.13. <a href="transportlbt-ruoperationoptions.html">Transport LBT-RU Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.13.1. <a
+href="transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUACKNOWLEDGEMENTINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_acknowledgement_interval (receiver)</span></span></a></dt>
+
+<dt>4.13.2. <a
+href="transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.13.3. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUCLIENTACTIVITYTIMEOUT"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_client_activity_timeout
+(source)</span></span></a></dt>
+
+<dt>4.13.4. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUCLIENTMAPSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_client_map_size
+(source)</span></span></a></dt>
+
+<dt>4.13.5. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUCOALESCETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_coalesce_threshold
+(source)</span></span></a></dt>
+
+<dt>4.13.6. <a
+href="transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUCONNECTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_connect_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.13.7. <a
+href="transportlbt-ruoperationoptions.html#CONTEXTTRANSPORTLBTRUDATARATELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_data_rate_limit
+(context)</span></span></a></dt>
+
+<dt>4.13.8. <a
+href="transportlbt-ruoperationoptions.html#CONTEXTTRANSPORTLBTRUDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.13.9. <a
+href="transportlbt-ruoperationoptions.html#RECEIVERTRANSPORTLBTRUMAXIMUMCONNECTATTEMPTS"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_maximum_connect_attempts
+(receiver)</span></span></a></dt>
+
+<dt>4.13.10. <a
+href="transportlbt-ruoperationoptions.html#CONTEXTTRANSPORTLBTRURATEINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_rate_interval
+(context)</span></span></a></dt>
+
+<dt>4.13.11. <a
+href="transportlbt-ruoperationoptions.html#CONTEXTTRANSPORTLBTRURETRANSMITRATELIMIT"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtru_retransmit_rate_limit
+(context)</span></span></a></dt>
+
+<dt>4.13.12. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUSMMAXIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_sm_maximum_interval
+(source)</span></span></a></dt>
+
+<dt>4.13.13. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUSMMINIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_sm_minimum_interval
+(source)</span></span></a></dt>
+
+<dt>4.13.14. <a
+href="transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUUSESESSIONID"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_use_session_id
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.14. <a href="transportlbt-ipcoperationoptions.html">Transport LBT-IPC Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.14.1. <a
+href="transportlbt-ipcoperationoptions.html#RECEIVERTRANSPORTLBTIPCACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.14.2. <a
+href="transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_behavior
+(source)</span></span></a></dt>
+
+<dt>4.14.3. <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.14.4. <a href="transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCID"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_id
+(source)</span></span></a></dt>
+
+<dt>4.14.5. <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_id_high
+(context)</span></span></a></dt>
+
+<dt>4.14.6. <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_id_low
+(context)</span></span></a></dt>
+
+<dt>4.14.7. <a
+href="transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCMAXIMUMRECEIVERSPERTRANSPORT">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_maximum_receivers_per_transport
+(source)</span></span></a></dt>
+
+<dt>4.14.8. <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCRECEIVEROPERATIONALMODE">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_receiver_operational_mode
+(context)</span></span></a></dt>
+
+<dt>4.14.9. <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCRECEIVERTHREADBEHAVIOR">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtipc_receiver_thread_behavior (context)</span></span></a></dt>
+
+<dt>4.14.10. <a
+href="transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCSMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_sm_interval
+(source)</span></span></a></dt>
+
+<dt>4.14.11. <a
+href="transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCTRANSMISSIONWINDOWSIZE"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtipc_transmission_window_size
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.15. <a href="transportlbt-rdmaoperationoptions.html">Transport LBT-RDMA Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.15.1. <a
+href="transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMADATAGRAMMAXSIZE"><span
+ class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.15.2. <a
+href="transportlbt-rdmaoperationoptions.html#SOURCETRANSPORTLBTRDMAINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_interface
+(source)</span></span></a></dt>
+
+<dt>4.15.3. <a
+href="transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAMAXIMUMPORTS"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_maximum_ports
+(context)</span></span></a></dt>
+
+<dt>4.15.4. <a
+href="transportlbt-rdmaoperationoptions.html#SOURCETRANSPORTLBTRDMAPORT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_port
+(source)</span></span></a></dt>
+
+<dt>4.15.5. <a
+href="transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_port_high
+(context)</span></span></a></dt>
+
+<dt>4.15.6. <a
+href="transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMAPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_port_low
+(context)</span></span></a></dt>
+
+<dt>4.15.7. <a
+href="transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMARECEIVERTHREADBEHAVIOR">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_receiver_thread_behavior
+(context)</span></span></a></dt>
+
+<dt>4.15.8. <a
+href="transportlbt-rdmaoperationoptions.html#SOURCETRANSPORTLBTRDMATRANSMISSIONWINDOWSIZE">
+<span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_transmission_window_size (source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.16. <a href="transportaccelerationoptions.html">Transport Acceleration
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.16.1. <a href="transportaccelerationoptions.html#CONTEXTDBLLBTRMACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">dbl_lbtrm_acceleration
+(context)</span></span></a></dt>
+
+<dt>4.16.2. <a href="transportaccelerationoptions.html#CONTEXTDBLLBTRUACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">dbl_lbtru_acceleration
+(context)</span></span></a></dt>
+
+<dt>4.16.3. <a href="transportaccelerationoptions.html#CONTEXTDBLMIMACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">dbl_mim_acceleration
+(context)</span></span></a></dt>
+
+<dt>4.16.4. <a
+href="transportaccelerationoptions.html#CONTEXTDBLRESOLVERACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">dbl_resolver_acceleration
+(context)</span></span></a></dt>
+
+<dt>4.16.5. <a
+href="transportaccelerationoptions.html#CONTEXTRESOLVERUDACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_ud_acceleration
+(context)</span></span></a></dt>
+
+<dt>4.16.6. <a href="transportaccelerationoptions.html#CONTEXTUDACCELERATION"><span
+class="lbm-option-name"><span class="PHRASE">ud_acceleration
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.17. <a href="multicastimmediatemessagingnetworkoptions.html">Multicast Immediate
+Messaging Network Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.17.1. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">mim_address (context)</span></span></a></dt>
+
+<dt>4.17.2. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMDESTINATIONPORT"><span
+class="lbm-option-name"><span class="PHRASE">mim_destination_port
+(context)</span></span></a></dt>
+
+<dt>4.17.3. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMINCOMINGADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">mim_incoming_address
+(context)</span></span></a></dt>
+
+<dt>4.17.4. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMINCOMINGDESTINATIONPORT"><span
+ class="lbm-option-name"><span class="PHRASE">mim_incoming_destination_port
+(context)</span></span></a></dt>
+
+<dt>4.17.5. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMOUTGOINGADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">mim_outgoing_address
+(context)</span></span></a></dt>
+
+<dt>4.17.6. <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMOUTGOINGDESTINATIONPORT"><span
+ class="lbm-option-name"><span class="PHRASE">mim_outgoing_destination_port
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.18. <a href="multicastimmediatemessagingreliabilityoptions.html">Multicast
+Immediate Messaging Reliability Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.18.1. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMIGNOREINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">mim_ignore_interval
+(context)</span></span></a></dt>
+
+<dt>4.18.2. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKBACKOFFINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">mim_nak_backoff_interval
+(context)</span></span></a></dt>
+
+<dt>4.18.3. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKGENERATIONINTERVAL">
+<span class="lbm-option-name"><span class="PHRASE">mim_nak_generation_interval
+(context)</span></span></a></dt>
+
+<dt>4.18.4. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKINITIALBACKOFFINTERVAL">
+<span class="lbm-option-name"><span class="PHRASE">mim_nak_initial_backoff_interval
+(context)</span></span></a></dt>
+
+<dt>4.18.5. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKSUPPRESSINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">mim_nak_suppress_interval
+(context)</span></span></a></dt>
+
+<dt>4.18.6. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMSENDNAKS"><span
+class="lbm-option-name"><span class="PHRASE">mim_send_naks
+(context)</span></span></a></dt>
+
+<dt>4.18.7. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMTRANSMISSIONWINDOWLIMIT">
+<span class="lbm-option-name"><span class="PHRASE">mim_transmission_window_limit
+(context)</span></span></a></dt>
+
+<dt>4.18.8. <a
+href="multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMTRANSMISSIONWINDOWSIZE">
+<span class="lbm-option-name"><span class="PHRASE">mim_transmission_window_size
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.19. <a href="multicastimmediatemessagingoperationoptions.html">Multicast Immediate
+Messaging Operation Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.19.1. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTIMMEDIATEMESSAGERECEIVERFUNCTION">
+<span class="lbm-option-name"><span class="PHRASE">immediate_message_receiver_function
+(context)</span></span></a></dt>
+
+<dt>4.19.2. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTIMMEDIATEMESSAGETOPICRECEIVERFUNCTION">
+<span class="lbm-option-name"><span
+class="PHRASE">immediate_message_topic_receiver_function (context)</span></span></a></dt>
+
+<dt>4.19.3. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">mim_activity_timeout
+(context)</span></span></a></dt>
+
+<dt>4.19.4. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMDELIVERYCONTROLACTIVITYCHECKINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">mim_delivery_control_activity_check_interval
+(context)</span></span></a></dt>
+
+<dt>4.19.5. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMDELIVERYCONTROLACTIVITYTIMEOUT">
+<span class="lbm-option-name"><span class="PHRASE">mim_delivery_control_activity_timeout
+(context)</span></span></a></dt>
+
+<dt>4.19.6. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMDELIVERYCONTROLORDERTABLESZ">
+<span class="lbm-option-name"><span class="PHRASE">mim_delivery_control_order_tablesz
+(context)</span></span></a></dt>
+
+<dt>4.19.7. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMIMPLICITBATCHINGINTERVAL">
+<span class="lbm-option-name"><span class="PHRASE">mim_implicit_batching_interval
+(context)</span></span></a></dt>
+
+<dt>4.19.8. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMIMPLICITBATCHINGMINIMUMLENGTH">
+<span class="lbm-option-name"><span class="PHRASE">mim_implicit_batching_minimum_length
+(context)</span></span></a></dt>
+
+<dt>4.19.9. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMORDEREDDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">mim_ordered_delivery
+(context)</span></span></a></dt>
+
+<dt>4.19.10. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSMMAXIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">mim_sm_maximum_interval
+(context)</span></span></a></dt>
+
+<dt>4.19.11. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSMMINIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">mim_sm_minimum_interval
+(context)</span></span></a></dt>
+
+<dt>4.19.12. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSQNWINDOWINCREMENT"><span
+ class="lbm-option-name"><span class="PHRASE">mim_sqn_window_increment
+(context)</span></span></a></dt>
+
+<dt>4.19.13. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSQNWINDOWSIZE"><span
+class="lbm-option-name"><span class="PHRASE">mim_sqn_window_size
+(context)</span></span></a></dt>
+
+<dt>4.19.14. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSRCDELETIONTIMEOUT"><span
+ class="lbm-option-name"><span class="PHRASE">mim_src_deletion_timeout
+(context)</span></span></a></dt>
+
+<dt>4.19.15. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMTGSZ"><span
+class="lbm-option-name"><span class="PHRASE">mim_tgsz (context)</span></span></a></dt>
+
+<dt>4.19.16. <a
+href="multicastimmediatemessagingoperationoptions.html#CONTEXTMIMUNRECOVERABLELOSSFUNCTION">
+<span class="lbm-option-name"><span class="PHRASE">mim_unrecoverable_loss_function
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.20. <a href="latejoinoptions.html">Late Join Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.20.1. <a href="latejoinoptions.html#LATEJOINTIMINGS">Late Join Recovery</a></dt>
+
+<dt>4.20.2. <a href="latejoinoptions.html#SOURCELATEJOIN"><span
+class="lbm-option-name"><span class="PHRASE">late_join (source)</span></span></a></dt>
+
+<dt>4.20.3. <a
+href="latejoinoptions.html#RECEIVERRETRANSMITINITIALSEQUENCENUMBERREQUEST"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_initial_sequence_number_request
+(receiver)</span></span></a></dt>
+
+<dt>4.20.4. <a
+href="latejoinoptions.html#RECEIVERRETRANSMITMESSAGECACHINGPROXIMITY"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_message_caching_proximity
+(receiver)</span></span></a></dt>
+
+<dt>4.20.5. <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTGENERATIONINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_request_generation_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.20.6. <a href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_request_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.20.7. <a href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTMAXIMUM"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_request_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.20.8. <a
+href="latejoinoptions.html#RECEIVERRETRANSMITREQUESTOUTSTANDINGMAXIMUM"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_request_outstanding_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.20.9. <a href="latejoinoptions.html#SOURCERETRANSMITRETENTIONAGETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_retention_age_threshold
+(source)</span></span></a></dt>
+
+<dt>4.20.10. <a href="latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_retention_size_limit
+(source)</span></span></a></dt>
+
+<dt>4.20.11. <a href="latejoinoptions.html#SOURCERETRANSMITRETENTIONSIZETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_retention_size_threshold
+(source)</span></span></a></dt>
+
+<dt>4.20.12. <a href="latejoinoptions.html#RECEIVERUSELATEJOIN"><span
+class="lbm-option-name"><span class="PHRASE">use_late_join
+(receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.21. <a href="off-transportrecoveryoptions.html">Off-Transport Recovery
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.21.1. <a href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTDURATION"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_duration
+(receiver)</span></span></a></dt>
+
+<dt>4.21.2. <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTINITIALDELAY"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_initial_delay
+(receiver)</span></span></a></dt>
+
+<dt>4.21.3. <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTLOGALERTCOOLDOWN"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_log_alert_cooldown
+(receiver)</span></span></a></dt>
+
+<dt>4.21.4. <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTMAXIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_maximum_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.21.5. <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTMINIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_minimum_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.21.6. <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTOUTSTANDINGMAXIMUM"><span
+class="lbm-option-name"><span class="PHRASE">otr_request_outstanding_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.21.7. <a href="off-transportrecoveryoptions.html#RECEIVERUSEOTR"><span
+class="lbm-option-name"><span class="PHRASE">use_otr (receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.22. <a href="requestnetworkoptions.html">Request Network Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.22.1. <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPBINDREQUESTPORT"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_bind_request_port
+(context)</span></span></a></dt>
+
+<dt>4.22.2. <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_interface
+(context)</span></span></a></dt>
+
+<dt>4.22.3. <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORT"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_port
+(context)</span></span></a></dt>
+
+<dt>4.22.4. <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORTHIGH"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_port_high
+(context)</span></span></a></dt>
+
+<dt>4.22.5. <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORTLOW"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_port_low
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.23. <a href="requestoperationoptions.html">Request Operation Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.23.1. <a href="requestoperationoptions.html#CONTEXTREQUESTTCPEXCLUSIVEADDR"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_exclusiveaddr
+(context)</span></span></a></dt>
+
+<dt>4.23.2. <a href="requestoperationoptions.html#CONTEXTREQUESTTCPLISTENBACKLOG"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_listen_backlog
+(context)</span></span></a></dt>
+
+<dt>4.23.3. <a href="requestoperationoptions.html#CONTEXTREQUESTTCPREUSEADDR"><span
+class="lbm-option-name"><span class="PHRASE">request_tcp_reuseaddr
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.24. <a href="responseoperationoptions.html">Response Operation Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.24.1. <a
+href="responseoperationoptions.html#CONTEXTRESPONSESESSIONMAXIMUMBUFFER"><span
+class="lbm-option-name"><span class="PHRASE">response_session_maximum_buffer
+(context)</span></span></a></dt>
+
+<dt>4.24.2. <a
+href="responseoperationoptions.html#CONTEXTRESPONSESESSIONSENDERSOCKETBUFFER"><span
+class="lbm-option-name"><span class="PHRASE">response_session_sender_socket_buffer
+(context)</span></span></a></dt>
+
+<dt>4.24.3. <a
+href="responseoperationoptions.html#CONTEXTRESPONSETCPDELETIONTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">response_tcp_deletion_timeout
+(context)</span></span></a></dt>
+
+<dt>4.24.4. <a href="responseoperationoptions.html#CONTEXTRESPONSETCPINTERFACE"><span
+class="lbm-option-name"><span class="PHRASE">response_tcp_interface
+(context)</span></span></a></dt>
+
+<dt>4.24.5. <a href="responseoperationoptions.html#CONTEXTRESPONSETCPNODELAY"><span
+class="lbm-option-name"><span class="PHRASE">response_tcp_nodelay
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.25. <a href="implicitbatchingoptions.html">Implicit Batching Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.25.1. <a href="implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">implicit_batching_interval
+(source)</span></span></a></dt>
+
+<dt>4.25.2. <a
+href="implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"><span
+class="lbm-option-name"><span class="PHRASE">implicit_batching_minimum_length
+(source)</span></span></a></dt>
+
+<dt>4.25.3. <a href="implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGTYPE"><span
+class="lbm-option-name"><span class="PHRASE">implicit_batching_type
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.26. <a href="deliverycontroloptions.html">Delivery Control Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.26.1. <a href="deliverycontroloptions.html#RECEIVERCHANNELMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">channel_map_tablesz
+(receiver)</span></span></a></dt>
+
+<dt>4.26.2. <a
+href="deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_loss_check_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.26.3. <a
+href="deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_loss_tablesz
+(receiver)</span></span></a></dt>
+
+<dt>4.26.4. <a
+href="deliverycontroloptions.html#RECEIVERDELIVERYCONTROLMAXIMUMBURSTLOSS"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_burst_loss
+(receiver)</span></span></a></dt>
+
+<dt>4.26.5. <a
+href="deliverycontroloptions.html#CONTEXTDELIVERYCONTROLMAXIMUMTOTALMAPENTRIES"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_total_map_entries
+(context)</span></span></a></dt>
+
+<dt>4.26.6. <a
+href="deliverycontroloptions.html#RECEIVERDELIVERYCONTROLORDERTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_order_tablesz
+(receiver)</span></span></a></dt>
+
+<dt>4.26.7. <a
+href="deliverycontroloptions.html#CONTEXTMIMDELIVERYCONTROLLOSSCHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">mim_delivery_control_loss_check_interval
+(context)</span></span></a></dt>
+
+<dt>4.26.8. <a href="deliverycontroloptions.html#RECEIVERNULLCHANNELBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">null_channel_behavior
+(receiver)</span></span></a></dt>
+
+<dt>4.26.9. <a
+href="deliverycontroloptions.html#RECEIVERSOURCENOTIFICATIONFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">source_notification_function
+(receiver)</span></span></a></dt>
+
+<dt>4.26.10. <a
+href="deliverycontroloptions.html#RECEIVERUNRECOGNIZEDCHANNELBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">unrecognized_channel_behavior
+(receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.27. <a href="wildcardreceiveroptions.html">Wildcard Receiver Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.27.1. <a href="wildcardreceiveroptions.html#WILDCARDRECEIVERPATTERNCALLBACK"><span
+class="lbm-option-name"><span class="PHRASE">pattern_callback
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.2. <a href="wildcardreceiveroptions.html#WILDCARDRECEIVERPATTERNTYPE"><span
+class="lbm-option-name"><span class="PHRASE">pattern_type
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.3. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRECEIVERCREATECALLBACK"><span
+class="lbm-option-name"><span class="PHRASE">receiver_create_callback
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.4. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRECEIVERDELETECALLBACK"><span
+class="lbm-option-name"><span class="PHRASE">receiver_delete_callback
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.5. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERNOSOURCELINGERTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_no_source_linger_timeout
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.6. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERQUERYMAXIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_maximum_interval
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.7. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERQUERYMINIMUMDURATION"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_duration
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.8. <a
+href="wildcardreceiveroptions.html#WILDCARDRECEIVERRESOLVERQUERYMINIMUMINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_minimum_interval
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.27.9. <a
+href="wildcardreceiveroptions.html#CONTEXTRESOLVERWILDCARDQUERIESPERSECOND"><span
+class="lbm-option-name"><span class="PHRASE">resolver_wildcard_queries_per_second
+(context)</span></span></a></dt>
+
+<dt>4.27.10. <a href="wildcardreceiveroptions.html#CONTEXTRESOLVERWILDCARDQUERYBPS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_wildcard_query_bps
+(context)</span></span></a></dt>
+
+<dt>4.27.11. <a
+href="wildcardreceiveroptions.html#CONTEXTRESOLVERWILDCARDRECEIVERMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">resolver_wildcard_receiver_map_tablesz
+(context)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.28. <a href="eventqueueoptions.html">Event Queue Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.28.1. <a href="eventqueueoptions.html#EVENTQUEUEEVENTQUEUENAME"><span
+class="lbm-option-name"><span class="PHRASE">event_queue_name
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.2. <a href="eventqueueoptions.html#EVENTQUEUEQUEUEAGEENABLED"><span
+class="lbm-option-name"><span class="PHRASE">queue_age_enabled
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.3. <a
+href="eventqueueoptions.html#EVENTQUEUEQUEUECANCELLATIONCALLBACKSENABLED"><span
+class="lbm-option-name"><span class="PHRASE">queue_cancellation_callbacks_enabled
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.4. <a href="eventqueueoptions.html#EVENTQUEUEQUEUECOUNTENABLED"><span
+class="lbm-option-name"><span class="PHRASE">queue_count_enabled
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.5. <a href="eventqueueoptions.html#EVENTQUEUEQUEUEDELAYWARNING"><span
+class="lbm-option-name"><span class="PHRASE">queue_delay_warning
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.6. <a href="eventqueueoptions.html#EVENTQUEUEQUEUEENQUEUENOTIFICATION"><span
+class="lbm-option-name"><span class="PHRASE">queue_enqueue_notification
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.7. <a href="eventqueueoptions.html#EVENTQUEUEQUEUEOBJECTSPURGEDONCLOSE"><span
+class="lbm-option-name"><span class="PHRASE">queue_objects_purged_on_close
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.8. <a href="eventqueueoptions.html#EVENTQUEUEQUEUESERVICETIMEENABLED"><span
+class="lbm-option-name"><span class="PHRASE">queue_service_time_enabled
+(event_queue)</span></span></a></dt>
+
+<dt>4.28.9. <a href="eventqueueoptions.html#EVENTQUEUEQUEUESIZEWARNING"><span
+class="lbm-option-name"><span class="PHRASE">queue_size_warning
+(event_queue)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.29. <a href="ultramessagingpersistenceoptions.html">Ultra Messaging Persistence
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.29.1. <a
+href="ultramessagingpersistenceoptions.html#CONTEXTUMEACKBATCHINGINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_ack_batching_interval
+(context)</span></span></a></dt>
+
+<dt>4.29.2. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">ume_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.29.3. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">ume_activity_timeout
+(source)</span></span></a></dt>
+
+<dt>4.29.4. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEALLOWCONFIRMEDDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">ume_allow_confirmed_delivery
+(receiver)</span></span></a></dt>
+
+<dt>4.29.5. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMECONFIRMEDDELIVERYNOTIFICATION"><span
+class="lbm-option-name"><span class="PHRASE">ume_confirmed_delivery_notification
+(source)</span></span></a></dt>
+
+<dt>4.29.6. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMECONSENSUSSEQUENCENUMBERBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">ume_consensus_sequence_number_behavior
+(receiver)</span></span></a></dt>
+
+<dt>4.29.7. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMECONSENSUSSEQUENCENUMBERBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">ume_consensus_sequence_number_behavior
+(source)</span></span></a></dt>
+
+<dt>4.29.8. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEEXPLICITACKONLY"><span
+class="lbm-option-name"><span class="PHRASE">ume_explicit_ack_only
+(receiver)</span></span></a></dt>
+
+<dt>4.29.9. <a href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE"><span
+class="lbm-option-name"><span class="PHRASE">ume_flight_size
+(source)</span></span></a></dt>
+
+<dt>4.29.10. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">ume_flight_size_behavior
+(source)</span></span></a></dt>
+
+<dt>4.29.11. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBYTES"><span
+class="lbm-option-name"><span class="PHRASE">ume_flight_size_bytes
+(source)</span></span></a></dt>
+
+<dt>4.29.12. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEFORCERECLAIMFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">ume_force_reclaim_function
+(source)</span></span></a></dt>
+
+<dt>4.29.13. <a href="ultramessagingpersistenceoptions.html#SOURCEUMELATEJOIN"><span
+class="lbm-option-name"><span class="PHRASE">ume_late_join
+(source)</span></span></a></dt>
+
+<dt>4.29.14. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEMESSAGESTABILITYNOTIFICATION"><span
+class="lbm-option-name"><span class="PHRASE">ume_message_stability_notification
+(source)</span></span></a></dt>
+
+<dt>4.29.15. <a href="ultramessagingpersistenceoptions.html#SOURCEUMEPROXYSOURCE"><span
+class="lbm-option-name"><span class="PHRASE">ume_proxy_source
+(source)</span></span></a></dt>
+
+<dt>4.29.16. <a
+href="ultramessagingpersistenceoptions.html#CONTEXTUMERECEIVERLIVENESSINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_receiver_liveness_interval
+(context)</span></span></a></dt>
+
+<dt>4.29.17. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERECEIVERPACEDPERSISTENCE"><span
+class="lbm-option-name"><span class="PHRASE">ume_receiver_paced_persistence
+(receiver)</span></span></a></dt>
+
+<dt>4.29.18. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERECEIVERPACEDPERSISTENCE"><span
+class="lbm-option-name"><span class="PHRASE">ume_receiver_paced_persistence
+(source)</span></span></a></dt>
+
+<dt>4.29.19. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERECOVERYSEQUENCENUMBERINFOFUNCTION">
+<span class="lbm-option-name"><span
+class="PHRASE">ume_recovery_sequence_number_info_function
+(receiver)</span></span></a></dt>
+
+<dt>4.29.20. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEREGISTRATIONEXTENDEDFUNCTION"><span
+ class="lbm-option-name"><span class="PHRASE">ume_registration_extended_function
+(receiver)</span></span></a></dt>
+
+<dt>4.29.21. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEREGISTRATIONFUNCTION"><span
+class="lbm-option-name"><span class="PHRASE">ume_registration_function
+(receiver)</span></span></a></dt>
+
+<dt>4.29.22. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEREGISTRATIONINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_registration_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.29.23. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEREGISTRATIONINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_registration_interval
+(source)</span></span></a></dt>
+
+<dt>4.29.24. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYACKONRECEPTION"><span
+class="lbm-option-name"><span class="PHRASE">ume_repository_ack_on_reception
+(source)</span></span></a></dt>
+
+<dt>4.29.25. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYDISKFILESIZELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">ume_repository_disk_file_size_limit
+(source)</span></span></a></dt>
+
+<dt>4.29.26. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYSIZELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">ume_repository_size_limit
+(source)</span></span></a></dt>
+
+<dt>4.29.27. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYSIZETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">ume_repository_size_threshold
+(source)</span></span></a></dt>
+
+<dt>4.29.28. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR">
+<span class="lbm-option-name"><span
+class="PHRASE">ume_retention_intergroup_stability_behavior
+(source)</span></span></a></dt>
+
+<dt>4.29.29. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR">
+<span class="lbm-option-name"><span
+class="PHRASE">ume_retention_intragroup_stability_behavior
+(source)</span></span></a></dt>
+
+<dt>4.29.30. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONSIZELIMIT"><span
+class="lbm-option-name"><span class="PHRASE">ume_retention_size_limit
+(source)</span></span></a></dt>
+
+<dt>4.29.31. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONSIZETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">ume_retention_size_threshold
+(source)</span></span></a></dt>
+
+<dt>4.29.32. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONUNIQUECONFIRMATIONS"><span
+class="lbm-option-name"><span class="PHRASE">ume_retention_unique_confirmations
+(source)</span></span></a></dt>
+
+<dt>4.29.33. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERETRANSMITREQUESTGENERATIONINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">ume_retransmit_request_generation_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.29.34. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERETRANSMITREQUESTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_retransmit_request_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.29.35. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERETRANSMITREQUESTMAXIMUM"><span
+class="lbm-option-name"><span class="PHRASE">ume_retransmit_request_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.29.36. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMERETRANSMITREQUESTOUTSTANDINGMAXIMUM">
+<span class="lbm-option-name"><span
+class="PHRASE">ume_retransmit_request_outstanding_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.29.37. <a href="ultramessagingpersistenceoptions.html#CONTEXTUMESESSIONID"><span
+class="lbm-option-name"><span class="PHRASE">ume_session_id
+(context)</span></span></a></dt>
+
+<dt>4.29.38. <a href="ultramessagingpersistenceoptions.html#RECEIVERUMESESSIONID"><span
+class="lbm-option-name"><span class="PHRASE">ume_session_id
+(receiver)</span></span></a></dt>
+
+<dt>4.29.39. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESESSIONID"><span
+class="lbm-option-name"><span class="PHRASE">ume_session_id
+(source)</span></span></a></dt>
+
+<dt>4.29.40. <a
+href="ultramessagingpersistenceoptions.html#CONTEXTUMESOURCELIVENESSTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">ume_source_liveness_timeout
+(context)</span></span></a></dt>
+
+<dt>4.29.41. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMESTATELIFETIME"><span
+class="lbm-option-name"><span class="PHRASE">ume_state_lifetime
+(receiver)</span></span></a></dt>
+
+<dt>4.29.42. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"><span
+class="lbm-option-name"><span class="PHRASE">ume_state_lifetime
+(source)</span></span></a></dt>
+
+<dt>4.29.43. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESTORE"><span
+class="lbm-option-name"><span class="PHRASE">ume_store (source)</span></span></a></dt>
+
+<dt>4.29.44. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMESTOREACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">ume_store_activity_timeout
+(source)</span></span></a></dt>
+
+<dt>4.29.45. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESTOREBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">ume_store_behavior
+(source)</span></span></a></dt>
+
+<dt>4.29.46. <a
+href="ultramessagingpersistenceoptions.html#SOURCEUMESTORECHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">ume_store_check_interval
+(source)</span></span></a></dt>
+
+<dt>4.29.47. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESTOREGROUP"><span
+class="lbm-option-name"><span class="PHRASE">ume_store_group
+(source)</span></span></a></dt>
+
+<dt>4.29.48. <a href="ultramessagingpersistenceoptions.html#SOURCEUMESTORENAME"><span
+class="lbm-option-name"><span class="PHRASE">ume_store_name
+(source)</span></span></a></dt>
+
+<dt>4.29.49. <a
+href="ultramessagingpersistenceoptions.html#RECEIVERUMEUSEACKBATCHING"><span
+class="lbm-option-name"><span class="PHRASE">ume_use_ack_batching
+(receiver)</span></span></a></dt>
+
+<dt>4.29.50. <a href="ultramessagingpersistenceoptions.html#RECEIVERUMEUSELATEJOIN"><span
+class="lbm-option-name"><span class="PHRASE">ume_use_late_join
+(receiver)</span></span></a></dt>
+
+<dt>4.29.51. <a href="ultramessagingpersistenceoptions.html#RECEIVERUMEUSESTORE"><span
+class="lbm-option-name"><span class="PHRASE">ume_use_store
+(receiver)</span></span></a></dt>
+
+<dt>4.29.52. <a
+href="ultramessagingpersistenceoptions.html#CONTEXTUMEUSERRECEIVERREGISTRATIONID"><span
+class="lbm-option-name"><span class="PHRASE">ume_user_receiver_registration_id
+(context)</span></span></a></dt>
+
+<dt>4.29.53. <a href="ultramessagingpersistenceoptions.html#SOURCEUMEWRITEDELAY"><span
+class="lbm-option-name"><span class="PHRASE">ume_write_delay
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.30. <a href="ultramessagingqueuingoptions.html">Ultra Messaging Queuing
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.30.1. <a href="ultramessagingqueuingoptions.html#CONTEXTUMQCOMMANDINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_command_interval
+(context)</span></span></a></dt>
+
+<dt>4.30.2. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQCOMMANDOUTSTANDINGMAXIMUM"><span
+class="lbm-option-name"><span class="PHRASE">umq_command_outstanding_maximum
+(context)</span></span></a></dt>
+
+<dt>4.30.3. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQDELAYEDCONSUMPTIONREPORTINTERVAL"><span
+ class="lbm-option-name"><span class="PHRASE">umq_delayed_consumption_report_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.30.4. <a href="ultramessagingqueuingoptions.html#CONTEXTUMQFLIGHTSIZE"><span
+class="lbm-option-name"><span class="PHRASE">umq_flight_size
+(context)</span></span></a></dt>
+
+<dt>4.30.5. <a href="ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZE"><span
+class="lbm-option-name"><span class="PHRASE">umq_flight_size
+(source)</span></span></a></dt>
+
+<dt>4.30.6. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQFLIGHTSIZEBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">umq_flight_size_behavior
+(context)</span></span></a></dt>
+
+<dt>4.30.7. <a href="ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZEBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">umq_flight_size_behavior
+(source)</span></span></a></dt>
+
+<dt>4.30.8. <a href="ultramessagingqueuingoptions.html#RECEIVERUMQHOLDINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_hold_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.30.9. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQINDEXASSIGNMENTELIGIBILITYDEFAULT"><span
+ class="lbm-option-name"><span class="PHRASE">umq_index_assignment_eligibility_default
+(receiver)</span></span></a></dt>
+
+<dt>4.30.10. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQMESSAGERETRANSMISSIONINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_message_retransmission_interval
+(context)</span></span></a></dt>
+
+<dt>4.30.11. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQMESSAGESTABILITYNOTIFICATION"><span
+class="lbm-option-name"><span class="PHRASE">umq_message_stability_notification
+(context)</span></span></a></dt>
+
+<dt>4.30.12. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQMESSAGESTABILITYNOTIFICATION"><span
+class="lbm-option-name"><span class="PHRASE">umq_message_stability_notification
+(source)</span></span></a></dt>
+
+<dt>4.30.13. <a href="ultramessagingqueuingoptions.html#CONTEXTUMQMSGTOTALLIFETIME"><span
+class="lbm-option-name"><span class="PHRASE">umq_msg_total_lifetime
+(context)</span></span></a></dt>
+
+<dt>4.30.14. <a href="ultramessagingqueuingoptions.html#SOURCEUMQMSGTOTALLIFETIME"><span
+class="lbm-option-name"><span class="PHRASE">umq_msg_total_lifetime
+(source)</span></span></a></dt>
+
+<dt>4.30.15. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQQUEUEACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_activity_timeout
+(context)</span></span></a></dt>
+
+<dt>4.30.16. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQQUEUECHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_check_interval
+(context)</span></span></a></dt>
+
+<dt>4.30.17. <a href="ultramessagingqueuingoptions.html#SOURCEUMQQUEUENAME"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_name
+(source)</span></span></a></dt>
+
+<dt>4.30.18. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQQUEUEPARTICIPANTSONLY"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_participants_only
+(source)</span></span></a></dt>
+
+<dt>4.30.19. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQQUEUEPARTICIPATION"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_participation
+(receiver)</span></span></a></dt>
+
+<dt>4.30.20. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQQUEUEQUERYINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_query_interval
+(context)</span></span></a></dt>
+
+<dt>4.30.21. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQQUEUEREGISTRATIONID"><span
+class="lbm-option-name"><span class="PHRASE">umq_queue_registration_id
+(context)</span></span></a></dt>
+
+<dt>4.30.22. <a href="ultramessagingqueuingoptions.html#RECEIVERUMQRECEIVERTYPEID"><span
+class="lbm-option-name"><span class="PHRASE">umq_receiver_type_id
+(receiver)</span></span></a></dt>
+
+<dt>4.30.23. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQREQUIREQUEUEAUTHENTICATION"><span
+class="lbm-option-name"><span class="PHRASE">umq_require_queue_authentication
+(context)</span></span></a></dt>
+
+<dt>4.30.24. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">umq_retention_intergroup_stability_behavior
+(context)</span></span></a></dt>
+
+<dt>4.30.25. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">umq_retention_intergroup_stability_behavior
+(source)</span></span></a></dt>
+
+<dt>4.30.26. <a
+href="ultramessagingqueuingoptions.html#CONTEXTUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">umq_retention_intragroup_stability_behavior
+(context)</span></span></a></dt>
+
+<dt>4.30.27. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR"><span
+ class="lbm-option-name"><span class="PHRASE">umq_retention_intragroup_stability_behavior
+(source)</span></span></a></dt>
+
+<dt>4.30.28. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQRETRANSMITREQUESTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_retransmit_request_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.30.29. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQRETRANSMITREQUESTOUTSTANDINGMAXIMUM"><span
+ class="lbm-option-name"><span class="PHRASE">umq_retransmit_request_outstanding_maximum
+(receiver)</span></span></a></dt>
+
+<dt>4.30.30. <a href="ultramessagingqueuingoptions.html#CONTEXTUMQSESSIONID"><span
+class="lbm-option-name"><span class="PHRASE">umq_session_id
+(context)</span></span></a></dt>
+
+<dt>4.30.31. <a href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSET"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set
+(source)</span></span></a></dt>
+
+<dt>4.30.32. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETASSIGNMENTFUNCTION"><span
+ class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_assignment_function
+(source)</span></span></a></dt>
+
+<dt>4.30.33. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETEVENTS"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_events
+(source)</span></span></a></dt>
+
+<dt>4.30.34. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETLOADFACTORBEHAVIOR"><span
+ class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_load_factor_behavior
+(source)</span></span></a></dt>
+
+<dt>4.30.35. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGELIFETIME"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_message_lifetime
+(source)</span></span></a></dt>
+
+<dt>4.30.36. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGEMAXREASSIGNMENTS">
+<span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_message_max_reassignments
+(source)</span></span></a></dt>
+
+<dt>4.30.37. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETMESSAGEREASSIGNMENTTIMEOUT">
+<span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_message_reassignment_timeout
+(source)</span></span></a></dt>
+
+<dt>4.30.38. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETRECEIVERACTIVITYTIMEOUT">
+<span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_receiver_activity_timeout
+(source)</span></span></a></dt>
+
+<dt>4.30.39. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETRECEIVERKEEPALIVEINTERVAL">
+<span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_receiver_keepalive_interval
+(source)</span></span></a></dt>
+
+<dt>4.30.40. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBAPPLICATIONSETROUNDROBINBIAS"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_round_robin_bias
+(source)</span></span></a></dt>
+
+<dt>4.30.41. <a href="ultramessagingqueuingoptions.html#SOURCEUMQULBCHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_check_interval
+(source)</span></span></a></dt>
+
+<dt>4.30.42. <a href="ultramessagingqueuingoptions.html#SOURCEUMQULBEVENTS"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_events
+(source)</span></span></a></dt>
+
+<dt>4.30.43. <a href="ultramessagingqueuingoptions.html#SOURCEUMQULBFLIGHTSIZE"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_flight_size
+(source)</span></span></a></dt>
+
+<dt>4.30.44. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBFLIGHTSIZEBEHAVIOR"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_flight_size_behavior
+(source)</span></span></a></dt>
+
+<dt>4.30.45. <a href="ultramessagingqueuingoptions.html#SOURCEUMQULBRECEIVEREVENTS"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_receiver_events
+(source)</span></span></a></dt>
+
+<dt>4.30.46. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBRECEIVERPORTION"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_receiver_portion
+(source)</span></span></a></dt>
+
+<dt>4.30.47. <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBRECEIVERPRIORITY"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_receiver_priority
+(source)</span></span></a></dt>
+
+<dt>4.30.48. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQULBSOURCEACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_source_activity_timeout
+(receiver)</span></span></a></dt>
+
+<dt>4.30.49. <a
+href="ultramessagingqueuingoptions.html#RECEIVERUMQULBSOURCECHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_source_check_interval
+(receiver)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.31. <a href="ultramessagingjmsoptions.html">Ultra Messaging JMS Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.31.1. <a href="ultramessagingjmsoptions.html#CONNECTIONFACTORYCLIENTID"><span
+class="lbm-option-name"><span class="PHRASE">client_id
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.2. <a href="ultramessagingjmsoptions.html#CONNECTIONFACTORYCONTEXTINDEX"><span
+class="lbm-option-name"><span class="PHRASE">context_index
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.3. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYCREATEQUEUEBROWSERCONTEXT"><span
+class="lbm-option-name"><span class="PHRASE">create_queue_browser_context
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.4. <a href="ultramessagingjmsoptions.html#CONNECTIONFACTORYDEBUG"><span
+class="lbm-option-name"><span class="PHRASE">debug
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.5. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYDEFAULTMESSAGETYPE"><span
+class="lbm-option-name"><span class="PHRASE">default_message_type
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.6. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYDEFAULTTEMPTOPICTYPE"><span
+class="lbm-option-name"><span class="PHRASE">default_temp_topic_type
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.7. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYDEFAULTTOPICTYPE"><span
+class="lbm-option-name"><span class="PHRASE">default_topic_type
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.8. <a href="ultramessagingjmsoptions.html#DESTINATIONDESTTYPE"><span
+class="lbm-option-name"><span class="PHRASE">DestType
+(Destination)</span></span></a></dt>
+
+<dt>4.31.9. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYQUEUEBROWSERCREATIONDELAY"><span
+class="lbm-option-name"><span class="PHRASE">queue_browser_creation_delay
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.10. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYQUEUEBROWSERTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">queue_browser_timeout
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.11. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYRECEIVERCREATIONDELAY"><span
+class="lbm-option-name"><span class="PHRASE">RECEIVER_CREATION_DELAY
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.12. <a href="ultramessagingjmsoptions.html#DESTINATIONREGID"><span
+class="lbm-option-name"><span class="PHRASE">regid (Destination)</span></span></a></dt>
+
+<dt>4.31.13. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYSOURCECREATIONDELAY"><span
+class="lbm-option-name"><span class="PHRASE">SOURCE_CREATION_DELAY
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.14. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYSOURCEREGISTRATIONTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">SOURCE_REGISTRATION_TIMEOUT
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.15. <a href="ultramessagingjmsoptions.html#DESTINATIONTOPIC"><span
+class="lbm-option-name"><span class="PHRASE">Topic (Destination)</span></span></a></dt>
+
+<dt>4.31.16. <a href="ultramessagingjmsoptions.html#DESTINATIONTYPE"><span
+class="lbm-option-name"><span class="PHRASE">Type (Destination)</span></span></a></dt>
+
+<dt>4.31.17. <a href="ultramessagingjmsoptions.html#CONNECTIONFACTORYUSEAPPHEADER"><span
+class="lbm-option-name"><span class="PHRASE">use_app_header
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.18. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYUSEINDEXQUEUING"><span
+class="lbm-option-name"><span class="PHRASE">use_index_queuing
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.19. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYUSEUMPSESSIONIDS"><span
+class="lbm-option-name"><span class="PHRASE">use_ump_session_ids
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.20. <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYWAITFORSOURCEREGISTRATION"><span
+class="lbm-option-name"><span class="PHRASE">wait_for_source_registration
+(ConnectionFactory)</span></span></a></dt>
+
+<dt>4.31.21. <a href="ultramessagingjmsoptions.html#DESTINATIONWILDCARD"><span
+class="lbm-option-name"><span class="PHRASE">Wildcard
+(Destination)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.32. <a href="hotfailoveroperationoptions.html">Hot Failover Operation
+Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.32.1. <a
+href="hotfailoveroperationoptions.html#HFXDELIVERYCONTROLLOSSCHECKINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_loss_check_interval
+(hfx)</span></span></a></dt>
+
+<dt>4.32.2. <a href="hotfailoveroperationoptions.html#HFXDELIVERYCONTROLMAXDELAY"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_max_delay
+(hfx)</span></span></a></dt>
+
+<dt>4.32.3. <a
+href="hotfailoveroperationoptions.html#HFXDELIVERYCONTROLMAXIMUMBURSTLOSS"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_burst_loss
+(hfx)</span></span></a></dt>
+
+<dt>4.32.4. <a
+href="hotfailoveroperationoptions.html#HFXDELIVERYCONTROLMAXIMUMTOTALMAPENTRIES"><span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_total_map_entries
+(hfx)</span></span></a></dt>
+
+<dt>4.32.5. <a href="hotfailoveroperationoptions.html#HFXDUPLICATEDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">duplicate_delivery
+(hfx)</span></span></a></dt>
+
+<dt>4.32.6. <a href="hotfailoveroperationoptions.html#RECEIVERHFDUPLICATEDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">hf_duplicate_delivery
+(receiver)</span></span></a></dt>
+
+<dt>4.32.7. <a href="hotfailoveroperationoptions.html#RECEIVERHFOPTIONALMESSAGES"><span
+class="lbm-option-name"><span class="PHRASE">hf_optional_messages
+(receiver)</span></span></a></dt>
+
+<dt>4.32.8. <a href="hotfailoveroperationoptions.html#WILDCARDRECEIVERHFRECEIVER"><span
+class="lbm-option-name"><span class="PHRASE">hf_receiver
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.32.9. <a href="hotfailoveroperationoptions.html#HFXORDEREDDELIVERY"><span
+class="lbm-option-name"><span class="PHRASE">ordered_delivery
+(hfx)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.33. <a href="automaticmonitoringoptions.html">Automatic Monitoring Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.33.1. <a href="automaticmonitoringoptions.html#CONTEXTMONITORAPPID"><span
+class="lbm-option-name"><span class="PHRASE">monitor_appid
+(context)</span></span></a></dt>
+
+<dt>4.33.2. <a href="automaticmonitoringoptions.html#EVENTQUEUEMONITORAPPID"><span
+class="lbm-option-name"><span class="PHRASE">monitor_appid
+(event_queue)</span></span></a></dt>
+
+<dt>4.33.3. <a href="automaticmonitoringoptions.html#CONTEXTMONITORINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">monitor_interval
+(context)</span></span></a></dt>
+
+<dt>4.33.4. <a href="automaticmonitoringoptions.html#EVENTQUEUEMONITORINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">monitor_interval
+(event_queue)</span></span></a></dt>
+
+<dt>4.33.5. <a href="automaticmonitoringoptions.html#CONTEXTMONITORTRANSPORT"><span
+class="lbm-option-name"><span class="PHRASE">monitor_transport
+(context)</span></span></a></dt>
+
+<dt>4.33.6. <a href="automaticmonitoringoptions.html#EVENTQUEUEMONITORTRANSPORT"><span
+class="lbm-option-name"><span class="PHRASE">monitor_transport
+(event_queue)</span></span></a></dt>
+
+<dt>4.33.7. <a href="automaticmonitoringoptions.html#CONTEXTMONITORTRANSPORTOPTS"><span
+class="lbm-option-name"><span class="PHRASE">monitor_transport_opts
+(context)</span></span></a></dt>
+
+<dt>4.33.8. <a
+href="automaticmonitoringoptions.html#EVENTQUEUEMONITORTRANSPORTOPTS"><span
+class="lbm-option-name"><span class="PHRASE">monitor_transport_opts
+(event_queue)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.34. <a href="deprecatedoptions.html">Deprecated Options</a></dt>
+
+<dd>
+<dl>
+<dt>4.34.1. <a href="deprecatedoptions.html#CONTEXTRESOLVERACTIVESOURCEINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_active_source_interval
+(context)</span></span></a></dt>
+
+<dt>4.34.2. <a href="deprecatedoptions.html#CONTEXTRESOLVERACTIVETHRESHOLD"><span
+class="lbm-option-name"><span class="PHRASE">resolver_active_threshold
+(context)</span></span></a></dt>
+
+<dt>4.34.3. <a href="deprecatedoptions.html#CONTEXTRESOLVERMAXIMUMADVERTISEMENTS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_maximum_advertisements
+(context)</span></span></a></dt>
+
+<dt>4.34.4. <a href="deprecatedoptions.html#CONTEXTRESOLVERMAXIMUMQUERIES"><span
+class="lbm-option-name"><span class="PHRASE">resolver_maximum_queries
+(context)</span></span></a></dt>
+
+<dt>4.34.5. <a href="deprecatedoptions.html#CONTEXTRESOLVERQUERYINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_interval
+(context)</span></span></a></dt>
+
+<dt>4.34.6. <a
+href="deprecatedoptions.html#WILDCARDRECEIVERRESOLVERQUERYMAXINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">resolver_query_max_interval
+(wildcard_receiver)</span></span></a></dt>
+
+<dt>4.34.7. <a href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_address
+(context)</span></span></a></dt>
+
+<dt>4.34.8. <a href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTDESTINATIONPORT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_destination_port
+(context)</span></span></a></dt>
+
+<dt>4.34.9. <a href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT"><span
+class="lbm-option-name"><span class="PHRASE">resolver_unicast_port
+(context)</span></span></a></dt>
+
+<dt>4.34.10. <a href="deprecatedoptions.html#SOURCERETRANSMITMESSAGEMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">retransmit_message_map_tablesz
+(source)</span></span></a></dt>
+
+<dt>4.34.11. <a href="deprecatedoptions.html#CONTEXTTRANSPORTDATAGRAMMAXSIZE"><span
+class="lbm-option-name"><span class="PHRASE">transport_datagram_max_size
+(context)</span></span></a></dt>
+
+<dt>4.34.12. <a
+href="deprecatedoptions.html#RECEIVERTRANSPORTLBTIPCACKNOWLEDGEMENTINTERVAL"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_acknowledgement_interval
+(receiver)</span></span></a></dt>
+
+<dt>4.34.13. <a
+href="deprecatedoptions.html#SOURCETRANSPORTLBTIPCCLIENTACTIVITYTIMEOUT"><span
+class="lbm-option-name"><span class="PHRASE">transport_lbtipc_client_activity_timeout
+(source)</span></span></a></dt>
+
+<dt>4.34.14. <a href="deprecatedoptions.html#SOURCEUMEMESSAGEMAPTABLESZ"><span
+class="lbm-option-name"><span class="PHRASE">ume_message_map_tablesz
+(source)</span></span></a></dt>
+
+<dt>4.34.15. <a href="deprecatedoptions.html#SOURCEUMEPRIMARYSTOREADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">ume_primary_store_address
+(source)</span></span></a></dt>
+
+<dt>4.34.16. <a href="deprecatedoptions.html#SOURCEUMEPRIMARYSTOREPORT"><span
+class="lbm-option-name"><span class="PHRASE">ume_primary_store_port
+(source)</span></span></a></dt>
+
+<dt>4.34.17. <a href="deprecatedoptions.html#SOURCEUMEREGISTRATIONID"><span
+class="lbm-option-name"><span class="PHRASE">ume_registration_id
+(source)</span></span></a></dt>
+
+<dt>4.34.18. <a href="deprecatedoptions.html#SOURCEUMESECONDARYSTOREADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">ume_secondary_store_address
+(source)</span></span></a></dt>
+
+<dt>4.34.19. <a href="deprecatedoptions.html#SOURCEUMESECONDARYSTOREPORT"><span
+class="lbm-option-name"><span class="PHRASE">ume_secondary_store_port
+(source)</span></span></a></dt>
+
+<dt>4.34.20. <a href="deprecatedoptions.html#SOURCEUMETERTIARYSTOREADDRESS"><span
+class="lbm-option-name"><span class="PHRASE">ume_tertiary_store_address
+(source)</span></span></a></dt>
+
+<dt>4.34.21. <a href="deprecatedoptions.html#SOURCEUMETERTIARYSTOREPORT"><span
+class="lbm-option-name"><span class="PHRASE">ume_tertiary_store_port
+(source)</span></span></a></dt>
+</dl>
+</dd>
+
+<dt>4.35. <a href="portvalues.html"><b class="APPLICATION">UMS</b> Port Values</a></dt>
+
+<dd>
+<dl>
+<dt>4.35.1. <a href="portvalues.html#UDPPORTVALUES"><b class="APPLICATION">UMS</b> UDP
+Port Values</a></dt>
+
+<dt>4.35.2. <a href="portvalues.html#TCPPORTVALUES"><b class="APPLICATION">UMS</b> TCP
+Port Values</a></dt>
+</dl>
+</dd>
+
+<dt>4.36. <a href="mulcastgroupvalues.html"><b class="APPLICATION">UMS</b> Multicast
+Group Values</a></dt>
+
+<dt>4.37. <a href="timerintervalvalues.html"><b class="APPLICATION">UMS</b> Timer
+Interval Values</a></dt>
+
+<dt>4.38. <a href="maybesetduringoperation.html">Options That May Be Set During
+Operation</a></dt>
+
+<dt>4.39. <a href="cannotbesetfromconfigfile.html">Options (Callbacks) That Cannot Be Set
+From a UM Configuration File</a></dt>
+</dl>
+</dd>
+
+<dt><a href="doc-index.html">Index</a></dt>
+</dl>
+</div>
+
+<div class="LOT">
+<dl class="LOT">
+<dt><b>List of Tables</b></dt>
+
+<dt>1-1. <a href="attributesobjects.html#AEN1464"><b class="APPLICATION">UM</b> Objects
+and Corresponding Attributes Objects</a></dt>
+
+<dt>1-2. <a href="attributesobjects.html#AEN1504"><b class="APPLICATION">UM</b> API
+Functions For Working With <tt class="LITERAL">lbm_context_attr_t</tt> Attributes
+Objects</a></dt>
+
+<dt>1-3. <a href="modifyingcurrentattributes.html#AEN1639"><b class="APPLICATION">UM</b>
+API Functions For Working With <span class="TYPE">lbm_event_queue_t</span>
+Objects</a></dt>
+
+<dt>1-4. <a href="retrievingcurrentoptionvalues.html#AEN1694"><b
+class="APPLICATION">UM</b> API Functions For Retrieving Option Values from <span
+class="TYPE">lbm_event_queue_t</span> Objects</a></dt>
+
+<dt>4-1. <a href="portvalues.html#AEN22428">Default <b class="APPLICATION">UMS</b> UDP
+Port Values</a></dt>
+
+<dt>4-2. <a href="portvalues.html#AEN22517">Default <b class="APPLICATION">UMS</b> TCP
+Port Values</a></dt>
+
+<dt>4-3. <a href="mulcastgroupvalues.html#AEN22572">Default <b
+class="APPLICATION">UMS</b> Multicast Group Values</a></dt>
+
+<dt>4-4. <a href="timerintervalvalues.html#AEN22623">Default <b
+class="APPLICATION">UMS</b> Timer Interval Values</a></dt>
+
+<dt>4-5. <a href="maybesetduringoperation.html#AEN22992">Options That May Be Set During
+Operation</a></dt>
+
+<dt>4-6. <a href="cannotbesetfromconfigfile.html#AEN23076">Options That Cannot Be Set
+From a UM Configuration File</a></dt>
+</dl>
+</div>
+
+<div class="LOT">
+<dl class="LOT">
+<dt><b>List of Figures</b></dt>
+
+<dt>1-1. <a href="configuringoptions.html#FIGATTR">Attributes value assignment
+methods</a></dt>
+
+<dt>2-1. <a href="unicastresolver.html#LBMRD-NAT-EXAMPLE">Unicast Topic Resolution Across
+Domains</a></dt>
+
+<dt>4-1. <a href="multicastresolvernetworkoptions.html#FIGRESOLVER-MULTICAST">Multicast
+resolver network options</a></dt>
+
+<dt>4-2. <a href="unicastresolvernetworkoptions.html#FIGRESOLVER-UNICAST">Unicast
+resolver network options</a></dt>
+
+<dt>4-3. <a href="transporttcpnetworkoptions.html#FIGTCP-NET">TCP network
+options</a></dt>
+
+<dt>4-4. <a href="transportlbt-rmnetworkoptions.html#FIGLBT-RM-NETWORK">LBT-RM network
+options</a></dt>
+
+<dt>4-5. <a href="transportlbt-rmreliabilityoptions.html#FIGLBT-RM-LOSS">Scenario
+Timeline: LBT-RM Datagram Loss Resulting in Unrecovered Message Loss</a></dt>
+
+<dt>4-6. <a href="transportlbt-rmreliabilityoptions.html#FIGLBT-RM-IGNORE">Scenario
+Timeline: LBT-RM Source Ignoring NAKs for Efficiency</a></dt>
+
+<dt>4-7. <a href="transportlbt-rmreliabilityoptions.html#FIGLBT-RM-SUPPRESSION">Scenario
+Timeline: An LBT-RM Receiver Suppressing NAK Generation</a></dt>
+
+<dt>4-8. <a href="transportlbt-rmoperationoptions.html#FIGLBT-RM-SM">An LBT-RM source
+stops sending</a></dt>
+
+<dt>4-9. <a href="transportlbt-rmoperationoptions.html#FIGLBT-RM-ACTIVITY">A receiver
+detects the end of an LBT-RM session</a></dt>
+
+<dt>4-10. <a href="transportlbt-runetworkoptions.html#FIGLBTRU-NET">LBT-RU network
+options</a></dt>
+
+<dt>4-11. <a href="transportlbt-ruoperationoptions.html#FIGLBT-RU-DEATH">An LBT-RU
+receiver goes away</a></dt>
+
+<dt>4-12. <a
+href="transportlbt-ipcoperationoptions.html#FIGLBT-IPC-SOURCE-SM-SCENARIO.TIMELINE.PNG">An
+LBT-IPC source goes away</a></dt>
+
+<dt>4-13. <a href="deliverycontroloptions.html#FIGUNRECOVERABLELOSS">Generation of
+Unrecoverable Loss Event</a></dt>
+
+<dt>4-14. <a href="deliverycontroloptions.html#FIGBURSTLOSS">Generation of Burst Loss
+Event</a></dt>
+</dl>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top"><a href="configuringoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">&nbsp;</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Configuring <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Delivery Control Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Implicit Batching Options"
+href="implicitbatchingoptions.html" />
+<link rel="NEXT" title="Wildcard Receiver Options" href="wildcardreceiveroptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="implicitbatchingoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="wildcardreceiveroptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DELIVERYCONTROLOPTIONS" name="DELIVERYCONTROLOPTIONS">4.26.
+Delivery Control Options</a></h1>
+
+<p>A Delivery Controller is a receiver-side object created for each source identified by
+the receiver through topic resolution. A delivery controller performs the following.</p>
+
+<ul>
+<li>
+<p>Delivers messages to multiple receivers subscribed to the same topic.</p>
+</li>
+
+<li>
+<p>Orders received topic messages if <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="_top"><tt
+class="LITERAL">ordered_delivery</tt></a> is set to 1 (default). This option applies to
+LBT-RU and LBT-RM transports.</p>
+</li>
+
+<li>
+<p>Determines unrecoverable loss and burst loss events for the receiver's topic over
+LBT-RU and LBT-RM transports.</p>
+</li>
+</ul>
+
+<p>&#13;</p>
+
+<p>Unlike the loss depicted in <a
+href="../Config/transportlbt-rmreliabilityoptions.html#LBT-RM-LOSS" target="_top">LBT-RM
+Datagram Loss Resulting in Unrecovered Message Loss</a> which is due to the inability of
+the transport or network to perform message retransmission, <a
+href="deliverycontroloptions.html#FIGUNRECOVERABLELOSS">Figure 4-13</a> demonstrates how
+a receiver's Delivery Controller detects the loss of a topic message and notifies the
+receiving application. The <a
+href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"
+target="_top">TSNI</a> messages contain the sequence number of the last message sent by
+the source.</p>
+
+<div class="FIGURE"><a id="FIGUNRECOVERABLELOSS" name="FIGUNRECOVERABLELOSS"></a>
+<p><b>Figure 4-13. Generation of Unrecoverable Loss Event</b></p>
+
+<p><img src="reference/Unrecoverable_Loss.png" align="CENTER" /></p>
+</div>
+
+<p>&#13;</p>
+
+<p>The Delivery Controller detects burst loss by comparing the sequence numbers of the
+last two messages received. If the resulting gap in sequence numbers equals or exceeds
+the <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLMAXIMUMBURSTLOSS"
+target="_top"><tt class="LITERAL">delivery_control_maximum_burst_loss</tt></a>, the
+delivery controller sends <tt class="LITERAL">LBM_MSG_BURST_LOSS</tt> to the
+application.</p>
+
+<div class="FIGURE"><a id="FIGBURSTLOSS" name="FIGBURSTLOSS"></a>
+<p><b>Figure 4-14. Generation of Burst Loss Event</b></p>
+
+<p><img src="reference/Burst_Loss.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERCHANNELMAPTABLESZ"
+name="RECEIVERCHANNELMAPTABLESZ">4.26.1. <span class="lbm-option-name"><span
+class="PHRASE">channel_map_tablesz (receiver)</span></span></a></h2>
+
+<p>The size of the hash table that the receiver uses to store channel subscriptions. A
+larger table means more channels can be stored more efficiently, but takes up more
+memory. A smaller table uses less memory, but costs more CPU time for large numbers of
+channel subscriptions.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13604" name="AEN13604"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10273</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+name="RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL">4.26.2. <span
+class="lbm-option-name"><span class="PHRASE">delivery_control_loss_check_interval
+(receiver)</span></span></a></h2>
+
+<p>This controls the interval between mandatory topic loss checks for a receiver. A value
+of 0 turns this loss check off.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13640" name="AEN13640"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERDELIVERYCONTROLLOSSTABLESZ"
+name="RECEIVERDELIVERYCONTROLLOSSTABLESZ">4.26.3. <span class="lbm-option-name"><span
+class="PHRASE">delivery_control_loss_tablesz (receiver)</span></span></a></h2>
+
+<p>For LBT-RM and other datagram-based transport sessions only. This controls the size of
+the hash table index used for storing unrecoverable loss state on a per source per topic
+basis. Larger values mean larger hash tables and probably better CPU usage under loss
+scenarios at the cost of more memory per source per topic. Smaller values mean smaller
+hash tables and probably worse CPU usage under loss scenarios but with less memory usage.
+The value used should be a prime number for efficiency.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13677" name="AEN13677"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>table entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>Deprecated</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERDELIVERYCONTROLMAXIMUMBURSTLOSS"
+name="RECEIVERDELIVERYCONTROLMAXIMUMBURSTLOSS">4.26.4. <span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_burst_loss
+(receiver)</span></span></a></h2>
+
+<p>This controls the maximum tolerable burst loss before a burst loss message is
+delivered to the application. A burst loss less than or equal to this size is treated
+normally. Larger burst loss is treated as unrecoverable immediately.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13718" name="AEN13718"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">512</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDELIVERYCONTROLMAXIMUMTOTALMAPENTRIES"
+name="CONTEXTDELIVERYCONTROLMAXIMUMTOTALMAPENTRIES">4.26.5. <span
+class="lbm-option-name"><span class="PHRASE">delivery_control_maximum_total_map_entries
+(context)</span></span></a></h2>
+
+<p>The maximum total buffered map entries (unrecoverable loss messages as well as data)
+that all topics can buffer. When this is exceeded, unrecoverable loss is signaled for
+data until the total buffered subsides. A value of 0 implies no maximum value setting and
+allows any amount required to be buffered.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13755" name="AEN13755"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>map entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERDELIVERYCONTROLORDERTABLESZ"
+name="RECEIVERDELIVERYCONTROLORDERTABLESZ">4.26.6. <span class="lbm-option-name"><span
+class="PHRASE">delivery_control_order_tablesz (receiver)</span></span></a></h2>
+
+<p>For LBT-RM and other datagram-based transport sessions only. This controls the size of
+the hash table index used for storing buffered data on a per source per topic basis when
+ordered delivery is used. Larger values mean larger hash tables and probably better CPU
+usage under loss scenarios at the cost of more memory per source per topic. Smaller
+values mean smaller hash tables and probably worse CPU usage under loss scenarios but
+with less memory usage. The value used should be a prime number for efficiency.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13792" name="AEN13792"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>table entries</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">131</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>Deprecated</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTMIMDELIVERYCONTROLLOSSCHECKINTERVAL"
+name="CONTEXTMIMDELIVERYCONTROLLOSSCHECKINTERVAL">4.26.7. <span
+class="lbm-option-name"><span class="PHRASE">mim_delivery_control_loss_check_interval
+(context)</span></span></a></h2>
+
+<p>This controls the interval between mandatory loss checks for a Multicast Immediate
+Messaging (MIM) transport session. A value of 0 turns this loss check off.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13836" name="AEN13836"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (disabled)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERNULLCHANNELBEHAVIOR"
+name="RECEIVERNULLCHANNELBEHAVIOR">4.26.8. <span class="lbm-option-name"><span
+class="PHRASE">null_channel_behavior (receiver)</span></span></a></h2>
+
+<p>Behavior desired when a message without channel information (i.e. a standard <b
+class="APPLICATION">UM</b> message) is received by <b class="APPLICATION">UM</b>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13879" name="AEN13879"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN13898" name="AEN13898"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">deliver</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_CHANNEL_BEHAVIOR_DELIVER_MSGS</code></td>
+<td>Messages sent without channel information will be delivered to the callback specified
+upon receiver creation. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">discard</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_CHANNEL_BEHAVIOR_DISCARD_MSGS</code></td>
+<td>Messages sent without channel information will be discarded.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERSOURCENOTIFICATIONFUNCTION"
+name="RECEIVERSOURCENOTIFICATIONFUNCTION">4.26.9. <span class="lbm-option-name"><span
+class="PHRASE">source_notification_function (receiver)</span></span></a></h2>
+
+<p>Callback functions (and associated client data pointer) that are called when a
+receiver creates or deletes a delivery controller associated with a source. For the
+creation function, the application has the ability to set the source client data pointer
+to be used in each message received from the source. This callback is called directly in
+line and does not use the event queue. Therefore the callback function used should not
+block or it will block the context thread processing. A value of NULL for the callback
+turns off the callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13934" name="AEN13934"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_rcv_src_notification_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUNRECOGNIZEDCHANNELBEHAVIOR"
+name="RECEIVERUNRECOGNIZEDCHANNELBEHAVIOR">4.26.10. <span class="lbm-option-name"><span
+class="PHRASE">unrecognized_channel_behavior (receiver)</span></span></a></h2>
+
+<p>Behavior desired when a message with channel information for a channel not in the
+receiver's set of subscribed channels is received by <b class="APPLICATION">UM</b>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN13972" name="AEN13972"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN13991" name="AEN13991"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">deliver</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_CHANNEL_BEHAVIOR_DELIVER_MSGS</code></td>
+<td>Messages sent with channel information for a channel not in the receiver's set of
+subscribed channels will be delivered to the callback specified upon receiver creation.
+<span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">discard</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_CHANNEL_BEHAVIOR_DISCARD_MSGS</code></td>
+<td>Messages sent with channel information for a channel not in the receiver's set of
+subscribed channels will be discarded.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="implicitbatchingoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="wildcardreceiveroptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Implicit Batching Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Wildcard Receiver Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

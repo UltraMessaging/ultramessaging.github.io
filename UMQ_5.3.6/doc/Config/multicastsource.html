@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Creating Multicast Sources</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="PREVIOUS" title="Lowest Latency" href="lowestlatency.html" />
+<link rel="NEXT" title="Disabling Aspects of Topic Resolution "
+href="disable-topic-res.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="lowestlatency.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 2. Example Configuration
+Scenarios</td>
+<td width="10%" align="right" valign="bottom"><a href="disable-topic-res.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MULTICASTSOURCE" name="MULTICASTSOURCE">2.3. Creating
+Multicast Sources</a></h1>
+
+<p>This is an example configuration file that changes the default transport to reliable
+multicast so all sources created send messages over LBT-RM.</p>
+
+<pre class="SCREEN">
+#
+# UM can be configured to create sources using the LBT-RM reliable
+# multicast protocol instead of the default TCP.
+#
+source transport LBT-RM
+#
+# Stable and reliable operation with multicast requires careful
+# setting of rate control limits.  See
+# http://www.29west.com/docs/THPM/thpm.html#GROUP-RATE-CONTROL
+# for background information.
+#
+# It's generally best to start with small limits and gradually
+# increase them after testing indicates that they can be safely
+# sustained on your network.
+#
+# The following example limits (new) data to 10 Mbps and retransmissions
+# to 1 Mbps (10%).  Note that when changing the data rate limit, the
+# limit retransmission limit should be changed as well.  A good value
+# for most purposes is between 2% and 10% of the data rate limit, with
+# a lower limit of 1,000,000.
+# 
+#
+context transport_lbtrm_data_rate_limit 10000000
+context transport_lbtrm_retransmit_rate_limit 1000000
+</pre>
+
+<p>You may <a href="Examples/MulticastSource.cfg" target="_top">download the file</a>.
+Most browsers let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="lowestlatency.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="disable-topic-res.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Lowest Latency</td>
+<td width="34%" align="center" valign="top"><a href="examples.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Disabling Aspects of Topic Resolution</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

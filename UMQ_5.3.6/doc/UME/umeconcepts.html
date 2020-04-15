@@ -1,0 +1,660 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Concepts</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="NEXT" title="Architectures" href="architectures.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="architectures.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMECONCEPTS" name="UMECONCEPTS">2. Concepts</a></h1>
+
+<p>This section illuminates important <b class="APPLICATION">UMP</b> and <b
+class="APPLICATION">UMQ</b> concepts and features.</p>
+
+<ul>
+<li>
+<p><a href="umeconcepts.html#UME-PERSISTENCE"><i>Persistence</i></a></p>
+</li>
+
+<li>
+<p><a href="umeconcepts.html#UME-QUEUING-FEATURES"><i>Queuing Features</i></a></p>
+</li>
+</ul>
+
+<p>Contained in <b class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> are all
+of the features and capabilities of <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b>'s high performance, message streaming. This document explains
+persistence and queuing capabilities only. For specific information about <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>'s high performance
+streaming, see <a href="../Design/index.html" target="doccontent"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> <b class="APPLICATION">Concepts</b></a>.</p>
+
+<p>Also available to <b class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> is
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Manager</b>. <b class="APPLICATION">UMM</b> provides a GUI that
+simplifies the creation of <b class="APPLICATION">UM</b> XML configuration files and also
+allows you to assign application configurations to specific users, also created in the
+UMM GUI. The UMM Daemon runs this feature, offering a <b class="APPLICATION">UMM</b> GUI
+API to support custom GUIs and uses a MySQL database to store configurations. See the <a
+href="../UMM/index.html" target="doccontent">Ultra Messaging Manager Guide</a>.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME-PERSISTENCE" name="UME-PERSISTENCE">2.1.
+Persistence</a></h2>
+
+<p>In discussing <b class="APPLICATION">UMP</b> , we refer to specific recovery from the
+failures of sources, receivers, and persistent stores. Failed sources can restart and
+resume sending data from the point at which they stopped. Receivers can recover from
+failure and begin receiving data from the point immediately prior to failure. This
+process is sometimes called durable subscription. Persistent stores can also be restarted
+and continue providing persistence to the sources and receivers that they serve. <b
+class="APPLICATION">UMP</b> is not designed to address ongoing, corrupting agents.
+Rather, if one of its components fails, the design of <b class="APPLICATION">UMP</b> 's
+persistence enables it to continue supporting its ongoing operations at some level.</p>
+
+<p>The default mode of <b class="APPLICATION">UMP</b> Persistence is Source-paced
+Persistence (SPP). In this mode, the consumption of messages by receivers does not impact
+the rate a <b class="APPLICATION">UM</b> source can send messages. Sources send messages
+simultaneously to receivers and the persistent store. (See <a
+href="ume-ops-operational-view.html#UME-OPS-NORMAL-OPERATION"><i>Normal
+Operation</i></a>.) Receiver-paced Persistence (RPP) is the second mode. In RPP, sources
+also send messages to receivers and the persistent store in parallel, but the store
+retains RPP messages until all RPP receivers acknowledge consumption. In addition,
+sources can be slowed to ensure that the store is not overrun with messages resulting in
+messages being dropped and not delivered to all RPP receivers. (See <a
+href="ume-ops-operational-view.html#UMP-RPPOPS-NORMAL-OPERATION"><i>RPP Normal
+Operations</i></a>.)</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-PERSISTENCESTORE"
+name="UMECONCEPTS-PERSISTENCESTORE">2.1.1. Persistent Store</a></h3>
+
+<p><b class="APPLICATION">UMP</b> uses a daemon to persist source and receiver state
+outside the actual sources and receivers themselves. This is the <b
+class="APPLICATION">UMP</b> Persistent Store. The store can persist state in memory as
+well as on disk. State is persisted on a per-topic, per-source basis by the store. <b
+class="APPLICATION">UMP</b> stores need not be a single entity. For fault tolerance
+purposes, it is possible to configure multiple stores in various ways. See <a
+href="tutorial.html#TUTORIAL-UMESTORE"><i>Adding the</i> UMP Store to a Source</a>, <a
+href="designing-persistent-applications.html#UME-STORES"><i>UMP Stores</i></a>, <a
+href="ume-fault-tolerance.html#STORE-CONFIGURATION-CONSIDERATIONS"><i>Store Configuration
+Considerations</i></a>, <a href="umestored-manpage.html"><i>Man Pages</i></a> and <a
+href="umestored-config.html"><i>Configuration Reference for Umestored</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-REGID" name="UMECONCEPTS-REGID">2.1.2.
+Registration Identifier</a></h3>
+
+<p><b class="APPLICATION">UMP</b> identifies sources and receivers with Registration
+Identifiers, also called Registration IDs or RegIDs. A RegID is a 32-bit number that
+uniquely identifies a source or a receiver to a store. This means that RegIDs are also
+specific to a store and can be reused between individual stores, if needed. No two active
+sources or receivers can share a RegID or use the same RegID at the same time. This point
+is critical: since <b class="APPLICATION">UMP</b> enables your application to use and
+handle RegIDs very freely, you must use RegIDs carefully to avoid destructive results.
+See <a href="tutorial.html#TUTORIAL-ADDINGFAULTRECOVERY"><i>Adding Fault Recovery with
+Registration IDs</i></a> and <a
+href="designing-persistent-applications.html#REGISTRATION-IDENTIFIERS"><i>Registration
+Identifiers</i></a>. RegIDs can also be managed easily with the use of Session IDs. See
+<a href="designing-persistent-applications.html#SESSION-IDS"><i>Managing RegIDs with
+Session IDs</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-DELIVERYCONFIRMATION"
+name="UMECONCEPTS-DELIVERYCONFIRMATION">2.1.3. Delivery Confirmation</a></h3>
+
+<p><b class="APPLICATION">UMP</b> provides feedback to sources upon notification that a
+receiver has consumed a given piece of data, in other words, that it has received and
+processed a message. This feedback is called Delivery Confirmation. See also <a
+href="designing-persistent-applications.html#CONFIRMED-DELIVERY"><i>Confirmed
+Delivery</i></a> and <a
+href="designing-persistent-applications.html#SOURCE-MESSAGE-RETENTION-AND-RELEASE"><i>Source
+Message Retention and Release</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-RETENTIONPOLICY"
+name="UMECONCEPTS-RETENTIONPOLICY">2.1.4. Release Policy</a></h3>
+
+<p>Sources and persistent stores retain data according to a release policy, which is a
+set of rules that specifies when a message can be reclaimed. Each rule would allow any
+message that complies with the rule to be reclaimed. However, a message must comply with
+all rules before it can be reclaimed. Conversely, any message not complying with all
+rules will not be reclaimed. A source or store retains messages until its retention
+policy dictates the message may be removed. Sources and stores use slightly different
+retention policies based on their individual roles. For more information on retention
+policies, see <a
+href="designing-persistent-applications.html#SOURCE-MESSAGE-RETENTION-AND-RELEASE"><i>Source
+Message Retention and Release</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-MESSAGESTABILITY"
+name="UMECONCEPTS-MESSAGESTABILITY">2.1.5. Message Stability</a></h3>
+
+<p>Sources send messages to both receivers and to stores. Messages become stable once the
+message has been persisted at the store or a set of stores. The number of messages that
+can be sent by a source has no relation to the number of its messages that have been
+stabilized unless <a href="ume-ops-operational-view.html#UME-FLIGHT-SIZE"><i>UMP Flight
+Size</i></a> is enabled. In addition, <b class="APPLICATION">UMP</b> informs the
+application when messages are stabilized, enabling the application to take any desired
+action. See <a
+href="designing-persistent-applications.html#SOURCE-MESSAGE-RETENTION-AND-RELEASE"><i>Source
+Message Retention and Release</i></a>.</p>
+
+<p>Publishing messages to a store is a coordinated hand-off between the publishing
+application and the store. The store assumes responsibility for delivering a message only
+when the publisher is informed that the message is <span class="emphasis"><i
+class="EMPHASIS">stable</i></span>. Stability refers to the store having a copy of the
+message in memory and/or on disk, depending on configuration. Until the publisher is
+informed that a message is stable, it may be lost upon restart. Messages may be delivered
+without the publisher being informed that they were stable. Upon restart, the publisher
+is expected to send again any messages previously sent that were not known to be stable.
+Since the store cannot differentiate between new messages and messages sent again upon
+publisher restart, the application is responsible for marking messages as sent again in
+some manner (e.g., by setting a flag in message content or properties), if required for
+downstream duplicate checking.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-ROUND-ROBIN" name="UMECONCEPTS-ROUND-ROBIN">2.1.6.
+Round-Robin Store Failover</a></h3>
+
+<p>Stores can also experience failures from which they may or may not recover. A source
+can be configured to move to a second store if the first store fails and can not recover
+in time. Round-robin store behavior describes the behavior of a source moving through a
+list of stores, using a single store at any one time, with several specified backups
+available to it in case the single store fails.</p>
+
+<p>See also <a
+href="designing-persistent-applications.html#SOURCES-USING-RR-STORE-CONFIGURATION"><i>Sources
+Using Round-Robin Store Configuration</i></a> and <a
+href="designing-persistent-applications.html#ROUND-ROBIN-STORE-USAGE"><i>Round-Robin
+Store Usage</i></a></p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMECONCEPTS-QUORUM-CONSENSUS"
+name="UMECONCEPTS-QUORUM-CONSENSUS">2.1.7. Quorum/Consensus Store Failover</a></h3>
+
+<p>In addition to a source being configured for round-robin store behavior, several
+stores can be configured for simultaneous operation. In this situation, a single store or
+even a handful of stores can fail without impacting the source and receivers. As long as
+a quorum of the configured stores is accessible, messaging operation generally continues
+uninterrupted. (<b class="APPLICATION">UMP</b> defines a Quorum as a majority.)</p>
+
+<p>See also <a
+href="designing-persistent-applications.html#SOURCES-USING-QC-STORE-CONFIGURATION"><i>Sources
+Using Quorum/Consensus Store Configuration</i></a>, <a
+href="designing-persistent-applications.html#QUORUM-CONSENSUS-STORE-USAGE"><i>Quorum/Consensus
+Store Usage</i></a>, <a
+href="ume-fault-tolerance.html#QC-CONFIG-SINGLE-LOCATION-GROUPS"><i>Quorum/Consensus -
+Single Location Groups</i></a> and <a
+href="ume-fault-tolerance.html#QC-CONFIG-MIXED-LOCATION-GROUPS"><i>Quorum/Consensus -
+Mixed Location Groups</i></a>.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME-QUEUING-FEATURES" name="UME-QUEUING-FEATURES">2.2. Queuing
+Features</a></h2>
+
+<p>A queue may be persistent or may be volatile in nature. Receiver message processing
+follows a once-and-only-once (OAOO) semantic where each message is only processed by a
+single receiver of the application set. The following concepts are integral to <b
+class="APPLICATION">UMQ</b>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCE-STREAMING" name="SOURCE-STREAMING">2.2.1. Source
+Streaming</a></h3>
+
+<p>Sources may send and have in flight several messages to the queue at the same time.
+This provides some significant throughput benefits.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ-MESSAGESTABILITY" name="UMQ-MESSAGESTABILITY">2.2.2.
+Message Stability</a></h3>
+
+<p>Publishing messages to a queue is a coordinated hand-off between the publishing
+application and the queue. The queue assumes responsibility for delivering a message only
+when the publisher is informed that the message is <span class="emphasis"><i
+class="EMPHASIS">stable</i></span>. Stability refers to the queue having a copy of the
+message in memory and/or on disk, depending on configuration. Until the publisher is
+informed that a message is stable, it may be lost upon restart. Messages may be delivered
+without the publisher being informed that they were stable. Upon restart, the publisher
+is expected to send again any messages previously sent that were not known to be stable.
+Since the queue cannot differentiate between new messages and messages sent again upon
+publisher restart, the application is responsible for marking messages as sent again in
+some manner (e.g., by setting a flag in message content or properties), if required for
+downstream duplicate checking.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ-OAOO" name="UMQ-OAOO">2.2.3. Once-and-Only-Once
+Delivery</a></h3>
+
+<p>Once-and-Only-Once (OAOO) delivery means that each message is assigned to only one
+receiver at a time. If a message is not acknowledged by the assigned receiver, it can be
+reassigned and redelivered to either the same or a different receiver (depending on
+configuration and circumstances), in which case the resent message is flagged as
+redelivered. Applications are always responsible for detection and proper handling of
+potentially duplicate messages.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="APPLICATION-SETS" name="APPLICATION-SETS">2.2.4. Application
+Sets</a></h3>
+
+<p>An Application Set is a group of receivers and can be used to load balance queue
+topics within a receiving application or accommodate multiple processing purposes for a
+single topic. The OAOO semantic applies to an Application Set. Therefore, you can
+configure multiple Application Sets for a queue and only one receiver in each set will
+process a given message. See <a
+href="umestored-config.html#APP-SET-ELEMENT"><i>Application Set Element</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVER-PORTION-SIZE" name="RECEIVER-PORTION-SIZE">2.2.5.
+Receiver Portion Size</a></h3>
+
+<p>You can increase the throughput to receivers by increasing their portion size. This
+increases the number of messages in flight to a receiver. This setting is specified in a
+Receiver Type ID. See <a href="umestored-config.html#RECEIVER-TYPE-OPTIONS"><i>Options
+for a Receiver Type's ume-attributes Element</i></a>. A receiver configured with one
+Receiver Type ID and subscribed to Topic A in one application can have 5 messages in
+flight, where a Topic A receiver configured with a different Receiver Type ID in another
+application can have only one message in flight.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONFIG-STORE-FORWARD" name="CONFIG-STORE-FORWARD">2.2.6.
+Configurable Store and Forward</a></h3>
+
+<p>You can configure a Queue to assign and send data to receivers after the data has been
+persisted to disk (<b class="APPLICATION">Store-Then-Forward</b>) or in parallel to being
+persisted to disk (<b class="APPLICATION">Store-While-Forwarding</b>). <b
+class="APPLICATION">Store-While-Forwarding</b> produces lower end-to-end latency from
+sources to receivers at the expense of potential message loss under certain multiple
+failure conditions. See also ...</p>
+
+<ul>
+<li>
+<p><a href="umestored-config.html#UMESTORED-QUEUE-ELEMENT"><i>Queue Element</i></a></p>
+</li>
+
+<li>
+<p><a href="architectures.html#QUEUING-ARCH"><i>Queuing Architecture</i></a></p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DISSEMINATION" name="DISSEMINATION">2.2.7. Multiple
+Dissemination Models</a></h3>
+
+<p><b class="APPLICATION">UMQ</b> provides the following load balancing configurations
+for data dissemination not possible with other queuing products.</p>
+
+<ul>
+<li>
+<p><a href="ume-ops-operational-view.html#SQD"><i>Serial Queue Dissemination
+(SQD)</i></a>: Queue sends data to each receiver via serial unicasts. Only the receivers
+assigned to a message receive that message.</p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#PQD"><i>Parallel Queue Dissemination
+(PQD)</i></a>: Queue sends data and control information to all receivers via <b
+class="APPLICATION">UM</b> transport sessions. Control information contains assignment
+information.</p>
+</li>
+
+<li>
+<p><a href="ume-ops-operational-view.html#SD"><i>Source Dissemination (SD)</i></a>:
+Source sends data to all receivers via <b class="APPLICATION">UM</b> transport sessions.
+Queues send control information to all receivers via separate transport sessions. Control
+information contains assignment information.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUE-FAULT-TOLERANCE" name="QUEUE-FAULT-TOLERANCE">2.2.8.
+Queue Fault Tolerance</a></h3>
+
+<p>Queues may be composed of several actual queue instances that operate with source and
+receivers in such a way that failure of one queue instance or even several queue
+instances need not stop or even slow down sources and receivers from performing queuing
+operations. See <a href="ume-fault-tolerance.html#QUEUE-REDUNDANCY"><i>Queue
+Redundancy</i></a>.</p>
+
+<p>Known Issue: Configurations with multiple queue instances (slaves) can lead to
+inconsistent state, which can trigger message loss, crashes or restart issues
+necessitating removal of files resulting in message loss. Therefore, Informatica
+recommends deploying configurations with only a single queue instance (without slaves).
+To facilitate failover, set the <tt class="LITERAL">sinc-log-filename</tt>, <tt
+class="LITERAL">sinc-data-filename</tt>, and <tt
+class="LITERAL">sinc-queue-swap-filename</tt> to write to a shared file-system, and use
+external process management (automatic or manual) to start up a secondary queue instance
+referencing the same files if and only if the active instance fails (i.e. only allow one
+queue instance to access the files at any time). With this configuration, sinc files will
+grow over time, so clean restarts (i.e. shut down, delete all files and restart) will be
+required periodically. Using a shared file-system may impact performance; Informatica
+strongly recommends holistic system performance characterization prior to any production
+deployment.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INDEXED-QUEUING" name="INDEXED-QUEUING">2.2.9. Indexed
+Queuing</a></h3>
+
+<p>Messages may be sent with an <span class="emphasis"><i
+class="EMPHASIS">index</i></span> using an extended send call, <code
+class="FUNCTION">lbm_src_sendv_ex</code>, that includes a pointer to <a
+href="../API/structlbm__umq__index__info__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_umq_index_info_t</tt></a> in <tt
+class="LITERAL">lbm_src_send_ex_info_t</tt>. An index is an application-defined 64-bit
+unsigned number or free-form string.</p>
+
+<p>By default, all receivers are eligible to be assigned indices by the Queue. Once the
+Queue assigns the first message sent with a particular index to an individual receiver in
+each Application Set, the Queue assigns subsequent messages (sent from any source) with
+that same index to those same individual receivers, provided the receivers remain alive
+and responsive.</p>
+
+<p>You can exert greater control over how a Queue assigns indices to receivers by
+configuring individual indices and ranges of indices in the Queue's <tt
+class="LITERAL">umestored</tt> XML configuration file. You can then set rules that allow
+or deny receivers the permission to process messages with certain indices. See <a
+href="umestored-config.html#UMESTORED-INDICES-ELEMENT"><i>Indices Element</i></a>.</p>
+
+<p>Note that with indexed queuing, messages with a particular index can be assigned only
+to the single consumer responsible for that index (i.e., assignment is "sticky"). If an
+index consumer stops consuming messages (a failure scenario) long enough for its
+configured portion size to become full while another message with the same index is
+pending, message delivery to all other consumers within the same Application Set is
+halted. Therefore, Informatica recommends using indexed queuing only in configurations
+with message reassignment enabled and set to a relatively brief interval, as this
+determines the amount of time that message consumption within an Application Set may be
+halted in the event of receiver failure.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DEAD-LETTER-QUEUE" name="DEAD-LETTER-QUEUE">2.2.10. Dead
+Letter Queue</a></h3>
+
+<p>Queues can be configured to isolate unconsumed messages in a Dead Letter Queue, which
+prevents these messages from causing application or queuing system problems. These
+unconsumed messages remain in the Dead Letter Queue for the life of the Queue. Other
+applications can access these messages for analysis by starting a wildcard receiver for
+the Dead Letter topic queue.</p>
+
+<p>Configuring a Dead Letter Queue involves the following actions in the Queue's <tt
+class="LITERAL">umestored</tt> XML configuration file.</p>
+
+<ol type="1">
+<li>
+<p>Configure a <tt class="LITERAL">dead-letter-topic-prefix</tt> and <tt
+class="LITERAL">dead-letter-topic-separator</tt> for the Queue. <b
+class="APPLICATION">UMQ</b> uses this information to compose a Dead Letter topic name.
+The example below illustrates this step, but may or may not be suitable to include in
+your <tt class="LITERAL">umestored</tt> XML configuration file. See also <a
+href="umestored-config.html#GEN-QUEUE-OPTIONS"><i>General Options for a Queue's
+ume-attributes Element</i></a>.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;queues&#62;
+&lt;queue name="Sample_Queue_with_Dead_Letter_Topic" port="20333" group-index="0"&#62;
+    &lt;ume-attributes&#62;
+        &lt;!-- dead-letter-topic-prefix must be specified for any dead letter queues to be created --&#62;
+        &lt;option type="queue" name="dead-letter-topic-prefix" value="dead_letter"/&#62;
+        &lt;!-- dead-letter-topic-separator defaults to '/', so the following line isn't necessary --&#62;
+        &lt;option type="queue" name="dead-letter-topic-separator" value="/"/&#62;
+    &lt;/ume-attributes&#62;
+&lt;/queue&#62;
+       
+</pre>
+</li>
+
+<li>
+<p>In each of the Queue's Application Sets from which you wish to capture unconsumed
+messages, set the <tt class="LITERAL">discard-behavior</tt> to <tt
+class="LITERAL">dead-letter</tt>. The example below illustrates this step, but may or may
+not be suitable to include in your <tt class="LITERAL">umestored</tt> XML configuration
+file. See also <a href="umestored-config.html#APP-SET-OPTIONS"><i>Options for an
+Application Set's ume-attributes Element</i></a>.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;application-sets&#62;
+    &lt;application-set name="Set 1"&#62;
+        &lt;ume-attributes&#62;
+            &lt;option type="queue" name="log-audit-trail" value="1"/&#62;
+            &lt;!-- discard-behavior set to dead-letter tells the queue that when messages 
+            EOL off this appset, they should be placed on a dead letter queue --&#62;
+            &lt;option type="queue" name="discard-behavior" value="dead-letter"/&#62;
+        &lt;/ume-attributes&#62;
+    &lt;/application-set&#62;
+&lt;/application-sets&#62;
+       
+</pre>
+</li>
+
+<li>
+<p>Configure a <tt class="LITERAL">dead-letter-topic</tt> for the Queue and assign it to
+a different <tt class="LITERAL">application set</tt> than the one in step 2 that has its
+<tt class="LITERAL">discard-behavior</tt> set to <tt class="LITERAL">drop</tt>. The
+example below illustrates this step, but may or may not be suitable to include in your
+<tt class="LITERAL">umestored</tt> XML configuration file. See also <a
+href="umestored-config.html#QTOPIC-OPTIONS"><i>Options for a Queue Topic's ume-attributes
+Element</i></a>.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;topics&#62;
+    &lt;!-- since the dead-letter-topic-prefix is dead_letter, it is necessary to specify a topic 
+    pattern that matches dead_letter --&#62;
+    &lt;topic pattern="dead_letter" type="PCRE"&#62;
+        &lt;ume-attributes&#62;
+            &lt;!-- this topic is a dead-letter-topic --&#62;
+            &lt;!-- you cannot create a source and submit messages directly to a dead 
+            letter topic --&#62;
+            &lt;option type="queue" name="dead-letter-topic" value="1"/&#62;
+        &lt;/ume-attributes&#62;
+        &lt;application-sets&#62;
+            &lt;!-- you must assign this dead-letter-topic to an application set that has its 
+            "discard-behavior" set to "drop" --&#62;
+            &lt;application-set name="Set 2"/&#62;
+        &lt;/application-sets&#62;
+    &lt;/topic&#62;
+&lt;/topics&#62;
+       
+</pre>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MESSAGE-LIFETIMES" name="MESSAGE-LIFETIMES">2.2.11. Message
+Lifetimes</a></h3>
+
+<p>You can configure a lifetime period for messages during which the message may be
+assigned to a receiver. Upon expiration of the message lifetime, the queue cannot assign
+the message to a receiver. The queue either discards the message from the queue
+permanently or sends it to the <a href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead
+Letter Queue</i></a>, if configured. A message's total lifetime starts when the queue
+enqueues the message. Messages lifetimes apply to both <b class="APPLICATION">UMQ</b> and
+ULB messages. See <a
+href="designing-queuing-applications.html#MESSAGE-LIFETIMES-REASSIGN"><i>Message
+Lifetimes and Reassignment</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="QUEUING-TERMINOLOGY" name="QUEUING-TERMINOLOGY">2.2.12.
+Queuing Terminology</a></h3>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Queuing Edition</b> uses the following terms.</p>
+
+<div class="INFORMALTABLE"><a id="AEN318" name="AEN318"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="480" />
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Queue</td>
+<td>A named, virtual entity to which sources submit messages and from which receivers
+retrieve messages.</td>
+</tr>
+
+<tr>
+<td>Queue Instance</td>
+<td>A running daemon that is part of a Queue. In <b class="APPLICATION">UMP</b> , this is
+the <tt class="LITERAL">umestored</tt> process. The collection of all queue instances
+with the same name constitutes a Queue.</td>
+</tr>
+
+<tr>
+<td>Registration ID</td>
+<td>The ID that a source or receiver application uses to register a context with a Queue.
+The context uses the same Registration ID for each Queue Instance. The context may
+generate a Registration ID or the user may specify Registration IDs to be used with
+specific Queues. See <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQQUEUEREGISTRATIONID"
+target="doccontent"><tt class="LITERAL">umq_queue_registration_id</tt></a></td>
+</tr>
+
+<tr>
+<td>Message ID</td>
+<td>The unique ID of a queue message.</td>
+</tr>
+
+<tr>
+<td>Assignment</td>
+<td>The designation of particular queued messages to individual receivers for
+processing.</td>
+</tr>
+
+<tr>
+<td>Consumption</td>
+<td>The processing of a queue message by an assigned receiver.</td>
+</tr>
+
+<tr>
+<td>Consumption Report (CR)</td>
+<td>Receivers send Consumption Report (CR) messages to notify Queues of message
+consumption.</td>
+</tr>
+
+<tr>
+<td>Re-Assignment</td>
+<td>When a receiver does not consume a message within a specified period of time, the
+Queue re-assigns the message to another receiver.</td>
+</tr>
+
+<tr>
+<td>Assignment ID</td>
+<td>Used by the Queue to identify receivers registered with certain topics. Found within
+control information.</td>
+</tr>
+
+<tr>
+<td>Receiver Control Record (RCR)</td>
+<td>Message control information sent to receivers by Queues using Parallel Queue
+Dissemination (PQD) or Source Dissemination (SD). An RCR contains the Message ID of the
+message, a list of the Assignment IDs (receivers) that should process the message, and
+ordering information.</td>
+</tr>
+
+<tr>
+<td>RCR Index</td>
+<td>An index that identifies a topic on a Queue.</td>
+</tr>
+
+<tr>
+<td>End of Lifetime (EOL)</td>
+<td>Maximum time limit before a message must be consumed. The timer starts when the Queue
+assigns the message to a receiver and is unaffected by reassignments. The Queue discards
+any message with an expired EOL.</td>
+</tr>
+
+<tr>
+<td>Receiver Type ID</td>
+<td>Indicates the Application Set a receiving application wishes to join. This ID is
+fully managed by the administrator of the Queue and implies not only Application Set but
+also some other ways that the receiver is treated, such as portion size and assignment
+options.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="architectures.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">The <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Guide for Persistence and Queuing</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Architectures</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

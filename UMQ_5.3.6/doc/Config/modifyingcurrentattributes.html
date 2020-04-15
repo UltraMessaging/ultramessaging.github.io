@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Modifying Current Attributes</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="PREVIOUS" title="Attributes Objects" href="attributesobjects.html" />
+<link rel="NEXT" title="Retrieving Current Option Values"
+href="retrievingcurrentoptionvalues.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="attributesobjects.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="10%" align="right" valign="bottom"><a
+href="retrievingcurrentoptionvalues.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MODIFYINGCURRENTATTRIBUTES"
+name="MODIFYINGCURRENTATTRIBUTES">1.6. Modifying Current Attributes</a></h1>
+
+<p>A few options within an <b class="APPLICATION">UM</b> object's current attributes can
+be set after the object is created. <b class="APPLICATION">UM</b> API functions
+supporting such actions operate on the object itself, rather than on an attributes
+object. In addition to modifying the current attributes, the value of options from the
+current attributes can be fetched.</p>
+
+<p>The <b class="APPLICATION">UM</b> objects which support these actions are <span
+class="TYPE">lbm_src_t</span>, <span class="TYPE">lbm_rcv_t</span>, <span
+class="TYPE">lbm_context_t</span>, and <span class="TYPE">lbm_event_queue_t</span>. For
+each such object, there are corresponding API functions to set an option from a binary
+value, set an option from a string value, get an option as a binary value, and get an
+option as a string value. These function names are based on the object name, suffixed
+with <code class="FUNCTION">_setopt()</code>, <code
+class="FUNCTION">_str_setopt()</code>, <code class="FUNCTION">_getopt()</code>, and <code
+class="FUNCTION">_str_getopt()</code>. As an illustration of this convention, the API
+functions for working with <span class="TYPE">lbm_event_queue_t</span> objects are shown
+in the following table.</p>
+
+<div class="TABLE"><a id="AEN1639" name="AEN1639"></a>
+<p><b>Table 1-3. UM API Functions For Working With <span
+class="TYPE">lbm_event_queue_t</span> Objects</b></p>
+
+<table border="1" class="CALSTABLE">
+<col width="288" title="COL1" />
+<col width="216" title="COL2" />
+<thead>
+<tr>
+<th align="CENTER">Action</th>
+<th align="CENTER"><b class="APPLICATION">UM</b> API function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Set Option from a Binary Value</td>
+<td><code class="FUNCTION">lbm_event_queue_setopt()</code></td>
+</tr>
+
+<tr>
+<td>Set Option from a String Value</td>
+<td><code class="FUNCTION">lbm_event_queue_str_setopt()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The following sections describe in detail the use of these <b
+class="APPLICATION">UM</b> API functions. The functions related to <span
+class="TYPE">lbm_event_queue_t</span> objects are used for the purpose of illustration,
+but the instructions (if not the specifics) apply to all such <b
+class="APPLICATION">UM</b> objects.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MODCURRENTATTRIBUTESSET" name="MODCURRENTATTRIBUTESSET">1.6.1.
+Setting An Option from a Binary Value</a></h2>
+
+<p>Setting an option from a binary value requires knowledge of not only the option name,
+but its type and allowable values as well. The final two parameters in the call to <code
+class="FUNCTION">lbm_event_queue_setopt()</code> are a pointer to a variable which
+contains the option value to be set, and a pointer to a variable of type <span
+class="TYPE">size_t</span> which contains the length of the option value variable. This
+length must be be correct for the specified option.</p>
+
+<p>In the example code below, we set the queue size warning to 5000 events.</p>
+
+<pre class="SCREEN">
+unsigned long int optval;
+size_t optlen;
+lbm_event_queue_t evq; /* must be previously created */
+int rc;
+
+/* Set the queue size warning */
+optlen = sizeof(optval);
+optval = 5000;
+rc = lbm_event_queue_setopt(&amp;evq, "queue_size_warning", &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MODCURRENTATTRIBUTESSETSTRING"
+name="MODCURRENTATTRIBUTESSETSTRING">1.6.2. Setting An Option from a String
+Value</a></h2>
+
+<p>Setting an option from a string value effectively does the same thing that setting an
+option from a binary value does. However, the option value is passed as a null-terminated
+string, rather than as value and length pointers. This is similar to the mechanism used
+by <b class="APPLICATION">UM</b> to process options in a configuration file. Thus, the
+format used for option values must match the format you would use in a configuration
+file.</p>
+
+<p>As before, we set the queue size warning to 5000 events.</p>
+
+<pre class="SCREEN">
+lbm_event_queue_t evq; /* must be previously created */
+int rc;
+
+/* Set the queue size warning */
+rc = lbm_event_queue_setopt(&amp;evq, "queue_size_warning", "5000");
+if (rc != 0)
+{
+   /* Handle error */
+}
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MODCURRENTATTRIBUTESRESTRICTIONS"
+name="MODCURRENTATTRIBUTESRESTRICTIONS">1.6.3. Restrictions</a></h2>
+
+<p>Modifying the current attributes of a object allows only a very limited subset of
+options to be set or retrieved. Consult subsequent sections of this document to determine
+if a particular option can be specified.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="attributesobjects.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="retrievingcurrentoptionvalues.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Attributes Objects</td>
+<td width="34%" align="center" valign="top"><a href="configuringoptions.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Retrieving Current Option Values</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

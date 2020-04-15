@@ -1,0 +1,605 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging JMS Configuration</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging JMS Guide" href="index.html" />
+<link rel="PREVIOUS" title="JNDI Administered Objects" href="jndi-lookup.html" />
+<link rel="NEXT" title="Asynchronous Message Delivery" href="async-msg-delivery.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">Ultra Messaging JMS Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="jndi-lookup.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="async-msg-delivery.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMJMS-CONFIG" name="UMJMS-CONFIG">5. Ultra Messaging JMS
+Configuration</a></h1>
+
+<p>You configure options/attributes for Ultra Messaging JMS object creation in one of
+three general ways:</p>
+
+<ul>
+<li>
+<p>Using a UM configuration XML file</p>
+</li>
+
+<li>
+<p>Using UMM</p>
+</li>
+
+<li>
+<p>Using a JMSConfig file</p>
+</li>
+</ul>
+
+<p>This section discusses the following topics:</p>
+
+<ul>
+<li>
+<p><a href="umjms-config.html#CONFIG-JNDI"><i>jndi.properties</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#CONFIG-UMXML"><i>Configuring Ultra Messaging JMS with a</i>
+UM XML File</a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#CONFIG-UMM"><i>Configuring Ultra Messaging JMS with Ultra
+Messaging Manager</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#JMSCONFIG"><i>Configuring Ultra Messaging JMS with a
+JMSConfig XML File</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIG-JNDI" name="CONFIG-JNDI">5.1. jndi.properties</a></h2>
+
+<p>The <tt class="FILENAME">/jmsclient/bin/jndi.properties</tt> governs from where your
+JMS applications receive their configuration data. Regardless of which of the three
+configuration methods you decide to use, you must edit or ensure that this file matches
+the selected method. The <tt class="FILENAME">jndi.properties</tt>, in its default form,
+appears below. Note that the file specifies the third configuration method (JMSConfig XML
+file).</p>
+
+<pre class="PROGRAMLISTING">
+## Use the LBM XML based context factory
+#java.naming.factory.initial = com.latencybusters.jms.LBMXmlContextFactory
+## where the xml config file is one of
+#java.naming.provider.url = classpath:umjms.xml
+#java.naming.provider.url = file:C:/umjms.xml
+#java.naming.provider.url = file:/home/user1/umjms.xml
+ 
+## Use the UMM based context factory
+#java.naming.factory.initial = com.latencybusters.jms.UMMContextFactory
+## where the ummd is running at the following url
+#java.naming.provider.url = localhost:15701
+#java.naming.security.principal = JMSUser
+#java.naming.security.credentials = JMSUser
+ 
+## Use Sun's RefFSContextFactory (with .bindings file)
+java.naming.factory.initial = com.sun.jndi.fscontext.RefFSContextFactory
+## where the .bindings file is
+java.naming.provider.url = file:.
+   
+</pre>
+
+<p>The next three sections describe how to edit the appropriate sections of this
+file.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIG-UMXML" name="CONFIG-UMXML">5.2. Configuring Ultra
+Messaging JMS with a <b class="APPLICATION">UM</b> XML File</a></h2>
+
+<p>You can create an XML configuration file using an XML editor or by using the <b
+class="APPLICATION">UMM</b> GUI. See <a href="../UMM/umm-gui.html" target="doccontent">Using
+the UMM GUI</a> for details. With this method, the UMM Daemon doesn't have to be running
+when your Ultra Messaging JMS applications start.</p>
+
+<p>To use this configuration method, edit the <tt class="FILENAME">jndi.properties</tt>
+file as follows:</p>
+
+<ol type="1">
+<li>
+<p>Make sure that all lines in the second and third section are commented out.</p>
+</li>
+
+<li>
+<p>Un-comment the line, <tt class="LITERAL">java.naming.factory.initial =
+com.latencybusters.jms.LBMXmlContextFactory</tt></p>
+</li>
+
+<li>
+<p>Un-comment one of the <tt class="LITERAL">java.naming.provider.url</tt> lines and
+supply the path and filename of your XML configuration file. See also <a
+href="umjms-config.html#CONFIG-UMM"><i>Configuring Ultra Messaging JMS with Ultra
+Messaging Manager</i></a>.</p>
+</li>
+
+<li>
+<p>Save the <tt class="FILENAME">jndi.properties</tt> file.</p>
+</li>
+</ol>
+
+<p>The <b class="APPLICATION">UM</b> XML configuration file has the following high-level
+structure.</p>
+
+<pre class="PROGRAMLISTING">
+&lt;?xml version="1.0" encoding="UTF-8"?&#62;
+&lt;um-configuration version="1.0"&#62;
+ 
+&lt;applications&#62;
+ &lt;application name="uJMS"&#62;
+ 
+  &lt;contexts&#62;
+    &lt;context name="uJMSConnectionFactory" template=""&#62;
+      &lt;sources/&#62;
+      &lt;receivers/&#62;
+      &lt;wildcard-receivers/&#62;
+      &lt;options type="context"&#62; 
+    &lt;/context&#62;
+    &lt;context name="uJMSConnectionFactory-UMS"&#62;
+      &lt;sources/&#62;
+       &lt;receivers/&#62;
+       &lt;wildcard-receivers/&#62;
+    &lt;/context&#62;
+    &lt;context name="uJMSConnectionFactory-UMP"&#62;
+      &lt;sources/&#62;
+      &lt;receivers/&#62;
+      &lt;wildcard-receivers/&#62;
+    &lt;/context&#62;
+    &lt;context name="uJMSConnectionFactory-UMQ"&#62;
+      &lt;sources/&#62;
+      &lt;receivers/&#62;
+      &lt;wildcard-receivers/&#62;
+    &lt;/context&#62;
+  &lt;/contexts&#62;
+ 
+  &lt;event-queues&#62;
+    &lt;event-queue/&#62;
+  &lt;/event-queues&#62;
+ 
+  &lt;application-data&#62;
+    &lt;ConnectionFactory name="uJMSConnectionFactory"&#62;
+      &lt;options type="ConnectionFactory"&#62;
+      &lt;/options&#62;
+    &lt;/ConnectionFactory&#62;
+    &lt;Destination name="TempQueue"&#62;
+      &lt;options type="Destination"&#62;
+      &lt;/options&#62;
+    &lt;/Destination&#62;
+  &lt;/application-data&#62;
+ 
+ &lt;/application&#62;
+&lt;/applications&#62;
+&lt;/um-configuration&#62;
+   
+</pre>
+
+<p>Essentially, the structure has two parts. The first part contains the contexts that
+allow you to specify traditional <b class="APPLICATION">UM</b> configuration option
+values. The second part, <tt class="LITERAL">&lt;application-data&#62;</tt>, allows you
+to specify JMS options to factories and destinations. The following details some of the
+major sections of the above high-level structure.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">&lt;context name="uJMSConnectionFactory" template=""&#62;</tt> -
+Accepts general <b class="APPLICATION">UM</b> configuration option values for the
+contexts, sources, and receivers used by your applications.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;context name="uJMSConnectionFactory-UMS"&#62;</tt> - Accepts
+option values specific to any Streaming activities of your applications.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;context name="uJMSConnectionFactory-UMP"&#62;</tt> - Accepts
+option values specific to Persistent activities, such as store configuration options.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;context name="uJMSConnectionFactory-UMQ"&#62;</tt> - Accepts
+option values specific to Queueing activities, such as queue configuration options.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;ConnectionFactory name="uJMSConnectionFactory"&#62;</tt> -
+Accepts JMS Factory option values such as <tt class="LITERAL">default_message_type</tt>
+or <tt class="LITERAL">default_topic_type</tt>.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;Destination name="TempQueue"&#62;</tt> - Accepts JMS
+destination option values such as <tt class="LITERAL">type</tt> or <tt
+class="LITERAL">dest_type</tt> .</p>
+</li>
+</ul>
+
+<p>To see a more complete XML file, see <tt
+class="FILENAME">/jmsclient/config/umjms.xml</tt>. Unlike the high-level structure above,
+this file contains relevant option values. You can also review the same information in
+the <b class="APPLICATION">UMM</b> GUI. The XML file you create must adhere to the
+high-level structure presented above.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIG-UMM" name="CONFIG-UMM">5.3. Configuring Ultra Messaging
+JMS with Ultra Messaging Manager</a></h2>
+
+<p>You can use the <b class="APPLICATION">UMM</b> GUI to create configurations for your
+JMS applications. With this method, the UMM Daemon must be running to provide server
+configuration and license information to your JMS applications when they start. To use
+this method, edit the <tt class="FILENAME">jndi.properties</tt> file as follows:</p>
+
+<ol type="1">
+<li>
+<p>Make sure that all lines in the first and third section are commented out.</p>
+</li>
+
+<li>
+<p>Un-comment the line, <tt class="LITERAL">java.naming.factory.initial =
+com.latencybusters.jms.UMMContextFactory</tt></p>
+</li>
+
+<li>
+<p>Un-comment <tt class="LITERAL">java.naming.provider.url</tt> and substitute an IP
+address and port number for <tt class="LITERAL">localhost:15701</tt> to specify where the
+UMM Daemon runs. You can add a comma-separated list of daemons.</p>
+</li>
+
+<li>
+<p>Save the <tt class="FILENAME">jndi.properties</tt> file.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="JMSCONFIG" name="JMSCONFIG">5.4. Configuring Ultra Messaging
+JMS with a JMSConfig XML File</a></h2>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> This is a legacy feature and no longer recommended.</p>
+</blockquote>
+</div>
+
+<p>With this method, you use the <tt class="FILENAME">/jmsclient/bin/config.bat</tt> or
+<tt class="FILENAME">/jmsclient/bin/config.sh</tt> script to create a <tt
+class="FILENAME">.bindings</tt> file from your <tt class="FILENAME">config.xml</tt>. To
+use this method, edit the <tt class="FILENAME">jndi.properties</tt> file as follows:</p>
+
+<ol type="1">
+<li>
+<p>Make sure that all lines in the first and second section are commented out.</p>
+</li>
+
+<li>
+<p>Un-comment the line, <tt class="LITERAL">java.naming.factory.initial =
+com.sun.jndi.fscontext.RefFSContextFactory</tt></p>
+</li>
+
+<li>
+<p>Un-comment <tt class="LITERAL">java.naming.provider.url = file:.</tt>.</p>
+</li>
+
+<li>
+<p>Save the <tt class="FILENAME">jndi.properties</tt> file.</p>
+</li>
+</ol>
+
+<br />
+<br />
+<p>The JMSConfig.xml file allows you to assign <b class="APPLICATION">UM</b>
+configuration values to the Ultra Messaging JMS <tt
+class="LITERAL">ConnectionFactory</tt> and specify message topics as destinations. You
+can create a JMSConfig format XML configuration file using an XML editor or text editor.
+See <tt class="FILENAME">/jmsclient/config/config.xml</tt> for an example of a JMSConfig
+file. This is the configuration file for the <b class="APPLICATION">UM</b> JMS examples
+described in <a href="../QuickStart/jms-binary-quick-start.html" target="doccontent">Ultra
+Messaging JMS Quick Start</a>.</p>
+
+<p>The configuration file has the following high-level structure.</p>
+
+<pre class="SCREEN">
+&lt;JMSConfig&#62;
+    &lt;ConnectionFactories&#62;
+        &lt;ConnectionFactory&#62;
+            &lt;FactoryAttributes&#62;
+                &lt;Attribute/&#62;
+            &lt;/FactoryAttributes&#62;
+            &lt;ContextAttributes&#62;
+                &lt;Attribute "UM configuration options, scope=context" /&#62;
+            &lt;/ContextAttributes&#62;
+            &lt;SourcetAttributes&#62;
+                &lt;Attribute "UM configuration options, scope=source" /&#62;
+            &lt;/SourcetAttributes&#62;
+            &lt;ReceiverAttributes&#62;
+                &lt;Attribute "UM configuration options, scope=receiver" /&#62;
+            &lt;/ReceiverAttributes&#62;
+            &lt;WildcardRceiverAttributes&#62;
+                &lt;Attribute "UM configuration options, scope=wildcard-receiver" /&#62;
+            &lt;/WildcardReceiverAttributes&#62;
+        &lt;/ConnectionFactory&#62;
+    &lt;/ConnectionFactories&#62;
+    &lt;Destinations&#62;
+        &lt;Destination&#62;
+            &lt;DestinationAttributes&#62;
+                &lt;Attribute/&#62;
+            &lt;/DestinationAttributes&#62;
+            &lt;ReceiverAttributes&#62;
+                &lt;Attribute/&#62;
+            &lt;/RecieverAttributes&#62;
+        &lt;/Destination&#62;
+    &lt;/Destinations&#62;
+&lt;/JMSConfig&#62;
+       
+</pre>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umjms-config.html#CONNECTIONFACTORY-ATTRIBUTES"><i>ConnectionFactory
+Attributes</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#DESTINATION-ATTRIBUTES"><i>Destination
+Attributes</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONNECTIONFACTORY-ATTRIBUTES"
+name="CONNECTIONFACTORY-ATTRIBUTES">5.4.1. ConnectionFactory Attributes</a></h3>
+
+<p>You can configure as many ConnectionFactories as needed. The ConnectionFactory element
+contains the following sets of attributes.</p>
+
+<ul>
+<li>
+<p><a href="umjms-config.html#FACTORYATTRIBUTES"><i>FactoryAttributes</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#CONTEXTATTRIBUTES"><i>ContextAttributes</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#SOURCEATTRIBUTES"><i>SourceAttributes</i></a></p>
+</li>
+
+<li>
+<p><a href="umjms-config.html#RECEIVERATTIBUTES"><i>ReceiverAttibutes</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="FACTORYATTRIBUTES" name="FACTORYATTRIBUTES">5.4.1.1.
+FactoryAttributes</a></h4>
+
+<p>See <a href="../Config/ultramessagingjmsoptions.html" target="doccontent">Ultra Messaging
+JMS Options</a> for ConnectionFactory options.</p>
+
+<p>The following is an example ConnectionFactory configuration that uses all the default
+values.</p>
+
+<pre class="SCREEN">
+&lt;ConnectionFactories&#62;
+    &lt;ConnectionFactory&#62;
+        &lt;FactoryAttributes&#62;
+            &lt;Attribute name="CLIENT_ID" value="UME1"/&#62;
+            &lt;Attribute name="DEBUG" value="false"/&#62; 
+            &lt;Attribute name="DEFAULT_TOPIC_TYPE" value="UME"/&#62;
+            &lt;Attribute name="DEFAULT_TEMP_TOPIC_TYPE" value="LBM"/&#62;
+            &lt;Attribute name="USE_APP_HEADER" value="true"/&#62;
+            &lt;Attribute name="DEFAULT_MESSAGE_TYPE" value="TextMessage"/&#62;
+        &lt;/FactoryAttributes&#62;
+    &lt;/ConnectionFactory&#62;
+&lt;/ConnectionFactories&#62;
+       
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The following message methods will not work if set USE_APP_HEADER to
+false. (<tt class="LITERAL">&lt;Attribute name="USE_APP_HEADER"
+value="false"/&#62;</tt>).</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">getJMSCorrelationID/setJMSCorrelationID</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">getJMSDeliveryMode/setJMSDeliveryMode</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">getJMSDestination/setJMSDestination</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">getJMSExpiration/setJMSExpiration</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">getJMSMessageID/setJMSMessageID</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">getJMSPriority/setJMSPriority</tt></p>
+</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONTEXTATTRIBUTES" name="CONTEXTATTRIBUTES">5.4.1.2.
+ContextAttributes</a></h4>
+
+<p>A ConnectionFactory's Context Attributes consist of any <b class="APPLICATION">UM</b>
+Configuration Options with the scope of Context. See the <a href="../Config/index.html"
+target="doccontent"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</a> for all configuration options. The
+following are examples of ContextAttributes.</p>
+
+<pre class="SCREEN">
+&lt;ContextAttributes&#62;
+    &lt;Attribute name="operational_mode" value="sequential"/&#62;
+    &lt;Attribute name="resolver_multicast_ttl" value="16"/&#62;
+    &lt;Attribute name="resolver_multicast_address" value="225.72.39.173"/&#62;
+    &lt;Attribute name="mim_address" value="225.72.39.174"/&#62;
+    &lt;Attribute name="transport_lbtrm_multicast_address_low" value="225.73.39.200"/&#62;
+    &lt;Attribute name="transport_lbtrm_multicast_address_high" value="225.73.39.210"/&#62;
+    &lt;Attribute name="request_tcp_port_low" value="16000"/&#62;
+    &lt;Attribute name="request_tcp_port_high" value="16010"/&#62;
+    &lt;Attribute name="transport_lbtrm_source_port_low" value="15000"/&#62;
+    &lt;Attribute name="transport_lbtrm_source_port_high" value="15500"/&#62;
+    &lt;Attribute name="transport_tcp_maximum_ports" value="20"/&#62;
+    &lt;Attribute name="transport_tcp_port_low" value="16500"/&#62;
+    &lt;Attribute name="transport_tcp_port_high" value="16600"/&#62;
+    &lt;Attribute name="resolver_unicast_port_high" value="45000"/&#62;
+    &lt;Attribute name="transport_lbtrm_data_rate_limit" value="500000000"/&#62;
+    &lt;Attribute name="transport_lbtrm_retransmit_rate_limit" value="1000000"/&#62;
+    &lt;Attribute name="transport_lbtrm_receiver_socket_buffer" value="8000000"/&#62;
+    &lt;Attribute name="request_tcp_reuseaddr" value="1"/&#62;
+&lt;/ContextAttributes&#62;
+               
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="SOURCEATTRIBUTES" name="SOURCEATTRIBUTES">5.4.1.3.
+SourceAttributes</a></h4>
+
+<p>A ConnectionFactory's Source Attributes consist of any <b class="APPLICATION">UM</b>
+Configuration Options with the scope of Source. See the <a href="../Config/index.html"
+target="doccontent"><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+Configuration Guide</a> for all configuration options. The following are examples of
+SourceAttributes.</p>
+
+<pre class="SCREEN">
+&lt;SourceAttributes&#62;
+    &lt;Attribute name="transport" value="lbtrm"/&#62;
+    &lt;Attribute name="late_join" value="1"/&#62;
+    &lt;Attribute name="ume_store_name" value="JMSStore1"/&#62;
+    &lt;Attribute name="ume_store_name" value="JMSStore2"/&#62;
+    &lt;Attribute name="ume_store_name" value="JMSStore3"/&#62;
+    &lt;Attribute name="ume_store_behavior" value="qc"/&#62;
+    &lt;Attribute name="ume_proxy_source" value="1"/&#62;
+    &lt;Attribute name="umq_queue_name" value="JMSQueue"/&#62;
+    &lt;Attribute name="implicit_batching_minimum_length" value="1"/&#62;
+&lt;/SourceAttributes&#62;
+               
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> You can define and add stores to a source's store list by using either
+the <tt class="LITERAL">ume_store</tt> or <tt class="LITERAL">ume_store_name</tt>
+attribute. We suggest the latter (which uses a name instead of an IP/port address), as
+this facilitates JMS deployment to different machines and/or the UM Gateway.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVERATTIBUTES" name="RECEIVERATTIBUTES">5.4.1.4.
+ReceiverAttibutes</a></h4>
+
+<p>A ConnectionFactory's Receiver Attributes consist of any <b class="APPLICATION">UM</b>
+Configuration Options with the scope of Receiver. See the <a href="../Config/index.html"
+target="doccontent"><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+Configuration Guide</a> for all configuration options. The following are examples of
+Receiver Attributes.</p>
+
+<pre class="SCREEN">
+&lt;ReceiverAttributes&#62;
+    &lt;Attribute name="umq_receiver_type_id" value="100"/&#62;
+&lt;/ReceiverAttributes&#62;
+               
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DESTINATION-ATTRIBUTES" name="DESTINATION-ATTRIBUTES">5.4.2.
+Destination Attributes</a></h3>
+
+<p>Destinations correspond to <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> topics. See <a href="../Config/ultramessagingjmsoptions.html"
+target="doccontent">Ultra Messaging JMS Options</a> for destinations options.</p>
+
+<p>The following is an example destination configuration.</p>
+
+<pre class="SCREEN">
+&lt;Destination name="ReplyTopic" type="Topic"&#62;
+    &lt;DestinationAttributes&#62;
+            &lt;Attribute name="REGID" value="4400"/&#62;
+        &lt;Attribute name="WILDCARD" value="false"/&#62;
+        &lt;Attribute name="TYPE" value="LBM"/&#62;
+    &lt;/DestinationAttributes&#62;
+&lt;/Destination&#62;
+                   
+</pre>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="jndi-lookup.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="async-msg-delivery.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">JNDI Administered Objects</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Asynchronous Message Delivery</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - A simple configuration file for a UME store daemon that instantiates a Queue 
+  - named "Queue Training" listening on port 14567 for registrations. Logs are 
+  - appended to the file q-training.log. Port 14789 is used for a web monitor.
+  -->
+<ume-store version="1.1">
+<daemon>
+ <log>q-training.log</log>
+ <web-monitor>*:14789</web-monitor>
+</daemon>
+
+<queues>
+	<queue name="Queue Training" port="14567" group-index="0">
+		<ume-attributes>
+			<option type="queue" name="dissemination-model" value="SQD"/>
+		</ume-attributes>
+
+		<!-- Define the Application Set(s) -->
+		<application-sets>
+			<application-set name="Set 1">
+				<ume-attributes>
+					<option type="queue" name="log-audit-trail" value="1"/>
+				</ume-attributes>
+				<receiver-types>
+					<receiver-type id="100"/>
+				</receiver-types>
+			</application-set>
+		</application-sets>
+
+		<topics>
+			<!-- Define the topic(s) and the Application Sets for them -->
+			<topic pattern="." type="PCRE">
+				<application-sets>
+					<application-set name="Set 1"/>
+				</application-sets>
+			</topic>
+		</topics>
+	</queue>
+</queues>
+
+</ume-store>

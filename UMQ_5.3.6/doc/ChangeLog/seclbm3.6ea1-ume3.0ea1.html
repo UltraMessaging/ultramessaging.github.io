@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.6.ea1 / UME 3.0ea1 - July 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.5 / UME 2.2 - July 2009"
+href="seclbm3.5-ume2.2.html" />
+<link rel="NEXT" title="Release LBM 3.5.ea3 / UME 2.2ea1 - May 2009"
+href="seclbm3.5ea3.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.5-ume2.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.5ea3.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.6EA1-UME3.0EA1" name="SECLBM3.6EA1-UME3.0EA1">47.
+Release LBM 3.6.ea1 / UME 3.0ea1 - July 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.6EA1" name="LBM3.6EA1">47.1. LBM 3.6ea1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3-6EA1-NEW" name="LBM3-6EA1-NEW">47.1.1. LBM 3.6ea1 New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added <b class="APPLICATION">LBM</b> <b class="APPLICATION">Spectrum</b> that allows a
+source to send topic messages with channel information. A receiver can subscribe (<code
+class="FUNCTION">lbm_rcv_subscribe_channel()</code> <code
+class="FUNCTION">lbm_wrcv_subscribe_channel()</code>) to a channel and receive only topic
+messages sent to that channel. Each channel can use a different receiver callback, if
+desired. Benefits include less topic resolution traffic since LBM advertises only topics,
+not channels and in order delivery across channels since all messages are part of the
+same topic stream.</p>
+</li>
+
+<li>
+<p>Added support for <b class="APPLICATION">Adaptive Batching</b>, which attempts to send
+messages immediately during periods of low volume and automatically batch messages during
+periods of higher volume. You enable Adaptive Batching by setting <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGTYPE"
+target="doccontent"><tt class="LITERAL">implicit_batching_type</tt></a> to <tt
+class="LITERAL">adaptive</tt>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">New Monitoring Statistics:</b> Added monitoring statistics to
+<a href="../API/structlbm__event__queue__stats__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_event_queue_stats_t</tt></a> structure to reflect a new event type
+used internally by <b class="APPLICATION">LBM</b>. The new statistics report on the
+number of callback events (<tt class="LITERAL">callback_events</tt>), total callback
+events (<tt class="LITERAL">callback_events_tot</tt>) and callback event service times
+(<tt class="LITERAL">callback_events_svc_min</tt>, <tt
+class="LITERAL">callback_events_svc_mean</tt> and <tt
+class="LITERAL">callback_events_svc_max</tt>). These statistics are available to the <a
+href="../API/index.html" target="doccontent">C API</a>, the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>. The new statistics have
+also been added to the <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> <b class="APPLICATION">MIB</b> and the InterMapper probe files.
+In addition, all example applications support the callback statistics.</p>
+</li>
+
+<li>
+<p>Added the <b class="APPLICATION">Topic Index</b> to the source string ( <a
+href="../API/structlbm__transport__source__info__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_transport_source_info_t</tt></a>). <b class="APPLICATION">LBM</b>
+includes the topic index in source strings supplied through message delivery and new
+source notification. A receiving application can now identify the source of any message
+it receives by parsing the source string. New API functions, <code
+class="FUNCTION">lbm_transport_source_parse()</code> and <code
+class="FUNCTION">lbm_transport_source_format()</code>, allow you to parse and create
+source strings. Inclusion of the Topic Index in the source string is the default. You can
+disable this by setting <a
+href="../Config/majoroptions.html#CONTEXTSOURCEINCLUDESTOPICINDEX" target="doccontent"><tt
+class="LITERAL">source_includes_topic_index</tt></a> to 0 (zero).</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6EA1-FIXES" name="LBM3.6EA1-FIXES">47.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Removed the warning assertion, <tt
+class="LITERAL">fdm-&#62;select_invalid_entries==0</tt>, that could appear during busy
+periods when using the <tt class="LITERAL">select</tt> file descriptor type.</p>
+</li>
+
+<li>
+<p>Corrected a problem that occurred if a NULL topic object was passed to <code
+class="FUNCTION">lbm_hf_src_create</code>. This resulted in a Segfault. <code
+class="FUNCTION">lbm_hf_src_create</code> now correctly returns <tt
+class="LITERAL">-1</tt>.</p>
+</li>
+
+<li>
+<p>Changed the default Host ID for <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg; from <tt class="LITERAL">0x00000000</tt> to <tt
+class="LITERAL">0x7fffffff</tt> to improve host name resolution between an <b
+class="APPLICATION">LBM</b> source running on <span class="TRADEMARK">Microsoft</span>
+<span class="TRADEMARK">Windows</span> and sending over LBT-IPC to a receiver running on
+a Linux/Unix machine. The previous default Host ID could produce the following receiver
+error: <tt class="LITERAL">LOG Level 5: LBT-IPC: failed to open shared memory
+(2)</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Java and .NET <tt class="LITERAL">lbmmon</tt> example
+applications that resulted in the incorrect display of the source application's process
+and object IDs.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Java and .NET <tt class="LITERAL">lbmmsrc</tt> example
+applications that caused the following exception when printing IPC statistics: <tt
+class="LITERAL">Unhandled Exception: com.latencybusters.lbm.LBMEInvalException: value at
+num must be large enough to handle all transport sessions.</tt> This exception was caused
+by an incorrect calculation of the number of transport sessions. Future versions of <b
+class="APPLICATION">LBM</b> will remove the requirement for Java and .NET applications to
+specify a number of statistical sets when creating various <b class="APPLICATION">LBM</b>
+statistics.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now ignores any spaces at the end of numeric attributes
+in <b class="APPLICATION">LBM</b> configuration files.</p>
+</li>
+
+<li>
+<p>Fixed an issue with the wire format for LBM messages where the explicit batching flags
+were not being correctly converted to network byte order. This resulted in the
+LBM_MSG_FLAG_START_BATCH and LBM_MSG_FLAG_END_BATCH flags not being set correctly if
+sending from a big-endian machine to a little-endian machine, or vice versa. LBM now
+correctly formats the field in question.</p>
+
+<p>Due to the change in the wire format, mixing <b class="APPLICATION">LBM</b> 3.5 with
+earlier versions results in incorrectly set batching flags in most cases. This does not
+impact the behavior of explicit batching on the source side, only the message flags on
+the receiver side. These flags provide information to the receiving application, and are
+not used in message delivery, so applications that do not currently use them can mix <b
+class="APPLICATION">LBM</b> versions without impact.</p>
+</li>
+
+<li>
+<p>Changed the way multiple LBT-IPC processes verify availability of the LBT-IPC
+transport during Topic Resolution. If two processes check the transport at nearly the
+same time, the second process will experience a 1 second delay. Multiple processes now
+verify serially.</p>
+</li>
+
+<li>
+<p>Fixed a problem with calling <tt class="LITERAL">lbm_src_flush()</tt> from multiple
+threads or using <tt class="LITERAL">lbm_src_send()</tt> in combination with <tt
+class="LITERAL">lbm_src_flush()</tt> from multiple threads. This problem produced the
+following assertion. WARNING: failed assertion [num&#62;0] at line 1382 in
+../../../../src/lib/lbm/lbmsock.c. With this correction, using <tt
+class="LITERAL">lbm_src_send()</tt> in combination with <tt
+class="LITERAL">lbm_src_flush()</tt> from multiple threads does not cause a problem.</p>
+</li>
+
+<li>
+<p>Corrected a problem with setting <tt class="LITERAL">*_interface</tt> options from
+within the <b class="APPLICATION">LBM</b> Configuration File specified by the environment
+variable LBM_DEFAULT_CONFIG_FILE. Setting <tt class="LITERAL">*_interface</tt> options in
+this manner no longer results in an error.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6EA1-KNOWNISSUES" name="LBM3.6EA1-KNOWNISSUES">47.1.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. 29West
+is investigating this issue.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.0EA1" name="UME3.0EA1">47.2. UME 3.0ea1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.0EA1-NEW" name="UME3.0EA1-NEW">47.2.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Java <b class="APPLICATION">UME</b> receiver applications must now call <tt
+class="LITERAL">LBMMessage.dispose()</tt> when the application is completely finished
+with the message. Previously, <b class="APPLICATION">UME</b> sent implicit ACKs
+immediately on return from the user's callback. If a Java <b class="APPLICATION">UME</b>
+receiver application uses implicit ACKs (the default), <b class="APPLICATION">UME</b>
+will not send any implicit ACKs unless the application calls <tt
+class="LITERAL">LBMMessage.dispose()</tt>.</p>
+</li>
+
+<li>
+<p>Added <b class="APPLICATION">Queuing</b> capabilities to <b
+class="APPLICATION">UME</b> that allows sources to submit messages asynchronously to a
+queue and permits receivers to retrieve messages from a queue in an entirely different
+asynchronous manner. <b class="APPLICATION">UME</b> Queuing also supports Once and Only
+Once (OAOO) delivery and Application Sets that allow you to load balance processing or
+support multiple processing purposes for single topics. See <a href="../UME/index.html"
+target="doccontent">Ultra Messaging® for the Enterprise</a> for more information.</p>
+</li>
+
+<li>
+<p>Added support for <b class="APPLICATION">Proxy Sources</b> which allows a <b
+class="APPLICATION">UME</b> source to request one of the <b class="APPLICATION">UME</b>
+stores act as a proxy in case the source terminates. In this event, advertisements can
+continue, existing receivers can continue recovery from a store, and new receivers can
+register with the stores and receive any messages they have missed. You enable Proxy
+Sources with the source configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEPROXYSOURCE"
+target="doccontent"><tt class="LITERAL">ume_proxy_source</tt></a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.0EA1-KNOWNISSUES" name="UME3.0EA1-KNOWNISSUES">47.2.2.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>Queue resiliency is not in place with this release. Multiple Queues with the same name
+are not supported with this release. In addition, Queues that fail and restart will not
+work with continually functioning sources and receivers.</p>
+</li>
+
+<li>
+<p>Sources must use either <b class="APPLICATION">UME</b> stores or a <b
+class="APPLICATION">UME</b> queue, but not both at the same time. This will be addressed
+in a future release.</p>
+</li>
+
+<li>
+<p>When using a <b class="APPLICATION">UME</b> Queue, receivers should not rely upon the
+message sequence number supplied in the <tt class="LITERAL">lbm_msg_t</tt> (or <tt
+class="LITERAL">LBMMessage</tt>) object as the sequence numbering may change in future
+releases. Applications should utilize the <tt class="LITERAL">Message-ID</tt>
+instead.</p>
+</li>
+
+<li>
+<p>EOS semantics related to Queuing are somewhat complicated depending on the
+dissemination model being used. New events may be introduced in future releases to handle
+additional "EOS-like" concerns associated with the use of a <b
+class="APPLICATION">UME</b> Queue.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.5-ume2.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.5ea3.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.5 / UME 2.2 - July 2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.5.ea3 / UME 2.2ea1 - May
+2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

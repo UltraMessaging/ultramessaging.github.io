@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Demonstrating Persistence</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Enabling Persistence" href="tutorial.html" />
+<link rel="NEXT" title="Designing Persistence Applications"
+href="designing-persistent-applications.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="tutorial.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="designing-persistent-applications.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DEMONSTRATING-UME-PERSISTENCE"
+name="DEMONSTRATING-UME-PERSISTENCE">6. Demonstrating Persistence</a></h1>
+
+<p>This section demonstrates the following events using the <tt
+class="LITERAL">ume-example</tt> applications described in <a
+href="tutorial.html"><i>Enabling Persistence</i></a>.</p>
+
+<ul>
+<li>
+<p><a
+href="demonstrating-ume-persistence.html#RUNNING-UME-EXAMPLE-APPLICATIONS"><i>Running</i>
+UMP Example Applications</a></p>
+</li>
+
+<li>
+<p><a href="demonstrating-ume-persistence.html#SINGLE-RECEIVER-FAILS-RECOVERS"><i>Single
+Receiver Fails and Recovers</i></a></p>
+</li>
+
+<li>
+<p><a href="demonstrating-ume-persistence.html#SINGLE-SOURCE-FAILS-RECOVERS"><i>Single
+Source Fails and Recovers</i></a></p>
+</li>
+
+<li>
+<p><a href="demonstrating-ume-persistence.html#SINGLE-STORE-FAILS"><i>Single Store
+Fails</i></a></p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> While these four sections demonstrate how <b class="APPLICATION">UMP</b>
+uses RegIDs to provide persistence, RegIDs can also be managed easily with the use of
+Session IDs. See <a href="designing-persistent-applications.html#SESSION-IDS"><i>Managing
+RegIDs with Session IDs</i></a>.</p>
+</blockquote>
+</div>
+
+<p>The following table lists all source files used in this section. The files can also be
+found in the <tt class="FILENAME">/doc/UME</tt> directory.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2072" name="AEN2072"></a>
+<table border="1" class="CALSTABLE">
+<col width="192" />
+<col width="192" />
+<thead>
+<tr>
+<th>Object</th>
+<th>Filename</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Source Application 3</td>
+<td><a href="ume-example-src-3.c" target="doccontent">ume-example-src-3.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application 3</td>
+<td><a href="ume-example-rcv-3.c" target="doccontent">ume-example-rcv-3.c</a></td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UMP</b> Store Configuration File</td>
+<td><a href="ume-example-config.xml" target="doccontent">ume-example-config.xml</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Perform the following tasks first.</p>
+
+<ol type="1">
+<li>
+<p>Build <a href="ume-example-src-3.c" target="doccontent"><tt
+class="LITERAL">ume-example-rcv-3.c</tt></a> and <a href="ume-example-rcv-3.c"
+target="doccontent"><tt class="LITERAL">ume-example-src-3.c</tt></a>. Instructions for building
+them are at the beginning of the source files.</p>
+</li>
+
+<li>
+<p>Create default directories, <tt class="LITERAL">umestored-cache</tt> and <tt
+class="LITERAL">umestored-state</tt> in the <tt class="FILENAME">/doc/UME</tt> directory
+where the other ume-example files are located. Our sample XML store configuration file,
+<tt class="LITERAL"><a href="ume-example-config.xml"
+target="doccontent">ume-example-config.xml</a></tt>, doesn't specify directories for the
+store's cache and state files, so those will be placed in the default directories.</p>
+</li>
+
+<li>
+<p>Start the store. <tt class="LITERAL">$ umestored <a href="ume-example-config.xml"
+target="doccontent">ume-example-config.xml</a></tt></p>
+</li>
+</ol>
+
+<p>You should see no output if the store started successfully. However, you should find a
+new log file, <tt class="LITERAL">ume-example-stored.log</tt>, in the directory you ran
+the store in. The first couple lines should look similar to below.</p>
+
+<pre class="PROGRAMLISTING">
+Fri Feb 01 07:34:28 2009 [INFO]: Latency Busters Persistent Store version 2.0
+Fri Feb 01 07:34:28 2009 [INFO]: LBM 3.3 [UME-2.0] Build: Jan 31 2009, 02:10:43 
+( DEBUG license LBT-RM LBT-RU ) WC[PCRE 6.7 04-Jul-2006, appcb]
+       
+</pre>
+
+<p>You'll also be able to view the store's web monitor. Open a web browser and go to:</p>
+
+<pre class="PROGRAMLISTING">
+      http://127.0.0.1:15304/
+       
+</pre>
+
+<p>You should see the store's web monitor page, which is a diagnostic and monitoring tool
+for the <b class="APPLICATION">UMP</b> store. See <a
+href="ume-store-web-monitor.html"><i>Ultra Messaging Web Monitor</i></a>.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RUNNING-UME-EXAMPLE-APPLICATIONS"
+name="RUNNING-UME-EXAMPLE-APPLICATIONS">6.1. Running <b class="APPLICATION">UMP</b>
+Example Applications</a></h2>
+
+<p>With the store running, let's try our example source and receiver applications.</p>
+
+<ol type="1">
+<li>
+<p>Start the Receiver. <tt class="LITERAL">$ ume-example-rcv-3.exe</tt></p>
+</li>
+
+<li>
+<p>Start the Source. <tt class="LITERAL">$ ume-example-src-3.exe</tt></p>
+</li>
+</ol>
+
+<p>You should see output for the source similar to the following:</p>
+
+<pre class="PROGRAMLISTING">
+saving RegID info to "UME-example-src-RegID" - 127.0.0.1:14567:2795623327
+       
+</pre>
+
+<p>You should see output for the receiver similar to the following:</p>
+
+<pre class="PROGRAMLISTING">
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][2795623327] Requesting RegID: 0
+saving RegID info to "UME-example-rcv-RegID" - 127.0.0.1:14567:2795623327:2795623328
+Received 15 bytes on topic UME Example (sequence number 0) 'UME Message 01'
+Received 15 bytes on topic UME Example (sequence number 1) 'UME Message 02'
+Received 15 bytes on topic UME Example (sequence number 2) 'UME Message 03'
+Received 15 bytes on topic UME Example (sequence number 3) 'UME Message 04'
+...
+       
+</pre>
+
+<p>The example source sends 20 messages. After the 20th messages, both the source and
+receiver exit and print the message <tt class="LITERAL">removing saved RegID file...</tt>
+So what just happened? Let's walk through the output line by line.</p>
+
+<p><b class="APPLICATION">Source</b></p>
+
+<pre class="PROGRAMLISTING">
+saving RegID info to "UME-example-src-RegID" - 127.0.0.1:14567:2795623327
+       
+</pre>
+
+<p>The source successfully registered with the store using its pre-configured store
+address and port of 127.0.0.1:14567. It didn't ask for a specific RegID from the store,
+so the store automatically assigned one to it. In this case, the store assigned the ID,
+2795623327. Your source's ID will likely be different because stores assign random
+RegIDs.</p>
+
+<p>If you run the test again, you'll notice the source application has written a file
+called <tt class="LITERAL">UME-example-src-RegID</tt> that contains the same information
+the source printed on startup, namely the IP address and port of the store it registered
+with, along with its RegID assigned by the store.</p>
+
+<p><b class="APPLICATION">Receiver</b></p>
+
+<pre class="PROGRAMLISTING">
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][2795623327] Requesting RegID: 0
+saving RegID info to "UME-example-rcv-RegID" - 127.0.0.1:14567:2795623327:2795623328
+       
+</pre>
+
+<p>The receiver has been informed of how to connect to the store by the source, and it
+also successfully registered with the store. The store's IP address and port are shown,
+followed by the source's unique identifier string (in this case, it's a TCP source on
+port 14371), and the source's RegID. The receiver then requests RegID 0 from the store,
+which is a special value that means <span class="emphasis"><i class="EMPHASIS">pick an ID
+for me</i></span> (Although not displayed, the source requested ID 0 when it started up
+as well).</p>
+
+<p>In parallel with the source application, the receiver application writes its RegID
+with this store to the file, <tt class="LITERAL">UME-example-rcv-RegID</tt>.</p>
+
+<p>After sending 20 messages under normal, stable conditions, the source and receiver
+applications exit and remove their RegID files.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SINGLE-RECEIVER-FAILS-RECOVERS"
+name="SINGLE-RECEIVER-FAILS-RECOVERS">6.2. Single Receiver Fails and Recovers</a></h2>
+
+<p>Perform the following procedure with the store running to see what happens when a
+receiver fails and recovers.</p>
+
+<ol type="1">
+<li>
+<p>Start the Receiver. <tt class="LITERAL">$ ume-example-rcv-3.exe</tt></p>
+</li>
+
+<li>
+<p>Start the source. <tt class="LITERAL">$ ume-example-src-3.exe</tt> Let it run for a
+few seconds so the receiver gets a few messages.</p>
+
+<pre class="PROGRAMLISTING">
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][3735579353] Requesting RegID: 0
+saving RegID info to "UME-example-rcv-RegID" - 127.0.0.1:14567:3735579353:3735579354
+Received 15 bytes on topic UME Example (sequence number 0) 'UME Message 01'
+Received 15 bytes on topic UME Example (sequence number 1) 'UME Message 02'
+Received 15 bytes on topic UME Example (sequence number 2) 'UME Message 03'
+           
+</pre>
+</li>
+
+<li>
+<p>Stop the receiver (<b class="APPLICATION">Ctrl/C</b>) and leave the source running.
+Wait a few more seconds so that the source sends some messages while the receiver was
+down.</p>
+</li>
+
+<li>
+<p>Restart the Receiver and let it run to completion. <tt class="LITERAL">$
+ume-example-rcv-3.exe</tt></p>
+
+<pre class="PROGRAMLISTING">
+read in saved RegID info from "UME-example-rcv-RegID" - 127.0.0.1:14567 RegIDs 
+source 3735579353, receiver 3735579354
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][3735579353] 
+Requesting RegID: 3735579354
+Received 15 bytes on topic UME Example (sequence number 3) 'UME Message 04'
+Received 15 bytes on topic UME Example (sequence number 4) 'UME Message 05'
+Received 15 bytes on topic UME Example (sequence number 5) 'UME Message 06'
+Received 15 bytes on topic UME Example (sequence number 6) 'UME Message 07'
+Received 15 bytes on topic UME Example (sequence number 7) 'UME Message 08'
+Received 15 bytes on topic UME Example (sequence number 8) 'UME Message 09'
+Received 15 bytes on topic UME Example (sequence number 9) 'UME Message 10'
+Received 15 bytes on topic UME Example (sequence number 10) 'UME Message 11'
+           
+</pre>
+</li>
+</ol>
+
+<p>Notice that the receiver picked up the message stream right where it had left off -
+after message 3. The first few messages (which the source had sent while the receiver was
+down) appear to come in much faster than the source's normal rate of one per second.
+That's because they are being served to the receiver from the store. The remaining
+messages continue to come in at the normal one-per-second rate because they're being
+received from the source's live message stream. This is <span class="emphasis"><i
+class="EMPHASIS">durable subscription</i></span> at work.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SINGLE-SOURCE-FAILS-RECOVERS"
+name="SINGLE-SOURCE-FAILS-RECOVERS">6.3. Single Source Fails and Recovers</a></h2>
+
+<p>Perform the following procedure with the store running to see what happens when a
+source fails and recovers.</p>
+
+<ol type="1">
+<li>
+<p>Start the Receiver. <tt class="LITERAL">$ ume-example-rcv-3.exe</tt></p>
+</li>
+
+<li>
+<p>Start the source. <tt class="LITERAL">$ ume-example-src-3.exe</tt> Let it run for a
+few seconds so the receiver gets a few messages.</p>
+</li>
+
+<li>
+<p>Stop the Source (<b class="APPLICATION">Ctrl/C</b>).</p>
+</li>
+
+<li>
+<p>Restart the Source and let it run to completion. <tt class="LITERAL">$
+ume-example-rcv-3.exe</tt></p>
+</li>
+</ol>
+
+<p><b class="APPLICATION">Source</b></p>
+
+<p>You should see output similar to the following on the second run of the source.</p>
+
+<pre class="PROGRAMLISTING">
+read in saved RegID info from "UME-example-src-RegID" - 127.0.0.1:14567:2118965523
+will start with message number 5
+removing saved RegID file "UME-example-src-RegID"
+           
+</pre>
+
+<p><b class="APPLICATION">Receiver</b></p>
+
+<p>The receiver's output looks like the following.</p>
+
+<pre class="PROGRAMLISTING">
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][2118965523] Requesting RegID: 0
+saving RegID info to "UME-example-rcv-RegID" - 127.0.0.1:14567:2118965523:2118965524
+Received 15 bytes on topic UME Example (sequence number 0) 'UME Message 01'
+Received 15 bytes on topic UME Example (sequence number 1) 'UME Message 02'
+Received 15 bytes on topic UME Example (sequence number 2) 'UME Message 03'
+Received 15 bytes on topic UME Example (sequence number 3) 'UME Message 04'
+UME Store 0: 127.0.0.1:14567 [TCP:169.254.97.160:14371][2118965523] Requesting RegID: 2118965524
+saving RegID info to "UME-example-rcv-RegID" - 127.0.0.1:14567:2118965523:2118965524
+Received 15 bytes on topic UME Example (sequence number 4) 'UME Message 05'
+Received 15 bytes on topic UME Example (sequence number 5) 'UME Message 06'
+Received 15 bytes on topic UME Example (sequence number 6) 'UME Message 07'
+Received 15 bytes on topic UME Example (sequence number 7) 'UME Message 08'
+...
+           
+</pre>
+
+<p>When the source was restarted, it read in its previously saved RegID and requested the
+same ID when registering with the store. The store informed the source that it had left
+off at sequence number 3 (UME Message 04), and the next sequence number it should send is
+4 (UME Message 05). Bringing the source back up also caused the receiver to re-register
+with the store. Receivers can <span class="emphasis"><i class="EMPHASIS">only</i></span>
+find out about stores from sources they are listening to. Once the receiver re-registered
+with the store, it continued receiving messages from the source where it had left
+off.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SINGLE-STORE-FAILS" name="SINGLE-STORE-FAILS">6.4. Single
+Store Fails</a></h2>
+
+<p>Perform the following procedure with the store running to see what happens when the
+store itself fails.</p>
+
+<ol type="1">
+<li>
+<p>Start the Receiver. <tt class="LITERAL">$ ume-example-rcv-3.exe</tt></p>
+</li>
+
+<li>
+<p>Start the source. <tt class="LITERAL">$ ume-example-src-3.exe</tt> Let it run for a
+few seconds so the receiver gets a few messages.</p>
+</li>
+
+<li>
+<p>Stop the Store (<b class="APPLICATION">Ctrl/C</b>).</p>
+</li>
+</ol>
+
+<p>Notice that with this simple example program, the source simply prints the following
+and exits.</p>
+
+<pre class="PROGRAMLISTING">
+saving RegID info to "UME-example-src-RegID" - 127.0.0.1:14567:4095035673
+Store unresponsive: store 0 [127.0.0.1:14567] unresponsive
+Store unresponsive: store 0 [127.0.0.1:14567] unresponsive - no registration response.
+line 318: not currently registered with enough <b class="APPLICATION">UMP</b> stores
+           
+</pre>
+
+<p>When a source application tries to send a message without being registered with a
+store, the send call returns an error. Messages sent while not registered with a store
+cannot be persisted. See <a
+href="designing-persistent-applications.html#UME-STORES"><i>UMP Stores</i></a> for
+information about using multiple stores.</p>
+
+<p>Your source application(s) should assume an unresponsive store is a temporary problem
+and wait before sending the message again. See <a href="../example/umesrc.c"
+target="doccontent"><tt class="LITERAL">umesrc.c</tt></a>, <a
+href="../java_example/umesrc.java" target="doccontent"><tt
+class="LITERAL">umesrc.java</tt></a>, or <a href="../dotnet_example/umesrc.cs"
+target="doccontent"><tt class="LITERAL">umesrc.cs</tt></a> for examples of this behavior.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="tutorial.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a
+href="designing-persistent-applications.html" accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Enabling Persistence</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Designing Persistence Applications</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

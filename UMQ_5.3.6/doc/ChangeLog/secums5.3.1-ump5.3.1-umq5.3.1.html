@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.3.1 / UMP 5.3.1 / UMQ 5.3.1 - September - 2012</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UMS 5.3.2 / UMP 5.3.2 - November - 2012"
+href="hp-ump5.3.2.html" />
+<link rel="NEXT" title="Release UMS 5.3 / UMP 5.3 / UMQ 5.3 - June - 2012"
+href="secums5.3-ump5.3-umq5.3.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="hp-ump5.3.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="secums5.3-ump5.3-umq5.3.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.3.1-UMP5.3.1-UMQ5.3.1"
+name="SECUMS5.3.1-UMP5.3.1-UMQ5.3.1">7. Release UMS 5.3.1 / UMP 5.3.1 / UMQ 5.3.1 -
+September - 2012</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.3.1" name="UMS5.3.1">7.1. UMS 5.3.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.1-NEW" name="UMS5.3.1-NEW">7.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">Manager</b> has been added to <b class="APPLICATION">UMS</b>.
+Previously this feature was only available with <b class="APPLICATION">UMP</b> and <b
+class="APPLICATION">UMQ</b> This feature ensures the consistency and reliability of
+enterprise production applications by enabling IT administrators to control what
+configurations messaging applications can use and what users can operate them. See <a
+href="../UMM/index.html" target="doccontent">Ultra Messaging Manager</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.1-UPDATES" name="UMS5.3.1-UPDATES">7.1.2.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>The <b class="APPLICATION">UM</b> log message, Core-5688-1866, has been changed from
+Warning to an INFO message.</p>
+</li>
+
+<li>
+<p>Performance has been improved by converting locks for srcs and imbq to spinlocks in
+the Windows code. The environment variable <tt
+class="LITERAL">LBM_WINDOWS_RATELIMITER_SPINLOCK_COUNT</tt> sets the spinlock count. <tt
+class="LITERAL">InitializeCriticalSection</tt> will be used if the variable is not set.
+<tt class="LITERAL">InitializeCriticalSectionAndSpinCount</tt> will be used when the
+variable is set.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.1-FIXES" name="UMS5.3.1-FIXES">7.1.3. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem in the <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a> that caused an exception when assigning a UNICODE string to the <tt
+class="LITERAL">LBMReceiver</tt> topic attribute.</p>
+</li>
+
+<li>
+<p>Fixed an issue on AIX platforms that resulted in the message selector string <tt
+class="LITERAL">unknown</tt> to be parsed incorrectly as <tt
+class="LITERAL">true</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem in PDM that caused out of bounds exceptions when calling <code
+class="FUNCTION">setValue(PDMMessage [])</code> after modifying a PDM message that is
+part of a <tt class="LITERAL">MESSAGE_ARR</tt> field within another serialized PDM
+message. After modifying a PDM message that is member of a <tt
+class="LITERAL">MESSAGE_ARR</tt> type field, You must call <code
+class="FUNCTION">setValue(PDMMessage [])</code> to allow PDM to update the internal
+version of the message.</p>
+</li>
+
+<li>
+<p>Changed the <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE"
+target="doccontent"><tt class="LITERAL">fd_management_type</tt></a> <tt
+class="LITERAL">epoll</tt> so that it no longer asserts when closing STDIN.</p>
+</li>
+
+<li>
+<p>Corrected a problem with multiple receivers for a topic in adjacent Topic Resolution
+Domains serviced by a UM Gateway that caused topic interest to not be properly
+represented in the adjacent domains. This resulted in remote receivers not getting the
+expected message data.</p>
+</li>
+
+<li>
+<p>Fixed a problem with Message Selectors which could result in a failure when comparing
+<tt class="LITERAL">NaN</tt> values.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused receivers to get corrupted packets when the source does a
+non-blocking send over TCP without an event queue.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could result in the error log message, <tt
+class="LITERAL">CoreApi-5688-3233: TCP server listen: (98)</tt> even if TCP ports are
+still available.</p>
+</li>
+
+<li>
+<p>Fixed an issue with PDM that caused a segfault when using different message versions
+and a different number of fields. This correction was applied to the <a
+href="../API/index.html" target="doccontent">C API</a>, the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>.</p>
+</li>
+
+<li>
+<p>Reversed a <b class="APPLICATION">UM</b> 5.3 bug fix because it was shown to produce
+receiver deafness across a UM Gateway. The <b class="APPLICATION">UM</b> 5.3 bug fix
+change log entry appears below.</p>
+
+<p><span class="emphasis"><i class="EMPHASIS">Added additional validation logic to Topic
+Resolution advertisement (TIR) processing to prevent malformed packets from causing an
+invalid memory access, potentially leading to a crash.</i></span></p>
+</li>
+
+<li>
+<p>Corrected a problem that now allows Late Join to work properly when using the <a
+href="../Config/majoroptions.html#CONTEXTNETWORKCOMPATIBILITYMODE" target="doccontent"><tt
+class="LITERAL">network_compatibility_mode</tt></a>.</p>
+</li>
+
+<li>
+<p>Fixed an issue that caused a JVM crash if multiple contexts were created with the same
+port.</p>
+</li>
+
+<li>
+<p>Corrected problems with uninitialized attribute values for context, source, receiver,
+and event queue attributes.</p>
+</li>
+
+<li>
+<p>Fixed a problem with sending and receiving message properties between platforms using
+different endian formats.</p>
+</li>
+
+<li>
+<p>JMS now creates its own MessageID rather than using one based on the underlying JMS
+system. Also added are UM-layer functions that create a JMSMessageId, to add
+compatibility between JMS and the other UM senders/receivers.</p>
+</li>
+
+<li>
+<p>Fixed a problem that exposed LBMC to possible Denial of Service (DoS) attacks.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused a fatal assert <tt class="LITERAL">Core-5688-7: FATAL:
+failed assertion</tt> that could happen when setting <tt
+class="LITERAL">network_compatibility_mode</tt>.</p>
+</li>
+
+<li>
+<p>Fixed another problem that sometimes caused fatal assert <tt
+class="LITERAL">Core-5688-7: FATAL: failed assertion</tt>. UM now creates a unique mutex
+name that results in successful creation of a named Mutex, thus avoiding the assert.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.1-KNOWNISSUES" name="UMS5.3.1-KNOWNISSUES">7.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Retrieving plain text (not XML) configurations files via an http or ftp request is
+limited to configuration files of 1K in size. Configuration files over 1K will result in
+an error: <tt class="LITERAL">error reading config file</tt>. Informatica will fix this
+in a future release. A workaround is to convert the plain text configuration file to an
+XML configuration file.</p>
+</li>
+
+<li>
+<p>The <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a> does not support
+message selectors with unicode symbols and causes receiver creation to fail.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> does not support the use of Unicode PCRE characters in
+wildcard receiver patterns on any system that communicates with a HP-UX or AIX
+system.</p>
+</li>
+
+<li>
+<p>Hot Failover is not currently supported with Multitransport Threads.</p>
+</li>
+
+<li>
+<p>Configuring sources with LBT-RU, source-side filtering, and adaptive batching may
+cause a crash. All three options must be set to cause the problem. Informatica is working
+to address this issue.</p>
+</li>
+
+<li>
+<p>When using the UM Gateway Informatica recommends that you <b class="APPLICATION">do
+not</b> enable the Multitransport Threads feature. Informatica does not support nor test
+the operation of Multitransport Threads across the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multitransport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or queues (<b class="APPLICATION">UMQ</b>).</p>
+</li>
+
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Sending LBT-IPC messages larger than 65,535 bytes is not supported when <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero) unless you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt>.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">UMS</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">UMS</b> may leave a monitoring thread running after
+context deletion. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bt applications using
+the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a 32-bit
+application using LBT-IPC. It can only interact with a 64-bit application. Likewise, a
+32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support gateway failover, MIM, persistence, queuing,
+JMS, or Ultra Load Balancing. Gateway support of these features is in development.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support a four gateway "full-mesh" configuration
+(i.e., all gateways connected).</p>
+</li>
+
+<li>
+<p>If using LBT-RDMA across the UM Gateway and you exit the gateway with <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>, you may see a segfault. Informatica is
+aware of this and has not observed any ill effects from this segfault.</p>
+</li>
+
+<li>
+<p>Informatica recommends against configuring UM Gateways in a ring of peer portals - use
+configurations utilizing gateway endpoints (parallel paths) to break the ring.</p>
+</li>
+
+<li>
+<p>Informatica recommends not stopping and restarting UM Gateways within the transport's
+activity timeout period (<tt class="LITERAL">transport_*_activity_timeout</tt> defaults
+to 60 seconds for LBTRU and LBTRM).</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.1-INCOMPATIBILITIES"
+name="UMS5.3.1-INCOMPATIBILITIES">7.1.5. Version Compatibilities</a></h3>
+
+<ul>
+<li>
+<p>Although <b class="APPLICATION">UMS</b> 5.0 applications should run well with <b
+class="APPLICATION">LBM</b> 4.2 UM Gateways, all Gateways should always run the same
+version.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.3.1" name="UMP5.3.1">7.2. UMP 5.3.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.1-UPDATES" name="UMP5.3.1-UPDATES">7.2.1.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>The notice Core-5688-3847 can be received when setting the <a
+href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">wincompport</tt> only.
+The occurrence of this notice has been changed so that after the first 5 occurrences, the
+notice only prints every 10,000th consecutive occurrence. An example of this notice: <tt
+class="LITERAL">Core-5688-3847: NOTICE: wincport 000000000893BE90 line 4615 WSA err
+10061, Connection refused (peer 10.29.3.56:23005) (op 4)</tt></p>
+</li>
+
+<li>
+<p>Added identifying information such as RegID, store name and store index to
+registration error responses.</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UM</b> persistent store has been modified to retain state
+and cache files when the store restarts that may be corrupted instead of deleting them.
+The store renames these files to <tt
+class="LITERAL">regid-state/cache.pid.month_day_year</tt>. These files remain
+indefinitely in the same cache/state directories as specified in the store's XML
+configuration file.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.1-FIXES" name="UMP5.3.1-FIXES">7.2.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem that prevented a restarted store from correctly persisting the
+receiver lifetime timeouts. NOTE: Be sure to delete the old state files when upgrading
+your system to this release.</p>
+</li>
+
+<li>
+<p>Corrected a problem where a restarted umestored process generated unneeded log
+messages upon encountering empty cache files.</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused a memory store to attempt to late-join messages from
+the source that the repository has already received. This occurred after the source
+re-registers with the store. Now the repository only initiates Late Join for messages
+that it has not received.</p>
+</li>
+
+<li>
+<p>Corrected a potential memory corruption issue in the store daemon (<tt
+class="LITERAL">umestored</tt>), that was introduced in UM 5.3. The memory corruption
+could occur when the store, upon startup, detects and deletes a corrupt or empty cache
+file.</p>
+</li>
+
+<li>
+<p>Corrected a condition where a <b class="APPLICATION">UMP</b> store configured with
+Receiver-paced Persistence and a <tt class="LITERAL">repository-type</tt> of <tt
+class="LITERAL">disk</tt> could stop persisting new data if messages at the end of the
+cache file were not consumed by all registered receivers and there was available space at
+the beginning of the cache file.</p>
+</li>
+
+<li>
+<p>Corrected a problem with receivers registering with Quorum/Consensus stores that
+resulted in the log message: <tt class="LITERAL">Core-5688-3113: NOTICE: UME receiver
+"name" source "LBTRM:10.29.3.16:14390:228383bb:224.10.10.10:14400" registration consensus
+sequence number 0 less than highest seen 51c. Using consensus.</tt> Receivers now
+properly register with all stores in the group.</p>
+</li>
+
+<li>
+<p>Fixed an issue that would incorrectly allow multiple receivers on the same topic with
+the same <a href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMESESSIONID"
+target="doccontent"><tt class="LITERAL">ume_session_id</tt></a> to both be registered with the
+store simultaneously.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused a large delay in receiver re-registration if a source goes
+down and the store creates a proxy source or if the source simply restarts.</p>
+</li>
+
+<li>
+<p>Fixed the store daemon (<tt class="LITERAL">umestoreds</tt>) shutdown issue on <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; so
+that the store does not log an error message when the store shutdown command is issued
+via the Service Control Manager (SCM).</p>
+</li>
+
+<li>
+<p>Corrected a problem with store initialization that could cause a segfault during long
+running store recoveries.</p>
+</li>
+
+<li>
+<p>Corrected a problem with restarted stores that produced the error log message, <tt
+class="LITERAL">LOG Level 5: Core-5688-3167: WARNING: received keepalive from non-active
+store 0</tt>. Now a store does not send keepalives to a source if the source is not
+registered to the store.</p>
+</li>
+
+<li>
+<p>Corrected a problem where a receiver on the opposite side of a gateway did not receive
+a persistent message until a persistent source in the same context sent one.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.1-KNOWNISSUES" name="UMP5.3.1-KNOWNISSUES">7.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Creating multiple receivers on the same topic in the same context using the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> may result in a crash when
+calling <code class="FUNCTION">Dispose()</code> if the topic is a persistent data stream.
+It is recommended to either protect the calls to <code class="FUNCTION">Dispose()</code>
+to prevent concurrent calls or use a single receiver per topic and use application code
+to deliver messages to different callbacks. This will be fixed in a future release.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> stores sometimes fail to send message stability
+acknowledgements to sources for messages sent while the store was being reported
+unresponsive by the source. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>, may
+crash if you enable proxy sources and the daemon is configured with a very restrictive
+port range, ( <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_low</tt></a> - <a
+href="../Config/transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_lbtrm_multicast_address_high</tt></a>, <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTLOW"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_low</tt></a> - <a
+href="../Config/transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTHIGH"
+target="doccontent"><tt class="LITERAL">transport_tcp_port_high</tt></a>, etc.). Informatica
+recommends that you use a wide port range (at least 1000 ports) in your <b
+class="APPLICATION">UM</b> configuration file if you enable proxy sources for <tt
+class="LITERAL">umestored</tt>. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UMP</b> store daemon, <tt class="LITERAL">umestored</tt>,
+stops persisting messages to disk if the store has a loss condition which is not resolved
+prior to an EOS event. As a workaround, Informatica recommends that you enable <tt
+class="LITERAL">receiver</tt> <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a> <tt
+class="LITERAL">2500</tt> in the <b class="APPLICATION">UM</b> configuration file, not
+the <tt class="LITERAL">umestored</tt> XML configuration file. The value of 2500 assumes
+the default <tt class="LITERAL">*_nak_generation_interval</tt>. See <a
+href="../Config/grouprelated.html#PREVENTUNDETECTEDLOSS2" target="doccontent">Preventing
+Undetected Loss</a> for more information. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UMP</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. Informatica is
+working on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.3.1" name="UMQ5.3.1">7.3. UMQ 5.3.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.1-UPDATES" name="UMQ5.3.1-UPDATES">7.3.1.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>Added <a
+href="../Config/ultramessagingqueuingoptions.html#CONTEXTUMQCOMMANDOUTSTANDINGMAXIMUM"
+target="doccontent"><tt class="LITERAL">umq_command_outstanding_maximum</tt></a> to control the
+maximum number of outstanding <b class="APPLICATION">UMQ</b> commands (registrations,
+de-registrations, indexed queuing commands, message list commands, etc.) a client is
+allowed at one time. Outstanding commands are not yet acknowledged by the queue.</p>
+</li>
+
+<li>
+<p>Updated the JMS example, <tt class="FILENAME">Reply.java</tt>, to fix a case where it
+would fail to reply to a native source that did not correctly set the <tt
+class="LITERAL">JMSReplyTo</tt> property. Also, updated an internal exception to more
+cleanly handle the case where an application attempts to send to a null destination.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.1-FIXES" name="UMQ5.3.1-FIXES">7.3.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem that could cause a persistent <b class="APPLICATION">UMQ</b> queue
+daemon (<tt class="LITERAL">umestored</tt>) to occasionally fail to start up if it
+previously had registered receivers that used <b class="APPLICATION">UMQ</b> session
+IDs.</p>
+</li>
+
+<li>
+<p>Fixed an issue that could cause a non-<b class="APPLICATION">UMQ</b> context receiving
+a unicasted <b class="APPLICATION">UMQ</b> control message to crash. This only happened
+if a non-<b class="APPLICATION">UMQ</b> context was created and re-used a request port
+from a previously running <b class="APPLICATION">UMQ</b> context.</p>
+</li>
+
+<li>
+<p>Fixed a small memory leak during the clean shutdown of a slave instance of the <b
+class="APPLICATION">UMQ</b> queue daemon (<tt class="LITERAL">umestored</tt>). This leak
+had no impact during normal operation.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could cause <b class="APPLICATION">UMQ</b> clients to crash if
+they had over 65535 currently outstanding queue commands. This many queue commands could
+accumulate if you performed a very large message retrieve command or attempted to
+register tens of thousands of clients with a queue in a very short period of time.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could cause a persistent, disk queue daemon (<tt
+class="LITERAL">umestored</tt>) to sometimes fail to restart with a <tt
+class="LITERAL">anode!=NULL</tt> assertion.</p>
+</li>
+
+<li>
+<p>Corrected problems with <b class="APPLICATION">UMQ</b> session IDs and observer
+receivers ( <a
+href="../Config/ultramessagingqueuingoptions.html#RECEIVERUMQQUEUEPARTICIPATION"
+target="doccontent"><tt class="LITERAL">umq_queue_participation</tt></a> = 2) that could cause
+the queue daemon (<tt class="LITERAL">umestored</tt>) to crash upon shutdown if multiple
+observer receivers on the same topic with different session IDs were used.</p>
+</li>
+
+<li>
+<p>Fixed a problem with how Ultra Messaging JMS tracks sources within a context that
+resulted in sources on a topic being created multiple times.</p>
+</li>
+
+<li>
+<p>Corrected a problem in Ultra Messaging JMS that prevented multiple <tt
+class="LITERAL">MessageProducers</tt> with the same topic on the same connection.</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused a crash when <b class="APPLICATION">UMQ</b> Ultra Load
+Balancing receivers were assigned incorrect Application IDs during registration.</p>
+</li>
+
+<li>
+<p>Fixed an issue that resulted in received message timestamp values to be set to 0
+(zero) for <b class="APPLICATION">UMQ</b> messages.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused the JMS redelivered flag to not be set on redelivered
+messages when <b class="APPLICATION">UMQ</b> was in linear mode.</p>
+</li>
+
+<li>
+<p>Added the following new constants to <tt class="FILENAME">lbm.h</tt>, <tt
+class="FILENAME">lbm.java</tt> and <tt class="FILENAME">lbm.cs</tt> to aid in
+interoperability with Ultra Messaging JMS.</p>
+
+<pre class="PROGRAMLISTING">
+LBM_TEXTMESSAGE =        0;
+LBM_BYTEMESSAGE =        1;
+LBM_MAPMESSAGE =         2;
+LBM_MESSAGE =            3;
+LBM_OBJECTMESSAGE =      4;
+LBM_STREAMMESSAGE =      5;
+LBM_JMSDeliveryMode =    "JMSDeliveryMode";
+LBM_JMSExpiration =      "JMSExpiration";
+LBM_JMSPriority =        "JMSPriority";
+LBM_JMSMessageID =       "JMSMessageID";
+LBM_JMSTimestamp =       "JMSTimestamp";
+LBM_JMSCorrelationID =   "JMSCorrelationID";
+LBM_JMSType =            "JMSType";
+LBM_JMSRedelivered =     "JMSRedelivered";
+LBM_LBMMessageType =     "LBMMessageType";
+LBM_JMSTopicType =       "JMSTopicType";
+LBM_JMSReplyToName =     "JMSReplyToName";
+LBM_JMSReplyToWildcard = "JMSReplyToWildcard";
+LBM_JMSReplyToType =     "JMSReplyToType";
+               
+</pre>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.1-KNOWNISSUES" name="UMQ5.3.1-KNOWNISSUES">7.3.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>The method, <code class="FUNCTION">getJMSRedelivered</code> for a message always
+returns false for redelivered messages when using Queue Session IDs along with the
+topic's <tt class="LITERAL">message-reassignment-timeout</tt> set to 0 (zero).</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">UM</b> configuration file specified for a queue cannot also
+contain source attributes for a store such as, <tt class="LITERAL">source ume_store
+127.0.0.1:14567</tt> or <tt class="LITERAL">source ume_store_name NYstore2</tt>.</p>
+</li>
+
+<li>
+<p>When servicing large message retrieval requests from a queue browser, the queue may
+become busy enough that the receiver perceives it as unresponsive and re-registers with
+the queue, canceling the message retrieval request. Informatica recommends limiting large
+message retrievals to 1000 messages at a time, waiting for each retrieval to finish
+before beginning the next retrieval request</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="hp-ump5.3.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="secums5.3-ump5.3-umq5.3.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UMS 5.3.2 / UMP 5.3.2 - November -
+2012</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UMS 5.3 / UMP 5.3 / UMQ 5.3 - June -
+2012</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

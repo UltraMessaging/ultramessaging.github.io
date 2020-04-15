@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Enabling Queuing</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="Designing Persistence Applications"
+href="designing-persistent-applications.html" />
+<link rel="NEXT" title="Designing Queuing Applications"
+href="designing-queuing-applications.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="designing-persistent-applications.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="designing-queuing-applications.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ENABLING-QUEUING" name="ENABLING-QUEUING">8. Enabling
+Queuing</a></h1>
+
+<p>This section describes how to add queuing to a minimum <b class="APPLICATION">UM</b>
+source and receiver with the following.</p>
+
+<ul>
+<li>
+<p><a href="enabling-queuing.html#QUEUE-STARTING-CONFIG"><i>Starting
+Configuration</i></a></p>
+</li>
+
+<li>
+<p><a href="enabling-queuing.html#ADDING-QUEUE-TO-SOURCE"><i>Adding a Queue to a
+Source</i></a></p>
+</li>
+
+<li>
+<p><a href="enabling-queuing.html#SENDING-TO-QUEUE"><i>Sending to the Queue</i></a></p>
+</li>
+
+<li>
+<p><a href="enabling-queuing.html#RECEIVING-FROM-QUEUE"><i>Receiving from the
+Queue</i></a></p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">UMQ</b> Prerequisite: You should understand basic <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> concepts such
+as Sources and Receivers along with the basic methods for configuring them.</p>
+
+<p>The following table lists all source files used in this section. You can also find
+links to them in the appropriate task. The files can also be found in the <tt
+class="FILENAME">/doc/UME</tt> directory.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2908" name="AEN2908"></a>
+<table border="1" class="CALSTABLE">
+<col width="240" />
+<col width="192" />
+<thead>
+<tr>
+<th>Object</th>
+<th>Filename</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Source Application</td>
+<td><a href="q-example-src.c" target="doccontent">q-example-src.c</a></td>
+</tr>
+
+<tr>
+<td>Receiver Application</td>
+<td><a href="q-example-rcv.c" target="doccontent">q-example-rcv.c</a></td>
+</tr>
+
+<tr>
+<td><b class="APPLICATION">UMQ</b> Configuration File</td>
+<td><a href="q-example-config.xml" target="doccontent">q-example-config.xml</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-STARTING-CONFIG" name="QUEUE-STARTING-CONFIG">8.1.
+Starting Configuration</a></h2>
+
+<p>We begin with the minimal source and receiver used by the <a
+href="../QuickStart/index.html" target="doccontent">UM QuickStart Guide</a>. To more easily
+demonstrate the <b class="APPLICATION">UMQ</b> features we are interested in, we have
+modified the QuickStart source and receiver in the following ways.</p>
+
+<ul>
+<li>
+<p>Modified the source to send 20 messages with a one second pause between each
+message.</p>
+</li>
+
+<li>
+<p>Modified the receiver to anticipate 20 messages instead of just one.</p>
+</li>
+
+<li>
+<p>Assigned the topic, <b class="APPLICATION">UME Queue Example</b>, to both the source
+and receiver.</p>
+</li>
+
+<li>
+<p>Modified the receiver to not exit on unexpected receiver events.</p>
+</li>
+</ul>
+
+<p>The last change allows us to better demonstrate basic operation and evolve our
+receiver slowly without having to anticipate all the options that <b
+class="APPLICATION">UMQ</b> provides up front.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Be sure to build <a href="q-example-src.c"
+target="doccontent">q-example-src.c</a> and <a href="q-example-rcv.c"
+target="doccontent">q-example-rcv.c</a>. Instructions for building them are at the beginning of
+the source files.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ADDING-QUEUE-TO-SOURCE" name="ADDING-QUEUE-TO-SOURCE">8.2.
+Adding a Queue to a Source</a></h2>
+
+<p>To enable queuing, a source needs to be configured to use a queue by setting the <a
+href="../Config/ultramessagingqueuingoptions.html#SOURCEUMQQUEUENAME" target="doccontent"><tt
+class="LITERAL">umq_queue_name</tt></a> for the source. The following <a
+href="q-example-src.c" target="doccontent">q-example-src.c</a> code sets the source's queue to
+the <tt class="LITERAL">queue_name</tt> established in the <b class="APPLICATION">UMQ</b>
+configuration file (<tt class="LITERAL">q-example-config.xml</tt> ).</p>
+
+<pre class="SCREEN">
+err = lbm_src_topic_attr_str_setopt(&amp;attr, "umq_queue_name", queue_name);
+</pre>
+
+<p>Examining <a href="q-example-config.xml" target="doccontent">q-example-config.xml</a>
+reveals that <tt class="LITERAL">queue_name</tt> is set to <b class="APPLICATION">Queue
+Training</b> and listens on port 14567 for registrations.</p>
+
+<p>Let's instantiate the queue with the following command.</p>
+
+<pre class="SCREEN">
+$ umestored q-example-config.xml
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SENDING-TO-QUEUE" name="SENDING-TO-QUEUE">8.3. Sending to the
+Queue</a></h2>
+
+<p>Further examination of <a href="q-example-config.xml"
+target="doccontent">q-example-config.xml</a> shows that the <b class="APPLICATION">Queue
+Training</b> is configured for <a href="ume-ops-operational-view.html#SQD"><i>Serial
+Queue Dissemination (SQD)</i></a>. In this model, sources send messages to topics as
+usual, but receivers interested in the topic need not even be started because topic
+messages go to the Queue first.</p>
+
+<p>Therefore we can take the next step and run the source with the following command.</p>
+
+<pre class="SCREEN">
+$ q-example-src
+</pre>
+
+<p>The sample output below shows that the source sends 20 messages on the <b
+class="APPLICATION">UME Queue Example</b> topic.</p>
+
+<pre class="SCREEN">
+tmont@agentmbp:/Volumes/source$ ./q-example-src 
+INFO: Host has multiple multicast-capable interfaces. Default multicast interface: [en1][192.168.0.41] 
+INFO: Source "UME Queue Example" Late Join not set, but UME store or UMQ queue specified. Setting Late Join. 
+Sent Message 01 
+Sent Message 02 
+Sent Message 03 
+Sent Message 04 
+Sent Message 05 
+Sent Message 06 
+Sent Message 07 
+Sent Message 08 
+Sent Message 09 
+Sent Message 10 
+Sent Message 11 
+Sent Message 12 
+Sent Message 13 
+Sent Message 14 
+Sent Message 15 
+Sent Message 16 
+Sent Message 17 
+Sent Message 18 
+Sent Message 19 
+Sent Message 20
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVING-FROM-QUEUE" name="RECEIVING-FROM-QUEUE">8.4.
+Receiving from the Queue</a></h2>
+
+<p>At this point, only the Queue is running. The receiving application can start up at
+anytime and receive any messages from the Queue on the topic it subscribes to.</p>
+
+<pre class="SCREEN">
+tmont@agentmbp:/Volumes/source$ ./q-example-rcv 
+INFO: Host has multiple multicast-capable interfaces. Default multicast interface: [en1][192.168.0.41] 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 01' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 02' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 03' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 04' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 05' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 06' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 07' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 08' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 09' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 10' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 11' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 12' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 13' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 14' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 15' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 16' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 17' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 18' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 19' 
+Received 20 bytes on topic UME Queue Example: 'UME Queue Message 20'
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a
+href="designing-persistent-applications.html" accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="designing-queuing-applications.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Designing Persistence Applications</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Designing Queuing Applications</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

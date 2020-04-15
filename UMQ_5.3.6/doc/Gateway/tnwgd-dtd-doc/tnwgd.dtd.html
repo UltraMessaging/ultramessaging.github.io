@@ -1,0 +1,1655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+<meta http-equiv='CONTENT-TYPE' content='text/html; charset=UTF-8' />
+<link rel='StyleSheet' href='DTDDocStyle.css' type='text/css' media='screen' />
+<title>UM Gateway</title>
+	<script type="text/javascript" src="../../Search/highlight.js"></script>
+</head><body>
+<p class='DTDSource'><b><code>tnwgd.dtd</code></b>: <a href='tnwgd.dtd.html'>Elements</a> - Entities - <a href='tnwgd.dtd.org.html'>Source</a> | <a href='intro.html'>Intro</a> - <a href='elementsIndex.html'>Index</a><br /><a href='index.html' target='_top'>FRAMES</a>&nbsp;/&nbsp;<a href='tnwgd.dtd.html' target='_top'>NO FRAMES</a></p><h1>UM Gateway</h1>
+<p>Configuration for the UM Gateway Daemon.</p><br />
+<a name='tnw-gateway'></a>
+<br /><table class='elementTitle' summary="tnw-gateway"><tr><td class='leftElementTitle'>
+&lt;tnw-gateway&gt;</td><td class='rightElementTitle'>
+Root element
+</td></tr></table>
+<p>The root element of the UM gateway configuration.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;tnw-gateway&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;tnw-gateway&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#daemon'>daemon</a></td><td>One or none</td></tr>
+<tr><td><a href='#portals'>portals</a></td><td>Only one</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;tnw-gateway&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;tnw-gateway&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#tnw-gateway_version'>version</a></td><td>1.0</td><td></td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#daemon'>daemon</a>?, <a href='#portals'>portals</a>)</p><a name='tnw-gateway_version'></a>
+<br /><table class='attributeTitle' summary="version"><tr><td class='leftAttributeTitle'>
+@version</td><td class='rightAttributeTitle'>
+Attribute of <a href='#tnw-gateway'>tnw-gateway</a>
+</td></tr></table>
+<p>UM Gateway DTD version used.</p><p><span class='inTextTitle'>Possible values</span>: 1.0 - <span class='inTextTitle'>Required</span></p><a name='daemon'></a>
+<br /><table class='elementTitle' summary="daemon"><tr><td class='leftElementTitle'>
+&lt;daemon&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tnw-gateway'>tnw-gateway</a>
+</td></tr></table>
+<p>Specifies the global daemon configuration.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;daemon&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;daemon&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#gid'>gid</a></td><td>One or none</td></tr>
+<tr><td><a href='#lbm-license-file'>lbm-license-file</a></td><td>One or none</td></tr>
+<tr><td><a href='#log'>log</a></td><td>One or none</td></tr>
+<tr><td><a href='#monitor'>monitor</a></td><td>One or none</td></tr>
+<tr><td><a href='#patternmap'>patternmap</a></td><td>One or none</td></tr>
+<tr><td><a href='#pidfile'>pidfile</a></td><td>One or none</td></tr>
+<tr><td><a href='#propagation-delay'>propagation-delay</a></td><td>One or none</td></tr>
+<tr><td><a href='#topicmap'>topicmap</a></td><td>One or none</td></tr>
+<tr><td><a href='#uid'>uid</a></td><td>One or none</td></tr>
+<tr><td><a href='#web-monitor'>web-monitor</a></td><td>One or none</td></tr>
+<tr><td><a href='#xml-config'>xml-config</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#log'>log</a>?, <a href='#uid'>uid</a>?, <a href='#gid'>gid</a>?, <a href='#pidfile'>pidfile</a>?, <a href='#lbm-license-file'>lbm-license-file</a>?, <a href='#topicmap'>topicmap</a>?, <a href='#patternmap'>patternmap</a>?, <a href='#monitor'>monitor</a>?, <a href='#web-monitor'>web-monitor</a>?, <a href='#propagation-delay'>propagation-delay</a>?, <a href='#xml-config'>xml-config</a>?)</p><a name='log'></a>
+<br /><table class='elementTitle' summary="log"><tr><td class='leftElementTitle'>
+&lt;log&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Indicates the file where log messages are sent.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;log&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;log&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#log_type'>type</a></td><td>file, syslog, console</td><td>console</td></tr><tr><td><a href='#log_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='log_type'></a>
+<br /><table class='attributeTitle' summary="type"><tr><td class='leftAttributeTitle'>
+@type</td><td class='rightAttributeTitle'>
+Attribute of <a href='#log'>log</a>
+</td></tr></table>
+<p>Type of logging. For syslog and console, the filename is ignored.</p><p><span class='inTextTitle'>Possible values</span>: file, syslog, console - <span class='inTextTitle'>Default value</span>: console</p><a name='log_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#log'>log</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='pidfile'></a>
+<br /><table class='elementTitle' summary="pidfile"><tr><td class='leftElementTitle'>
+&lt;pidfile&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Pathname for daemon process ID (PID) file.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;pidfile&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pidfile&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pidfile_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='pidfile_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pidfile'>pidfile</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='uid'></a>
+<br /><table class='elementTitle' summary="uid"><tr><td class='leftElementTitle'>
+&lt;uid&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>User ID (UID) for daemon process (if run as root)</p><a name='gid'></a>
+<br /><table class='elementTitle' summary="gid"><tr><td class='leftElementTitle'>
+&lt;gid&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Group ID (GID) for daemon process (if run as root)</p><a name='lbm-license-file'></a>
+<br /><table class='elementTitle' summary="lbm-license-file"><tr><td class='leftElementTitle'>
+&lt;lbm-license-file&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Specifies the LBM license file.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;lbm-license-file&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;lbm-license-file&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#lbm-license-file_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='lbm-license-file_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#lbm-license-file'>lbm-license-file</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='topicmap'></a>
+<br /><table class='elementTitle' summary="topicmap"><tr><td class='leftElementTitle'>
+&lt;topicmap/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Determines characteristics of the internal topic maps.</p><blockquote>
+<table  summary="&lt;topicmap&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topicmap&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topicmap_hash-function'>hash-function</a></td><td>classic, djb2, sdbm, murmur2</td><td>murmur2</td></tr><tr><td><a href='#topicmap_size'>size</a></td><td></td><td>131111</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='topicmap_hash-function'></a>
+<br /><table class='attributeTitle' summary="hash-function"><tr><td class='leftAttributeTitle'>
+@hash-function</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topicmap'>topicmap</a>
+</td></tr></table>
+<p>Topic map hash function to use.</p><p><span class='inTextTitle'>Possible values</span>: classic, djb2, sdbm, murmur2 - <span class='inTextTitle'>Default value</span>: murmur2</p><a name='topicmap_size'></a>
+<br /><table class='attributeTitle' summary="size"><tr><td class='leftAttributeTitle'>
+@size</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topicmap'>topicmap</a>
+</td></tr></table>
+<p>Number of entries in the topic map.</p><p><span class='inTextTitle'>Default value</span>: 131111</p><a name='patternmap'></a>
+<br /><table class='elementTitle' summary="patternmap"><tr><td class='leftElementTitle'>
+&lt;patternmap/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Determines characteristics of the internal pattern maps.</p><blockquote>
+<table  summary="&lt;patternmap&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;patternmap&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#patternmap_hash-function'>hash-function</a></td><td>classic, djb2, sdbm, murmur2</td><td>murmur2</td></tr><tr><td><a href='#patternmap_size'>size</a></td><td></td><td>131111</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='patternmap_hash-function'></a>
+<br /><table class='attributeTitle' summary="hash-function"><tr><td class='leftAttributeTitle'>
+@hash-function</td><td class='rightAttributeTitle'>
+Attribute of <a href='#patternmap'>patternmap</a>
+</td></tr></table>
+<p>Pattern map hash function to use.</p><p><span class='inTextTitle'>Possible values</span>: classic, djb2, sdbm, murmur2 - <span class='inTextTitle'>Default value</span>: murmur2</p><a name='patternmap_size'></a>
+<br /><table class='attributeTitle' summary="size"><tr><td class='leftAttributeTitle'>
+@size</td><td class='rightAttributeTitle'>
+Attribute of <a href='#patternmap'>patternmap</a>
+</td></tr></table>
+<p>Number of entries in the pattern map.</p><p><span class='inTextTitle'>Default value</span>: 131111</p><a name='portals'></a>
+<br /><table class='elementTitle' summary="portals"><tr><td class='leftElementTitle'>
+&lt;portals&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tnw-gateway'>tnw-gateway</a>
+</td></tr></table>
+<p>Portal definitions.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;portals&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;portals&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#endpoint'>endpoint</a></td><td>Any number</td></tr>
+<tr><td><a href='#peer'>peer</a></td><td>Any number</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#endpoint'>endpoint</a> | <a href='#peer'>peer</a>)+</p><a name='endpoint'></a>
+<br /><table class='elementTitle' summary="endpoint"><tr><td class='leftElementTitle'>
+&lt;endpoint&gt;</td><td class='rightElementTitle'>
+Child of <a href='#portals'>portals</a>
+</td></tr></table>
+<p>Endpoint portal definition.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;endpoint&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;endpoint&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#acl'>acl</a></td><td>One or none</td></tr>
+<tr><td><a href='#context-query'>context-query</a></td><td>One or none</td></tr>
+<tr><td><a href='#cost'>cost</a></td><td>One or none</td></tr>
+<tr><td><a href='#domain-id'>domain-id</a></td><td>Only one</td></tr>
+<tr><td><a href='#late-join'>late-join</a></td><td>One or none</td></tr>
+<tr><td><a href='#lbm-attributes'>lbm-attributes</a></td><td>One or none</td></tr>
+<tr><td><a href='#lbm-config'>lbm-config</a></td><td>One or none</td></tr>
+<tr><td><a href='#name'>name</a></td><td>Only one</td></tr>
+<tr><td><a href='#pattern-domain-activity'>pattern-domain-activity</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-interest-generate'>pattern-interest-generate</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-purge'>pattern-purge</a></td><td>One or none</td></tr>
+<tr><td><a href='#receiver-context-name'>receiver-context-name</a></td><td>One or none</td></tr>
+<tr><td><a href='#source-context-name'>source-context-name</a></td><td>One or none</td></tr>
+<tr><td><a href='#sqn-window'>sqn-window</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-domain-activity'>topic-domain-activity</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-interest-generate'>topic-interest-generate</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-purge'>topic-purge</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-resolution'>topic-resolution</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#name'>name</a>, <a href='#domain-id'>domain-id</a>, <a href='#cost'>cost</a>?, <a href='#lbm-config'>lbm-config</a>?, <a href='#lbm-attributes'>lbm-attributes</a>?, <a href='#acl'>acl</a>?, <a href='#topic-resolution'>topic-resolution</a>?, <a href='#late-join'>late-join</a>?, <a href='#topic-purge'>topic-purge</a>?, <a href='#topic-interest-generate'>topic-interest-generate</a>?, <a href='#topic-domain-activity'>topic-domain-activity</a>?, <a href='#pattern-purge'>pattern-purge</a>?, <a href='#pattern-interest-generate'>pattern-interest-generate</a>?, <a href='#pattern-domain-activity'>pattern-domain-activity</a>?, <a href='#source-context-name'>source-context-name</a>?, <a href='#receiver-context-name'>receiver-context-name</a>?, <a href='#sqn-window'>sqn-window</a>?, <a href='#context-query'>context-query</a>?)</p><a name='peer'></a>
+<br /><table class='elementTitle' summary="peer"><tr><td class='leftElementTitle'>
+&lt;peer&gt;</td><td class='rightElementTitle'>
+Child of <a href='#portals'>portals</a>
+</td></tr></table>
+<p>Peer portal definition.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;peer&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;peer&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#acl'>acl</a></td><td>One or none</td></tr>
+<tr><td><a href='#batching'>batching</a></td><td>One or none</td></tr>
+<tr><td><a href='#context-query'>context-query</a></td><td>One or none</td></tr>
+<tr><td><a href='#cost'>cost</a></td><td>One or none</td></tr>
+<tr><td><a href='#gateway-keepalive'>gateway-keepalive</a></td><td>One or none</td></tr>
+<tr><td><a href='#lbm-attributes'>lbm-attributes</a></td><td>One or none</td></tr>
+<tr><td><a href='#lbm-config'>lbm-config</a></td><td>One or none</td></tr>
+<tr><td><a href='#max-datagram'>max-datagram</a></td><td>One or none</td></tr>
+<tr><td><a href='#max-queue'>max-queue</a></td><td>One or none</td></tr>
+<tr><td><a href='#name'>name</a></td><td>Only one</td></tr>
+<tr><td><a href='#pattern-domain-activity'>pattern-domain-activity</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-interest-generate'>pattern-interest-generate</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-purge'>pattern-purge</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-use-check'>pattern-use-check</a></td><td>One or none</td></tr>
+<tr><td><a href='#receiver-context-name'>receiver-context-name</a></td><td>One or none</td></tr>
+<tr><td><a href='#single-tcp'>single-tcp</a></td><td>One or none</td></tr>
+<tr><td><a href='#source-context-name'>source-context-name</a></td><td>One or none</td></tr>
+<tr><td><a href='#sqn-window'>sqn-window</a></td><td>One or none</td></tr>
+<tr><td><a href='#tcp'>tcp</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-domain-activity'>topic-domain-activity</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-interest-generate'>topic-interest-generate</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-purge'>topic-purge</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-use-check'>topic-use-check</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#name'>name</a>, <a href='#cost'>cost</a>?, (<a href='#tcp'>tcp</a> | <a href='#single-tcp'>single-tcp</a>), <a href='#max-queue'>max-queue</a>?, <a href='#max-datagram'>max-datagram</a>?, <a href='#batching'>batching</a>?, <a href='#lbm-config'>lbm-config</a>?, <a href='#lbm-attributes'>lbm-attributes</a>?, <a href='#acl'>acl</a>?, <a href='#topic-purge'>topic-purge</a>?, <a href='#topic-interest-generate'>topic-interest-generate</a>?, <a href='#topic-domain-activity'>topic-domain-activity</a>?, <a href='#pattern-purge'>pattern-purge</a>?, <a href='#pattern-interest-generate'>pattern-interest-generate</a>?, <a href='#pattern-domain-activity'>pattern-domain-activity</a>?, <a href='#topic-use-check'>topic-use-check</a>?, <a href='#pattern-use-check'>pattern-use-check</a>?, <a href='#source-context-name'>source-context-name</a>?, <a href='#receiver-context-name'>receiver-context-name</a>?, <a href='#sqn-window'>sqn-window</a>?, <a href='#context-query'>context-query</a>?, <a href='#gateway-keepalive'>gateway-keepalive</a>?)</p><a name='name'></a>
+<br /><table class='elementTitle' summary="name"><tr><td class='leftElementTitle'>
+&lt;name&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Portal name.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;name&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;name&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#name_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='name_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#name'>name</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='domain-id'></a>
+<br /><table class='elementTitle' summary="domain-id"><tr><td class='leftElementTitle'>
+&lt;domain-id&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>
+</td></tr></table>
+<p>Portal domain ID.</p><a name='cost'></a>
+<br /><table class='elementTitle' summary="cost"><tr><td class='leftElementTitle'>
+&lt;cost&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Portal cost.</p><a name='tcp'></a>
+<br /><table class='elementTitle' summary="tcp"><tr><td class='leftElementTitle'>
+&lt;tcp&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>TCP configuration.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;tcp&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;tcp&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#companion'>companion</a></td><td>Only one</td></tr>
+<tr><td><a href='#interface'>interface</a></td><td>One or none</td></tr>
+<tr><td><a href='#keepalive'>keepalive</a></td><td>One or none</td></tr>
+<tr><td><a href='#listen-port'>listen-port</a></td><td>Only one</td></tr>
+<tr><td><a href='#nodelay'>nodelay</a></td><td>One or none</td></tr>
+<tr><td><a href='#receive-buffer'>receive-buffer</a></td><td>One or none</td></tr>
+<tr><td><a href='#send-buffer'>send-buffer</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#interface'>interface</a>?, <a href='#listen-port'>listen-port</a>, <a href='#receive-buffer'>receive-buffer</a>?, <a href='#send-buffer'>send-buffer</a>?, <a href='#keepalive'>keepalive</a>?, <a href='#nodelay'>nodelay</a>?, <a href='#companion'>companion</a>)</p><a name='interface'></a>
+<br /><table class='elementTitle' summary="interface"><tr><td class='leftElementTitle'>
+&lt;interface&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>, <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>TCP interface specification. May be specified in dotted-decimal or CIDR format.</p><a name='listen-port'></a>
+<br /><table class='elementTitle' summary="listen-port"><tr><td class='leftElementTitle'>
+&lt;listen-port&gt;</td><td class='rightElementTitle'>
+Child of <a href='#acceptor'>acceptor</a>, <a href='#tcp'>tcp</a>
+</td></tr></table>
+<p>Port on which to listen for connections from the companion peer portal.
+Companion peer portal must specify this port as it's companion port.</p><a name='receive-buffer'></a>
+<br /><table class='elementTitle' summary="receive-buffer"><tr><td class='leftElementTitle'>
+&lt;receive-buffer&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>, <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Size of TCP receive buffer. If not specified, the system default size is used.</p><a name='send-buffer'></a>
+<br /><table class='elementTitle' summary="send-buffer"><tr><td class='leftElementTitle'>
+&lt;send-buffer&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>, <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Size of TCP send buffer. If not specified, the system default size is used.</p><a name='keepalive'></a>
+<br /><table class='elementTitle' summary="keepalive"><tr><td class='leftElementTitle'>
+&lt;keepalive/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>, <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Enable TCP keepalive. Disabled by default.</p><p class='emptyTagNote'>This element is always empty.</p><a name='nodelay'></a>
+<br /><table class='elementTitle' summary="nodelay"><tr><td class='leftElementTitle'>
+&lt;nodelay/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>, <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Enable TCP nodelay. Disabled by default.</p><p class='emptyTagNote'>This element is always empty.</p><a name='companion'></a>
+<br /><table class='elementTitle' summary="companion"><tr><td class='leftElementTitle'>
+&lt;companion&gt;</td><td class='rightElementTitle'>
+Child of <a href='#tcp'>tcp</a>
+</td></tr></table>
+<p>Description of companion peer portal.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;companion&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;companion&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#address'>address</a></td><td>Only one</td></tr>
+<tr><td><a href='#port'>port</a></td><td>Only one</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;companion&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;companion&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#companion_reconnect-interval'>reconnect-interval</a></td><td></td><td>5000</td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#address'>address</a>, <a href='#port'>port</a>)</p><a name='companion_reconnect-interval'></a>
+<br /><table class='attributeTitle' summary="reconnect-interval"><tr><td class='leftAttributeTitle'>
+@reconnect-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#companion'>companion</a>
+</td></tr></table>
+<p>Time interval, in milliseconds, to wait before reconnecting to the companion portal.</p><p><span class='inTextTitle'>Default value</span>: 5000</p><a name='address'></a>
+<br /><table class='elementTitle' summary="address"><tr><td class='leftElementTitle'>
+&lt;address&gt;</td><td class='rightElementTitle'>
+Child of <a href='#initiator'>initiator</a>, <a href='#companion'>companion</a>
+</td></tr></table>
+<p>Companion peer portal address. Specified in dotted-decimal format.</p><a name='port'></a>
+<br /><table class='elementTitle' summary="port"><tr><td class='leftElementTitle'>
+&lt;port&gt;</td><td class='rightElementTitle'>
+Child of <a href='#initiator'>initiator</a>, <a href='#companion'>companion</a>
+</td></tr></table>
+<p>Port to connect to on companion peer portal.
+Companion peer portal must specify this port as it's listen-port.</p><a name='single-tcp'></a>
+<br /><table class='elementTitle' summary="single-tcp"><tr><td class='leftElementTitle'>
+&lt;single-tcp&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Single TCP configuration.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;single-tcp&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;single-tcp&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#acceptor'>acceptor</a></td><td>One or none</td></tr>
+<tr><td><a href='#initiator'>initiator</a></td><td>One or none</td></tr>
+<tr><td><a href='#interface'>interface</a></td><td>One or none</td></tr>
+<tr><td><a href='#keepalive'>keepalive</a></td><td>One or none</td></tr>
+<tr><td><a href='#nodelay'>nodelay</a></td><td>One or none</td></tr>
+<tr><td><a href='#receive-buffer'>receive-buffer</a></td><td>One or none</td></tr>
+<tr><td><a href='#send-buffer'>send-buffer</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#interface'>interface</a>?, <a href='#receive-buffer'>receive-buffer</a>?, <a href='#send-buffer'>send-buffer</a>?, <a href='#keepalive'>keepalive</a>?, <a href='#nodelay'>nodelay</a>?, (<a href='#initiator'>initiator</a> | <a href='#acceptor'>acceptor</a>))</p><a name='initiator'></a>
+<br /><table class='elementTitle' summary="initiator"><tr><td class='leftElementTitle'>
+&lt;initiator&gt;</td><td class='rightElementTitle'>
+Child of <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Single-TCP initiator configuration</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;initiator&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;initiator&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#address'>address</a></td><td>Only one</td></tr>
+<tr><td><a href='#port'>port</a></td><td>Only one</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;initiator&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;initiator&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#initiator_reconnect-interval'>reconnect-interval</a></td><td></td><td>5000</td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#address'>address</a>, <a href='#port'>port</a>)</p><a name='initiator_reconnect-interval'></a>
+<br /><table class='attributeTitle' summary="reconnect-interval"><tr><td class='leftAttributeTitle'>
+@reconnect-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#initiator'>initiator</a>
+</td></tr></table>
+<p>Time interval, in milliseconds, to wait before reconnecting to the companion portal.</p><p><span class='inTextTitle'>Default value</span>: 5000</p><a name='acceptor'></a>
+<br /><table class='elementTitle' summary="acceptor"><tr><td class='leftElementTitle'>
+&lt;acceptor&gt;</td><td class='rightElementTitle'>
+Child of <a href='#single-tcp'>single-tcp</a>
+</td></tr></table>
+<p>Single-TCP acceptor configuration</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;acceptor&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;acceptor&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#listen-port'>listen-port</a></td><td>Only one</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#listen-port'>listen-port</a>)</p><a name='max-queue'></a>
+<br /><table class='elementTitle' summary="max-queue"><tr><td class='leftElementTitle'>
+&lt;max-queue&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Maximum queue size. If not specified, it defaults to 1000000 bytes.</p><a name='max-datagram'></a>
+<br /><table class='elementTitle' summary="max-datagram"><tr><td class='leftElementTitle'>
+&lt;max-datagram&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Maximum peer datagram size. If not specified, it defaults to 65535 bytes.</p><a name='batching'></a>
+<br /><table class='elementTitle' summary="batching"><tr><td class='leftElementTitle'>
+&lt;batching&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Peer batching configuration. Batching applies to data messages only: control messages are sent immediately (flushing any batched data messages).</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;batching&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;batching&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#batch-interval'>batch-interval</a></td><td>One or none</td></tr>
+<tr><td><a href='#min-length'>min-length</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#min-length'>min-length</a>?, <a href='#batch-interval'>batch-interval</a>?)</p><a name='min-length'></a>
+<br /><table class='elementTitle' summary="min-length"><tr><td class='leftElementTitle'>
+&lt;min-length&gt;</td><td class='rightElementTitle'>
+Child of <a href='#batching'>batching</a>
+</td></tr></table>
+<p>The minimum length of a set of batched messages. When the total length of the batched messages
+reaches or exceeds this value, the batch is sent. If not specified, it defaults to 8192 bytes.</p><a name='batch-interval'></a>
+<br /><table class='elementTitle' summary="batch-interval"><tr><td class='leftElementTitle'>
+&lt;batch-interval&gt;</td><td class='rightElementTitle'>
+Child of <a href='#batching'>batching</a>
+</td></tr></table>
+<p>The maximum interval (in milliseconds) between when the first message of an batch is queued until the batch is sent.
+A message will not stay in the queue longer than this value before being sent in the worse case.
+If not specified, it defaults to200 milliseconds. The minimum allowed value
+is 3 milliseconds.</p><a name='lbm-config'></a>
+<br /><table class='elementTitle' summary="lbm-config"><tr><td class='leftElementTitle'>
+&lt;lbm-config&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>LBM configuration filename.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;lbm-config&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;lbm-config&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#lbm-config_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='lbm-config_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#lbm-config'>lbm-config</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='lbm-attributes'></a>
+<br /><table class='elementTitle' summary="lbm-attributes"><tr><td class='leftElementTitle'>
+&lt;lbm-attributes&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Set of LBM attributes to apply. Will override any defaults or attribute values in lbm-config.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;lbm-attributes&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;lbm-attributes&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#option'>option</a></td><td>At least one</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#option'>option</a>+)</p><a name='option'></a>
+<br /><table class='elementTitle' summary="option"><tr><td class='leftElementTitle'>
+&lt;option/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#lbm-attributes'>lbm-attributes</a>
+</td></tr></table>
+<p>An individual LBM option.</p><blockquote>
+<table  summary="&lt;option&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;option&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#option_name'>name</a></td><td></td><td></td></tr><tr><td><a href='#option_scope'>scope</a></td><td>receiver, context, source, wildcard_receiver, event_queue</td><td></td></tr><tr><td><a href='#option_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='option_scope'></a>
+<br /><table class='attributeTitle' summary="scope"><tr><td class='leftAttributeTitle'>
+@scope</td><td class='rightAttributeTitle'>
+Attribute of <a href='#option'>option</a>
+</td></tr></table>
+<p>Option scope</p><p><span class='inTextTitle'>Possible values</span>: receiver, context, source, wildcard_receiver, event_queue - <span class='inTextTitle'>Required</span></p><a name='option_name'></a>
+<br /><table class='attributeTitle' summary="name"><tr><td class='leftAttributeTitle'>
+@name</td><td class='rightAttributeTitle'>
+Attribute of <a href='#option'>option</a>
+</td></tr></table>
+<p>Option name</p><p><span class='inTextTitle'>Required</span></p><a name='option_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#option'>option</a>
+</td></tr></table>
+<p>Option value</p><p><span class='inTextTitle'>Required</span></p><a name='acl'></a>
+<br /><table class='elementTitle' summary="acl"><tr><td class='leftElementTitle'>
+&lt;acl&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Specifies ACL for filtering, consisting of Access Control Entries (ACEs).</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;acl&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;acl&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#inbound'>inbound</a></td><td>One or none</td></tr>
+<tr><td><a href='#outbound'>outbound</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#inbound'>inbound</a>?, <a href='#outbound'>outbound</a>?)</p><a name='inbound'></a>
+<br /><table class='elementTitle' summary="inbound"><tr><td class='leftElementTitle'>
+&lt;inbound&gt;</td><td class='rightElementTitle'>
+Child of <a href='#acl'>acl</a>
+</td></tr></table>
+<p>Inbound ACLs. Determines what a portal allows to be forwarded from its topic
+resolution domain to other portals.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;inbound&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;inbound&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#ace'>ace</a></td><td>At least one</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#ace'>ace</a>+)</p><a name='outbound'></a>
+<br /><table class='elementTitle' summary="outbound"><tr><td class='leftElementTitle'>
+&lt;outbound&gt;</td><td class='rightElementTitle'>
+Child of <a href='#acl'>acl</a>
+</td></tr></table>
+<p>Outbound ACLs. Determines what a portal allows to be forwarded to its topic
+resolution domain from other portals.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;outbound&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;outbound&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#ace'>ace</a></td><td>At least one</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#ace'>ace</a>+)</p><a name='ace'></a>
+<br /><table class='elementTitle' summary="ace"><tr><td class='leftElementTitle'>
+&lt;ace&gt;</td><td class='rightElementTitle'>
+Child of <a href='#outbound'>outbound</a>, <a href='#inbound'>inbound</a>
+</td></tr></table>
+<p>Access control entry (ACE).</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;ace&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;ace&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#multicast-group'>multicast-group</a></td><td>Any number</td></tr>
+<tr><td><a href='#pcre-pattern'>pcre-pattern</a></td><td>Any number</td></tr>
+<tr><td><a href='#regex-pattern'>regex-pattern</a></td><td>Any number</td></tr>
+<tr><td><a href='#source-ip'>source-ip</a></td><td>Any number</td></tr>
+<tr><td><a href='#tcp-source-port'>tcp-source-port</a></td><td>Any number</td></tr>
+<tr><td><a href='#topic'>topic</a></td><td>Any number</td></tr>
+<tr><td><a href='#transport'>transport</a></td><td>Any number</td></tr>
+<tr><td><a href='#udp-destination-port'>udp-destination-port</a></td><td>Any number</td></tr>
+<tr><td><a href='#udp-source-port'>udp-source-port</a></td><td>Any number</td></tr>
+<tr><td><a href='#xport-id'>xport-id</a></td><td>Any number</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;ace&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;ace&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#ace_match'>match</a></td><td>accept, reject</td><td></td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#topic'>topic</a> | <a href='#pcre-pattern'>pcre-pattern</a> | <a href='#regex-pattern'>regex-pattern</a> | <a href='#transport'>transport</a> | <a href='#source-ip'>source-ip</a> | <a href='#multicast-group'>multicast-group</a> | <a href='#udp-source-port'>udp-source-port</a> | <a href='#udp-destination-port'>udp-destination-port</a> | <a href='#tcp-source-port'>tcp-source-port</a> | <a href='#xport-id'>xport-id</a>)+</p><a name='ace_match'></a>
+<br /><table class='attributeTitle' summary="match"><tr><td class='leftAttributeTitle'>
+@match</td><td class='rightAttributeTitle'>
+Attribute of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Action on matching this ACE</p><p><span class='inTextTitle'>Possible values</span>: accept, reject - <span class='inTextTitle'>Required</span></p><a name='topic'></a>
+<br /><table class='elementTitle' summary="topic"><tr><td class='leftElementTitle'>
+&lt;topic&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a topic ACE.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;topic&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='topic_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic'>topic</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='pcre-pattern'></a>
+<br /><table class='elementTitle' summary="pcre-pattern"><tr><td class='leftElementTitle'>
+&lt;pcre-pattern&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a PCRE topic pattern ACE.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;pcre-pattern&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pcre-pattern&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pcre-pattern_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='pcre-pattern_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pcre-pattern'>pcre-pattern</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='regex-pattern'></a>
+<br /><table class='elementTitle' summary="regex-pattern"><tr><td class='leftElementTitle'>
+&lt;regex-pattern&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a REGEX topic pattern ACE.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;regex-pattern&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;regex-pattern&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#regex-pattern_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='regex-pattern_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#regex-pattern'>regex-pattern</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='transport'></a>
+<br /><table class='elementTitle' summary="transport"><tr><td class='leftElementTitle'>
+&lt;transport/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a transport-type ACE.</p><blockquote>
+<table  summary="&lt;transport&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;transport&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#transport_comparison'>comparison</a></td><td>eq, equal, ne, notequal</td><td></td></tr><tr><td><a href='#transport_value'>value</a></td><td>tcp, lbt-rm, lbtrm, lbt-ru, lbtru, lbt-ipc, lbtipc</td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='transport_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#transport'>transport</a>
+</td></tr></table>
+<p>Transport type value. Allowable values are "tcp", "lbt-rm",
+"lbtrm", "lbt-ru", "lbtru", "lbt-ipc", and "lbtipc".</p><p><span class='inTextTitle'>Possible values</span>: tcp, lbt-rm, lbtrm, lbt-ru, lbtru, lbt-ipc, lbtipc - <span class='inTextTitle'>Required</span></p><a name='transport_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#transport'>transport</a>
+</td></tr></table>
+<p>Relation between the transport type and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The transport type must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The transport type must not be equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal - <span class='inTextTitle'>Required</span></p><a name='source-ip'></a>
+<br /><table class='elementTitle' summary="source-ip"><tr><td class='leftElementTitle'>
+&lt;source-ip/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a source IP ACE. Applies only to TCP, LBT-RM, and LBT-RU transports.</p><blockquote>
+<table  summary="&lt;source-ip&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;source-ip&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#source-ip_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#source-ip_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='source-ip_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#source-ip'>source-ip</a>
+</td></tr></table>
+<p>Source IP address as a dotted-decimal value.</p><p><span class='inTextTitle'>Required</span></p><a name='source-ip_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#source-ip'>source-ip</a>
+</td></tr></table>
+<p>Relation between the source IP address and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The source IP address must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The source IP address must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The source IP address be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The source IP address must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The source IP address be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The source IP address must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='multicast-group'></a>
+<br /><table class='elementTitle' summary="multicast-group"><tr><td class='leftElementTitle'>
+&lt;multicast-group/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a multicast group ACE. Applies only to LBT-RM transports.</p><blockquote>
+<table  summary="&lt;multicast-group&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;multicast-group&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#multicast-group_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#multicast-group_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='multicast-group_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#multicast-group'>multicast-group</a>
+</td></tr></table>
+<p>Multicast group as a dotted-decimal value.</p><p><span class='inTextTitle'>Required</span></p><a name='multicast-group_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#multicast-group'>multicast-group</a>
+</td></tr></table>
+<p>Relation between the multicast group and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The multicast group must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The multicast group must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The multicast group be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The multicast group must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The multicast group be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The multicast group must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='udp-source-port'></a>
+<br /><table class='elementTitle' summary="udp-source-port"><tr><td class='leftElementTitle'>
+&lt;udp-source-port/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a UDP source port ACE. Applies only to LBT-RM and LBT-RU transports.</p><blockquote>
+<table  summary="&lt;udp-source-port&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;udp-source-port&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#udp-source-port_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#udp-source-port_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='udp-source-port_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#udp-source-port'>udp-source-port</a>
+</td></tr></table>
+<p>UDP source port.</p><p><span class='inTextTitle'>Required</span></p><a name='udp-source-port_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#udp-source-port'>udp-source-port</a>
+</td></tr></table>
+<p>Relation between the UDP source port and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The UDP source port must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The UDP source port must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The UDP source port be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The UDP source port must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The UDP source port be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The UDP source port must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='udp-destination-port'></a>
+<br /><table class='elementTitle' summary="udp-destination-port"><tr><td class='leftElementTitle'>
+&lt;udp-destination-port/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a UDP destination port ACE. Applies only to LBT-RM transports.</p><blockquote>
+<table  summary="&lt;udp-destination-port&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;udp-destination-port&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#udp-destination-port_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#udp-destination-port_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='udp-destination-port_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#udp-destination-port'>udp-destination-port</a>
+</td></tr></table>
+<p>UDP destination port.</p><p><span class='inTextTitle'>Required</span></p><a name='udp-destination-port_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#udp-destination-port'>udp-destination-port</a>
+</td></tr></table>
+<p>Relation between the UDP destination port and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The UDP destination port must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The UDP destination port must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The UDP destination port be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The UDP destination port must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The UDP destination port be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The UDP destination port must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='tcp-source-port'></a>
+<br /><table class='elementTitle' summary="tcp-source-port"><tr><td class='leftElementTitle'>
+&lt;tcp-source-port/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a TCP source port ACE. Applies only to TCP transports.</p><blockquote>
+<table  summary="&lt;tcp-source-port&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;tcp-source-port&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#tcp-source-port_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#tcp-source-port_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='tcp-source-port_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#tcp-source-port'>tcp-source-port</a>
+</td></tr></table>
+<p>TCP source port.</p><p><span class='inTextTitle'>Required</span></p><a name='tcp-source-port_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#tcp-source-port'>tcp-source-port</a>
+</td></tr></table>
+<p>Relation between the TCP source port and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The TCP source port must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The TCP source port must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The TCP source port be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The TCP source port must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The TCP source port be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The TCP source port must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='xport-id'></a>
+<br /><table class='elementTitle' summary="xport-id"><tr><td class='leftElementTitle'>
+&lt;xport-id/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#ace'>ace</a>
+</td></tr></table>
+<p>Specifies a Xport ID ACE. Applies only to LBT-IPC transports.</p><blockquote>
+<table  summary="&lt;xport-id&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;xport-id&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#xport-id_comparison'>comparison</a></td><td>eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal</td><td></td></tr><tr><td><a href='#xport-id_value'>value</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='xport-id_value'></a>
+<br /><table class='attributeTitle' summary="value"><tr><td class='leftAttributeTitle'>
+@value</td><td class='rightAttributeTitle'>
+Attribute of <a href='#xport-id'>xport-id</a>
+</td></tr></table>
+<p>Xport ID.</p><p><span class='inTextTitle'>Required</span></p><a name='xport-id_comparison'></a>
+<br /><table class='attributeTitle' summary="comparison"><tr><td class='leftAttributeTitle'>
+@comparison</td><td class='rightAttributeTitle'>
+Attribute of <a href='#xport-id'>xport-id</a>
+</td></tr></table>
+<p>Relation between the Xport ID and the specified
+value which must be true for this ACE to match. Allowable values are:
+<dl>
+<dt>"eq", "equal"</dt>
+<dd>The Xport ID must be equal to the specified value.</dd>
+<dt>"ne", "notequal"</dt>
+<dd>The Xport ID must not be equal to the specified value.</dd>
+<dt>"lt", "lessthan"</dt>
+<dd>The Xport ID be less than the specified value.</dd>
+<dt>"le", "lessthanequal"</dt>
+<dd>The Xport ID must be less than or equal to the specified value.</dd>
+<dt>"gt", "greaterthan"</dt>
+<dd>The Xport ID be greater than the specified value.</dd>
+<dt>"le", "greaterthanequal"</dt>
+<dd>The Xport ID must be greater than or equal to the specified value.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: eq, equal, ne, notequal, lt, lessthan, le, lessthanequal, gt, greaterthan, ge, greaterthanequal - <span class='inTextTitle'>Required</span></p><a name='topic-resolution'></a>
+<br /><table class='elementTitle' summary="topic-resolution"><tr><td class='leftElementTitle'>
+&lt;topic-resolution&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>
+</td></tr></table>
+<p>Topic resolution configurations.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;topic-resolution&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;topic-resolution&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#initial-request'>initial-request</a></td><td>One or none</td></tr>
+<tr><td><a href='#pattern-use-query'>pattern-use-query</a></td><td>One or none</td></tr>
+<tr><td><a href='#topic-use-query'>topic-use-query</a></td><td>One or none</td></tr>
+</tbody></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#topic-use-query'>topic-use-query</a>?, <a href='#pattern-use-query'>pattern-use-query</a>?, <a href='#initial-request'>initial-request</a>?)</p><a name='topic-use-query'></a>
+<br /><table class='elementTitle' summary="topic-use-query"><tr><td class='leftElementTitle'>
+&lt;topic-use-query&gt;</td><td class='rightElementTitle'>
+Child of <a href='#topic-resolution'>topic-resolution</a>
+</td></tr></table>
+<p>Topic use query option.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;topic-use-query&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;topic-use-query&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#rate-limit'>rate-limit</a></td><td>One or none</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;topic-use-query&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic-use-query&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic-use-query_max'>max</a></td><td></td><td>5</td></tr><tr><td><a href='#topic-use-query_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr><tr><td><a href='#topic-use-query_timeout'>timeout</a></td><td></td><td>3000</td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#rate-limit'>rate-limit</a>?)</p><a name='topic-use-query_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-use-query'>topic-use-query</a>
+</td></tr></table>
+<p>The maximum time, in milliseconds, to wait for a topic use response.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 3000</p><a name='topic-use-query_max'></a>
+<br /><table class='attributeTitle' summary="max"><tr><td class='leftAttributeTitle'>
+@max</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-use-query'>topic-use-query</a>
+</td></tr></table>
+<p>Maximum number of topic use queries to send for a given topic.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 5</p><a name='topic-use-query_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-use-query'>topic-use-query</a>
+</td></tr></table>
+<p>The interval, in milliseconds, between periodic topic use queries
+being sent for each topic the portal has interest in.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='pattern-use-query'></a>
+<br /><table class='elementTitle' summary="pattern-use-query"><tr><td class='leftElementTitle'>
+&lt;pattern-use-query&gt;</td><td class='rightElementTitle'>
+Child of <a href='#topic-resolution'>topic-resolution</a>
+</td></tr></table>
+<p>Pattern use query option.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;pattern-use-query&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;pattern-use-query&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#rate-limit'>rate-limit</a></td><td>One or none</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;pattern-use-query&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pattern-use-query&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pattern-use-query_max'>max</a></td><td></td><td>5</td></tr><tr><td><a href='#pattern-use-query_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr><tr><td><a href='#pattern-use-query_timeout'>timeout</a></td><td></td><td>3000</td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#rate-limit'>rate-limit</a>?)</p><a name='pattern-use-query_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-use-query'>pattern-use-query</a>
+</td></tr></table>
+<p>The maximum time, in milliseconds, to wait for a pattern use response.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 3000</p><a name='pattern-use-query_max'></a>
+<br /><table class='attributeTitle' summary="max"><tr><td class='leftAttributeTitle'>
+@max</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-use-query'>pattern-use-query</a>
+</td></tr></table>
+<p>Maximum number of pattern use queries to send for a given pattern.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 5</p><a name='pattern-use-query_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-use-query'>pattern-use-query</a>
+</td></tr></table>
+<p>The interval, in milliseconds, between periodic pattern use queries
+being sent for each pattern the portal has interest in.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='rate-limit'></a>
+<br /><table class='elementTitle' summary="rate-limit"><tr><td class='leftElementTitle'>
+&lt;rate-limit/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#topic-use-query'>topic-use-query</a>, <a href='#pattern-use-query'>pattern-use-query</a>
+</td></tr></table>
+<p>Rate Limit option.</p><blockquote>
+<table  summary="&lt;rate-limit&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;rate-limit&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#rate-limit_bps'>bps</a></td><td></td><td>500000</td></tr><tr><td><a href='#rate-limit_objects-per-second'>objects-per-second</a></td><td></td><td>500</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='rate-limit_bps'></a>
+<br /><table class='attributeTitle' summary="bps"><tr><td class='leftAttributeTitle'>
+@bps</td><td class='rightAttributeTitle'>
+Attribute of <a href='#rate-limit'>rate-limit</a>
+</td></tr></table>
+<p>The limit in Bits per Second that data will be sent on the network.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 500000</p><a name='rate-limit_objects-per-second'></a>
+<br /><table class='attributeTitle' summary="objects-per-second"><tr><td class='leftAttributeTitle'>
+@objects-per-second</td><td class='rightAttributeTitle'>
+Attribute of <a href='#rate-limit'>rate-limit</a>
+</td></tr></table>
+<p>The limit in Objects per Second that data will be sent on the network.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 500</p><a name='initial-request'></a>
+<br /><table class='elementTitle' summary="initial-request"><tr><td class='leftElementTitle'>
+&lt;initial-request/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#topic-resolution'>topic-resolution</a>
+</td></tr></table>
+<p>Initial topic resolution request option.</p><blockquote>
+<table  summary="&lt;initial-request&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;initial-request&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#initial-request_duration'>duration</a></td><td></td><td>10</td></tr><tr><td><a href='#initial-request_periodic-interval'>periodic-interval</a></td><td></td><td>1000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='initial-request_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#initial-request'>initial-request</a>
+</td></tr></table>
+<p>The interval at which the initial topic resolution requests are sent.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 1000</p><a name='initial-request_duration'></a>
+<br /><table class='attributeTitle' summary="duration"><tr><td class='leftAttributeTitle'>
+@duration</td><td class='rightAttributeTitle'>
+Attribute of <a href='#initial-request'>initial-request</a>
+</td></tr></table>
+<p>The minimum duration for which the initial topic resolution requests are sent.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 10</p><a name='late-join'></a>
+<br /><table class='elementTitle' summary="late-join"><tr><td class='leftElementTitle'>
+&lt;late-join/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>
+</td></tr></table>
+<p>Late join configuration.</p><blockquote>
+<table  summary="&lt;late-join&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;late-join&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#late-join_forward'>forward</a></td><td>yes, no</td><td>yes</td></tr><tr><td><a href='#late-join_provide'>provide</a></td><td>source, always, never</td><td>source</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='late-join_provide'></a>
+<br /><table class='attributeTitle' summary="provide"><tr><td class='leftAttributeTitle'>
+@provide</td><td class='rightAttributeTitle'>
+Attribute of <a href='#late-join'>late-join</a>
+</td></tr></table>
+<p>Determines whether sources created on a portal should provide late join to receivers.
+Allowable values are:
+<dl>
+<dt>"source"</dt>
+<dd>Provide late join only if the original source provides late join.</dd>
+<dt>"always"</dt>
+<dd>Always provide late join, even if the original source does not.</dd>
+<dt>"never"</dt>
+<dd>Never provide late join, even if the original source does.</dd>
+</dl>
+The LBM configuration specified for the portal determines the late join configuration.</p><p><span class='inTextTitle'>Possible values</span>: source, always, never - <span class='inTextTitle'>Default value</span>: source</p><a name='late-join_forward'></a>
+<br /><table class='attributeTitle' summary="forward"><tr><td class='leftAttributeTitle'>
+@forward</td><td class='rightAttributeTitle'>
+Attribute of <a href='#late-join'>late-join</a>
+</td></tr></table>
+<p>If late join (retransmission) requests to a source on the portal are unable to be filled
+locally, should the requests be forwarded to the original source?
+<dl>
+<dt>"yes"</dt>
+<dd>Yes, forward retransmission requests if they cannot be filled locally.</dd>
+<dt>"no"</dt>
+<dd>No, retransmission requests should never be forwarded.</dd>
+</dl>
+This only applies to sources created on the portal with late join support.</p><p><span class='inTextTitle'>Possible values</span>: yes, no - <span class='inTextTitle'>Default value</span>: yes</p><a name='topic-purge'></a>
+<br /><table class='elementTitle' summary="topic-purge"><tr><td class='leftElementTitle'>
+&lt;topic-purge/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Topic purge configuration.</p><blockquote>
+<table  summary="&lt;topic-purge&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic-purge&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic-purge_periodic-interval'>periodic-interval</a></td><td></td><td>60000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='topic-purge_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-purge'>topic-purge</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which receiver topics are checked to determine if they can be purged.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 60000</p><a name='topic-interest-generate'></a>
+<br /><table class='elementTitle' summary="topic-interest-generate"><tr><td class='leftElementTitle'>
+&lt;topic-interest-generate/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Topic interest generation configuration.</p><blockquote>
+<table  summary="&lt;topic-interest-generate&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic-interest-generate&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic-interest-generate_interval'>interval</a></td><td></td><td>200</td></tr><tr><td><a href='#topic-interest-generate_max-topics'>max-topics</a></td><td></td><td>20</td></tr><tr><td><a href='#topic-interest-generate_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='topic-interest-generate_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-interest-generate'>topic-interest-generate</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which topic interest is generated.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='topic-interest-generate_max-topics'></a>
+<br /><table class='attributeTitle' summary="max-topics"><tr><td class='leftAttributeTitle'>
+@max-topics</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-interest-generate'>topic-interest-generate</a>
+</td></tr></table>
+<p>Maximum topics for which interest is generated at one time.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 20</p><a name='topic-interest-generate_interval'></a>
+<br /><table class='attributeTitle' summary="interval"><tr><td class='leftAttributeTitle'>
+@interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-interest-generate'>topic-interest-generate</a>
+</td></tr></table>
+<p>Interval (in milliseconds) between groups of topics.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 200</p><a name='topic-domain-activity'></a>
+<br /><table class='elementTitle' summary="topic-domain-activity"><tr><td class='leftElementTitle'>
+&lt;topic-domain-activity/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Topic domain activity configuration.</p><blockquote>
+<table  summary="&lt;topic-domain-activity&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic-domain-activity&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic-domain-activity_timeout'>timeout</a></td><td></td><td>900</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='topic-domain-activity_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-domain-activity'>topic-domain-activity</a>
+</td></tr></table>
+<p>Minimum time (in seconds) domain interest for a topic must be unrefreshed before interest is removed for that domain.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 900</p><a name='pattern-purge'></a>
+<br /><table class='elementTitle' summary="pattern-purge"><tr><td class='leftElementTitle'>
+&lt;pattern-purge/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Pattern purge configuration.</p><blockquote>
+<table  summary="&lt;pattern-purge&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pattern-purge&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pattern-purge_periodic-interval'>periodic-interval</a></td><td></td><td>60000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='pattern-purge_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-purge'>pattern-purge</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which receiver patterns are checked to determine if they can be purged.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 60000</p><a name='pattern-interest-generate'></a>
+<br /><table class='elementTitle' summary="pattern-interest-generate"><tr><td class='leftElementTitle'>
+&lt;pattern-interest-generate/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Pattern interest generation configuration.</p><blockquote>
+<table  summary="&lt;pattern-interest-generate&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pattern-interest-generate&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pattern-interest-generate_interval'>interval</a></td><td></td><td>200</td></tr><tr><td><a href='#pattern-interest-generate_max-patterns'>max-patterns</a></td><td></td><td>20</td></tr><tr><td><a href='#pattern-interest-generate_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='pattern-interest-generate_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-interest-generate'>pattern-interest-generate</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which pattern interest is generated.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='pattern-interest-generate_max-patterns'></a>
+<br /><table class='attributeTitle' summary="max-patterns"><tr><td class='leftAttributeTitle'>
+@max-patterns</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-interest-generate'>pattern-interest-generate</a>
+</td></tr></table>
+<p>Maximum patterns for which interest is generated at one time.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 20</p><a name='pattern-interest-generate_interval'></a>
+<br /><table class='attributeTitle' summary="interval"><tr><td class='leftAttributeTitle'>
+@interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-interest-generate'>pattern-interest-generate</a>
+</td></tr></table>
+<p>Interval (in milliseconds) between groups of patterns.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 200</p><a name='pattern-domain-activity'></a>
+<br /><table class='elementTitle' summary="pattern-domain-activity"><tr><td class='leftElementTitle'>
+&lt;pattern-domain-activity/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Pattern domain activity configuration.</p><blockquote>
+<table  summary="&lt;pattern-domain-activity&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pattern-domain-activity&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pattern-domain-activity_timeout'>timeout</a></td><td></td><td>900</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='pattern-domain-activity_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-domain-activity'>pattern-domain-activity</a>
+</td></tr></table>
+<p>Minimum time (in seconds) domain interest for a pattern must be unrefreshed before interest is removed for that domain.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 900</p><a name='topic-use-check'></a>
+<br /><table class='elementTitle' summary="topic-use-check"><tr><td class='leftElementTitle'>
+&lt;topic-use-check/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Topic use check configuration.</p><blockquote>
+<table  summary="&lt;topic-use-check&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;topic-use-check&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#topic-use-check_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='topic-use-check_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#topic-use-check'>topic-use-check</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which source topics are checked to determine if there is no more interest.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='pattern-use-check'></a>
+<br /><table class='elementTitle' summary="pattern-use-check"><tr><td class='leftElementTitle'>
+&lt;pattern-use-check/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Pattern use check configuration.</p><blockquote>
+<table  summary="&lt;pattern-use-check&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;pattern-use-check&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#pattern-use-check_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='pattern-use-check_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#pattern-use-check'>pattern-use-check</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which source patterns are checked to determine if there is no more interest.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='monitor'></a>
+<br /><table class='elementTitle' summary="monitor"><tr><td class='leftElementTitle'>
+&lt;monitor&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Monitoring configuration.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table summary="&lt;monitor&gt;'s children">
+<thead>
+<tr><th class='title' colspan='2'>&lt;monitor&gt;'s children</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+<tr><th class='subtitle'>Name</th><th class='subtitle'>Cardinality</th></tr>
+<tr><th colspan='2' height='1' class='ruler'></th></tr>
+</thead>
+<tbody><tr><td><a href='#format-module'>format-module</a></td><td>One or none</td></tr>
+<tr><td><a href='#transport-module'>transport-module</a></td><td>One or none</td></tr>
+</tbody></table></td><td class='construct'><table  summary="&lt;monitor&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;monitor&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#monitor_interval'>interval</a></td><td></td><td>0</td></tr></table></td></tr></table></blockquote>
+<span class='inTextTitle'>Element's model:</span><p class='model'>(<a href='#transport-module'>transport-module</a>?, <a href='#format-module'>format-module</a>?)</p><a name='monitor_interval'></a>
+<br /><table class='attributeTitle' summary="interval"><tr><td class='leftAttributeTitle'>
+@interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#monitor'>monitor</a>
+</td></tr></table>
+<p>Monitoring interval, in seconds. Zero disables monitoring.</p><p><span class='inTextTitle'>Default value</span>: 0</p><a name='transport-module'></a>
+<br /><table class='elementTitle' summary="transport-module"><tr><td class='leftElementTitle'>
+&lt;transport-module/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#monitor'>monitor</a>
+</td></tr></table>
+<p>Monitoring transport configuration.</p><blockquote>
+<table  summary="&lt;transport-module&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;transport-module&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#transport-module_module'>module</a></td><td>lbm, lbmsnmp, udp</td><td>lbm</td></tr><tr><td><a href='#transport-module_options'>options</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='transport-module_module'></a>
+<br /><table class='attributeTitle' summary="module"><tr><td class='leftAttributeTitle'>
+@module</td><td class='rightAttributeTitle'>
+Attribute of <a href='#transport-module'>transport-module</a>
+</td></tr></table>
+<p>Transport module to use. Default is "lbm".</p><p><span class='inTextTitle'>Possible values</span>: lbm, lbmsnmp, udp - <span class='inTextTitle'>Default value</span>: lbm</p><a name='transport-module_options'></a>
+<br /><table class='attributeTitle' summary="options"><tr><td class='leftAttributeTitle'>
+@options</td><td class='rightAttributeTitle'>
+Attribute of <a href='#transport-module'>transport-module</a>
+</td></tr></table>
+<p>Option string to be passed to the transport module.</p><a name='format-module'></a>
+<br /><table class='elementTitle' summary="format-module"><tr><td class='leftElementTitle'>
+&lt;format-module/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#monitor'>monitor</a>
+</td></tr></table>
+<p>Monitoring format configuration.</p><blockquote>
+<table  summary="&lt;format-module&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;format-module&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#format-module_module'>module</a></td><td>csv</td><td>csv</td></tr><tr><td><a href='#format-module_options'>options</a></td><td></td><td></td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='format-module_module'></a>
+<br /><table class='attributeTitle' summary="module"><tr><td class='leftAttributeTitle'>
+@module</td><td class='rightAttributeTitle'>
+Attribute of <a href='#format-module'>format-module</a>
+</td></tr></table>
+<p>Format module to use. Default is "csv".</p><p><span class='inTextTitle'>Possible values</span>: csv - <span class='inTextTitle'>Default value</span>: csv</p><a name='format-module_options'></a>
+<br /><table class='attributeTitle' summary="options"><tr><td class='leftAttributeTitle'>
+@options</td><td class='rightAttributeTitle'>
+Attribute of <a href='#format-module'>format-module</a>
+</td></tr></table>
+<p>Option string to be passed to the format module.</p><a name='web-monitor'></a>
+<br /><table class='elementTitle' summary="web-monitor"><tr><td class='leftElementTitle'>
+&lt;web-monitor&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Web monitor configuration. Specify as interface:port. Interface may be specified as '*'.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;web-monitor&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;web-monitor&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#web-monitor_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='web-monitor_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#web-monitor'>web-monitor</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='propagation-delay'></a>
+<br /><table class='elementTitle' summary="propagation-delay"><tr><td class='leftElementTitle'>
+&lt;propagation-delay/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Propagation delay configuration.</p><blockquote>
+<table  summary="&lt;propagation-delay&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;propagation-delay&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#propagation-delay_delta'>delta</a></td><td></td><td>0</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='propagation-delay_delta'></a>
+<br /><table class='attributeTitle' summary="delta"><tr><td class='leftAttributeTitle'>
+@delta</td><td class='rightAttributeTitle'>
+Attribute of <a href='#propagation-delay'>propagation-delay</a>
+</td></tr></table>
+<p>Specifies the difference, in milliseconds, between the shortest and longest
+propagation delays in the network. The default is zero.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 0</p><a name='xml-config'></a>
+<br /><table class='elementTitle' summary="xml-config"><tr><td class='leftElementTitle'>
+&lt;xml-config&gt;</td><td class='rightElementTitle'>
+Child of <a href='#daemon'>daemon</a>
+</td></tr></table>
+<p>Specifies the LBM XML configuration file.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;xml-config&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;xml-config&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#xml-config_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='xml-config_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#xml-config'>xml-config</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='source-context-name'></a>
+<br /><table class='elementTitle' summary="source-context-name"><tr><td class='leftElementTitle'>
+&lt;source-context-name&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Specifies the portal source context name.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;source-context-name&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;source-context-name&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#source-context-name_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='source-context-name_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#source-context-name'>source-context-name</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='receiver-context-name'></a>
+<br /><table class='elementTitle' summary="receiver-context-name"><tr><td class='leftElementTitle'>
+&lt;receiver-context-name&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Specifies the portal receiver context name.</p><blockquote><table summary='element info'><tr>
+<td class='construct'><table  summary="&lt;receiver-context-name&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;receiver-context-name&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#receiver-context-name_xml:space'>xml:space</a></td><td>default, preserve</td><td>default</td></tr></table></td></tr></table></blockquote>
+<a name='receiver-context-name_xml:space'></a>
+<br /><table class='attributeTitle' summary="xml:space"><tr><td class='leftAttributeTitle'>
+@xml:space</td><td class='rightAttributeTitle'>
+Attribute of <a href='#receiver-context-name'>receiver-context-name</a>
+</td></tr></table>
+<p>How whitespace is to be handled. "default" trims leading
+and trailing whitespace, and compress multiple whitespace characters
+into a single character. "preserve" preserves the whitespace exactly
+as read.</p><p><span class='inTextTitle'>Possible values</span>: default, preserve - <span class='inTextTitle'>Default value</span>: default</p><a name='sqn-window'></a>
+<br /><table class='elementTitle' summary="sqn-window"><tr><td class='leftElementTitle'>
+&lt;sqn-window/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Specifies the configuration of sequence number windows.</p><blockquote>
+<table  summary="&lt;sqn-window&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;sqn-window&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#sqn-window_increment'>increment</a></td><td></td><td>2048</td></tr><tr><td><a href='#sqn-window_size'>size</a></td><td></td><td>16384</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='sqn-window_size'></a>
+<br /><table class='attributeTitle' summary="size"><tr><td class='leftAttributeTitle'>
+@size</td><td class='rightAttributeTitle'>
+Attribute of <a href='#sqn-window'>sqn-window</a>
+</td></tr></table>
+<p>Determines the maximum number of topic (fragment) sequence numbers
+that will be maintained, for any given source, for duplicate detection.
+Must be a multiple of 8. Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 16384</p><a name='sqn-window_increment'></a>
+<br /><table class='attributeTitle' summary="increment"><tr><td class='leftAttributeTitle'>
+@increment</td><td class='rightAttributeTitle'>
+Attribute of <a href='#sqn-window'>sqn-window</a>
+</td></tr></table>
+<p>Determines the minimum increment, in topic (fragment) sequence numbers,
+by which the sequence number window is moved when the window size is exceeded.
+Must be a multiple of 8, an even divisor of the window size, and less the window size.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 2048</p><a name='context-query'></a>
+<br /><table class='elementTitle' summary="context-query"><tr><td class='leftElementTitle'>
+&lt;context-query/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#endpoint'>endpoint</a>, <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Context query generation configuration.</p><blockquote>
+<table  summary="&lt;context-query&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;context-query&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#context-query_interval'>interval</a></td><td></td><td>200</td></tr><tr><td><a href='#context-query_max-contexts'>max-contexts</a></td><td></td><td>20</td></tr><tr><td><a href='#context-query_periodic-interval'>periodic-interval</a></td><td></td><td>300000</td></tr><tr><td><a href='#context-query_timeout'>timeout</a></td><td></td><td>900</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='context-query_periodic-interval'></a>
+<br /><table class='attributeTitle' summary="periodic-interval"><tr><td class='leftAttributeTitle'>
+@periodic-interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#context-query'>context-query</a>
+</td></tr></table>
+<p>Interval (in milliseconds) at which context queries are generated.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 300000</p><a name='context-query_max-contexts'></a>
+<br /><table class='attributeTitle' summary="max-contexts"><tr><td class='leftAttributeTitle'>
+@max-contexts</td><td class='rightAttributeTitle'>
+Attribute of <a href='#context-query'>context-query</a>
+</td></tr></table>
+<p>Maximum number of contexts for which queries are generated at one time.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 20</p><a name='context-query_interval'></a>
+<br /><table class='attributeTitle' summary="interval"><tr><td class='leftAttributeTitle'>
+@interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#context-query'>context-query</a>
+</td></tr></table>
+<p>Interval (in milliseconds) between groups of context queries.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 200</p><a name='context-query_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#context-query'>context-query</a>
+</td></tr></table>
+<p>Minimum time (in seconds) a context query must be unanswered before it is removed for the portal.
+Before changing the value of this option, please contact Informatica Support.</p><p><span class='inTextTitle'>Default value</span>: 900</p><a name='gateway-keepalive'></a>
+<br /><table class='elementTitle' summary="gateway-keepalive"><tr><td class='leftElementTitle'>
+&lt;gateway-keepalive/&gt;</td><td class='rightElementTitle'>
+Child of <a href='#peer'>peer</a>
+</td></tr></table>
+<p>Gateway keepalive configuration.</p><blockquote>
+<table  summary="&lt;gateway-keepalive&gt;'s attributes"><tr>
+<th class='title' colspan='3'>&lt;gateway-keepalive&gt;'s attributes</th>
+</tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr>
+<th class='subtitle'>Name</th><th class='subtitle'>Values</th><th class='subtitle'>Default</th></tr>
+<tr><th colspan='3' height='1' class='ruler'></th></tr>
+<tr><td><a href='#gateway-keepalive_idle'>idle</a></td><td>yes, no</td><td>yes</td></tr><tr><td><a href='#gateway-keepalive_interval'>interval</a></td><td></td><td>5000</td></tr><tr><td><a href='#gateway-keepalive_timeout'>timeout</a></td><td></td><td>15000</td></tr></table></blockquote>
+<p class='emptyTagNote'>This element is always empty.</p><a name='gateway-keepalive_idle'></a>
+<br /><table class='attributeTitle' summary="idle"><tr><td class='leftAttributeTitle'>
+@idle</td><td class='rightAttributeTitle'>
+Attribute of <a href='#gateway-keepalive'>gateway-keepalive</a>
+</td></tr></table>
+<p>If gateway keepalives should be sent only when the link is idle.
+<dl>
+<dt>"yes"</dt>
+<dd>Yes, only send keepalives if no traffic has been sent or received in the last interval.</dd>
+<dt>"no"</dt>
+<dd>No, send a keepalive every interval.</dd>
+</dl></p><p><span class='inTextTitle'>Possible values</span>: yes, no - <span class='inTextTitle'>Default value</span>: yes</p><a name='gateway-keepalive_interval'></a>
+<br /><table class='attributeTitle' summary="interval"><tr><td class='leftAttributeTitle'>
+@interval</td><td class='rightAttributeTitle'>
+Attribute of <a href='#gateway-keepalive'>gateway-keepalive</a>
+</td></tr></table>
+<p>Minimum interval, in milliseconds, between keepalives. When <tt>idle</tt> is "no",
+a keepalive is sent every <tt>interval</tt> milliseconds. When <tt>idle</tt> is "yes",
+if the portal has not sent anything to the companion, or received anything from the companion, in
+<tt>interval</tt> milliseconds, a keepalive message is sent. A value of zero disables keepalives.</p><p><span class='inTextTitle'>Default value</span>: 5000</p><a name='gateway-keepalive_timeout'></a>
+<br /><table class='attributeTitle' summary="timeout"><tr><td class='leftAttributeTitle'>
+@timeout</td><td class='rightAttributeTitle'>
+Attribute of <a href='#gateway-keepalive'>gateway-keepalive</a>
+</td></tr></table>
+<p>Maximum time, in milliseconds, a peer can receive nothing from the companion
+before determining the connection is dead and disconnecting.</p><p><span class='inTextTitle'>Default value</span>: 15000</p></body>
+<script type="text/javascript">highlight();</script></html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging JMS Programming Quick Start</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Quick Start Guide" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging JMS Quick Start"
+href="jms-binary-quick-start.html" />
+<link rel="NEXT" title="Starting Ultra Messaging Daemons" href="start-daemons.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Quick Start Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="jms-binary-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="start-daemons.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="JMS-PROGRAMMING-QUICK-START"
+name="JMS-PROGRAMMING-QUICK-START">6. Ultra Messaging JMS Programming Quick
+Start</a></h1>
+
+<p>This source code example is provided by Informatica for educational and evaluation
+purposes only. Error handling in these programs is primitive. A production program would
+want to have better error handling, but for the purposes of a minimal example, it would
+just be a distraction. Also, a production program would want to support a configuration
+file to override default values on options.</p>
+
+<p>When building on Windows, use the following compile line. (<tt
+class="LITERAL">QueueReceiver.java</tt> is the application being compiled.)</p>
+
+<pre class="SCREEN">
+$JAVA_HOME/bin/javac QueueReceiver.java -cp $JMS_HOME/lib/uJMS_1.0.jar;$JMS_HOME/lib/jms.jar
+     
+</pre>
+
+<p>When building on Unix, use the following compile line. (<tt
+class="LITERAL">QueueReceiver.java</tt> is the application being compiled.)</p>
+
+<pre class="SCREEN">
+$JAVA_HOME/bin/javac QueueReceiver.java -cp $JMS_HOME/lib/JMS_API.jar:$JMS_HOME/lib/jms.jar
+     
+</pre>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMAL-JMS-SYNCHRONOUS-CONSUMER-IMPLEMENTATION"
+name="MINIMAL-JMS-SYNCHRONOUS-CONSUMER-IMPLEMENTATION">6.1. Ultra Messaging JMS
+Synchronous Consumer Implementation</a></h2>
+
+<p>This is a source code listing of a simple synchronous consumer program. You may find
+it helpful to <a href="SimpleSyncConsumer.java" target="doccontent">download the source
+code</a> (most browsers let you right-click on the link and use the <span
+class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleSyncConsumer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;
+
+   <a id="SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"
+name="SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a>
+import javax.jms.*;
+import javax.naming.*;
+
+public class SyncConsumer implements ExceptionListener {
+
+    public static void main(String[] args) {
+        new SyncConsumer();
+    }
+
+    public SyncConsumer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"
+name="SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {   <a id="SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            Connection connection = factory.createConnection();
+
+            // Create a Session
+            Session session = connection.createSession(false,
+                    javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+            // set the exception listener callback
+            connection.setExceptionListener(this);
+
+            // Create a topic destination
+            Destination destination = session.createTopic("TOPIC.1");
+
+            // create the consumer
+            MessageConsumer msgConsumer = session.createConsumer(destination);
+            connection.start();
+
+            while (true) {
+                System.out.println("Received message " + msgConsumer.receive());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+// The exception listener
+    public void onException(JMSException e) {
+        // print the connection exception status
+        System.err.println("Exception occurred: " + e.getMessage());
+    }
+}
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"><img
+ src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleSyncConsumer class consists only of a main method, which receives one or
+more messages from a topic using synchronous message delivery Run this program in
+conjunction with SimpleProducer.&#13;</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO">
+<img src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" />
+</a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMAL-JMS-ASYNCHRONOUS-CONSUMER-IMPLEMENTATION"
+name="MINIMAL-JMS-ASYNCHRONOUS-CONSUMER-IMPLEMENTATION">6.2. Ultra Messaging JMS
+Asynchronous Consumer Implementation</a></h2>
+
+<p>This is a source code listing of a simple asynchronous consumer program. You may find
+it helpful to <a href="SimpleAsyncConsumer.java" target="doccontent">download the source
+code</a> (most browsers let you right-click on the link and use the <span
+class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleAsyncConsumer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;   <a id="SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"><img src="./imagelib/callouts/1.png" hspace="0"
+vspace="0" border="0" alt="(1)" /></a>
+
+import javax.jms.*;
+import javax.naming.*;
+
+public class AsyncConsumer implements MessageListener, ExceptionListener {
+
+    public static void main(String[] args) {
+        new AsyncConsumer();
+        while (true) {
+            try {
+                Thread.sleep(1000000);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public AsyncConsumer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {   <a id="SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            Connection connection = factory.createConnection();
+
+            // Create a Session
+            Session session = connection.createSession(false,
+                    javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+            // set the exception listener callback
+            connection.setExceptionListener(this);
+
+            // Create a topic destination
+            Destination destination = session.createTopic("TOPIC.1");
+            // create the consumer
+            MessageConsumer msgConsumer = session.createConsumer(destination);
+
+            // set the message listener callback
+            msgConsumer.setMessageListener(this);
+            // start the connection
+            connection.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+// The exception listener
+    public void onException(JMSException e) {
+        // print the connection exception status
+        e.printStackTrace();
+    }
+
+// The message listener callback
+    public void onMessage(Message msg) {
+        try {
+            System.err.println("Received message: " + msg);
+        } catch (Exception e) {
+            System.err.println("Exception occurred: " + e.getMessage());
+            System.exit(-1);
+        }
+    }
+}
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="jms-programming-quick-start.html#SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleAsyncConsumer class consists only of a main method, which receives one or
+more messages from a topic using asynchronous message delivery. It uses the message
+listener TextListener. Run this program in conjunction with SimpleProducer. To end the
+program, enter Q or q on the command line.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO">
+<img src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" />
+</a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMAL-JMS-SIMPLE-PRODUCER-IMPLEMENTATION"
+name="MINIMAL-JMS-SIMPLE-PRODUCER-IMPLEMENTATION">6.3. Ultra Messaging JMS Simple
+Producer Implementation</a></h2>
+
+<p>This is a source code listing of a simple producer program. You may find it helpful to
+<a href="SimpleProducer.java" target="doccontent">download the source code</a> (most browsers
+let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleProducer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;
+
+import javax.jms.*;   <a id="SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"
+name="SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"><img src="./imagelib/callouts/1.png"
+hspace="0" vspace="0" border="0" alt="(1)" /></a>
+import javax.naming.*;
+
+public class Producer {
+
+    public static void main(String[] args) {
+        new Producer();
+    }
+
+    public Producer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"
+name="SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        Connection connection = null;   <a
+id="SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+        try {
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            connection = factory.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            connection.start();
+            Destination destination = session.createTopic("TOPIC.1");
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage();
+            for (int i = 0; i &lt; 10; i++) {
+                ((TextMessage) message).setText("********* This is a test *********** ");
+                producer.send(message);
+                Thread.sleep(10);
+                System.out.println("Sent " + message.getText());
+            }
+        } catch (Exception e) {
+            System.out.println("JNDI API lookup failed: "
+                    + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+
+        } finally {
+            if (connection != null) {
+                try {
+
+                    connection.close();
+                    System.exit(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}&#13;
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="jms-programming-quick-start.html#SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleProducer class consists only of a main method, which sends10 messages to a
+topic. Run this program in conjunction with SimpleAsyncConsumer and
+SimpleSyncConsumer.&#13;</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a
+href="jms-programming-quick-start.html#SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+ src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="jms-binary-quick-start.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="start-daemons.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging JMS Quick Start</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Starting Ultra Messaging Daemons</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

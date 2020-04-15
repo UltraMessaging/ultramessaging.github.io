@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.1.1 / UME 3.1.1 / UMQ 1.1.1 - October 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UME 3.0.2 - November 2010" href="secume3.0.2.html" />
+<link rel="NEXT" title="Release LBM 4.1 / UME 3.1 / UMQ 1.1 - August 2010"
+href="seclbm4.1-ume3.1-umq1.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="secume3.0.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm4.1-ume3.1-umq1.1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.1.1-UME3.1.1-UMQ1.1.1"
+name="SECLBM4.1.1-UME3.1.1-UMQ1.1.1">31. Release LBM 4.1.1 / UME 3.1.1 / UMQ 1.1.1 -
+October 2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.1.1" name="LBM4.1.1">31.1. LBM 4.1.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1.1-UPDATES" name="LBM4.1.1-UPDATES">31.1.1. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Improved the efficiency of Late Join retransmissions with the addition of a timer for
+every request set to the same value as the <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITREQUESTINTERVAL" target="doccontent"><tt
+class="LITERAL">retransmit_request_interval</tt></a>. Previously, Late Join re-requested
+retransmissions if the retransmission was not received at the expiration of the <tt
+class="LITERAL">retransmit_request_interval</tt>. Now Late Join only re-requests a
+retransmission when the first request's <tt
+class="LITERAL">retransmit_request_interval</tt> expires. This change also applies to
+retransmission requests from a <b class="APPLICATION">UME</b> store.</p>
+</li>
+
+<li>
+<p>The UM Gateway now supports single connection TCP Peer Portals.</p>
+</li>
+
+<li>
+<p>Added the <tt class="LITERAL">&lt;nodelay/&#62;</tt> element to the Gateway
+configuration for peer portals. This sets the TCP_NODELAY option for the peer TCP
+connections, disabling Nagle's algorithm. By default, TCP_NODELAY is not set.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1.1-FIXES" name="LBM4.1.1-FIXES">31.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed an issue that could cause some source events for Hot Failover sources in the
+.NET API to not be delivered to the source's source event callback for a brief period of
+time after source creation.</p>
+</li>
+
+<li>
+<p>Corrected a problem with LBT-IPC timers that caused the log warning: <tt
+class="LITERAL">THROTTLED MSG: timer scheduled &#60;= MIN_CLOCK_RES_MSEC (2 ms)
+[1282330517.878809]: Rescheduling for 3 ms</tt>. This problem occurred if <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> was set to <tt
+class="LITERAL">receiver_paced</tt> and the source was slowed by a receiver that could
+not keep up to the data stream.</p>
+</li>
+
+<li>
+<p>Corrected an issue with <tt class="LITERAL">lbmj</tt> library versioning for AIX. The
+<b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Java API
+now runs on AIX.</p>
+</li>
+
+<li>
+<p>Corrected a race condition with the LBT-RDMA transport that could result in a seg
+fault if a receiver was connecting/disconnecting at the same time that the source was
+being deleted.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the LBT-RDMA transport that caused a seg fault if you
+increased <a
+href="../Config/implicitbatchingoptions.html#SOURCEIMPLICITBATCHINGMINIMUMLENGTH"
+target="doccontent"><tt class="LITERAL">implicit_batching_minimum_length</tt></a> from the
+default value.</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused a seg fault when sending messages via the LBT-RDMA
+transport that are larger than approximately 3,800 bytes or less if the <a
+href="../Config/transportlbt-rdmaoperationoptions.html#CONTEXTTRANSPORTLBTRDMADATAGRAMMAXSIZE"
+ target="doccontent"><tt class="LITERAL">transport_lbtrdma_datagram_max_size</tt></a> has been
+reduced from the default value.</p>
+</li>
+
+<li>
+<p>Fixed an issue with automatic monitoring on Apple OSX that caused the process name to
+be set to <tt class="LITERAL">unknown</tt>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.1.1-KNOWNISSUES" name="LBM4.1.1-KNOWNISSUES">31.1.3.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using LBT-IPC, a seg fault can occur when sending messages larger than 65,535
+bytes when <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero). The
+seg fault occurs when fragments are lost. Setting <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt> avoids the seg fault by eliminating loss. <b
+class="APPLICATION">29West</b> is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. 29West is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">LBM</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.1.1" name="UME3.1.1">31.2. UME 3.1.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.1-NEW" name="UME3.1.1-NEW">31.2.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added a flight size mechanism that tracks messages in flight from a particular source
+and responds when a send would exceed the configured <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE"
+target="doccontent"><tt class="LITERAL">ume_flight_size</tt></a>. You can configure <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"
+target="doccontent"><tt class="LITERAL">ume_flight_size_behavior</tt></a> to either block any
+sends that would exceed the flight size or, allow the sends while notifying your
+application. For more see, <b class="APPLICATION">UME Flight Size</b> in <a
+href="../UME/ume-ops-operational-view.html#UME-OPS-NORMAL-OPERATION" target="doccontent">UME
+Normal Operation</a>.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">lbm_ume_src_msg_stable()</tt> which can mark a sequence
+number as stable. This may trigger a source event notification, if configured to do so
+and also adjusts the current number of inflight messages.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.1-UPDATES" name="UME3.1.1-UPDATES">31.2.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Modified the <tt class="LITERAL">receiver-new-registration-rollback</tt> store
+option's default to zero (0), which now requests no message recovery for newly registered
+receivers. Previously, zero (0) recovered the single latest message. Similarly, a value
+of 1 now recovers 1 message, whereas previously a value of 1 recovered 2 messages.</p>
+
+<p><b class="APPLICATION">Configuration Change Required:</b> Reduce this option's value
+by 1.</p>
+
+<p><b class="APPLICATION">Application Change Required:</b> If you use <tt
+class="LITERAL">lbm_ume_rcv_recovery_info_ex_function_cb()</tt> in any of your
+applications, increase the <tt class="LITERAL">low_sequence_number</tt> by one.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">all-active</tt> as a valid option for both <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTERGROUPSTABILITYBEHAVIOR"
+ target="doccontent"><tt class="LITERAL">ume_retention_intergroup_stability_behavior</tt></a>
+and <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+ target="doccontent"><tt class="LITERAL">ume_retention_intragroup_stability_behavior</tt></a>.
+An active store is defined as a registered store. A group is considered active if it has
+at least a quorum of active or registered stores. Intergroup stability requires at least
+one stable group.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UME</b> now supports a Quorum/Consensus group size of 1.</p>
+</li>
+
+<li>
+<p>Added two new store configuration options for separating the configuration of read
+async IO callbacks from and write async IO callbacks. See <tt
+class="LITERAL">repository-disk-max-write-async-cbs</tt> and <tt
+class="LITERAL">repository-disk-max-read-async-cbs</tt> in <a
+href="../UME/umestored-config.html#UMESTORED-TOPIC-OPTIONS" target="doccontent">Options for a
+Topic's ume-attributes Element</a>.</p>
+</li>
+
+<li>
+<p>Added the ability to track message stability and/or consumption on a per send basis as
+opposed to a per fragment basis by adding additional option values to <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEMESSAGESTABILITYNOTIFICATION"
+ target="doccontent"><tt class="LITERAL">ume_message_stability_notification</tt></a> and <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMECONFIRMEDDELIVERYNOTIFICATION"
+ target="doccontent"><tt class="LITERAL">ume_confirmed_delivery_notification</tt></a>. Values 0
+(zero) and 1 retain existing behavior. Using a value of 2 provides only a single
+notification to the source of stability or delivery for an entire message. A value of 3
+provides notification of stability or delivery for every fragment or message with the
+flag WHOLE_MESSAGE_STABLE or WHOLE_MESSAGE_CONFIRMED set for the last fragment of a
+message.</p>
+</li>
+
+<li>
+<p>Modified <tt class="LITERAL">umestored</tt> to greatly increase the rate at which
+stores handle retransmission requests. Retransmissions are now sent on a different
+context from the store context thread.</p>
+</li>
+
+<li>
+<p>Changed the <tt class="LITERAL">IP:port</tt> used to send stability ACKs when using <b
+class="APPLICATION">UME</b> across the UM Gateway. <b class="APPLICATION">UME</b> now
+uses the <tt class="LITERAL">IP:port</tt> specified in the topic advertisement, rather
+than the <tt class="LITERAL">IP:port</tt> specified in the persistent registration. This
+change only affects deployments in which</p>
+
+<ol type="1">
+<li>
+<p>The source and store are on different sides of a gateway.</p>
+</li>
+
+<li>
+<p>Multiple paths exist between the source and store via multiple parallel gateways.</p>
+</li>
+
+<li>
+<p>Due to ACL restrictions, the persistent registration and topic data are forwarded on
+different gateways.</p>
+</li>
+</ol>
+
+<br />
+<br />
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.1-FIXES" name="UME3.1.1-FIXES">31.2.3. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem that caused a segfault if <tt class="LITERAL">umestored</tt> was
+configured to use sequential mode.</p>
+</li>
+
+<li>
+<p>Corrected a problem that caused proxy source creation to fail in <b
+class="APPLICATION">UME</b> stores.</p>
+</li>
+
+<li>
+<p>Fixed an issue where a persistent registration timer could be scheduled repeatedly on
+an error condition, which caused rapid memory growth and CPU usage.</p>
+</li>
+
+<li>
+<p>Fixed an issue that caused a segfault if a receiver attempted a very large recovery
+that completed quickly.</p>
+</li>
+
+<li>
+<p>Corrected an issue in the Gateway concerning multiple parallel peer portals on the
+same gateway which connect to corresponding peer portals on another gateway. Multiple
+delivery confirmations could be received for a single message due to problems with how
+ACLs on the peer portals operated.</p>
+</li>
+
+<li>
+<p>Changed the value of <tt class="LITERAL">optlen</tt> to 0 (zero) if no <b
+class="APPLICATION">UME</b> store was configured with either a configuration file or
+<code class="FUNCTION">lbm_src_topic_attr_str_getopt()</code> and you called <code
+class="FUNCTION">lbm_src_topic_attr_str_getopt()</code>. Previously in this case, <tt
+class="LITERAL">optlen</tt> was set to -1.</p>
+</li>
+
+<li>
+<p>Added a new state , UNRESOLVED, for stores configured with only a <tt
+class="LITERAL">store-name</tt> and without an IP:port. Previously in this case, <b
+class="APPLICATION">UME</b> delivered a LBM_SRC_EVENT_UME_STORE_UNRESPONSIVE event to the
+source application. The event text now indicates that the store is UNRESOLVED, rather
+than unresponsive.</p>
+</li>
+
+<li>
+<p>Corrected an issue with <b class="APPLICATION">UME</b> sources referencing stores by
+name that have been become unresponsive and have been configured in the Round Robin
+fashion. Once the store restarted, re-registration did not occur. This condition only
+applies when the source and store reside on opposite sides of a gateway.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.1.1-KNOWNISSUES" name="UME3.1.1-KNOWNISSUES">31.2.4.
+Known Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ1.1.1" name="UMQ1.1.1">31.3. UMQ 1.1.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ1.1.1-NEW" name="UMQ1.1.1-NEW">31.3.1. New
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added a flight size mechanism for both <b class="APPLICATION">UMQ</b> and ULB that
+tracks messages in flight from a particular source and responds when a send would exceed
+the configured flight size. You can configure the <b class="APPLICATION">UMQ</b> flight
+size behavior for sources or Multicast Immediate Messaging to either block any sends that
+would exceed the flight size or, allow the sends while notifying your application. For
+more see, <a href="../UME/ume-ops-operational-view.html#QUEUE-FLIGHT-SIZE"
+target="doccontent">UMQ Flight Size</a> and <b class="APPLICATION">Ultra Load Balancing Flight
+Size</b> in <a href="../UME/ume-ops-operational-view.html#ULB-OPS" target="doccontent">Ultra
+Load Balancing Operations</a>.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">lbm_umq_ctx_msg_stable()</tt> which can mark a message ID as
+stable. This may trigger a source event notification, if configured to do so and also
+adjusts the current number of inflight messages.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="secume3.0.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.1-ume3.1-umq1.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UME 3.0.2 - November 2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.1 / UME 3.1 / UMQ 1.1 - August
+2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

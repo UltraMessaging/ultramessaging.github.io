@@ -1,0 +1,1329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging JMS Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Queuing Options"
+href="ultramessagingqueuingoptions.html" />
+<link rel="NEXT" title="Hot Failover Operation Options"
+href="hotfailoveroperationoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="ultramessagingqueuingoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="hotfailoveroperationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ULTRAMESSAGINGJMSOPTIONS"
+name="ULTRAMESSAGINGJMSOPTIONS">4.31. Ultra Messaging JMS Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYCLIENTID"
+name="CONNECTIONFACTORYCLIENTID">4.31.1. <span class="lbm-option-name"><span
+class="PHRASE">client_id (ConnectionFactory)</span></span></a></h2>
+
+<p>Unique identifier for a JMS Client.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19613" name="AEN19613"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYCONTEXTINDEX"
+name="CONNECTIONFACTORYCONTEXTINDEX">4.31.2. <span class="lbm-option-name"><span
+class="PHRASE">context_index (ConnectionFactory)</span></span></a></h2>
+
+<p>Optional. Normally a new Connection creates a new <b class="APPLICATION">UM</b>
+context, which means a ConnectionFactory using multiple Connections has that many
+corresponding contexts. This is the behavior if this option is NULL or simply not used.
+To force this ConnectionFactory to use the same context for all Connections it creates,
+set this string value to a desired identifier for the context.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19646" name="AEN19646"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYCREATEQUEUEBROWSERCONTEXT"
+name="CONNECTIONFACTORYCREATEQUEUEBROWSERCONTEXT">4.31.3. <span
+class="lbm-option-name"><span class="PHRASE">create_queue_browser_context
+(ConnectionFactory)</span></span></a></h2>
+
+<p>Create a secondary context per connection for queue browsing. If not using JMS queue
+browsing in the JMS application, set this option to <tt class="LITERAL">false</tt>. Not
+creating the the queue browser context can improve application performance.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19679" name="AEN19679"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19702" name="AEN19702"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>Create a secondary context for queue browsing. <span class="bold"><b
+class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>Do not create a secondary, queue browsing context.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYDEBUG" name="CONNECTIONFACTORYDEBUG">4.31.4.
+<span class="lbm-option-name"><span class="PHRASE">debug
+(ConnectionFactory)</span></span></a></h2>
+
+<p>Turns debugging on or off. Setting this to <tt class="LITERAL">false</tt> has the same
+effect as setting <tt class="LITERAL">com.latencybusters.jms.level = INFO</tt> in <tt
+class="FILENAME">jmsclient/bin/logging.properties</tt>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19738" name="AEN19738"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19761" name="AEN19761"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>True</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>False <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYDEFAULTMESSAGETYPE"
+name="CONNECTIONFACTORYDEFAULTMESSAGETYPE">4.31.5. <span class="lbm-option-name"><span
+class="PHRASE">default_message_type (ConnectionFactory)</span></span></a></h2>
+
+<p>Determines what type of message Ultra Messaging JMS creates when it receives a message
+without an App Header. The message could be from a non-JMS source or a JMS application
+that has App Headers turned off (<tt class="LITERAL">&lt;Attribute name="USE_APP_HEADER"
+value="false"/&gt;</tt>). Possible values are shown in the table below.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19795" name="AEN19795"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19818" name="AEN19818"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">TextMessage</code></td>
+<td><code class="CONSTANT">TextMessage</code></td>
+<td>TextMessage</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">BytesMessage</code></td>
+<td><code class="CONSTANT">BytesMessage</code></td>
+<td>BytesMessage <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span>
+</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">MapMessage</code></td>
+<td><code class="CONSTANT">MapMessage</code></td>
+<td>MapMessage</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">StreamMessage</code></td>
+<td><code class="CONSTANT">StreamMessage</code></td>
+<td>StreamMessage</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">ObjectMessage</code></td>
+<td><code class="CONSTANT">ObjectMessage</code></td>
+<td>ObjectMessage</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYDEFAULTTEMPTOPICTYPE"
+name="CONNECTIONFACTORYDEFAULTTEMPTOPICTYPE">4.31.6. <span class="lbm-option-name"><span
+class="PHRASE">default_temp_topic_type (ConnectionFactory)</span></span></a></h2>
+
+<p>Sets the default destination for <tt
+class="LITERAL">Session.createTemporaryTopic(topicName)</tt>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19870" name="AEN19870"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19893" name="AEN19893"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">UME</code></td>
+<td><code class="CONSTANT">UME</code></td>
+<td>Used as the default by topics.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">LBM</code></td>
+<td><code class="CONSTANT">LBM</code></td>
+<td>Setting this option to LBM increases performance. <span class="bold"><b
+class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYDEFAULTTOPICTYPE"
+name="CONNECTIONFACTORYDEFAULTTOPICTYPE">4.31.7. <span class="lbm-option-name"><span
+class="PHRASE">default_topic_type (ConnectionFactory)</span></span></a></h2>
+
+<p>Sets the default destination for <tt
+class="LITERAL">Session.createTopic(topicName)</tt>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19927" name="AEN19927"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19950" name="AEN19950"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">UME</code></td>
+<td><code class="CONSTANT">UME</code></td>
+<td>Used as the default by topics.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">LBM</code></td>
+<td><code class="CONSTANT">LBM</code></td>
+<td>Set to LBM to create a topic that uses basic streaming. <span class="bold"><b
+class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DESTINATIONDESTTYPE" name="DESTINATIONDESTTYPE">4.31.8. <span
+class="lbm-option-name"><span class="PHRASE">DestType
+(Destination)</span></span></a></h2>
+
+<p>The DestType attribute determines which JMS destination type should be created.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19983" name="AEN19983"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">Destination</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20006" name="AEN20006"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Queue</code></td>
+<td><code class="CONSTANT">Queue</code></td>
+<td>Queue</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Topic</code></td>
+<td><code class="CONSTANT">Topic</code></td>
+<td>Topic <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Destination</code></td>
+<td><code class="CONSTANT">Destination</code></td>
+<td>Destination <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYQUEUEBROWSERCREATIONDELAY"
+name="CONNECTIONFACTORYQUEUEBROWSERCREATIONDELAY">4.31.9. <span
+class="lbm-option-name"><span class="PHRASE">queue_browser_creation_delay
+(ConnectionFactory)</span></span></a></h2>
+
+<p>When creating a JMS QueueBrowser, the delay to allow the underlying queue browser's
+context and receiver to register with the queue. Increasing this value may help if an
+exception returns from the call to <tt class="LITERAL">getEnumeration</tt> indicating
+that the underlying receiver was not yet registered with the queue.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20047" name="AEN20047"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYQUEUEBROWSERTIMEOUT"
+name="CONNECTIONFACTORYQUEUEBROWSERTIMEOUT">4.31.10. <span class="lbm-option-name"><span
+class="PHRASE">queue_browser_timeout (ConnectionFactory)</span></span></a></h2>
+
+<p>The length of time (in milliseconds) to wait before giving up and returning after
+calling the JMS QueueBrowser's <tt class="LITERAL">getEnumeration</tt> method. A value of
+0 (zero) disables the timeout, allowing the method to wait an unlimited amount of
+time.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20089" name="AEN20089"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYRECEIVERCREATIONDELAY"
+name="CONNECTIONFACTORYRECEIVERCREATIONDELAY">4.31.11. <span
+class="lbm-option-name"><span class="PHRASE">RECEIVER_CREATION_DELAY
+(ConnectionFactory)</span></span></a></h2>
+
+<p>When creating a consumer in JMS, the amount of additional time to wait after creating
+the underlying <tt class="LITERAL">LBMReceiver</tt>. A value of 0 (zero) indicates no
+delay. When setting this option in a configuration file, it MUST be uppercase.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20131" name="AEN20131"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DESTINATIONREGID" name="DESTINATIONREGID">4.31.12. <span
+class="lbm-option-name"><span class="PHRASE">regid (Destination)</span></span></a></h2>
+
+<p>The Registration ID assigned to the source sending to the Destination. Required for <b
+class="APPLICATION">UMP</b>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20173" name="AEN20173"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">Destination</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYSOURCECREATIONDELAY"
+name="CONNECTIONFACTORYSOURCECREATIONDELAY">4.31.13. <span class="lbm-option-name"><span
+class="PHRASE">SOURCE_CREATION_DELAY (ConnectionFactory)</span></span></a></h2>
+
+<p>When creating a producer in JMS, the amount of additional time to wait after creating
+the underlying <tt class="LITERAL">LBMSource</tt>. A value of 0 (zero) indicates no
+delay. When setting this option in a configuration file, it MUST be uppercase.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20206" name="AEN20206"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYSOURCEREGISTRATIONTIMEOUT"
+name="CONNECTIONFACTORYSOURCEREGISTRATIONTIMEOUT">4.31.14. <span
+class="lbm-option-name"><span class="PHRASE">SOURCE_REGISTRATION_TIMEOUT
+(ConnectionFactory)</span></span></a></h2>
+
+<p>When <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYWAITFORSOURCEREGISTRATION">wait_for_source_registration</a>
+is set to true, the length of time (in milliseconds) to wait before throwing an exception
+to indicate the source could not register with the store or queue. A value of 0 (zero)
+disables the timeout, indicating the source should wait an unlimited amount of time. When
+setting this option in a configuration file, it MUST be uppercase.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20248" name="AEN20248"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">30000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DESTINATIONTOPIC" name="DESTINATIONTOPIC">4.31.15. <span
+class="lbm-option-name"><span class="PHRASE">Topic (Destination)</span></span></a></h2>
+
+<p>Sets the Topic Name. The maximum length for this string is 246 characters.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20289" name="AEN20289"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">Destination</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DESTINATIONTYPE" name="DESTINATIONTYPE">4.31.16. <span
+class="lbm-option-name"><span class="PHRASE">Type (Destination)</span></span></a></h2>
+
+<p>Determines the type of destination. Overrides the value set for the ConnectionFactory
+option, default_topic_type for this Destination only. Queueing applications would use
+UMQ. Topics would use UME or LBM.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20321" name="AEN20321"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">Destination</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20344" name="AEN20344"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">UME</code></td>
+<td><code class="CONSTANT">UME</code></td>
+<td>Set this option to UME for topics in <b class="APPLICATION">UMP</b>
+applications.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">LBM</code></td>
+<td><code class="CONSTANT">LBM</code></td>
+<td>Set this option to LBM topics in <b class="APPLICATION">UMS</b> applications. <span
+class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">UMQ</code></td>
+<td><code class="CONSTANT">UMQ</code></td>
+<td>Set this option to UMQ for <b class="APPLICATION">UMP</b> applications <span
+class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYUSEAPPHEADER"
+name="CONNECTIONFACTORYUSEAPPHEADER">4.31.17. <span class="lbm-option-name"><span
+class="PHRASE">use_app_header (ConnectionFactory)</span></span></a></h2>
+
+<p>When set to <tt class="LITERAL">true</tt>, this option enables Ultra Messaging JMS to
+transmit JMS message header and JMS message properties information (including message
+selectors) via a <b class="APPLICATION">UM</b> Message Properties object. See the Oracle
+JMS Specification for information on JMS message header fields and message properties.
+Setting this option to <tt class="LITERAL">false</tt> causes Ultra Messaging JMS to use
+the default message type, and can greatly increase performance.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20390" name="AEN20390"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20413" name="AEN20413"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>True</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>False <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYUSEINDEXQUEUING"
+name="CONNECTIONFACTORYUSEINDEXQUEUING">4.31.18. <span class="lbm-option-name"><span
+class="PHRASE">use_index_queuing (ConnectionFactory)</span></span></a></h2>
+
+<p>Allows you to turn on index queueing which can be used to simulate the behaviour of
+the <tt class="LITERAL">JMSXGroupID</tt> flag in a JMS broker. UM JMS sends all of the
+message for a particular transaction to the same consumer. <b class="APPLICATION">UMQ</b>
+load balances the groups of messages across consumers.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20448" name="AEN20448"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20471" name="AEN20471"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>True</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>False <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYUSEUMPSESSIONIDS"
+name="CONNECTIONFACTORYUSEUMPSESSIONIDS">4.31.19. <span class="lbm-option-name"><span
+class="PHRASE">use_ump_session_ids (ConnectionFactory)</span></span></a></h2>
+
+<p>Use this option (with <b class="APPLICATION">UMP</b>) to enable the use of <b
+class="APPLICATION">UMP</b> session IDs. If you use this option, do not set <a
+href="ultramessagingjmsoptions.html#CONNECTIONFACTORYCLIENTID">client_id</a>. For more
+information, see <b class="APPLICATION">UMP</b> Session IDs in the UM JMS Guide.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20508" name="AEN20508"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20531" name="AEN20531"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>True</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>False <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONNECTIONFACTORYWAITFORSOURCEREGISTRATION"
+name="CONNECTIONFACTORYWAITFORSOURCEREGISTRATION">4.31.20. <span
+class="lbm-option-name"><span class="PHRASE">wait_for_source_registration
+(ConnectionFactory)</span></span></a></h2>
+
+<p>When creating a producer in JMS, the value that controls whether or not to wait for
+the underlying <tt class="LITERAL">LBMSource</tt> to complete registration with the store
+or queue. If set to false, then it becomes the responsibility of the application to
+handle exceptions that occur during sending due to the source not yet being
+registered.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20565" name="AEN20565"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span
+class="PHRASE">ConnectionFactory</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20588" name="AEN20588"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>Wait for the underlying <tt class="LITERAL">LBMSource</tt> to complete registration
+with the store or queue. <span class="bold"><b class="EMPHASIS">Default for
+Unix.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>Do not wait for the underlying <tt class="LITERAL">LBMSource</tt> to complete
+registration.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DESTINATIONWILDCARD" name="DESTINATIONWILDCARD">4.31.21. <span
+class="lbm-option-name"><span class="PHRASE">Wildcard
+(Destination)</span></span></a></h2>
+
+<p>Indicates if the topic name is a wildcard pattern.</p>
+
+<div class="INFORMALTABLE"><a id="AEN20623" name="AEN20623"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">Destination</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN20646" name="AEN20646"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">True</code></td>
+<td><code class="CONSTANT">True</code></td>
+<td>True</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">False</code></td>
+<td><code class="CONSTANT">False</code></td>
+<td>False <span class="bold"><b class="EMPHASIS">Default for Unix.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ultramessagingqueuingoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="hotfailoveroperationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging Queuing Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Hot Failover Operation Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

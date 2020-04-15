@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.4 / UME 2.1 - February 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.4.1 / UME 2.1.1 - February 2009"
+href="seclbm3.4.1-ume2.1.1.html" />
+<link rel="NEXT" title="Release LBM 3.3.9 / UME 2.0.7 - December 2008"
+href="seclbm3.3.9-ume2.0.7.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.4.1-ume2.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.3.9-ume2.0.7.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.4-UME2.1" name="SECLBM3.4-UME2.1">51. Release LBM 3.4
+/ UME 2.1 - February 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.4" name="LBM3.4">51.1. LBM 3.4</a></h2>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Known Issue:</b> When using Event Queues with the Java API on
+Mac OS X kernel 9.4, core dumps have occurred. Mac OS X kernel versions prior to 9.4 have
+not produced this behavior. 29West is investigating this issue.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Feature Resumption:</b> String caching for the Java and .NET
+APIs has been re-enabled. Rather than creating a new string for the topic and source when
+each message is delivered, <b class="APPLICATION">LBM</b> uses a reference to a cached
+string that improves performance. In addition, the previously disabled per-source client
+object has been reintroduced. The object returned from the per-source creation callback
+is now available in the receiver and per-source deletion callbacks.</p>
+</li>
+
+<li>
+<p>The <b class="APPLICATION">LBM</b> Application Notes section (FAQs, error messages,
+articles) of the <b class="APPLICATION">LBM</b>/<b class="APPLICATION">UME</b>
+documentation set has been moved into the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">29West</b> Knowledgebase</a>. We will continue to
+add articles answering common support questions, new hardware issues, source code
+examples and more to our new Knowledgebase, which has full text search and ways for you
+to comment on articles and ask a question of <b class="APPLICATION">29West</b> Support. A
+link to the current <b class="APPLICATION">29West</b> <b
+class="APPLICATION">Messaging</b> documentation set will soon be added. We welcome your
+comments and hope you find the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">29West</b> Knowledgebase</a> helpful.</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.MONITORING" name="LBM3.4.MONITORING">51.1.1.
+Monitoring</a></h3>
+
+<ul>
+<li>
+<p><b class="APPLICATION">New Monitoring Statistics:</b> Added Context statistics and
+Event Queue statistics. Context statistics help you monitor topic resolution activity,
+along with the number of unknown messages received and the number of sends and responses
+that were blocked or returned EWOULDBLOCK. Context statistics also contain transport
+statistics for Multicast Immediate Messaging (MIM) activity and the existing transport
+statistics for all of the sources or receivers in a context. Event Queue statistics help
+you monitor the number of events currently on the queue, how long it takes to service
+them (maximum, minimum and mean service times) and the total number of events for the
+monitoring period.</p>
+
+<p>Implementing the new context and Event Queue statistics in an existing <tt
+class="LITERAL">lbmmon</tt> statistics receiver application requires the addition of a
+callback for each statistic type. All new statistics are available in the <a
+href="../API/index.html" target="doccontent">C API</a>, the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>. See also <a
+href="../Design/monitoring.html#LBM-API-FUNCTIONS" target="doccontent">LBM API Functions and
+Data Structures</a> in LBM Design Concepts. The new statistics have also been added to
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">MIB</b> and the InterMapper probe files.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Application Change Required:</b> <b class="APPLICATION">LBM</b>
+Version 3.4 has broken source and binary compatibility with monitoring applications that
+use a monitoring receiver controller. In order for your existing monitoring application
+to work with <b class="APPLICATION">LBM</b> Version 3.4, you must change the application
+code and re-compile. This change, although troublesome now, allows the addition of more
+statistics in the future without any further application change required.</p>
+
+<p>In the <a href="../API/index.html" target="doccontent">C API</a>, the method for specifying
+all statistics callbacks has been changed. Note that this change applies <span
+class="emphasis"><i class="EMPHASIS">only</i></span> to applications that act as a
+receiver of statistics. No changes are required for most applications that use the <tt
+class="LITERAL">lbmmon</tt> API to publish statistics. See the <a
+href="../API/lbmmon_8h.html" target="doccontent">lbmmon API documentation</a> for information
+about the new parameters passed to <tt class="LITERAL">lbmmon_rctl_create()</tt>, as well
+as the new API calls (<tt class="LITERAL">lbmmon_rctl_attr_*()</tt>) along with the
+structures (<tt class="LITERAL">lbmmon_rctl_attr_t</tt> and <tt
+class="LITERAL">lbmmon_*_statistics_func_t</tt>. See also <a
+href="../Design/monitoring.html#RECEIVING-MONITORING-DATA" target="doccontent">Receiving
+Monitoring Data</a> in LBM Design Concepts for code examples that use the new <tt
+class="LITERAL">lbmmon</tt> API calls to create a statistics receiver.</p>
+
+<p>The <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a> also require a new way to
+specify statistics callbacks for all statistics. However, callbacks for existing
+statistics are now deprecated and will continue to work until an undetermined future
+release.</p>
+</li>
+
+<li>
+<p>Added API functions to reset statistics for all functions that retrieve statistics.
+For more information, see the <a href="../API/index.html" target="doccontent">C API</a>, the <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>.</p>
+</li>
+
+<li>
+<p>Added a new monitoring function, <tt class="LITERAL">lbmmon_sctl_sample_ex()</tt>.
+This is an extension to the existing <tt class="LITERAL">lbmmon_sctl_sample()</tt> call,
+but allows an AppID string to be specified. This string overrides the AppID string
+specified in any <tt class="LITERAL">lbmmon_*_monitor()</tt> calls for this call only,
+and can be used to allow dynamic identification of the statistics message (via the AppID)
+to the receiving monitoring application.</p>
+</li>
+
+<li>
+<p>Added the capability to monitor an <b class="APPLICATION">LBM</b> context
+automatically by setting <b class="APPLICATION">LBM</b> <a
+href="../Config/automaticmonitoringoptions.html" target="doccontent">Automatic Monitoring
+Options</a> in a configuration file or by setting environment variables, which allow you
+to automatically monitor all <b class="APPLICATION">LBM</b> contexts. See also <a
+href="../Design/monitoring.html#AUTOMONITOR" target="doccontent">Automatic Monitoring</a> in
+LBM Design Concepts.</p>
+</li>
+
+<li>
+<p>Added the number of retransmission bytes sent (<tt class="LITERAL">rx_bytes_sent</tt>)
+to the LBT-RM and LBT-RU source statistics. This allows the calculation of a source's
+retransmission rate as well as the data rate. This new statistic has also been added to
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">MIB</b> and the InterMapper probe files. The <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">MIB</b> has also been restructured to the following order: Index
+fields (OIDs .1 through .10), auxiliary fields (OIDs .11 through .20) and the normal
+statistics fields beginning with OID .21.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.NEW" name="LBM3.4.NEW">51.1.2. New
+Features/Functions</a></h3>
+
+<ul>
+<li>
+<p>Added new API attribute management functions (<tt
+class="LITERAL">lbm_XXX_attr_create()</tt>, <tt
+class="LITERAL">lbm_XXX_attr_delete()</tt>, <tt class="LITERAL">lbm_XXX_attr_dup()</tt>,
+and <tt class="LITERAL">lbm_XXX_attr_default()</tt>). Now attribute structures can only
+be allocated, manipulated, copied or destroyed via the new API functions. The existing
+functions, <tt class="LITERAL">lbm_XXX_attr_init()</tt> and <tt
+class="LITERAL">lbm_XXX_attr_cleanup()</tt>, still work but have been deprecated. All new
+development should be done with the new functions. When the deprecated functions are
+removed in a future release, all <tt class="LITERAL">lbm_XXX_attr_t</tt> structures will
+become completely opaque, and the individual fields will be removed from <tt
+class="LITERAL">lbm.h</tt>.</p>
+</li>
+
+<li>
+<p>Added a new API function <tt class="LITERAL">lbm_src_flush()</tt>, which allows you to
+flush all batched messages from both the implicit and explicit batch buffer. For more
+information, see the <a href="../API/index.html" target="doccontent"><b
+class="APPLICATION">LBM</b> C API</a>, the <a href="../JavaAPI/html/index.html"
+target="doccontent"><b class="APPLICATION">LBM</b> Java API</a> and the <a
+href="../DotNetAPI/doc/Index.html" target="doccontent"><b class="APPLICATION">LBM</b> .NET
+API</a>.</p>
+</li>
+
+<li>
+<p>Added context source event callbacks. <b class="APPLICATION">LBM</b> now delivers
+source events for any message types that can be sent directly from a context rather than
+requiring a separate <tt class="LITERAL">lbm_src_t</tt> (or LBMSource) object. These
+message types include multicast immediate messages, unicast immediate messages, requests
+and responses. Currently, the only supported context source event is the wakeup source
+event type. Also, wakeup source event types for all sources now include a flag field in
+the event data to indicate what type of source has woken up.</p>
+</li>
+
+<li>
+<p>Added new API functions to retrieve current attribute settings for various <b
+class="APPLICATION">LBM</b> objects.</p>
+</li>
+
+<li>
+<p>Added C API functions (<tt class="LITERAL">lbm_*_dump()</tt>) and Java and .NET
+methods (<tt class="LITERAL">dumpAttributeList</tt>) that retrieve an <b
+class="APPLICATION">LBM</b> object's (context, receiver, Event Queue, etc.) current <b
+class="APPLICATION">LBM</b> configuration options.</p>
+</li>
+
+<li>
+<p>A new C API function, <tt class="LITERAL">lbm_context_delete_ex()</tt>, may be used
+with an Event Queue cancel callback to provide the application notification that all
+context-level source events have been processed or purged from any Event Queues. It is
+similar to the existing <tt class="LITERAL">*_delete_ex()</tt> C API functions.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.SDM" name="LBM3.4.SDM">51.1.3. Self Describing
+Messaging</a></h3>
+
+<ul>
+<li>
+<p>Added <tt class="LITERAL">get_sec()</tt> and <tt class="LITERAL">get_usec()</tt> to
+Java and .NET Self Describing Messaging (SDM). Now you can easily get the values for
+seconds and microseconds for a timestamp (<tt
+class="LITERAL">LBMSDMRawTimestamp.java</tt> and <tt
+class="LITERAL">LBMSDMRawTimestamp.cs</tt>).</p>
+</li>
+
+<li>
+<p>Added the ability to Java and .NET Self Describing Messaging (SDM) to set the size of
+the preallocated field array when you create messages with <tt
+class="LITERAL">LBMSDMFieldsAttribute.set_field_prealloc()</tt>. In the C API, this
+corresponds to the option <tt class="LITERAL">field_array_allocation</tt> used with <tt
+class="LITERAL">lbmsdm_msg_attr_str_setopt()</tt>.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the .NET <tt class="LITERAL">LBMSDMRawDecimal</tt> class that
+was misinterpreting the exponent as an unsigned number instead of a signed number when
+deserializing a message.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Java and .NET Self Describing Messaging (SDM) that prevented
+the use of strings greater than 32K in length. SDM strings can now be greater than
+32K.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Self Describing Messaging (SDM) that occurred when building
+the serialized form of the message. If the initial estimate of the serialized message
+length was too small, the output buffer was reallocated. In the cases where the
+reallocation caused the memory block to be moved, rather than simply extended, this could
+lead to a write to an invalid memory location.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.JAVA" name="LBM3.4.JAVA">51.1.4. Java</a></h3>
+
+<ul>
+<li>
+<p>Updated JNI to catch exceptions in objects created from JNI. If an exception occurs,
+the exception is logged and the current operation is terminated.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Java timers discovered when using the Java example
+application, <tt class="LITERAL">lbmreq</tt> with Event Queues. Now when an <tt
+class="LITERAL">LBMTimer</tt> object expires and goes out of scope, it will be finalized
+and collected immediately.</p>
+</li>
+
+<li>
+<p>Fixed a memory corruption problem in the Java API that caused crashes during cleanup
+of transport sessions for receivers using LBM Event Queues. This problem only occurred on
+32-bit systems.</p>
+</li>
+
+<li>
+<p>Fixed race conditions with Java LBMTimers that are constructed without appropriate
+callbacks being set.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.JAVADOTNET" name="LBM3.4.JAVADOTNET">51.1.5. Java and
+.NET</a></h3>
+
+<ul>
+<li>
+<p>Added additional null checks in the Java and .NET APIs to prevent null pointer
+exceptions when handling messages containing empty arrays.</p>
+</li>
+
+<li>
+<p>Fixed an issue with .NET and Java that caused Hot Failover Receiver statistics to be
+empty. Also fixed .NET and Java <tt class="LITERAL">lbmrcv</tt> example programs that
+printed incorrect values for messages received (<tt class="LITERAL">msgs_rcved</tt>) when
+using the TCP transport and periodic statistics collection.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">LBMContextAttributes.setImmediateMessageCallback()</tt>
+function in Java and .NET to allow setting a context's topic-less immediate message
+callback before context creation. This method is now preferred over the older <tt
+class="LITERAL">LBMContext.enableImmediateMessageReceiver()</tt> and <tt
+class="LITERAL">LBMContext.addImmediateMessageReceiver()</tt> methods.</p>
+</li>
+
+<li>
+<p>Updated Java and .NET finalizers to catch unexpected exceptions and dump the
+stacktrace of the exception to the standard Java API <tt
+class="LITERAL">printStackTrace</tt> (stderr).</p>
+</li>
+
+<li>
+<p>Updated <tt class="LITERAL">LBMReceiver</tt> constructors in Java and .NET to throw an
+LBM.EINVAL exception if they receive an <tt class="LITERAL">LBMTopic</tt> object that has
+already been used in the creation of an <tt class="LITERAL">LBMReceiver</tt>. Re-using
+<tt class="LITERAL">LBMTopic</tt> objects in this manner has always been unsupported by
+<b class="APPLICATION">LBM</b>, but no error was logged previously.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.CONFIG" name="LBM3.4.CONFIG">51.1.6.
+Configuration</a></h3>
+
+<ul>
+<li>
+<p>Process-wide <b class="APPLICATION">LBM</b> configuration option defaults may now be
+automatically loaded at startup without code changes by setting the environment variable
+<tt class="LITERAL">LBM_DEFAULT_CONFIG_FILE</tt> to the path (or URL) of an <b
+class="APPLICATION">LBM</b> configuration file.</p>
+</li>
+
+<li>
+<p>Added the <a href="../Config/majoroptions.html#CONTEXTSOURCEEVENTFUNCTION"
+target="doccontent"><code class="PARAMETER">source_event_function</code></a> context
+configuration option as an alternative way to set a context's topic-less immediate
+messaging callback. The older method, using the <tt
+class="LITERAL">lbm_context_rcv_immediate_msgs</tt> API call, is still supported, but not
+recommended for new code.</p>
+</li>
+
+<li>
+<p>Added warning message to <tt class="LITERAL">rcv_create</tt> functions if the <a
+href="../Config/transportlbt-rmoperationoptions.html#RECEIVERTRANSPORTLBTRMACTIVITYTIMEOUT"
+ target="doccontent"><code class="PARAMETER">transport_lbtrm_activity_timeout</code></a> is
+less than <a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKGENERATIONINTERVAL"
+ target="doccontent"><code
+class="PARAMETER">transport_lbtrm_nak_generation_interval</code></a>. The warning states
+that this condition results in silent data loss if loss occurs within the activity
+timeout interval prior to the end of the transport session.</p>
+</li>
+
+<li>
+<p>Added two new configuration options, <a
+href="../Config/transportlbt-rmreliabilityoptions.html#RECEIVERTRANSPORTLBTRMNAKINITIALBACKOFFINTERVAL"
+ target="doccontent"><code
+class="PARAMETER">transport_lbtrm_nak_initial_backoff_interval</code></a> and <a
+href="../Config/multicastimmediatemessagingreliabilityoptions.html#CONTEXTMIMNAKINITIALBACKOFFINTERVAL"
+ target="doccontent"><code class="PARAMETER">mim_nak_initial_backoff_interval</code></a>, which
+control latency due to loss. The default for both options is 50 milliseconds. A value of
+zero for either option turns on immediate NAKs.</p>
+</li>
+
+<li>
+<p>Added a new Wildcard Receiver option <a
+href="../Config/config.html#WILDCARDRECEIVERRECEIVERCREATECALLBACK" target="doccontent"><code
+class="PARAMETER">receiver_create_callback</code></a> that allows a callback when a
+Wildcard Receiver matches a topic and is about to create an actual receiver for the
+topic. This allows, among other things, an application to modify the receiver attributes
+to be used in creating the receiver.</p>
+</li>
+
+<li>
+<p>Removed the explicit setting of <a href="../Config/config.html#CONTEXTREQUESTTCPPORT"
+target="doccontent"><code class="PARAMETER">request_tcp_port</code></a> from the C example
+application, <tt class="LITERAL">lbmreq</tt>. <tt class="LITERAL">lbmreq</tt> now uses
+the <a href="../Config/config.html#CONTEXTREQUESTTCPPORTLOW" target="doccontent"><code
+class="PARAMETER">request_tcp_port_low</code></a> and <a
+href="../Config/config.html#CONTEXTREQUESTTCPPORTHIGH" target="doccontent"><code
+class="PARAMETER">request_tcp_port_high</code></a> range.</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_config</tt>, <tt class="LITERAL">LBM.setConfiguration()</tt>
+and <tt class="LITERAL">lbmaux</tt> functions can now load configuration files from a URL
+using HTTP or FTP. (e.g. lbm_config http://www.example.com/lbm.cfg).</p>
+</li>
+
+<li>
+<p>Corrected a problem with an LBT-RU source with source-side filtering enabled that
+would cause a segfault if the source option <a
+href="../Config/transportlbt-ruoperationoptions.html#SOURCETRANSPORTLBTRUCLIENTACTIVITYTIMEOUT"
+ target="doccontent"><code class="PARAMETER">transport_lbtru_client_activity_timeout</code></a>
+was set to less than 10 seconds, and a timeout was detected after a receiver connect.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.RESP" name="LBM3.4.RESP">51.1.7.
+Request/Response</a></h3>
+
+<ul>
+<li>
+<p>Fixed an error where held responses could trigger a memory read error. "Held
+responses" refers to an LBM response or Unicast Immediate Message for which the response
+object has been retained after the response has been sent, and subsequently, the
+requestor disconnects. The memory read error occurs upon the next response sent with the
+response object.</p>
+</li>
+
+<li>
+<p>Upon expiration of the <tt class="LITERAL">response_tcp_deletion_timeout</tt>, logic
+was added to ensure that the response message had been sent. If not, <b
+class="APPLICATION">LBM</b> restarts the timer to give additional time for the send to
+complete.</p>
+</li>
+
+<li>
+<p>Corrected a problem on Mac OS X that resulted in a bind failure of the <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPINTERFACE"
+target="doccontent"><code class="PARAMETER">request_tcp_interface</code></a> or the <a
+href="../Config/responseoperationoptions.html#CONTEXTRESPONSETCPINTERFACE"
+target="doccontent"><code class="PARAMETER">response_tcp_interface</code></a>. The bind failure
+prevented the initialization of the <b class="APPLICATION">LBM</b> context and produced
+the message, <tt class="LITERAL">could not find open TCP server port in range</tt>. This
+problem was most prevalent in Java applications, but could also occur in C
+applications.</p>
+</li>
+
+<li>
+<p>Corrected a problem with sending responses that returned an LBM_EOP error, <tt
+class="LITERAL">response channel disconnected unexpectedly</tt> due to the selection of a
+disconnected channel that could also result in the access of freed memory. Now <b
+class="APPLICATION">LBM</b> ignores disconnected response channel connection objects to
+avoid inadvertently referencing freed memory. This correction forces responses sent to a
+disconnected channel (requester) to re-establish the connection, instead of failing with
+the LBM_EOP error, <tt class="LITERAL">response channel disconnected
+unexpectedly</tt>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.4.GEN" name="LBM3.4.GEN">51.1.8. General</a></h3>
+
+<ul>
+<li>
+<p>Corrected the condition that prevented the flushing of the message batching buffer
+with the <tt class="LITERAL">LBM_MSG_FLUSH</tt> flag after starting a message batch with
+the <tt class="LITERAL">LBM_MSG_START_BATCH</tt> flag. The <tt
+class="LITERAL">LBM_MSG_FLUSH</tt> flag now flushes the buffer, but <b
+class="APPLICATION">LBM</b> continues to batch messages until it receives the <tt
+class="LITERAL">LBM_MSG_END_BATCH</tt> flag. Additionally, if <b
+class="APPLICATION">LBM</b> receives a <tt class="LITERAL">LBM_MSG_COMPLETE_BATCH</tt>
+flag without previously receiving a <tt class="LITERAL">LBM_MSG_START_BATCH</tt> flag, it
+does not report an error.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now supports setting the <tt
+class="LITERAL">SO_RCVBUF</tt> and <tt class="LITERAL">SO_SNDBUF</tt> on a Stratus VOS
+system. If running on a version of VOS that does not support this functionality, <b
+class="APPLICATION">LBM</b> logs a warning. You may set these parameters via <b
+class="APPLICATION">LBM</b> configuration options ending in <tt
+class="LITERAL">socket_buffer</tt>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now conforms to the POSIX standard when sending a
+message on a Stratus VOS system. Previously, VOS 17.x did not function properly with <b
+class="APPLICATION">LBM</b>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now allows the <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSRCDELETIONTIMEOUT"
+ target="doccontent"><code class="PARAMETER">mim_src_deletion_timeout</code></a> option to
+increase as needed to ensure the last message has completed. Previously, when sending
+large immediate messages, the message could take longer to send than the <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTMIMSRCDELETIONTIMEOUT"
+ target="doccontent"><code class="PARAMETER">mim_src_deletion_timeout</code></a> default, which
+resulted in a failure.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> rate limiter now supports values more than 4
+gigabits/sec. Previously, rate limits of more than 4 gigabits per second were not
+supported on 32-bit or 64-bit <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;, and were not supported on other 32-bit platforms.
+Also, configuration file parsing for rate limiter settings has been changed to allow
+larger (64-bit) values.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now reports an error if you configure Wildcard Receiver
+and Event Queue options with non-numeric values. Previously <b
+class="APPLICATION">LBM</b> would assign a value of zero without any notification.</p>
+</li>
+
+<li>
+<p>Reactivated the Linger option (linger for xx seconds before closing context) for the
+Java source code example, <tt class="LITERAL">lbmimsg.java</tt>.</p>
+</li>
+
+<li>
+<p>Corrected how <b class="APPLICATION">LBM</b> Debug enables certain debug levels that
+resulted in segmentation faults on Solaris.</p>
+</li>
+
+<li>
+<p>In a few error cases <b class="APPLICATION">LBM</b> aborts an operation and returns
+without unlocking its mutex locks. <b class="APPLICATION">LBM</b> has been updated to
+unlock mutex locks before returning from an error.</p>
+</li>
+
+<li>
+<p>Fixed an issue where a partial message could be delivered after a burst loss
+notification. As a result of this change, if any portion of a message is lost, the entire
+message is considered lost.</p>
+</li>
+
+<li>
+<p>Changed the error message produced when a receiver goes down prior to an application
+sending a Unicast Immediate Message. Error message now reads, <tt class="LITERAL">LBM
+send error: no connection to target while sending unicast immediate message</tt>.</p>
+</li>
+
+<li>
+<p>Changed TCP-LB to not send partial messages. When using Bounded Latency TCP and
+sending large fragmented messages, if <b class="APPLICATION">LBM</b> needs to remove data
+from the buffer to make room for new data, <b class="APPLICATION">LBM</b> removes all
+fragments of a message so the receiver does not receive any partial messages.</p>
+</li>
+
+<li>
+<p>Fixed a problem when using LBT-RU on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> in conjunction with the <tt
+class="LITERAL">wincompport</tt> <a href="../Config/config.html#CONTEXTFDMANAGEMENTTYPE"
+target="doccontent"><code class="PARAMETER">fd_management_type</code></a>. Previously, a single
+receiver disconnecting from a topic caused all other receivers for that topic to stop
+receiving data.</p>
+</li>
+
+<li>
+<p>Corrected a problem in the <b class="APPLICATION">LBM</b> Gateway that prevented
+messages from being forwarded across the Gateway if you used a non-default value for the
+Unicast topic resolution port in tunnel mode.</p>
+</li>
+
+<li>
+<p>Corrected a problem with TCP transport that occurred when the <a
+href="../Config/transporttcpoperationoptions.html#SOURCETRANSPORTTCPMULTIPLERECEIVERBEHAVIOR"
+ target="doccontent"><code
+class="PARAMETER">transport_tcp_multiple_receiver_behavior</code></a> was set to <tt
+class="LITERAL">bounded_latency</tt> or <tt class="LITERAL">source_paced</tt>. The "total
+buffered" counter increased when data was added to the buffer but was not properly
+decreased when data was removed. Over time, this resulted in the failed assertion <tt
+class="LITERAL">[src-&#62;totalbuffered&#62;=len]</tt>. This counter supplies the <tt
+class="LITERAL">bytes_buffered</tt> source transport TCP statistic and does not impact
+the performance of <b class="APPLICATION">LBM</b>.</p>
+</li>
+
+<li>
+<p>Corrected a problem with <tt class="LITERAL">lbm_log</tt> that resulted in a system
+crash when <tt class="LITERAL">lbm_log</tt> was called multiple times on machines with
+multiple interfaces.</p>
+</li>
+
+<li>
+<p>Fixed a condition on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> that caused a blocking MIM send to return immediately
+without sending any data if it followed a non-blocking send which had returned
+LBM_EWOULDBLOCK.</p>
+</li>
+
+<li>
+<p>Corrected a problem with LBT-RU and source-side filtering that caused a deleted and
+then re-created receiver to connect to the source but not receive any messages.</p>
+</li>
+
+<li>
+<p>Fixed a .NET marshalling issue affecting <tt class="LITERAL">LBM.version()</tt>, <tt
+class="LITERAL">LBM.errorMessage()</tt> and <tt
+class="LITERAL">LBMMonitor.errorMessage()</tt> on some 64-bit systems which resulted in
+crashes when calling these functions or if the .NET API attempted to throw an
+exception.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.1" name="UME2.1">51.2. UME 2.1</a></h2>
+
+<ul>
+<li>
+<p><b class="APPLICATION">UME</b> store options, <tt
+class="LITERAL">repository-size-threshold</tt> and <tt
+class="LITERAL">repository-size-limit</tt> may now be safely set up to 4 gigabytes.</p>
+</li>
+
+<li>
+<p>The Java and .NET APIs now properly support <b class="APPLICATION">UME</b>
+Quorum/Consensus store failover.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SNMP1.1" name="SNMP1.1">51.3. SNMP Agent 1.1</a></h2>
+
+<ul>
+<li>
+<p>All new statistics cited above in <a
+href="seclbm3.4-ume2.1.html#LBM3.4.MONITORING"><i>Monitoring</i></a> have been added to
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">MIB</b> and the InterMapper probe files.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">29West</b> <b class="APPLICATION">Messaging</b> now supports
+the optional LBT-RU session ID. This was also added to the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> <b class="APPLICATION">MIB</b>.</p>
+</li>
+
+<li>
+<p>Fixed a problem that prevented <b class="APPLICATION">29West</b> <b
+class="APPLICATION">Messaging</b> from starting due to a properly formed XML
+configuration file that did not contain the optional &lt;daemon&#62; section. Problem
+only appeared on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> 32-bit systems.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.4.1-ume2.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.3.9-ume2.0.7.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.4.1 / UME 2.1.1 - February
+2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.3.9 / UME 2.0.7 - December
+2008</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

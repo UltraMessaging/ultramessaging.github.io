@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Using the UMM API</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="PREVIOUS" title="Using the UMM GUI" href="umm-gui.html" />
+<link rel="NEXT" title="UM Manager Daemon" href="umm-daemon.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Manager Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umm-gui.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umm-daemon.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMM-API" name="UMM-API">4. Using the UMM API</a></h1>
+
+<p>The <b class="APPLICATION">UMM</b> API allows you to programmatically create and store
+application configurations in the <b class="APPLICATION">UMM</b> database. The <b
+class="APPLICATION">UMM</b> GUI uses the same API to create users, passwords,
+applications configurations and configuration templates. See <a
+href="../UMMJavaAPI/html/index.html" target="doccontent">UMM Java API</a> for <b
+class="APPLICATION">UMM</b> objects, constructors and methods.</p>
+
+<p>Programs that create application XML configurations store them in the <b
+class="APPLICATION">UMM</b> Configuration Database as shown in the diagram, <a
+href="umm-api.html#UMM-API-USAGE"><i>Architecture for Programming Application
+Configurations</i></a>. The UMM Daemon serves the XML configuration to <b
+class="APPLICATION">UM</b> applications.</p>
+
+<div class="FIGURE"><a id="UMM-API-USAGE" name="UMM-API-USAGE"></a>
+<p><b>Figure 27. Architecture for Programming Application Configurations</b></p>
+
+<img src="UMM_API_Usage.png" align="CENTER" /></div>
+
+<p>The following sample code provides a framework for creating an application
+configuration, <tt class="LITERAL">test_application</tt> with two templates. <tt
+class="LITERAL">template_1</tt> sets the file descriptor type option for a <b
+class="APPLICATION">UM</b> context. <tt class="LITERAL">template_2</tt> sets the resolver
+multicast address and port. Use of the application configuration is also authenticated
+with a username and password.</p>
+
+<p>See <a href="../Config/xmlconfigurationfiles.html#TEMPLATE-ELEMENTS"
+target="doccontent">&lt;templates&#62;</a> and <a
+href="../Config/xmlconfigurationfiles.html#APPLICATIONS-ELEMENT"
+target="doccontent">&lt;applications&#62;</a> in the <b class="APPLICATION">UM</b>
+Configuration Guide for more information about XML configuration elements. See also <a
+href="umm-gui.html#UMMGUI-TEMPLATES"><i>Creating Configuration Templates</i></a> and <a
+href="umm-gui.html#UMMGUI-APPS"><i>Creating Application Configurations</i></a> for
+information on creating templates and application configurations using the <b
+class="APPLICATION">UMM</b> GUI.</p>
+
+<pre class="PROGRAMLISTING">
+package umm.api;
+
+import java.io.CharArrayReader;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import umm.api.NameValue;
+import umm.api.UMMAPI;
+import umm.api.util.DOMUtil;
+import umm.api.util.Util;
+
+public class Example {
+
+    String test_application = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&#62;\n"
+            + "&lt;application name=\"test_application\" template=\"\"&#62;\n"
+            + " &lt;contexts order=\"deny,allow\"&#62;\n"
+            + "&lt;context rule=\"allow\" template=\"\"&#62;\n"
+            + "&lt;sources order=\"deny,allow\"/&#62;\n"
+            + " &lt;receivers order=\"deny,allow\"/&#62;\n"
+            + "&lt;wildcard-receivers order=\"deny,allow\"/&#62;\n"
+            + " &lt;/context&#62;\n"
+            + " &lt;/contexts&#62;\n"
+            + "&lt;event-queues order=\"deny,allow\"&#62;\n"
+            + " &lt;event-queue rule=\"allow\"/&#62;\n"
+            + "&lt;/event-queues&#62;\n"
+            + "&lt;/application&#62;";
+    String template_1 = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&#62;\n"
+            + "&lt;template name=\"template_1\"&#62;\n"
+            + "&lt;options type=\"context\"&#62;\n"
+            + "&lt;option default-value=\"epoll\" name=\"fd_management_type\"/&#62;\n"
+            + "&lt;/options&#62;\n"
+            + "&lt;/template&#62;";
+    String template_2 = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&#62;\n"
+            + "&lt;template name=\"template_2\"&#62;\n"
+            + "&lt;options type=\"context\"&#62;\n"
+            + "&lt;option default-value=\"224.9.10.11\" name=\"resolver_multicast_address\"/&#62;\n"
+            + "&lt;option default-value=\"12965\" name=\"resolver_multicast_port\"/&#62;\n"
+            + "&lt;/options&#62;\n"
+            + "&lt;/template&#62;";
+    UMMAPI api;
+
+    private void init(String machine, int port) throws Exception {
+
+        //Create the UMMPI object. The constructor takes a machine name and port 
+        //which are used to connect to the UMM Daemon.
+        api = new UMMAPI(machine, port);
+        System.out.println("Init Success");
+    }
+
+    private void login(String userName, String password) throws Exception {
+
+        //Logon to the UMM system. The login method must be called with a valid username 
+        //and password. The login user must be a UMM administrative user.
+    if (api.login(userName, password)) {
+            System.out.println("login Success");
+            return;
+        }
+        System.out.println("login Failure");
+        System.exit(-1);
+    }
+
+    public Example(String args[]) {
+        try {
+
+            String machine = args[0];
+            int port = Integer.parseInt(args[1]);
+            String userName = args[2];
+            String password = args[3];
+
+            init(machine, port); //Connect to the UMM daemon
+            login(userName, password); //Login to the daemon.
+
+            ArrayList&lt;NameValue&#62; templateList = new ArrayList();
+            // Need a list of templates to assign to the Application.
+
+            NameValue nv = api.saveTemplate("template_1", template_1);
+            if (nv == null) {
+                System.out.println("saveTemplate Failure");
+                System.exit(-1);
+            }
+            templateList.add(nv);
+
+            nv = api.saveTemplate("template_2", template_2);
+            if (nv == null) {
+                System.out.println("saveTemplate Failure");
+                System.exit(-1);
+            }
+            templateList.add(nv);
+
+            String xml = setTemplateXML(templateList, test_application);
+            if (xml == null) {
+                System.out.println("setTemplateXML Failure");
+                System.exit(-1);
+            }
+
+            //The template names must be set in the xml.
+            if (api.saveApplication("test_application", xml) == null) {
+                System.out.println("saveApplication Failure");
+                System.exit(-1);
+            }
+
+            //The template names must be set in the Database.
+            if (api.setTemplates("test_application", templateList) == false) {
+                System.out.println("setTemplates Failure");
+                System.exit(-1);
+            }
+
+            System.out.println("##############################################");
+            System.out.println(api.getConfig("test_application"));
+        } catch (Exception ex) {
+            Logger.getLogger(Example.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        api.logOff();
+    }
+
+    private String setTemplateXML(ArrayList&lt;NameValue&#62; list, String xml) {
+        try {
+
+            StringBuilder sb = new StringBuilder();
+
+            //Build the template name string.
+            for (NameValue nv : list) {
+                sb.append(nv.getName() + ",");
+            }
+            // Remove the last ","
+            if (sb.length() &#62; 0) {
+                sb.delete(sb.length() - 1, sb.length());
+            }
+            
+            //Create a DOM document.
+            CharArrayReader characterStream = new CharArrayReader(xml.toCharArray());
+            InputSource is = new InputSource(characterStream);
+            Document document = DOMUtil.createDocument(is);
+            Node node = (Node) document.getDocumentElement();
+            
+            //Find the correct node to add the templates to.
+            node = DOMUtil.findNode("contexts", node);
+            if (node == null) {
+                System.out.println("No contexts node");
+                return null;
+            }
+            node = DOMUtil.findNode("context", node);
+            if (node == null) {
+                System.out.println("No context node");
+                return null;
+            }
+            if (node.getAttributes().getNamedItem("template") != null) {
+                node.getAttributes().getNamedItem("template").setNodeValue(sb.toString());
+                return DOMUtil.getXML(document);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String args[]) {
+        new Example(args);
+        System.exit(0);
+    }
+}&#13;
+</pre>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umm-gui.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umm-daemon.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Using the UMM GUI</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">UM Manager Daemon</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

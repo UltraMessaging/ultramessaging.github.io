@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="store,log file,LBM_SRC_EVENT_UME_REGISTRATION_ERROR,Automatic Monitoring,transport statistics,transport statistics,naks_sent,Web Monitor,UMP Store,wget,UMP Store,Process ID,PID,log messages,LBM_SRC_EVENT_UME_STORE_UNRESPONSIVE" />
+    <title>Monitoring the UMP Store Daemon (umestored)</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html#3_5_8_1">Monitoring UM Statistics, Logs and Daemons</a> &gt; Monitoring the UMP Store Daemon (umestored)</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_5_8_1">Monitoring the UMP Store Daemon (umestored)</a></div>
+      <div class="Short_Description"><a name="3_5_8_2">The UM store provides persistence services to UM sources and receivers. Multiple stores can be used in the following two configurations .</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_2_2">Round-Robin, which allows only one store of the group to be the active store.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_2_4">Quorum/Consensus, which allows a number of stores to be used at the same time. Multiple stores can fail and </a><b class="Bold">UMP</b> can continue operation unhindered.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_8_3_4">Monitor the following for all stores.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_6_2">Store log files</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_6_4">Application events and log files</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_6_6">Store's internal transport statistics</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_3_6_8">UMP store daemon web monitor</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_8_6_1">Store Log File</a></div>
+      <div class="Short_Description"><a name="3_5_8_6_2">The store's XML configuration file specifies the location of the log file. UM always appends store log files. If you use the same log file for the same store over multiple days, it will contain all the information logged across a number of days. Each store should have its own log file.</a></div>
+      <div class="Body"><a name="3_5_8_6_4_2">The following lists critical things to monitor in a store log file.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_6_4_4_2">aio_warnings - may indicate a problem with the disk (disk full, cannot write, etc.)</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_6_4_4_4">Proxy source creation - indicates that a source 'went away'. This may be fine, but could also indicate an error condition. Discuss with your UM development team when this event is safe and when it indicates a problem.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_6_4_4_6">Rapid log file growth - Log files growing rapidly or growing much more rapidly than normal, may indicate a problem. Look at what types of messages are being written to the log at higher-than-normal rates to see where the issue might be.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_8_6_4_6">In application log files, look for LBM_SRC_EVENT_UME_REGISTRATION_ERROR messages. These can indicate many different problems that will prevent message persistence. See the UM Log Messages section for details.</a></div>
+      <div class="Heading_2"><a name="3_5_8_8_1">Monitoring a Store's Internal Transport Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_8_8_2">Since </a><span class="codeph">umestored</span> is a proprietary UM application developed with the UM API library, you can configure the daemon with automatic monitoring and then access transport statistics for the daemon's internal sources and receivers. To accomplish this, follow the procedure below.</div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_8_4_2_2">Enable Automatic Monitoring in the UM configuration file cited in the umestored XML configuration file's &lt;daemon&gt; element.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_8_4_2_4">For each store configured in the umestored XML configuration file, add a </a><span class="Keyword">&lt;context-name&gt;</span> element. Automatic Monitoring then maintains complete transport statistics for each store at the interval set in the UM configuration file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_8_10_1">UMP Store Web Monitor</a></div>
+      <div class="Short_Description"><a name="3_5_8_10_2">Explanations of umestored statistics can be found in </a><span class="Italic">Section 13</span>, <span class="Italic">UM Guide for Persistence and Queuing</span>. The store XML configuration file contains the location of the Store Web Monitor. Information you can monitor on the umestored Web Monitor include the following.</div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_10_4_2_2">List of stores the daemon is running.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_10_4_2_4">List of topics and wildcard topic patterns for each store, along with registration IDs for the sources sending on the topics.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_10_4_2_6">Source and receiver information for each topic.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">4. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><a name="3_5_8_10_4_2_8">UM Stats or transport-level statistics for underlying receivers in the store. These are similar to the transport statistics mentioned earlier, however they indicate how the store is communicating with its sources for a given topic. For example, a non-zero number of </a><span class="Keyword">naks_sent</span> means the store is experiencing some loss.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_8_10_4_4">TIP: You can build a script that executes the Linux </a><span class="Keyword">wget</span> command at a 5 second interval to grab a web monitor screen shot and save it to a directory or file. (Also curl or geneos web tool kit.)</div>
+      <div class="Heading_2"><a name="3_5_8_12_1">Detecting UMP Store Failures</a></div>
+      <div class="Short_Description"><a name="3_5_8_12_2">You can detect the loss of a store with the following.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_12_4_2_2">Loss of the UMP Store's Process ID (PID)</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_12_4_2_4">Application log messages stating the loss of connection to the store</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_8_12_4_4">Stores can also be "too busy" and therefore cannot service source and receiving applications. Sources declare a store inactive with the LBM_SRC_EVENT_UME_STORE_UNRESPONSIVE event when the store's activity timeout expires . This can be caused by the following.</a></div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_12_4_6_2">Disk is too busy (or when the system starts swapping)</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_8_12_4_6_4">The store is processing an overly-large load of recovery traffic. You may want to recommend that UM administrators consider a larger quorum / consensus group size.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.3 / UME 2.0 - February 2008</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.3.1 / UME 2.0 - February 2008"
+href="seclbm3.3.1-ume2.0.html" />
+<link rel="NEXT" title=" Release LBM 3.3EA3 / UME 2.0EA2 2008-1-11"
+href="seclbm3.3ea3-ume2.0ea2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.3.1-ume2.0.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.3ea3-ume2.0ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.3-UME2.0" name="SECLBM3.3-UME2.0">61. Release LBM 3.3
+/ UME 2.0 - February 2008</a></h1>
+
+<p>See also <a href="seclbm3.3ea3-ume2.0ea2.html"><i>Release LBM 3.3EA3 / UME 2.0EA2
+2008-1-11</i></a>, <a href="seclbm3.3ea2-ume2.0ea1.html"><i>Release LBM 3.3EA2 / UME
+2.0EA1 2007-12-19</i></a> and <a href="sec3.3ea1.html"><i>Release LBM 3.3EA1
+2007-11-15</i></a>.</p>
+
+<ul>
+<li>
+<p>Changed the default configuration settings for all 23 port configuration parameters in
+LBM. Each port default was moved by 10,000. For example, mim_destination_port moved from
+4401 to 14401. The <b class="APPLICATION">LBM</b> code will use the original locations
+with the definition of the "LBM_USE_ORIG_DEFAULT_PORTS" environment variable (value not
+pertinent).</p>
+</li>
+
+<li>
+<p>Implemented Topic Sequence Number Information (TSNI) messages. These will be received
+from LBTRM/LBTRU sources that have been idle for more than the <tt
+class="LITERAL">transport_topic_sequence_number_info_interval</tt>. Older receivers won't
+understand TSNI messages and will display the log message, "LOG Level 5: LBMC cntl
+unknown next header 20, ignoring header". This may be safely ignored.</p>
+</li>
+
+<li>
+<p>Added support for multiple <b class="APPLICATION">LBM</b> transport configuration
+parameters to be set through the lbmmon API.</p>
+</li>
+
+<li>
+<p>Added log message identifying the presence of multiple network interfaces before a
+specific resolver interface has been specified.</p>
+</li>
+
+<li>
+<p>Named all <b class="APPLICATION">LBM</b> data structs to support forward
+declaration.</p>
+</li>
+
+<li>
+<p>Added propagation of Java exceptions incurred during <b class="APPLICATION">LBM</b>
+callbacks back to JVM as LBMApplication exceptions.</p>
+</li>
+
+<li>
+<p>Changed <b class="APPLICATION">LBM</b> and <b class="APPLICATION">UME</b> to ignore
+insignificant whitespace in XML-based configuration files.</p>
+</li>
+
+<li>
+<p>Added file name and line number to memory allocation failure messages.</p>
+</li>
+
+<li>
+<p>Added better detection of invalid <b class="APPLICATION">LBM</b> configuration
+attribute names and values.</p>
+</li>
+
+<li>
+<p>Changed <b class="APPLICATION">UME</b> to flag instances where a store is not seeing
+topic advertisements from a source.</p>
+</li>
+
+<li>
+<p>Fixed bug in Java and .NET SDM LBMSDMField.sameBaseType() method which always returned
+true.</p>
+</li>
+
+<li>
+<p>Removed the fatal assertion on invalid sequence number checkin <b
+class="APPLICATION">UME</b> store that appeared when an unrecoverable loss burst message
+is received.</p>
+</li>
+
+<li>
+<p>Added failover optimization to <b class="APPLICATION">UME</b> store
+initialization.</p>
+</li>
+
+<li>
+<p>Fixed a race condition in the <b class="APPLICATION">UME</b> store with respect to
+source deletion and pending AIOs that could cause a crash.</p>
+</li>
+
+<li>
+<p>Added throttling of unrecoverable loss messages in the <b class="APPLICATION">UME</b>
+store log.</p>
+</li>
+</ul>
+
+<br />
+<br />
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.3.1-ume2.0.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.3ea3-ume2.0ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.3.1 / UME 2.0 - February
+2008</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.3EA3 / UME 2.0EA2 2008-1-11</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

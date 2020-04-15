@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport LBT-RU Reliability Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-RU Network Options"
+href="transportlbt-runetworkoptions.html" />
+<link rel="NEXT" title="Transport LBT-RU Operation Options"
+href="transportlbt-ruoperationoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="transportlbt-runetworkoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="transportlbt-ruoperationoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTLBT-RURELIABILITYOPTIONS"
+name="TRANSPORTLBT-RURELIABILITYOPTIONS">4.12. Transport LBT-RU Reliability
+Options</a></h1>
+
+<p>For every LBT-RU reliability option, there is a corresponding LBT-RM reliability
+option. For more information on how LBT-RU reliability options interact and for
+illustrations, please see the introduction to the <a
+href="transportlbt-rmreliabilityoptions.html">transport LBT-RM reliability options</a>
+section.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRUIGNOREINTERVAL"
+name="SOURCETRANSPORTLBTRUIGNOREINTERVAL">4.12.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_ignore_interval (source)</span></span></a></h2>
+
+<p>The interval to ignore NAKs after a retransmission is sent. This option affects the
+transport session underlying the source rather than the source itself. The transport
+session uses the value from the first source created on the session and ignores
+subsequent sources. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8563" name="AEN8563"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUNAKBACKOFFINTERVAL"
+name="RECEIVERTRANSPORTLBTRUNAKBACKOFFINTERVAL">4.12.2. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_nak_backoff_interval
+(receiver)</span></span></a></h2>
+
+<p>For LBT-RU sessions only. The maximum interval between transmissions of a single NAK.
+The actual value is random (to reduce self-similar behaviors) and is uniform on the range
+[0.5*interval, 1.5*interval]. This option affects the transport session underlying the
+receiver rather than the receiver itself. The transport session uses the value from the
+first receiver created on the session and ignores subsequent receivers. Refer to <a
+href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver Configuration
+and Transport Sessions</a> and <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8605" name="AEN8605"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 [100,300] (0.2 [0.1,0.3]
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUNAKGENERATIONINTERVAL"
+name="RECEIVERTRANSPORTLBTRUNAKGENERATIONINTERVAL">4.12.3. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_nak_generation_interval
+(receiver)</span></span></a></h2>
+
+<p>For LBT-RU sessions only. The maximum time that a piece of data may be outstanding
+before the data is unrecoverably lost. Although the minimum valid value is 5
+milliseconds, larger values are advisable. This option affects the transport session
+underlying the receiver rather than the receiver itself. The transport session uses the
+value from the first receiver created on the session and ignores subsequent receivers.
+Refer to <a href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver
+Configuration and Transport Sessions</a> and <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8647" name="AEN8647"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUNAKSUPPRESSINTERVAL"
+name="RECEIVERTRANSPORTLBTRUNAKSUPPRESSINTERVAL">4.12.4. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_nak_suppress_interval
+(receiver)</span></span></a></h2>
+
+<p>For LBT-RU sessions only. The maximum interval to suppress sending NAKs after an NCF
+is received. This option affects the transport session underlying the receiver rather
+than the receiver itself. The transport session uses the value from the first receiver
+created on the session and ignores subsequent receivers. Refer to <a
+href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">Receiver Configuration
+and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8688" name="AEN8688"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRURECEIVERSOCKETBUFFER"
+name="CONTEXTTRANSPORTLBTRURECEIVERSOCKETBUFFER">4.12.5. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_receiver_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set <code class="CONSTANT">SO_RCVBUF</code> value of the LBT-RU receiver
+unicast socket (both sender and receiver sides). In some cases the OS will not allow all
+of this value to be used. See the section on <a
+href="reference.html#SOCKETBUFFERSIZE">socket buffer sizes</a> for platform-dependent
+information. See also our white paper <a
+href="http://vip.informatica.com/content/Downloads?docid=1568&amp;=NA-Ongoing-2011Q1-JP-UM_Topics_in_High_Performance_WP_www"
+ target="_top">Topics in High Performance Messaging</a> for background and guidelines on
+UDP buffer sizing.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8737" name="AEN8737"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">524288
+(512KB)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRUSOURCESOCKETBUFFER"
+name="CONTEXTTRANSPORTLBTRUSOURCESOCKETBUFFER">4.12.6. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_source_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set <code class="CONSTANT">SO_SNDBUF</code> value of the LBT-RU send
+multicast socket. In some cases the OS will not allow all of this value to be used. See
+the section on <a href="reference.html#SOCKETBUFFERSIZE">socket buffer sizes</a> for
+platform-dependent information. A value of 0 instructs <b class="APPLICATION">UM</b> to
+use the OS default.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8786" name="AEN8786"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS default or 131072,
+whichever is larger)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWLIMIT"
+name="SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWLIMIT">4.12.7. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_transmission_window_limit
+(source)</span></span></a></h2>
+
+<p>Caps the total amount of memory that a transmission window uses, which includes data
+and overhead. For example, if the <a
+href="transportlbt-rureliabilityoptions.html#SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWSIZE">transport_lbtru_transmission_window_size</a>
+is 24 MB (default) and the source sends 20 byte messages with the "flush" flag, the
+actual amount of memory used can approximate 300 MB. The default value of this option
+does not limit the transmission window.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8824" name="AEN8824"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWSIZE"
+name="SOURCETRANSPORTLBTRUTRANSMISSIONWINDOWSIZE">4.12.8. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtru_transmission_window_size
+(source)</span></span></a></h2>
+
+<p>The maximum amount of buffered data that the LBT-RU source is allowed to retain for
+retransmissions. The minimum valid value is 65536 bytes. This option affects the
+transport session underlying the source rather than the source itself. The transport
+session uses the value from the first source created on the session and ignores
+subsequent sources. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8862" name="AEN8862"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">25165824 (24
+MB)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="transportlbt-runetworkoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="transportlbt-ruoperationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-RU Network Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport LBT-RU Operation Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

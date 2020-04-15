@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport LBT-RDMA Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-IPC Operation Options"
+href="transportlbt-ipcoperationoptions.html" />
+<link rel="NEXT" title="Transport Acceleration Options"
+href="transportaccelerationoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="transportlbt-ipcoperationoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="transportaccelerationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTLBT-RDMAOPERATIONOPTIONS"
+name="TRANSPORTLBT-RDMAOPERATIONOPTIONS">4.15. Transport LBT-RDMA Operation
+Options</a></h1>
+
+<p>Use of the LBT-RDMA transport requires the purchase and installation of the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">RDMA Transport Module</b>. See your <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> representative for licensing specifics.</p>
+
+<p>See also <a href="../Design/lbm-objects.html#TRANSPORT-LBT-RDMA"
+target="_top">Transport LBT-RDMA</a>.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRDMADATAGRAMMAXSIZE"
+name="CONTEXTTRANSPORTLBTRDMADATAGRAMMAXSIZE">4.15.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated for a LBT-RDMA transport session. The
+default value is 4096, the minimum is 500 bytes, and the maximum is 4096.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10041" name="AEN10041"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">4096</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRDMAINTERFACE"
+name="SOURCETRANSPORTLBTRDMAINTERFACE">4.15.2. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_interface (source)</span></span></a></h2>
+
+<p>Specifies the network interface over which <b class="APPLICATION">UM</b> LBT-RDMA
+sources receive connection requests from topic receivers. You can specify the full IP
+address of the interface, or just the network part (see <a
+href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a> for details). Be
+aware that the first source joining a transport session sets the interface with this
+option. Thus, setting a different interface for a subsequent topic that maps onto the
+same transport session will have no effect. Default is set to INADDR_ANY, meaning that it
+accepts incoming connection requests from any interface.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10087" name="AEN10087"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRDMAMAXIMUMPORTS"
+name="CONTEXTTRANSPORTLBTRDMAMAXIMUMPORTS">4.15.3. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_maximum_ports (context)</span></span></a></h2>
+
+<p>Maximum number of LBT-RDMA sessions to allocate.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10130" name="AEN10130"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of ports</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRDMAPORT"
+name="SOURCETRANSPORTLBTRDMAPORT">4.15.4. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_port (source)</span></span></a></h2>
+
+<p>Port number for a specific source's LBT-RDMA session that is outside the <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDLOW">transport_lbtrdma_port_low</a>
+and <a
+href="transportlbt-ipcoperationoptions.html#CONTEXTTRANSPORTLBTIPCIDHIGH">transport_lbtrdma_port_high</a>
+range. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10170" name="AEN10170"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRDMAPORTHIGH"
+name="CONTEXTTRANSPORTLBTRDMAPORTHIGH">4.15.5. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_port_high (context)</span></span></a></h2>
+
+<p>Highest port number that can be assigned to a LBT-RDMA session.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10211" name="AEN10211"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20,020</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRDMAPORTLOW"
+name="CONTEXTTRANSPORTLBTRDMAPORTLOW">4.15.6. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtrdma_port_low (context)</span></span></a></h2>
+
+<p>Lowest port number that can be assigned to a LBT-RDMA session.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10248" name="AEN10248"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20,001</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRDMARECEIVERTHREADBEHAVIOR"
+name="CONTEXTTRANSPORTLBTRDMARECEIVERTHREADBEHAVIOR">4.15.7. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_receiver_thread_behavior
+(context)</span></span></a></h2>
+
+<p>Receiver behavior for monitoring a LBT-RDMA source's shared memory area for new
+data.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10285" name="AEN10285"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10308" name="AEN10308"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">pend</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_RDMA_RCV_THREAD_PEND</code></td>
+<td>Receiver waits (sleep) for notification from RDMA that the source has updated the
+shared memory area with new data. Default. <span class="bold"><b class="EMPHASIS">Default
+for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">busy_wait</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_RDMA_RCV_THREAD_BUSY_WAIT</code></td>
+<td><b class="APPLICATION">UM</b> polls the shared memory area for new data.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRDMATRANSMISSIONWINDOWSIZE"
+name="SOURCETRANSPORTLBTRDMATRANSMISSIONWINDOWSIZE">4.15.8. <span
+class="lbm-option-name"><span class="PHRASE">transport_lbtrdma_transmission_window_size
+(source)</span></span></a></h2>
+
+<p>Size of an LBT-RDMA transport's shared memory area. This value may vary across
+platforms. The actual size of the shared memory area equals the value you specify for
+this option plus about 64 KB for header information. The minimum value for this option is
+65,536. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source
+Configuration and Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10343" name="AEN10343"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">25165824 (24
+MB)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="transportlbt-ipcoperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="transportaccelerationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-IPC Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport Acceleration Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

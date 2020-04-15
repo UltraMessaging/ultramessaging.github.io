@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Off-Transport Recovery Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Late Join Options" href="latejoinoptions.html" />
+<link rel="NEXT" title="Request Network Options" href="requestnetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="latejoinoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="requestnetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="OFF-TRANSPORTRECOVERYOPTIONS"
+name="OFF-TRANSPORTRECOVERYOPTIONS">4.21. Off-Transport Recovery Options</a></h1>
+
+<p>See also <a href="../Design/lbm-features.html#OTR" target="_top">Off-Transport
+Recovery (OTR)</a> for more information about this feature.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTDURATION"
+name="RECEIVEROTRREQUESTDURATION">4.21.1. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_duration (receiver)</span></span></a></h2>
+
+<p>The length of time a receiver continues to send OTR lost-message requests before
+giving up.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12522" name="AEN12522"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">20000 (20
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTINITIALDELAY"
+name="RECEIVEROTRREQUESTINITIALDELAY">4.21.2. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_initial_delay (receiver)</span></span></a></h2>
+
+<p>The length of time a receiver waits before initiating OTR lost-message requests.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12563" name="AEN12563"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTLOGALERTCOOLDOWN"
+name="RECEIVEROTRREQUESTLOGALERTCOOLDOWN">4.21.3. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_log_alert_cooldown (receiver)</span></span></a></h2>
+
+<p>Each OTR request generates a log message. The first request's log message is a
+WARNING-level log message, and subsequent requests that quickly follow generate
+INFO-level log messages. After a time interval defined by this option, the next request
+leading a new burst of requests again generates a WARNING-level log message.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12604" name="AEN12604"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">300 (5
+minutes)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTMAXIMUMINTERVAL"
+name="RECEIVEROTRREQUESTMAXIMUMINTERVAL">4.21.4. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_maximum_interval (receiver)</span></span></a></h2>
+
+<p>The maximum time interval between a receiver's OTR lost-message requests. After the
+receiver initiates OTR and is waiting to receive the retransmission, the initial interval
+(set by <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTMINIMUMINTERVAL">otr_request_minimum_interval</a>)
+doubles in length for each request until it reaches this option's value, then continues
+at this interval (until timeout or <b class="APPLICATION">UM</b> recovers messages).
+NOTE: When using TCP Request/Response, this value must be shorter than <a
+href="responseoperationoptions.html#CONTEXTRESPONSETCPDELETIONTIMEOUT">response_tcp_deletion_timeout</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12648" name="AEN12648"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTMINIMUMINTERVAL"
+name="RECEIVEROTRREQUESTMINIMUMINTERVAL">4.21.5. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_minimum_interval (receiver)</span></span></a></h2>
+
+<p>The initial time interval between a receiver's OTR lost-message requests. While the
+receiver is waiting to receive the retransmission, the interval doubles in length for
+each request until it reaches the maximum interval set by <a
+href="off-transportrecoveryoptions.html#RECEIVEROTRREQUESTMAXIMUMINTERVAL">otr_request_maximum_interval</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12690" name="AEN12690"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVEROTRREQUESTOUTSTANDINGMAXIMUM"
+name="RECEIVEROTRREQUESTOUTSTANDINGMAXIMUM">4.21.6. <span class="lbm-option-name"><span
+class="PHRASE">otr_request_outstanding_maximum (receiver)</span></span></a></h2>
+
+<p>The maximum number of OTR lost-message requests outstanding at any given time. Each
+message specifies an individual lost message. A value of 0 indicates no maximum.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12731" name="AEN12731"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUSEOTR" name="RECEIVERUSEOTR">4.21.7. <span
+class="lbm-option-name"><span class="PHRASE">use_otr (receiver)</span></span></a></h2>
+
+<p>Flag indicating if the receiver can use OTR or not.</p>
+
+<div class="INFORMALTABLE"><a id="AEN12772" name="AEN12772"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UM 5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN12795" name="AEN12795"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The receiver is enabled to use OTR to recover lost messages.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The receiver is not enabled to use OTR to recover lost messages. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="latejoinoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="requestnetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Late Join Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Request Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

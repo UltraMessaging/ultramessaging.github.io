@@ -1,0 +1,2112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>The UM Gateway</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="ARTICLE" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="ARTICLE">
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2">The UM Gateway</a></h1>
+
+<p class="COPYRIGHT">Copyright &copy; 2007 - 2014 Informatica Corporation</p>
+
+<p class="PUBDATE">March 2014<br />
+</p>
+
+<div class="LEGALNOTICE"><a id="INFACOPYRIGHT" name="INFACOPYRIGHT"></a>
+<p>Informatica Ultra Messaging</p>
+
+<p>Version 5.3</p>
+
+<p>March 2014</p>
+
+<p>Copyright (c) 1998-2014 Informatica Corporation. All rights reserved.</p>
+
+<p>This software and documentation contain proprietary information of Informatica
+Corporation and are provided under a license agreement containing restrictions on use and
+disclosure and are also protected by copyright law. Reverse engineering of the software
+is prohibited. No part of this document may be reproduced or transmitted in any form, by
+any means (electronic, photocopying, recording or otherwise) without prior consent of
+Informatica Corporation. This Software may be protected by U.S. and/or international
+Patents and other Patents Pending.</p>
+
+<p>Use, duplication, or disclosure of the Software by the U.S. Government is subject to
+the restrictions set forth in the applicable software license agreement and as provided
+in DFARS 227.7202-1(a) and 227.7702-3(a) (1995), DFARS 252.227-7013(c)(1)(ii) (OCT 1988),
+FAR 12.212(a) (1995), FAR 52.227-19, or FAR 52.227-14 (ALT III), as applicable.</p>
+
+<p>The information in this product or documentation is subject to change without notice.
+If you find any problems in this product or documentation, please report them to us in
+writing.</p>
+
+<p>Informatica, Informatica Platform, Informatica Data Services, PowerCenter,
+PowerCenterRT, PowerCenter Connect, PowerCenter Data Analyzer, PowerExchange, PowerMart,
+Metadata Manager, Informatica Data Quality, Informatica Data Explorer, Informatica B2B
+Data Transformation, Informatica B2B Data Exchange Informatica On Demand, Informatica
+Identity Resolution, Informatica Application Information Lifecycle Management,
+Informatica Complex Event Processing, Ultra Messaging and Informatica Master Data
+Management are trademarks or registered trademarks of Informatica Corporation in the
+United States and in jurisdictions throughout the world. All other company and product
+names may be trade names or trademarks of their respective owners.</p>
+
+<p>Portions of this software and/or documentation are subject to copyright held by third
+parties, including without limitation: Copyright DataDirect Technologies. All rights
+reserved. Copyright (c) Sun Microsystems. All rights reserved. Copyright (c) RSA Security
+Inc. All Rights Reserved. Copyright (c) Ordinal Technology Corp. All rights
+reserved.Copyright (c) Aandacht c.v. All rights reserved. Copyright Genivia, Inc. All
+rights reserved. Copyright Isomorphic Software. All rights reserved. Copyright (c) Meta
+Integration Technology, Inc. All rights reserved. Copyright (c) Intalio. All rights
+reserved. Copyright (c) Oracle. All rights reserved. Copyright (c) Adobe Systems
+Incorporated. All rights reserved. Copyright (c) DataArt, Inc. All rights reserved.
+Copyright (c) ComponentSource. All rights reserved. Copyright (c) Microsoft Corporation.
+All rights reserved. Copyright (c) Rogue Wave Software, Inc. All rights reserved.
+Copyright (c) Teradata Corporation. All rights reserved. Copyright (c) Yahoo! Inc. All
+rights reserved. Copyright (c) Glyph &amp; Cog, LLC. All rights reserved. Copyright (c)
+Thinkmap, Inc. All rights reserved. Copyright (c) Clearpace Software Limited. All rights
+reserved. Copyright (c) Information Builders, Inc. All rights reserved. Copyright (c) OSS
+Nokalva, Inc. All rights reserved. Copyright Edifecs, Inc. All rights reserved. Copyright
+Cleo Communications, Inc. All rights reserved. Copyright (c) International Organization
+for Standardization 1986. All rights reserved. Copyright (c) ej-technologies GmbH. All
+rights reserved. Copyright (c) Jaspersoft Corporation. All rights reserved. Copyright (c)
+is International Business Machines Corporation. All rights reserved. Copyright (c) yWorks
+GmbH. All rights reserved. Copyright (c) Lucent Technologies. All rights reserved.
+Copyright (c) University of Toronto. All rights reserved. Copyright (c) Daniel Veillard.
+All rights reserved. Copyright (c) Unicode, Inc. Copyright IBM Corp. All rights reserved.
+Copyright (c) MicroQuill Software Publishing, Inc. All rights reserved. Copyright (c)
+PassMark Software Pty Ltd. All rights reserved. Copyright (c) LogiXML, Inc. All rights
+reserved. Copyright (c) 2003-2010 Lorenzi Davide, All rights reserved. Copyright (c) Red
+Hat, Inc. All rights reserved. Copyright (c) The Board of Trustees of the Leland Stanford
+Junior University. All rights reserved. Copyright (c) EMC Corporation. All rights
+reserved. Copyright (c) Flexera Software. All rights reserved. Copyright (c) Jinfonet
+Software. All rights reserved. Copyright (c) Apple Inc. All rights reserved. Copyright
+(c) Telerik Inc. All rights reserved.</p>
+
+<p>This product includes software developed by the Apache Software Foundation
+(http://www.apache.org/), and/or other software which is licensed under various versions
+of the Apache License (the "License"). You may obtain a copy of these Licenses at
+http://www.apache.org/licenses/. Unless required by applicable law or agreed to in
+writing, software distributed under these Licenses is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Licenses
+for the specific language governing permissions and limitations under the Licenses.</p>
+
+<p>This product includes software which was developed by Mozilla
+(http://www.mozilla.org/), software copyright The JBoss Group, LLC, all rights reserved;
+software copyright (c) 1999-2006 by Bruno Lowagie and Paulo Soares and other software
+which is licensed under various versions of the GNU Lesser General Public License
+Agreement, which may be found at http:// www.gnu.org/licenses/lgpl.html. The materials
+are provided free of charge by Informatica, "as-is", without warranty of any kind, either
+express or implied, including but not limited to the implied warranties of
+merchantability and fitness for a particular purpose.</p>
+
+<p>The product includes ACE(TM) and TAO(TM) software copyrighted by Douglas C. Schmidt
+and his research group at Washington University, University of California, Irvine, and
+Vanderbilt University, Copyright (c) 1993-2006, all rights reserved.</p>
+
+<p>This product includes software developed by the OpenSSL Project for use in the OpenSSL
+Toolkit (copyright The OpenSSL Project. All Rights Reserved) and redistribution of this
+software is subject to terms available at http://www.openssl.org and
+http://www.openssl.org/source/license.html.</p>
+
+<p>This product includes Curl software which is Copyright 1996-2007, Daniel Stenberg,
+&lt;daniel@haxx.se&gt;. All Rights Reserved. Permissions and limitations regarding this
+software are subject to terms available at http://curl.haxx.se/docs/copyright.html.
+Permission to use, copy, modify, and distribute this software for any purpose with or
+without fee is hereby granted, provided that the above copyright notice and this
+permission notice appear in all copies.</p>
+
+<p>The product includes software copyright 2001-2005 (c) MetaStuff, Ltd. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http://www.dom4j.org/ license.html.</p>
+
+<p>The product includes software copyright (c) 2004-2007, The Dojo Foundation. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http://dojotoolkit.org/license.</p>
+
+<p>This product includes ICU software which is copyright International Business Machines
+Corporation and others. All rights reserved. Permissions and limitations regarding this
+software are subject to terms available at
+http://source.icu-project.org/repos/icu/icu/trunk/license.html.</p>
+
+<p>This product includes software copyright (c) 1996-2006 Per Bothner. All rights
+reserved. Your right to use such materials is set forth in the license which may be found
+at http:// www.gnu.org/software/ kawa/Software-License.html.</p>
+
+<p>This product includes OSSP UUID software which is Copyright (c) 2002 Ralf S.
+Engelschall, Copyright (c) 2002 The OSSP Project Copyright (c) 2002 Cable &amp; Wireless
+Deutschland. Permissions and limitations regarding this software are subject to terms
+available at http://www.opensource.org/licenses/mit-license.php.</p>
+
+<p>This product includes software developed by Boost (http://www.boost.org/) or under the
+Boost software license. Permissions and limitations regarding this software are subject
+to terms available at http:/ /www.boost.org/LICENSE_1_0.txt.</p>
+
+<p>This product includes software copyright (c) 1997-2007 University of Cambridge.
+Permissions and limitations regarding this software are subject to terms available at
+http:// www.pcre.org/license.txt.</p>
+
+<p>This product includes software copyright (c) 2007 The Eclipse Foundation. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http:// www.eclipse.org/org/documents/epl-v10.php.</p>
+
+<p>This product includes software licensed under the terms at
+http://www.tcl.tk/software/tcltk/license.html,
+http://www.bosrup.com/web/overlib/?License, http://www.stlport.org/doc/ license.html,
+http:// asm.ow2.org/license.html, http://www.cryptix.org/LICENSE.TXT,
+http://hsqldb.org/web/hsqlLicense.html, http://httpunit.sourceforge.net/doc/
+license.html, http://jung.sourceforge.net/license.txt ,
+http://www.gzip.org/zlib/zlib_license.html,
+http://www.openldap.org/software/release/license.html, http://www.libssh2.org,
+http://slf4j.org/license.html, http://www.sente.ch/software/OpenSourceLicense.html,
+http://fusesource.com/downloads/license-agreements/fuse-message-broker-v-5-3-
+license-agreement; http://antlr.org/license.html; http://aopalliance.sourceforge.net/;
+http://www.bouncycastle.org/licence.html; http://www.jgraph.com/jgraphdownload.html;
+http://www.jcraft.com/jsch/LICENSE.txt; http://jotm.objectweb.org/bsd_license.html; .
+http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231;
+http://www.slf4j.org/license.html; http://nanoxml.sourceforge.net/orig/copyright.html;
+http://www.json.org/license.html; http://forge.ow2.org/projects/javaservice/,
+http://www.postgresql.org/about/licence.html, http://www.sqlite.org/copyright.html,
+http://www.tcl.tk/software/tcltk/license.html, http://www.jaxen.org/faq.html,
+http://www.jdom.org/docs/faq.html, http://www.slf4j.org/license.html;
+http://www.iodbc.org/dataspace/iodbc/wiki/iODBC/License;
+http://www.keplerproject.org/md5/license.html;
+http://www.toedter.com/en/jcalendar/license.html;
+http://www.edankert.com/bounce/index.html; http://www.net-snmp.org/about/license.html;
+http://www.openmdx.org/#FAQ; http://www.php.net/license/3_01.txt;
+http://srp.stanford.edu/license.txt; http://www.schneier.com/blowfish.html;
+http://www.jmock.org/license.html; http://xsom.java.net; and
+http://benalman.com/about/license/;
+https://github.com/CreateJS/EaselJS/blob/master/src/easeljs/display/Bitmap.js;
+http://www.h2database.com/html/license.html#summary; and
+http://jsoncpp.sourceforge.net/LICENSE.</p>
+
+<p>This product includes software licensed under the Academic Free License
+http://www.opensource.org/licenses/afl-3.0.php), the Common Development and Distribution
+License (http://www.opensource.org/licenses/cddl1.php) the Common Public License
+(http://www.opensource.org/licenses/cpl1.0.php), the Sun Binary Code License Agreement
+Supplemental License Terms, the BSD License (http://
+www.opensource.org/licenses/bsd-license.php) the MIT License
+(http://www.opensource.org/licenses/mit-license.php) and the Artistic License
+(http://www.opensource.org/licenses/artistic-license-1.0).</p>
+
+<p>This product includes software copyright (c) 2003-2006 Joe WaInes, 2006-2007 XStream
+Committers. All rights reserved. Permissions and limitations regarding this software are
+subject to terms available at http://xstream.codehaus.org/license.html. This product
+includes software developed by the Indiana University Extreme! Lab. For further
+information please visit http://www.extreme.indiana.edu/.</p>
+
+<p>This Software is protected by U.S. Patent Numbers 5,794,246; 6,014,670; 6,016,501;
+6,029,178; 6,032,158; 6,035,307; 6,044,374; 6,092,086; 6,208,990; 6,339,775; 6,640,226;
+6,789,096; 6,820,077; 6,823,373; 6,850,947; 6,895,471; 7,117,215; 7,162,643; 7,243,110,
+7,254,590; 7,281,001; 7,421,458; 7,496,588; 7,523,121; 7,584,422; 7676516; 7,720,842;
+7,721,270; and 7,774,791, international Patents and other Patents Pending.</p>
+
+<p>DISCLAIMER: Informatica Corporation provides this documentation "as is" without
+warranty of any kind, either express or implied, including, but not limited to, the
+implied warranties of noninfringement, merchantability, or use for a particular purpose.
+Informatica Corporation does not warrant that this software or documentation is error
+free. The information provided in this software or documentation may include technical
+inaccuracies or typographical errors. The information in this software and documentation
+is subject to change at any time without notice.</p>
+
+<p>NOTICES</p>
+
+<p>This Informatica product (the "Software") includes certain drivers (the "DataDirect
+Drivers") from DataDirect Technologies, an operating company of Progress Software
+Corporation ("DataDirect") which are subject to the following terms and conditions:</p>
+
+<p>1. THE DATADIRECT DRIVERS ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</p>
+
+<p>2. IN NO EVENT WILL DATADIRECT OR ITS THIRD PARTY SUPPLIERS BE LIABLE TO THE END-USER
+CUSTOMER FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR OTHER DAMAGES
+ARISING OUT OF THE USE OF THE ODBC DRIVERS, WHETHER OR NOT INFORMED OF THE POSSIBILITIES
+OF DAMAGES IN ADVANCE. THESE LIMITATIONS APPLY TO ALL CAUSES OF ACTION, INCLUDING,
+WITHOUT LIMITATION, BREACH OF CONTRACT, BREACH OF WARRANTY, NEGLIGENCE, STRICT LIABILITY,
+MISREPRESENTATION AND OTHER TORTS.</p>
+</div>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="gateway.html">Single HTML</a> / <a href="gateway.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="#INTRODUCTION">Introduction</a></dt>
+
+<dt>2. <a href="#CONCEPTS">Conceptual View</a></dt>
+
+<dt>3. <a href="#RUNNINGTHEGATEWAY">Running the UM Gateway</a></dt>
+
+<dt>4. <a href="#CONFIGURATION">UM Gateway Configuration</a></dt>
+
+<dt>5. <a href="#USE-CASES">UM Gateway Examples</a></dt>
+
+<dt>6. <a href="#WEB-MONITOR">UM Gateway Web Monitor</a></dt>
+</dl>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="INTRODUCTION" name="INTRODUCTION">1. Introduction</a></h2>
+
+<p>The <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b
+class="APPLICATION">Gateway</b> facilitates WAN routing in the absence of multicast
+routing capability (often due to technical obstacles or enterprise policies). The UM
+Gateway forwards multicast and/or unicast topic resolution advertisements and queries
+(TIR/TQR), which ensures that receivers in disjoint topic resolution domains from the
+source can receive the topic messages to which they subscribe. The UM Gateway design
+includes the following features.</p>
+
+<ul>
+<li>
+<p>Full bidirectional forwarding</p>
+</li>
+
+<li>
+<p>Multi-hop forwarding</p>
+</li>
+
+<li>
+<p>Support for wildcard receivers</p>
+</li>
+
+<li>
+<p>Support of Request/Response messages</p>
+</li>
+
+<li>
+<p>Traffic filtering on multiple criteria</p>
+</li>
+
+<li>
+<p>Gateway resilience</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> transport monitoring statistics</p>
+</li>
+
+<li>
+<p>Gateway Web Monitor</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> <b class="APPLICATION">Gateway</b> is not supported on the <span
+class="TRADEMARK">HP NonStop</span>&reg; platform.</p>
+</blockquote>
+</div>
+
+<p>The following features are not supported or partially supported in the 5.2 (or
+earlier) release of the UM Gateway.</p>
+
+<ul>
+<li>
+<p>Persistence</p>
+</li>
+
+<li>
+<p>Mesh, loop, or alternate path gateway configurations</p>
+</li>
+
+<li>
+<p>Queuing</p>
+</li>
+
+<li>
+<p>Gateway Failover</p>
+</li>
+
+<li>
+<p>MIM</p>
+</li>
+
+<li>
+<p>JMS</p>
+</li>
+
+<li>
+<p>Ultra Load Balancing (ULB)</p>
+</li>
+</ul>
+
+<p>Full Gateway support of these features is in development. If you desire any of these
+features or any configuration or topology not presented in this document, please contact
+Informatica Ultra Messaging Support for possible alternatives.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="CONCEPTS" name="CONCEPTS">2. Conceptual View</a></h2>
+
+<p>The UM Gateway bridges disjoint topic resolution domains by effectively forwarding
+multicast and/or unicast topic resolution traffic, such as topic advertisements and
+queries (TIR/TQR), across gateways.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="#PORTALS"><i>UM Gateway Portals</i></a></p>
+</li>
+
+<li>
+<p><a href="#TR-DOMAIN"><i>Topic Resolution Domains</i></a></p>
+</li>
+
+<li>
+<p><a href="#BASIC-TOPOLOGY"><i>Basic Gateway Topology and Operation</i></a></p>
+</li>
+
+<li>
+<p><a href="#FORWARDING-COSTS"><i>Forwarding Costs</i></a></p>
+</li>
+
+<li>
+<p><a href="#ACL"><i>Access Control Lists (ACL)</i></a></p>
+</li>
+
+<li>
+<p><a href="#RESPONSE-FORWARDING"><i>Response Forwarding</i></a></p>
+</li>
+
+<li>
+<p><a href="#WRCV"><i>Wildcard Receivers</i></a></p>
+</li>
+
+<li>
+<p><a href="#TCP-TUNNELING"><i>TCP Connections for Tunneling</i></a></p>
+</li>
+
+<li>
+<p><a href="#RESILIENCE"><i>Gateway Resilience</i></a></p>
+</li>
+
+<li>
+<p><a href="#MONITORING"><i>Gateway Monitoring</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="PORTALS" name="PORTALS">2.1. UM Gateway Portals</a></h3>
+
+<p>A UM Gateway consists of two or more bidirectional portals that may be one of two
+types:</p>
+
+<ul>
+<li>
+<p>An <b class="APPLICATION">endpoint</b> portal that communicates directly to a <b
+class="APPLICATION">UM</b> topic resolution domain.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">peer</b> portal that communicates only with another peer
+portal (of another gateway), allowing tunneling behavior between gateways or other
+portals.</p>
+</li>
+</ul>
+
+<p>You configure portals in the gateway's XML configuration file, specifying the portal's
+name, cost, <b class="APPLICATION">UM</b> Configuration, Access Control Lists and other
+attributes. See <a href="#CONFIGURATION"><i>UM Gateway Configuration</i></a> for
+more.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="TR-DOMAIN" name="TR-DOMAIN">2.2. Topic Resolution
+Domains</a></h3>
+
+<p><b class="APPLICATION">UM</b> contexts must satisfy the following two requirements to
+belong to the same topic resolution domain.</p>
+
+<ul>
+<li>
+<p>The contexts must use the same topic resolution <b class="APPLICATION">UM</b>
+configuration (i.e., <tt class="LITERAL">resolver_*</tt> options are the same).</p>
+</li>
+
+<li>
+<p>Contexts can communicate using the protocols required for both message transport and
+topic resolution traffic.</p>
+</li>
+</ul>
+
+<p>For example, two contexts on separate machines in the same LAN are not in the same
+topic resolution domain if they use different resolver addresses. See <a
+href="../Config/multicastresolvernetworkoptions.html" target="doccontent"><tt
+class="LITERAL">Multicast Resolver Network Options</tt></a>. A topic resolution domain
+can span a WAN if the <b class="APPLICATION">UM</b> contexts on each side of a firewall
+use the same <b class="APPLICATION">UM</b> configuration and the firewall allows UDP
+traffic (multicast or unicast) to pass.</p>
+
+<p>Each endpoint portal must identify its associated topic resolution domain with a <tt
+class="LITERAL">domain-id</tt> in the gateway's XML configuration file, as in the example
+below. All portals in the same topic resolution domain must have the same <tt
+class="LITERAL">domain-id</tt>.</p>
+
+<pre class="SCREEN">
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN100&lt;/name&#62;
+      &lt;domain-id&#62;100&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan100.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN200&lt;/name&#62;
+      &lt;domain-id&#62;200&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan200.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+     
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="BASIC-TOPOLOGY" name="BASIC-TOPOLOGY">2.3. Basic Gateway
+Topology and Operation</a></h3>
+
+<p>The diagram, <a href="#TNW-GATEWAY"><i>UM Gateway</i></a>, shows a UM Gateway bridging
+topic resolution domain 1 and topic resolution domain 2, for topic AAA. Endpoint E1
+contains a proxy receiver for topic AAA and endpoint E2 has a proxy source for topic
+AAA.</p>
+
+<div class="FIGURE"><a id="TNW-GATEWAY" name="TNW-GATEWAY"></a>
+<p><b>Figure 1. UM Gateway</b></p>
+
+<p><img src="29W_Gateway.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="TOPIC-RESOLUTION-ACROSS-GATEWAY"
+name="TOPIC-RESOLUTION-ACROSS-GATEWAY">2.3.1. Topic Resolution Across the
+Gateway</a></h4>
+
+<p>To establish topic resolution in an already-running UM Gateway, the following
+typically occurs in an example like the above figure.</p>
+
+<ol type="1">
+<li>
+<p>A receiver in topic resolution domain 2 issues a TQR for topic AAA.</p>
+</li>
+
+<li>
+<p>Portal E2 receives the TQR and requests that portal E1 find a TIR for AAA on topic
+resolution domain 1. At this point, we can say that <i class="FIRSTTERM">interest</i> for
+topic AAA has been discovered within the gateway.</p>
+</li>
+
+<li>
+<p>E1 immediately responds with three actions: a) create a proxy receiver for topic AAA,
+which b) sends a TQR for AAA on domain 1, and c) issues a Topic Interest message for the
+benefit of any other portals that may exist in this gateway.</p>
+</li>
+
+<li>
+<p>A source for topic AAA in domain 1 issues a TIR.</p>
+</li>
+
+<li>
+<p>E1's AAA proxy receiver requests that E2 (and any other portals in the gateway) create
+a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>E2 creates proxy source AAA and issues a TIR to domain 2, thus completing topic
+resolution.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="INTEREST-AND-USE-QUERIES"
+name="INTEREST-AND-USE-QUERIES">2.3.2. Interest and Use Queries</a></h4>
+
+<p>When a UM Gateway first starts, its endpoint portals issue a brief series of Topic
+Resolution Request messages to their respective topic resolution domains. This provokes
+quiescent receivers (and wildcard receivers) into sending TQRs, indicating interest in
+the various topics. Each portal then records this interest. The gateway uses a periodic
+purge cycle to detect when there is no longer any interest in the topic (i.e. all
+receivers for a topic have been deleted), and removes it from the portals.</p>
+
+<p>After a gateway has been running, endpoint portals issue periodic Topic Use Queries
+and Pattern Use Queries (collectively referred to as simply Use Queries). Use Query
+Responses from UM contexts confirm that the receivers for these topics indeed still
+exist, thus maintaining these topics on the interest list. Autonomous TQRs also refresh
+interest and have the effect of suppressing the generation of Use Queries.</p>
+
+<div class="FIGURE"><a id="USE-QUERIES" name="USE-QUERIES"></a>
+<p><b>Figure 2. Use Queries and Interest</b></p>
+
+<p><img src="Use-Queries.png" align="CENTER" /></p>
+</div>
+
+<p>In the case of multi-hop gateway configurations, gateways cannot detect interest for
+remote contexts via Use Queries or TQRs. They do this instead via Interest Messages. A
+portal generates periodic interest messages, which are picked up by adjacent gateways
+(i.e., the next hop over), at which time interest is refreshed.</p>
+
+<div class="FIGURE"><a id="INTEREST-MESSAGES" name="INTEREST-MESSAGES"></a>
+<p><b>Figure 3. Interest Messages</b></p>
+
+<p><img src="Interest-Messages.png" align="CENTER" /></p>
+</div>
+
+<p>Intervals, limits, and durations for these topic resolution and interest mechanisms
+can be adjusted via gateway configuration options (see <a href="#CONFIGURATION"><i>UM
+Gateway Configuration</i></a>).</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="GATEWAY-KEEPALIVE" name="GATEWAY-KEEPALIVE">2.3.3. Gateway
+Keepalive</a></h4>
+
+<p>To maintain a reliable connection, gateways exchange <i class="FIRSTTERM">Gateway
+Keepalive</i> signals when connected via peer portals. Keepalive intervals and connection
+timeouts are configurable, and you can also set the gateway to send keepalives only when
+traffic is idle (default). See <a href="tnwgd-dtd-doc/tnwgd.dtd.html#gateway-keepalive"
+target="doccontent"><tt class="LITERAL">&lt;gateway-keepalive&#62;</tt></a>.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="PROXY-SOURCES-AND-RECEIVERS"
+name="PROXY-SOURCES-AND-RECEIVERS">2.3.4. Proxy Sources and Receivers</a></h4>
+
+<p>The <tt class="LITERAL">domain-id</tt> is used by Interest Messages and other internal
+and gateway-to-gateway traffic to ensure forwarding of all messages (payload and topic
+resolution) to the correct recipients. This also has the effect of not creating proxy
+sources/receivers where they are not needed. Thus, gateways create proxy sources and
+receivers based solely on receiver interest.</p>
+
+<p>If more than one source sends on a given topic, the receiving portal's single proxy
+receiver for that topic receives all messages sent on that topic. The sending portal,
+however creates a proxy source for every source sending on the topic. The UM Gateway
+maintains a table of proxy sources, each keyed by an Originating Transport ID (OTID).
+This enables proxy receiver to forward each message to the correct proxy source.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> <b class="APPLICATION">UM</b> sources create a unique OTID that describes
+their transport sessions and include this OTID in their topic advertisements. For more on
+multiple sources, see <a href="#DUPLICATE-PREVENTION"><i>Resolver Cache's Stored Cost
+Values Prevents Duplicates</i></a></p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> It is important to keep maximum datagram sizes exactly the same across
+all topic resolution domains and transports. For example, if the topic resolution domain
+on one side of a gateway uses LBT-RM message transport and the topic resolution domain on
+the other side uses LBT-RDMA, fragments from domain 1 will be too large for domain 2. See
+<tt class="LITERAL">transport_*_datagram_max_size</tt> in the <a
+href="../Config/index.html" target="doccontent">UM Configuration Guide</a>.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="MULTI-HOP-FORWARDING" name="MULTI-HOP-FORWARDING">2.3.5.
+Multi-Hop Forwarding</a></h4>
+
+<p>Consider a simple example UM Gateway deployment, as shown in <a
+href="#GATEWAY-NET"><i>Multi-Hop Network Example</i></a>.</p>
+
+<div class="FIGURE"><a id="GATEWAY-NET" name="GATEWAY-NET"></a>
+<p><b>Figure 4. Multi-Hop Network Example</b></p>
+
+<p><img src="Gateway_Net.png" align="CENTER" /></p>
+</div>
+
+<p>In this diagram, gateway A has two endpoint portals, connected to topic resolution
+domains 1 and 2. gateway B also has two endpoint portals that bridge domains 2 and 3.
+(Endpoint portal names reflect the topic resolution domain to which they connect. For
+example, gateway A endpoint E2 interfaces topic resolution domain 2.)</p>
+
+<p>Topic resolution domain 1 has a source for topic AAA, and domain 3, an AAA receiver.
+The following sequence of events enables the forwarding of topic messages from source AAA
+to receiver AAA.</p>
+
+<ol type="1">
+<li>
+<p>Receiver AAA queries (issues a TQR) for a source.</p>
+</li>
+
+<li>
+<p>Gateway B, endpoint E3 (B-E3) receives the TQR and requests that any other portals in
+the gateway forward any AAA advertisements.</p>
+</li>
+
+<li>
+<p>In response, B-E2 creates a proxy receiver for AAA and sends a Topic Interest message
+for AAA to topic resolution domain 2. (The proxy receiver also issues a TQR.)</p>
+</li>
+
+<li>
+<p>Gateway A, endpoint E2 (A-E2) receives this Topic Interest message and requests that
+any other portals in the gateway forward any AAA advertisements.</p>
+</li>
+
+<li>
+<p>In response, A-E1 creates a proxy receiver for AAA and sends a Topic Interest message
+(and TQR) for AAA to domain 1.</p>
+</li>
+
+<li>
+<p>Source AAA responds to the TQR by sending a TIR for topic AAA.</p>
+</li>
+
+<li>
+<p>The AAA proxy receiver created by A-E1 receives this TIR and requests that all gateway
+A portals with an interest in topic AAA create a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>In response, A-E2 creates a proxy source which sends a TIR for topic AAA via domain
+2.</p>
+</li>
+
+<li>
+<p>The AAA proxy receiver created by B-E2 receives this TIR and requests that all gateway
+B portals with an interest in topic AAA create a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>In response, B-E3 creates a proxy source, which sends a TIR for topic AAA via domain
+3.</p>
+</li>
+
+<li>
+<p>Topic AAA has now been resolved across both gateways, which forward all topic messages
+sent by source AAA to receiver AAA.</p>
+</li>
+</ol>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Access Control Lists can alter this sequence by, for example, accepting
+only certain transport types or forwarding only certain topics. For more, see <a
+href="#ACL"><i>Access Control Lists (ACL)</i></a>.</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="FORWARDING-COSTS" name="FORWARDING-COSTS">2.4. Forwarding
+Costs</a></h3>
+
+<p>Forwarding a message through a gateway incurs a cost in terms of latency, network
+bandwidth, and CPU utilization on the gateway machine, which may in turn affect the
+latency of other forwarded messages. Transiting multiple gateways adds even more
+cumulative latency to a message. Other gateway-related factors such as network bandwidth,
+switches, etc., can also add latency.</p>
+
+<p>Factors other than latency contribute to the cost of forwarding a message. Consider a
+message that can be sent from one domain to its destination domain over one of two paths.
+A three-hop path over 1000Mbps links may be faster than a single-hop path over a 100Mbps
+link. Further, it may be the case that the 100Mbps link is more expensive or less
+reliable. These could all be reasons for favoring the longer path.</p>
+
+<p>To account for these cost factors, topic advertisements (TIR) contain the following
+two fields.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">hop count</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">cost</tt></p>
+</li>
+</ul>
+
+<p>These fields appear as topic options within the TIR. When you call <tt
+class="LITERAL">lbm_src_create()</tt>, <b class="APPLICATION">UM</b> sets both to 0
+(zero) for use by the UM Gateway. You cannot set these fields; they are populated
+automatically by the gateway(s).</p>
+
+<p>&#13;</p>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="HOP-COUNT" name="HOP-COUNT">2.4.1. Hop Count</a></h4>
+
+<p>When the egress portal of a gateway creates a proxy source to forward, in effect, the
+original source's topic advertisement, it increments the <tt class="LITERAL">hop
+count</tt> by one. In the Multi-hop example presented earlier, gateway A, endpoint E2
+(A-E2) and gateway B, endpoint E3 (B-E3) would each increment the <tt class="LITERAL">hop
+count</tt>, resulting in receiver AAA receiving a TIR with a <tt class="LITERAL">hop
+count</tt> = 2.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="PORTAL-COSTS" name="PORTAL-COSTS">2.4.2. Portal Costs</a></h4>
+
+<p>The UM Gateway lets you assign a cost to a portal. As with the <tt class="LITERAL">hop
+count</tt>, when a portal creates a proxy source, it adds the portal's configured cost to
+the topic cost in the TIR. By default, the cost associated with a portal is 0. Using the
+Multi-hop example again, setting portal A-E2's cost to 3 increases the topic's cost by
+that much. If portal B-E3's cost is 2, the topic's <tt class="LITERAL">cost</tt> (and TIR
+cost), as received by receiver AAA, is now 5. The UM Gateway uses the cost to ensure that
+proxy receivers connect via the most efficient path to/from their source.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> After paths are established, if a new lower-cost source becomes
+available, receivers do not switch to it.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="DUPLICATE-PREVENTION" name="DUPLICATE-PREVENTION">2.4.3.
+Resolver Cache's Stored Cost Values Prevents Duplicates</a></h4>
+
+<p>The <b class="APPLICATION">UM</b> Resolver Cache stores TIRs to help receivers find
+sources. In addition to transport session information, the stored TIR contains the OTID,
+hop count and cost values. This information can be used by receivers to select the lowest
+cost source if a source sends over multiple network paths.</p>
+
+<p>In more complex network topologies, messages from the same source may traverse
+multiple paths and therefore, arrive from different proxy sources and different transport
+sessions. If a receiver looks up a topic in the cache and finds two TIRs with the same
+OTID but different transport sessions, it chooses the OTID with the lowest cost and joins
+that transport to receive messages. This prevents receiving duplicate messages from the
+same source.</p>
+
+<p>A <b class="APPLICATION">UM</b> receiver always treats advertisements for the same
+topic with the same OTID as equivalent transport sessions, and joins only one of them. In
+the event that the receiver detects an EOS on the joined transport session, one of any
+remaining equivalent transport sessions can be joined.</p>
+
+<p>For Multicast Immediate Messages (MIM) traffic, <b class="APPLICATION">UM</b>
+receivers keep a sequence number map for every OTID they have received messages from and
+reject any messages that have already been received.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="APPS-SET-TOPIC-COST" name="APPS-SET-TOPIC-COST">2.4.4.
+Applications Can Also Set the Topic Cost</a></h4>
+
+<p>Your application can change the cost of a topic in the receiving application's context
+using a callback ( <a
+href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION" target="doccontent"><tt
+class="LITERAL">source_cost_evaluation_function</tt></a>) that the UM Gateway uses in <tt
+class="LITERAL">lbm_src_cost_function_cb()</tt>. The gateway invokes this function
+whenever it receives an advertisement containing cost information. With a multiple-path
+topology, the gateway always forwards advertisements and messages via the least costly
+path, using <tt class="LITERAL">lbm_src_cost_function_cb()</tt> to determine the
+cost.</p>
+
+<p>You can supply a callback with <a
+href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION" target="doccontent"><tt
+class="LITERAL">source_cost_evaluation_function</tt></a> to affect this cost
+determination, increasing the cost of less desirable paths or completing filtering out
+certain paths. The gateway passes the topic name, hop count, and cost to the configured
+callback, which returns an integral cost value the gateway assigns to the topic. If you
+do not set <a href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION"
+target="doccontent"><tt class="LITERAL">source_cost_evaluation_function</tt></a>, a default
+function returns the cost as passed to it.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Your gateway application cannot directly configure the cost in a TIR;
+this is done by only the gateway itself.</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="ACL" name="ACL">2.5. Access Control Lists (ACL)</a></h3>
+
+<p>You can apply Access Control Lists (ACL) to a gateway's portals to filter or load
+balance traffic by certain topics, transports, topic patterns, multicast groups, etc. You
+configure ACLs in a gateway's XML configuration file, as children of an <tt
+class="LITERAL">&lt;endpoint&#62;</tt> or <tt class="LITERAL">&lt;peer&#62;</tt> portal.
+As traffic arrives at the portal, the portal either forwards it or rejects it per ACL
+criteria.</p>
+
+<p>Inbound ACLs determine what information to forward to other portals in the gateway,
+while Outbound ACLs determine (by topic) what information from other portals that this
+portal can forward out the gateway. Each portal (endpoint or peer) can have up to one
+inbound ACL and one outbound ACL.</p>
+
+<p>An ACL can contain one or more Access Control Entries (ACEs). ACEs let you match (and
+accept or reject based on), criteria elements called Access Control Conditions (ACCs).
+Possible ACCs are:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">&lt;multicast-group/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;pcre-pattern&#62;</tt> (PCRE wildcard patterns)</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;regex-pattern&#62;</tt> (Regex wildcard patterns)</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;source-ip/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;tcp-source-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;topic&#62;</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;transport/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;udp-destination-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;udp-source-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;xport-id/&#62;</tt> * (for LBT-IPC traffic)</p>
+</li>
+</ul>
+
+<p>* These items apply to only inbound ACLs, and are ignored if used with an outbound
+ACL.</p>
+
+<p>The above elements are all children of the <tt class="LITERAL">&lt;ace&#62;</tt>
+element. When an ACL has multiple ACE entries, the UM Gateway goes down the list until it
+finds a match. It then accepts (forwards) or rejects, and is done with that ACL. An
+implicit "reject all" is at the end of every ACL, so the UM Gateway rejects any topic not
+matched. If you place multiple ACCs within an ACE, the gateway performs an "and"
+operation with them.</p>
+
+<p>Note that the portal ignores an ACC if a) it is inbound-only and used in an outbound
+ACL, or b) it simply does not apply (such as a <tt
+class="LITERAL">&lt;udp-source-port/&#62;</tt> if the transport is TCP).</p>
+
+<p>Consider the following example, where we configure a portal to forward on specific
+topics. This example also illustrates the parent/child hierarchy for ACLs, ACEs, and
+ACCs.</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;ABC&lt;/topic&#62;
+            &lt;/ace&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;DEF&lt;/topic&#62;
+              &lt;transport value=lbt-rm comparison=eq/&#62;
+            &lt;/ace&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;GHI&lt;/topic&#62;
+            &lt;/ace&#62;       
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+
+<p>The above example shows each topic match in a separate ACE. When topic "GHI" arrives,
+the portal finds a match in the third ACE and forwards the topic. (Placing all three <tt
+class="LITERAL">&lt;topic&#62;</tt>s in a single ACE would never match anything.) Also
+note that "DEF" is forwarded only if it uses an LBT-RM transport.</p>
+
+<p>Since the behavior for multiple ACEs is "first match, then done", list ACEs in a
+specific-to-general order. For the example below, to forward topic "ABC123" but reject
+similar topics such as "ABCD123" or "ABCE123", list the ACE for "ABC123" first (as done
+below). If the ACE to reject "ABC.*123" was listed first, it would also (undesirably)
+match and reject "ABC123".</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;ABC123&lt;/topic&#62;
+            &lt;/ace&#62;
+            &lt;ace match="reject"&#62;
+              &lt;pcre-pattern&#62;ABC.*123&lt;/pcre-pattern&#62;
+            &lt;/ace&#62;
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+
+<p>You could also filter on certain transport types to accept multicast traffic but
+reject tcp traffic, as shown below.</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;transport comparison="equal" value="lbtrm"/&#62;
+            &lt;/ace&#62;
+            &lt;ace match="reject"&#62;
+              &lt;transport comparison="equal" value="tcp"/&#62;
+            &lt;/ace&#62;
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="RESPONSE-FORWARDING" name="RESPONSE-FORWARDING">2.6. Response
+Forwarding</a></h3>
+
+<p>For request/response, the gateway appears as the responder from the perspective of the
+requester, and as the requester from the perspective of the responder. The UM Gateway
+supports request/response directly by maintaining a map between the original requester
+and the proxy request object it creates. The UM Gateway modifies requests and responses
+to appear as if they originated from the gateway.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MIM-CONSIDERATIONS" name="MIM-CONSIDERATIONS">2.7. Multicast
+Immediate Messaging Considerations</a></h3>
+
+<p>Multicast Immediate Messages (MIM) flood through the UM Gateway. You cannot filter MIM
+with <a href="#ACL"><i>Access Control Lists (ACL)</i></a>. Receivers on the other side of
+the gateway can easily receive duplicate messages. Informatica does not recommend using
+MIM for messaging traffic across the UM Gateway. MIM is intended for short-lived topics
+and applications that cannot tolerate a delay between source creation and the sending of
+the first message. See also <a
+href="../Design/lbm-features.html#MULTICAST-IMMEDIATE-MESSAGING" target="doccontent">Multicast
+Immediate Messaging</a>.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WRCV" name="WRCV">2.8. Wildcard Receivers</a></h3>
+
+<p>The UM Gateway supports wildcard receivers, provided wildcard topic querying is not
+disabled. The gateway processes wildcard queries, replicating the functionality in the <b
+class="APPLICATION">UM</b> topic resolution wildcard processing. The UM Gateway creates a
+single proxy receiver for each topic, including topics that match one or more wildcard
+patterns.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="TCP-TUNNELING" name="TCP-TUNNELING">2.9. TCP Connections for
+Tunneling</a></h3>
+
+<p>A UM Gateway peer portal communicates with exactly one peer portal on another gateway.
+Peer portals utilize TCP connections for all data and control traffic. (UDP is not
+supported for this.) Between the peer portals, you can configure either a single TCP
+connection, or dual TCP, with one connection serving each direction. The UM Gateway
+supports one tunnel per peer portal pair, and multiple peer portals.</p>
+
+<p>Below is an example of a two companion peer portals (on different gateways) configured
+(via gateway XML configuration file) for dual TCP connections. The companion peer portal
+(at the other end of the tunnel) would have its sockets defined inversely.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN2&lt;/name&#62;
+    &lt;tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;listen-port&#62;26123&lt;/listen-port&#62;
+      &lt;companion&#62;
+        &lt;address&#62;10.30.3.88&lt;/address&#62;
+        &lt;port&#62;26124&lt;/port&#62;
+      &lt;/companion&#62;
+    &lt;/tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN1&lt;/name&#62;
+    &lt;tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;listen-port&#62;26124&lt;/listen-port&#62;
+      &lt;companion&#62;
+        &lt;address&#62;10.30.3.89&lt;/address&#62;
+        &lt;port&#62;26123&lt;/port&#62;
+      &lt;/companion&#62;
+    &lt;/tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+     
+</pre>
+
+<p>For an example of a single TCP setup, see below.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN2&lt;/name&#62;
+    &lt;single-tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;initiator&#62;
+        &lt;address&#62;10.30.3.88&lt;/address&#62;
+        &lt;port&#62;26123&lt;/port&#62;
+      &lt;/initiator&#62;
+    &lt;/single-tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN1&lt;/name&#62;
+    &lt;single-tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;acceptor&#62;
+        &lt;listen-port&#62;26123&lt;/listen-port&#62;
+      &lt;/acceptor&#62;
+    &lt;/single-tcp&#62;
+  &lt;/peer&#62;
+     
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="RESILIENCE" name="RESILIENCE">2.10. Gateway
+Resilience</a></h3>
+
+<p>The UM Gateway supports resilience by way of parallel paths between topic resolution
+domains. This technique is referred to as Replication. Each gateway forwards traffic in a
+normal manner, and receivers are responsible for discarding duplicate messages. A similar
+approach can be taken for peer portals, in which case two gateways are required for each
+path, for a total of four gateways.</p>
+
+<div class="CAUTION">
+<blockquote class="CAUTION">
+<p><b>Important:</b> Although it is possible to configure multiple paths between topic
+resolution domains, configurations that result in loops or meshes are not supported.
+Please contact Informatica Ultra Messaging Support.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="CONSEQUENCES" name="CONSEQUENCES">2.10.1. Resilience
+Considerations</a></h4>
+
+<p>You should consider the following issues when developing your approach to gateway
+resilience.</p>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="TRAFFIC" name="TRAFFIC">2.10.1.1. Traffic Volume</a></h5>
+
+<p>Any time there exists more than one path a message can take from one point to another,
+the possibility exists that the message will take more than one path. Due to duplicate
+detection, an individual receiver will only receive each message once. However, depending
+on the type of transport, the message may still appear on the network multiple times.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="DATA-SESSION" name="DATA-SESSION">2.10.1.2. Data Session
+Re-establishment</a></h5>
+
+<p>When multiple paths exist from a source to a receiver, multiple proxy sources may be
+created adjacent to the receiver domain, appearing to the receiver as distinct but
+equivalent sources for the same topic. Topic resolution establishes a receiver for one
+such source. If one of the gateways fails, upon an EOS for the affected transport
+sessions, the receiver joins an equivalent transport session and continues to receive
+data from the remaining proxy sources, subject to EOS timeouts.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="UNICAST-CONTROL-SESSION"
+name="UNICAST-CONTROL-SESSION">2.10.1.3. Unicast Control Session
+Re-establishment</a></h5>
+
+<p>While a receiver can participate in multiple channels for the same topic, this is not
+possible with unicast control sessions. For example, even if two adjacent gateways both
+proxy the same store via different paths, a receiver can only connect to one proxy at a
+time. This means that, regardless of whether you chose replication or redundancy, the
+loss of one adjacent gateway may cause a brief pause while unicast control sessions
+re-establish.</p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MONITORING" name="MONITORING">2.11. Gateway
+Monitoring</a></h3>
+
+<p>The UM Gateway provides the following monitoring facilities.</p>
+
+<ul>
+<li>
+<p>Gateway-specific statistics which include the number of topics and topic patterns in
+the topic map, along with activity statistics about all the portals configured for the
+gateway. See <a href="../Gateway/web-monitor.html" target="doccontent">UM Gateway Web
+Monitor</a>.</p>
+</li>
+
+<li>
+<p>Standard <b class="APPLICATION">UM</b> transport statistics for the transport sessions
+the gateway has joined. See <a href="../Gateway/use-cases.html#TWO-LANS"
+target="doccontent">Spanning Two LANs</a> for an example.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="RUNNINGTHEGATEWAY" name="RUNNINGTHEGATEWAY">3. Running the UM
+Gateway</a></h2>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt><a href="#TNWGD">tnwgd</a>&nbsp;--&nbsp;UM Gateway Daemon</dt>
+</dl>
+</div>
+
+<h1><a id="TNWGD" name="TNWGD"></a>tnwgd</h1>
+
+<div class="REFNAMEDIV"><a id="AEN415" name="AEN415"></a>
+<h2>Name</h2>
+
+tnwgd&nbsp;--&nbsp;UM Gateway Daemon</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN418" name="AEN418"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">tnwgd</tt> [<code class="OPTION">-d</code>] [<code
+class="OPTION">--dump-dtd</code>] [<code class="OPTION">-h</code>] [<code
+class="OPTION">--help</code>] [<code class="OPTION">-f</code>] [<code
+class="OPTION">--detach</code>] [<code class="OPTION">-v</code>] [<code
+class="OPTION">--validate</code>] <tt class="REPLACEABLE"><i>configfile</i></tt></p>
+</div>
+
+<div class="REFSECT1"><a id="AEN439" name="AEN439"></a>
+<h2>Description</h2>
+
+<p>Gateway services are provided by <tt class="COMMAND">tnwgd</tt>. A gateway
+configuration file is required. The contents and format of the configuration file are
+documented separately.</p>
+
+<p>The DTD used to validate a configuration file will be dumped to standard output with
+<code class="OPTION">-d</code> or <code class="OPTION">--dump-dtd</code>. After dumping
+the DTD, <tt class="COMMAND">tnwgd</tt> exits instead of providing gateway services as
+usual.</p>
+
+<p>The configuration file will be validated against the DTD if either the <code
+class="OPTION">-v</code> or <code class="OPTION">--validate</code> options are given.
+After attempting validation, <tt class="COMMAND">tnwgd</tt> exits instead of providing
+gateway services as usual. The exit status will be 0 for a configuration file
+successfully validated by the DTD, and non-zero otherwise.</p>
+
+<p><tt class="COMMAND">tnwgd</tt> normally remains attached to the controlling terminal
+and runs until interrupted. If the <code class="OPTION">-f</code> or <code
+class="OPTION">--detach</code> options are given, <tt class="COMMAND">tnwgd</tt> instead
+forks, detaches the child from the controlling terminal, and the parent exits
+immediately.</p>
+
+<p>Command line help is available with <code class="OPTION">-h</code> or <code
+class="OPTION">--help</code>.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN459" name="AEN459"></a>
+<h2>Exit Status</h2>
+
+<p>The exit status from <tt class="COMMAND">tnwgd</tt> is 0 for success and some non-zero
+value for failure.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="CONFIGURATION" name="CONFIGURATION">4. UM Gateway
+Configuration</a></h2>
+
+<p>The UM Gateway configuration is controlled via an XML configuration file. The DTD for
+the UM Gateway configuration file is described in the <a href="tnwgd-dtd-doc/index.html"
+target="doccontent">DTD reference</a>.</p>
+
+<p>Several example UM Gateway configuration files, along with detailed explanations, can
+be found in <a href="#USE-CASES"><i>UM Gateway Examples</i></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Before designing any UM Gateway implementations based on configurations
+or examples other than those presented in this document, please contact your technical
+support representative.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="UMXMLCONFIG" name="UMXMLCONFIG">4.1. Using <b
+class="APPLICATION">UM</b> XML Configuration Files with the UM Gateway</a></h3>
+
+<p>With the <tt class="LITERAL">&lt;lbm-config&#62;</tt> element, you can import
+configurations from either a plain text or XML <b class="APPLICATION">UM</b>configuration
+file. However, using XML configuration files provides the following advantages over plain
+text <b class="APPLICATION">UM</b> configuration files.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">UM</b> attributes can be applied per topic and/or per
+context.</p>
+</li>
+
+<li>
+<p>Attributes applied to all portals on a particular gateway can be inherited from an <b
+class="APPLICATION">UM</b> XML template, instead of being set for each individual
+portal.</p>
+</li>
+</ul>
+
+<p>See <a href="../Config/xmlconfigurationfiles.html#XML-CONFIG" target="doccontent">XML
+Configuration Files</a> for more information about <b class="APPLICATION">UM</b> XML
+configuration.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> You should use <b class="APPLICATION">UM</b> XML templates to set options
+for individual portals because the UM Gateway processes <b class="APPLICATION">UM</b> XML
+configuration files in the <tt class="LITERAL">&lt;daemon&#62;</tt> element and not
+within each portal's configuration as with plain text <b class="APPLICATION">UM</b>
+configuration files.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Each gateway endpoint must have its <tt
+class="LITERAL">request_tcp_interface</tt> option set when the gateway starts, therefore,
+you must set it in each <tt class="LITERAL">&lt;endpoint&#62;</tt> element of the UM
+Gateway XML configuration file and not in an <b class="APPLICATION">UM</b> XML
+configuration file, which is implemented when the gateway creates <b
+class="APPLICATION">UM</b> objects such as proxy sources and receivers,</p>
+
+<pre class="SCREEN">
+&lt;endpoint&#62;
+    &lt;name&#62;Endpoint-1&lt;/name&#62;
+    &lt;domain-id&#62;1&lt;/domain-id&#62;
+    &lt;lbm-attributes&#62;
+        &lt;option name="request_tcp_interface" scope="context" value="10.29.3.0/24" /&#62;
+    &lt;/lbm-attributes&#62;
+&lt;/endpoint&#62;
+           
+</pre>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="SETTINGINDIVIDUALENDPOINTOPTIONS"
+name="SETTINGINDIVIDUALENDPOINTOPTIONS">4.1.1. Setting Individual Endpoint
+Options</a></h4>
+
+<p>When setting endpoint options, name the context of each endpoint in the gateway's XML
+configuration file.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+    &lt;endpoint&#62;
+        &lt;name&#62;Endpoint_1&lt;/name&#62;
+        &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;source-context-name&#62;endpt_1&lt;/source-context-name&#62;
+        &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+        &lt;/lbm-attributes&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+        &lt;name&#62;Endpoint_2&lt;/name&#62;
+        &lt;domain-id&#62;2&lt;/domain-id&#62;
+        &lt;receiver-context-name&#62;endpt_2&lt;/source-context-name&#62;
+        &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+        &lt;/lbm-attributes&#62;
+    &lt;/endpoint&#62;
+&lt;/portals&#62;
+       
+</pre>
+
+<p>Then assign configuration templates to those contexts in the <b
+class="APPLICATION">UM</b> XML configuration file.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="global"&#62;
+    &lt;contexts&#62;
+        &lt;context name="endpoint_1" template="endpt-1-options"&#62;
+            &lt;sources /&#62;
+        &lt;/context&#62;
+        &lt;context name="endpoint_2" template="endpt-2-options"&#62;
+            &lt;sources /&#62;
+        &lt;/context&#62;
+    &lt;/contexts&#62;
+&lt;/application&#62;
+       
+</pre>
+
+<p>You specify the unique options for each of this gateway's two endpoints in the <b
+class="APPLICATION">UM</b> XML configuration &lt;templates&#62; section used for <tt
+class="LITERAL">endpt-1-options</tt> and <tt class="LITERAL">endpt-2-options</tt>.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="COMMONUSESCASES" name="COMMONUSESCASES">4.1.2. UM Gateway and
+<b class="APPLICATION">UM</b> XML Configuration Use Cases</a></h4>
+
+<p>One advantage of using <b class="APPLICATION">UM</b> XML configuration files with the
+UM Gateway is the ability to assign unique <b class="APPLICATION">UM</b> attributes to
+the topics and contexts used for the proxy sources and proxy receivers the gateway
+creates. Plain text <b class="APPLICATION">UM</b> configuration files cannot assign <b
+class="APPLICATION">UM</b> attributes to the proxy sources and receivers based on topic.
+The following example shows how to assign a different LBTRM multicast address to a source
+based on its topic.</p>
+
+<p>Create a new <b class="APPLICATION">UM</b> XML configuration template for the desired
+topic name.</p>
+
+<pre class="SCREEN">
+&lt;template name="custom-topic-template"&#62;
+     &lt;options type="source"&#62;
+           &lt;option name="transport_lbtrm_multicast_address" default-value="#.#.#.#"/&#62;
+     &lt;/options&#62;
+&lt;/template&#62;
+           
+</pre>
+
+<p>Then include this template in the <tt class="LITERAL">&lt;application&#62;</tt>
+element associated with the gateway.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="global-options"&#62;
+     &lt;contexts&#62;
+           &lt;context&#62;
+                &lt;sources template="source-options"&#62;
+                     &lt;topic topicname="custom_topic_name" template="custom-topic-template" /&#62;
+                &lt;/sources&#62;
+           &lt;/context&#62;
+     &lt;/contexts&#62;
+&lt;/application&#62;
+           
+</pre>
+
+<p>This assigns the specified <b class="APPLICATION">UM</b> options to sources created on
+a particular topic.</p>
+
+<p>It is also possible to assign <b class="APPLICATION">UM</b> attributes directly in the
+&lt;application&#62; tag. For example, the following specifies that a particular topic
+should use LBTRU transport and a unicast resolver address.</p>
+
+<pre class="SCREEN">
+&lt;application name="tnwgd" template="tnwgd-common"&#62;
+    &lt;contexts&#62;
+        &lt;context&#62;
+            &lt;sources template="source-template"&#62;
+                &lt;topic topicname="LBTRU_TOPIC"&#62;
+                    &lt;options type="source"&#62;
+                        &lt;option name="transport" default-value="lbtru" /&#62;
+                        &lt;option name="resolver_unicast_address" default-value="#.#.#.#" /&#62;
+                    &lt;/options&#62;
+                &lt;/topic&#62;
+            &lt;/sources&#62;
+        &lt;/context&#62;
+    &lt;/contexts&#62;
+&lt;/application&#62;
+           
+</pre>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="SAMPLECONFIGURATION" name="SAMPLECONFIGURATION">4.1.2.1.
+Sample Configuration</a></h5>
+
+<p>The following sample configuration incorporates many of the examples mentioned above.
+The gateway applies options to all <b class="APPLICATION">UM</b> objects created. The <b
+class="APPLICATION">UM</b> XML configuration file overwrites these options for two
+specific topics. The first topic, LBTRM_TOPIC, uses a different template to change its
+transport from TCP to LBTRM, and to set an additional property. The second topic,
+LBTRU_TOPIC, also changes its transport from TCP to a new value. However, its new
+attributes are applied directly in its associated topic tag, instead of referencing a
+template. In addition, this sample configuration assigns all sources and receivers
+associated with the context <tt class="LITERAL">endpt_1</tt> the <tt
+class="LITERAL">rm-source</tt> template.</p>
+
+<p><b class="APPLICATION">UM XML Configuration File</b></p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;um-configuration version="1.0"&#62;
+&lt;templates&#62;
+&lt;template name="tnwgd-common"&#62;
+    &lt;options type="source"&#62;
+        &lt;option name="transport" default-value="tcp" /&#62;
+    &lt;/options&#62;
+    &lt;options type="context"&#62;
+        &lt;option name="request_tcp_interface" default-value="#.#.#.#/#" /&#62;
+        &lt;option name="transport_tcp_port_low" default-value="#" /&#62;
+        &lt;option name="transport_tcp_port_high" default-value="#" /&#62;
+        &lt;option name="resolver_multicast_address" default-value="#.#.#.#"/&#62;
+    &lt;/options&#62;
+&lt;/template&#62;
+&lt;template name="rm-source"&#62;
+    &lt;options type="source"&#62;
+        &lt;option name="transport" default-value="lbtrm" /&#62;
+        &lt;option name="transport_lbtrm_multicast_address" default-value="#.#.#.#"/&#62;
+    &lt;/options&#62;
+&lt;/template&#62;
+&lt;/templates&#62;
+&lt;applications&#62;
+    &lt;application name="tnwgd" template="tnwgd-common"&#62;
+        &lt;contexts&#62;
+            &lt;context&#62;
+                &lt;sources template="rm-source"&#62;
+                    &lt;topic topicname="LBTRM_TOPIC" template="rm-source" /&#62;
+                    &lt;topic topicname="LBTRU_TOPIC"&#62;
+                        &lt;options type="source"&#62;
+                            &lt;option name="transport" default-value="lbtru" /&#62;
+                            &lt;option name="resolver_unicast_address" default-value="#.#.#.#" /&#62;
+                        &lt;/options&#62;
+                    &lt;/topic&#62;
+                &lt;/sources&#62;
+            &lt;/context&#62;
+            &lt;context name="endpt_1" template="rm-source"&#62;
+                &lt;sources template="rm-source"/&#62;
+            &lt;/context&#62;
+        &lt;/contexts&#62;
+    &lt;/application&#62;
+&lt;/applications&#62;
+&lt;/um-configuration&#62; 
+               
+</pre>
+
+<p><b class="APPLICATION">Gateway XML Configuration File</b></p>
+
+<p>This gateway uses the above XML file, called <tt
+class="LITERAL">sample-config.xml</tt>, to set its <b class="APPLICATION">UM</b> options.
+It has three endpoints, one of which has the context <tt
+class="LITERAL">endpt_1</tt>.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;tnw-gateway version="1.0"&#62;
+    &lt;daemon&#62;
+        &lt;log type="console"/&#62;
+        &lt;xml-config&#62;sample-config.xml&lt;/xml-config&#62;
+    &lt;/daemon&#62;
+    &lt;portals&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_1&lt;/name&#62;
+         &lt;domain-id&#62;1&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="context_name" scope="context" value="endpt_1" /&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_2&lt;/name&#62;
+         &lt;domain-id&#62;2&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+      &lt;endpoint&#62;
+         &lt;name&#62;Endpoint_3&lt;/name&#62;
+         &lt;domain-id&#62;3&lt;/domain-id&#62;
+         &lt;lbm-attributes&#62;
+            &lt;option name="request_tcp_interface" scope="context" value="#.#.#.0/24" /&#62;
+         &lt;/lbm-attributes&#62;
+      &lt;/endpoint&#62;
+    &lt;/portals&#62;
+&lt;/tnw-gateway&#62; 
+               
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="USE-CASES" name="USE-CASES">5. UM Gateway Examples</a></h2>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="#TWO-LANS"><i>Spanning Two LANs</i></a></p>
+</li>
+
+<li>
+<p><a href="#MULTIPLE-LANS"><i>Spanning Multiple LANs</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="TWO-LANS" name="TWO-LANS">5.1. Spanning Two LANs</a></h3>
+
+<p>The network consists of two LANs. Within each LAN, full multicast connectivity exists.
+However, no multicast connectivity exists between LAN1 and LAN2. The diagram below
+displays proxy sources and proxy receivers in the UM Gateway.</p>
+
+<div class="FIGURE"><a id="USECASE-1" name="USECASE-1"></a>
+<p><b>Figure 5. Single Gateway Example</b></p>
+
+<p><img src="29W_Gateway_Usecase_1.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="TWO-LANS-TNWCONFIG" name="TWO-LANS-TNWCONFIG">5.1.1. <b
+class="APPLICATION">UM</b> Configuration Files</a></h4>
+
+<p>Sources in LAN1 use <tt class="FILENAME">lan1.cfg</tt> and the receivers in LAN2 use
+<tt class="FILENAME">lan2.cfg</tt>.</p>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="TWO-LANS-1" name="TWO-LANS-1">5.1.1.1. LAN1
+Configuration</a></h5>
+
+<p><tt class="FILENAME">lan1.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.2.0/24
+context resolver_multicast_address 225.7.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.7.33.85
+context transport_lbtrm_multicast_address_high 225.7.33.89
+context transport_lbtrm_source_port_low 24000
+context transport_lbtrm_source_port_high 24999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.2.0/24
+source transport_lbtru_interface 10.29.2.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.7.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.2.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.2.0/24
+source transport_tcp_interface 10.29.2.0/24
+context transport_tcp_port_low 18000
+context transport_tcp_port_high 18999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="TWO-LANS-2" name="TWO-LANS-2">5.1.1.2. LAN2
+Configuration</a></h5>
+
+<p><tt class="FILENAME">lan2.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.8.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.8.33.85
+context transport_lbtrm_multicast_address_high 225.8.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.3.0/24
+source transport_lbtru_interface 10.29.3.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.8.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.3.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.3.0/24
+source transport_tcp_interface 10.29.3.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="TWO-LANS-GATEWAY" name="TWO-LANS-GATEWAY">5.1.2. UM Gateway
+Configuration</a></h4>
+
+<p>This example uses the <tt class="FILENAME">two-lans.xml</tt> configuration file, which
+essentially consists of two endpoint portal configurations. If you notice in the <tt
+class="LITERAL">daemon</tt> section, we have turned on monitoring for the all endpoint
+portals in the gateway. The configuration specifies that all statistics be collected
+every 5 seconds and uses the <tt class="LITERAL">lbm</tt> transport module to send
+statistics to your monitoring application, that runs in LAN 1. See also <a
+href="../Design/monitoring.html" target="doccontent">Monitoring LBM</a>. The Web Monitor has
+also been turned on to monitor the performance of the gateway.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;!-- <b class="APPLICATION">UM</b> GW xml file- 2 endpoint portals --&#62;
+&lt;tnw-gateway version="1.0"&#62;
+  &lt;daemon&#62;
+    &lt;log type="console"/&#62;
+    &lt;lbm-license-file&#62;lic0014.txt&lt;/lbm-license-file&#62;
+    &lt;monitor interval="5"&#62;
+      &lt;transport-module module="lbm" options="config=lan1.cfg"/&#62;
+    &lt;/monitor&#62;
+    &lt;web-monitor&#62;*:15304&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN2&lt;/name&#62;
+      &lt;domain-id&#62;2&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan2.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+&lt;/tnw-gateway&#62;
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MULTIPLE-LANS" name="MULTIPLE-LANS">5.2. Spanning Multiple
+LANs</a></h3>
+
+<p>The network consists of three LANs. Within each LAN, full multicast connectivity
+exists. However, no multicast connectivity exists between the three LANs.</p>
+
+<div class="FIGURE"><a id="USECASE-2" name="USECASE-2"></a>
+<p><b>Figure 6. Multiple LANs Example</b></p>
+
+<p><img src="29W_Gateway_Usecase_2.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="MULTIPLE-LANS-TNWCONFIG" name="MULTIPLE-LANS-TNWCONFIG">5.2.1.
+<b class="APPLICATION">UM</b> Configuration Files</a></h4>
+
+<p>Sources in LAN1 use <tt class="FILENAME">lan1.cfg</tt> and the receivers in LAN2 and
+LAN3 use <tt class="FILENAME">lan2.cfg</tt> and <tt class="FILENAME">lan3.cfg</tt>,
+respectively.</p>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="MULTIPLE-LANS-1" name="MULTIPLE-LANS-1">5.2.1.1. LAN1
+Configuration</a></h5>
+
+<p><tt class="FILENAME">lan1.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.2.0/24
+context resolver_multicast_address 225.7.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.7.33.85
+context transport_lbtrm_multicast_address_high 225.7.33.89
+context transport_lbtrm_source_port_low 24000
+context transport_lbtrm_source_port_high 24999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.2.0/24
+source transport_lbtru_interface 10.29.2.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.7.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.2.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.2.0/24
+source transport_tcp_interface 10.29.2.0/24
+context transport_tcp_port_low 18000
+context transport_tcp_port_high 18999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="MULTIPLE-LANS-2" name="MULTIPLE-LANS-2">5.2.1.2. LAN2
+Configuration</a></h5>
+
+<p><tt class="FILENAME">lan2.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.8.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.8.33.85
+context transport_lbtrm_multicast_address_high 225.8.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.3.0/24
+source transport_lbtru_interface 10.29.3.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.8.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.3.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.3.0/24
+source transport_tcp_interface 10.29.3.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<hr />
+<h5 class="SECTION"><a id="MULTIPLE-LANS-3" name="MULTIPLE-LANS-3">5.2.1.3. LAN3
+Configuration</a></h5>
+
+<p><tt class="FILENAME">lan3.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.9.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.9.33.85
+context transport_lbtrm_multicast_address_high 225.9.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.6.0/24
+source transport_lbtru_interface 10.29.6.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.9.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.6.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.6.0/24
+source transport_tcp_interface 10.29.6.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="MULTIPLE-LANS-GATEWAY" name="MULTIPLE-LANS-GATEWAY">5.2.2. UM
+Gateway Configuration</a></h4>
+
+<p>The configuration for this gateway, expressed in <tt
+class="FILENAME">multiple-lans.xml</tt> also has transport statistics monitoring and the
+WebMonitor turned on. In addition, Late Join has been activated primarily for any
+receivers in LAN2 or LAN 3 that start up late. The configuration specifies that all proxy
+sources (pSRC) always provide Late Join service even if the original source does not. It
+also specifies that the pSRC forward retransmissions from the original source if the pSRC
+cannot fill the retransmission request itself. See also <a
+href="../Design/lbm-features.html#USING-LATE-JOIN" target="doccontent">Using Late Join</a>.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;!-- <b class="APPLICATION">UM</b> GW xml file- 3 endpoint portals --&#62;
+&lt;tnw-gateway version="1.0"&#62;
+  &lt;daemon&#62;
+    &lt;log type="console"/&#62;
+    &lt;lbm-license-file&#62;lic0014.txt&lt;/lbm-license-file&#62;
+    &lt;monitor interval="5"&#62;
+      &lt;transport-module module="lbm" options="config=lan1.cfg"/&#62;
+    &lt;/monitor&#62;
+    &lt;web-monitor&#62;*:15304&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN2&lt;/name&#62;
+      &lt;domain-id&#62;2&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan2.cfg&lt;/lbm-config&#62;
+      &lt;late-join provide="always" forward="yes"/&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN3&lt;/name&#62;
+      &lt;domain-id&#62;3&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan3.cfg&lt;/lbm-config&#62;
+      &lt;late-join provide="always" forward="yes"/&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+&lt;/tnw-gateway&#62;
+         
+</pre>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="WEB-MONITOR" name="WEB-MONITOR">6. UM Gateway Web
+Monitor</a></h2>
+
+<p>The built-in web monitor (configured in the <tt class="LITERAL">tnwgd</tt> XML
+configuration file) provides valuable statistics about the gateway and its portals, for
+which, the Web Monitor separates into receive statistics and send statistics. This
+section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="#WEB-MONITOR-MAIN"><i>UM Gateway Web Monitor Main Page</i></a></p>
+</li>
+
+<li>
+<p><a href="#WEB-MONITOR-PORTALS"><i>UM Gateway Web Monitor Portals Page</i></a></p>
+</li>
+
+<li>
+<p><a href="#WEB-MONITOR-PEER"><i>UM Gateway Web Monitor Peer Portal Page</i></a></p>
+</li>
+
+<li>
+<p><a href="#WEB-MONITOR-ENDPOINT"><i>UM Gateway Web Monitor Endpoint Portal
+Page</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WEB-MONITOR-MAIN" name="WEB-MONITOR-MAIN">6.1. UM Gateway Web
+Monitor Main Page</a></h3>
+
+<ul>
+<li>
+<p>This page provides statistics on the topics and wildcard patterns configured for the
+gateway, along with the number of unknown fragments and fragment bytes received.</p>
+</li>
+
+<li>
+<p>To go to the Portals page, click on <a
+href="../Gateway/web-monitor.html#WEB-MONITOR-PORTALS" target="doccontent">Portals</a>.</p>
+</li>
+</ul>
+
+<div class="FIGURE"><a id="TNWGW-WEB-MONITOR-MAIN" name="TNWGW-WEB-MONITOR-MAIN"></a>
+<p><b>Figure 7. UM Gateway Web Monitor Main Page</b></p>
+
+<p><img src="tnwgw_web_monitor_main.png" align="CENTER" /></p>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> On some platforms, this page may include a link to a memory allocation
+display page.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WEB-MONITOR-PORTALS" name="WEB-MONITOR-PORTALS">6.2. UM
+Gateway Web Monitor Portals Page</a></h3>
+
+<p>This page allows you to link to any of the <a
+href="../Gateway/web-monitor.html#WEB-MONITOR-PEER" target="doccontent">Peer</a> or <a
+href="../Gateway/web-monitor.html#WEB-MONITOR-ENDPOINT" target="doccontent">Endpoint</a>
+portals configured for the gateway.</p>
+
+<div class="FIGURE"><a id="TNWGW-WEB-MONITOR-PORTALS"
+name="TNWGW-WEB-MONITOR-PORTALS"></a>
+<p><b>Figure 8. UM Gateway Web Monitor Portals Page</b></p>
+
+<p><img src="tnwgw_web_monitor_portals.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WEB-MONITOR-PEER" name="WEB-MONITOR-PEER">6.3. UM Gateway Web
+Monitor Peer Portal Page</a></h3>
+
+<p>This page allows you to see Receive and Send statistics for the selected peer portal.
+Click on any of the links at the top of the page to review configuration option values
+for the portal's <b class="APPLICATION">UM</b> topic resolution domain.</p>
+
+<div class="FIGURE"><a id="TNWGW-WEB-MONITOR-PEER" name="TNWGW-WEB-MONITOR-PEER"></a>
+<p><b>Figure 9. UM Gateway Web Monitor Peer Portal Page</b></p>
+
+<p><img src="tnwgw_web_monitor_peer.png" align="CENTER" /></p>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WEB-MONITOR-ENDPOINT" name="WEB-MONITOR-ENDPOINT">6.4. UM
+Gateway Web Monitor Endpoint Portal Page</a></h3>
+
+<p>This page allows you to see Receive and Send statistics for the selected endpoint
+portal. Click on any of the links at the top of the page to review configuration option
+values for the portal's <b class="APPLICATION">UM</b> topic resolution domain.</p>
+
+<div class="FIGURE"><a id="TNWGW-WEB-MONITOR-ENDPOINT"
+name="TNWGW-WEB-MONITOR-ENDPOINT"></a>
+<p><b>Figure 10. UM Gateway Web Monitor Endpoint Portal Page</b></p>
+
+<p><img src="tnwgw_web_monitor_endpoint.png" align="CENTER" /></p>
+</div>
+</div>
+</div>
+</div>
+
+<hr />
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

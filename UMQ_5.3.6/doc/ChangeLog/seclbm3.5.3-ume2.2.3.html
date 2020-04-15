@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.5.3 / UME 2.2.3 - November 2009</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UME 2.2.4 - November 2009" href="ume2.2.4.html" />
+<link rel="NEXT" title="Release LBM 3.6.ea2 / UME 3.0ea2 - September 2009"
+href="seclbm3.6ea2-ume3.0ea2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="ume2.2.4.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.6ea2-ume3.0ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.5.3-UME2.2.3" name="SECLBM3.5.3-UME2.2.3">42. Release
+LBM 3.5.3 / UME 2.2.3 - November 2009</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.5.3" name="LBM3.5.3">42.1. LBM 3.5.3</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.5.3-FIXES" name="LBM3.5.3-FIXES">42.1.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem that prevented a requestor from receiving responses from a
+Multicast Immediate Message request if the <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPINTERFACE" target="doccontent"><tt
+class="LITERAL">request_tcp_interface</tt></a> differs from the <a
+href="../Config/multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTADDRESS"
+target="doccontent"><tt class="LITERAL">resolver_multicast_address</tt></a>.</p>
+</li>
+
+<li>
+<p>Fixed a problem in .NET when using SDM Unicode strings that produced an error similar
+to, <tt class="LITERAL">Failed: sdm_unicode_src1 Not enough space in buffer to format
+(offset 28 length 30 needed 5)</tt>. The <code class="FUNCTION">format()</code> method
+has been changed to encode the Unicode string length before it performs the storage
+length check.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.2.3" name="UME2.2.3">42.2. UME 2.2.3</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME2.2.3-FIXES" name="UME2.2.3-FIXES">42.2.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem when recovering old messages from a source or <b
+class="APPLICATION">UME</b> Store using Late Join or <b class="APPLICATION">UME</b> that
+caused the recovery process to either stop delivering messages to the application or
+delay delivery for a long period of time. This disruption would occur if loss occurred on
+the live stream during the recovery.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the <b class="APPLICATION">UME</b> Store when using <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; IO
+Completion Ports that rendered the Store unresponsive to incoming client registration
+requests. This condition could occur if several clients simultaneously attempted to
+either register with the Store or initiate keepalive connections.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ume2.2.4.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.6ea2-ume3.0ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UME 2.2.4 - November 2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.6.ea2 / UME 3.0ea2 - September
+2009</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

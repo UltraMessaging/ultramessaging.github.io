@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>UM Gateway Examples</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="The UM Gateway" href="index.html" />
+<link rel="PREVIOUS" title="UM Gateway Configuration" href="configuration.html" />
+<link rel="NEXT" title="UM Gateway Web Monitor" href="web-monitor.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The UM Gateway</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="configuration.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="web-monitor.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="USE-CASES" name="USE-CASES">5. UM Gateway Examples</a></h1>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="use-cases.html#TWO-LANS"><i>Spanning Two LANs</i></a></p>
+</li>
+
+<li>
+<p><a href="use-cases.html#MULTIPLE-LANS"><i>Spanning Multiple LANs</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TWO-LANS" name="TWO-LANS">5.1. Spanning Two LANs</a></h2>
+
+<p>The network consists of two LANs. Within each LAN, full multicast connectivity exists.
+However, no multicast connectivity exists between LAN1 and LAN2. The diagram below
+displays proxy sources and proxy receivers in the UM Gateway.</p>
+
+<div class="FIGURE"><a id="USECASE-1" name="USECASE-1"></a>
+<p><b>Figure 5. Single Gateway Example</b></p>
+
+<p><img src="29W_Gateway_Usecase_1.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TWO-LANS-TNWCONFIG" name="TWO-LANS-TNWCONFIG">5.1.1. <b
+class="APPLICATION">UM</b> Configuration Files</a></h3>
+
+<p>Sources in LAN1 use <tt class="FILENAME">lan1.cfg</tt> and the receivers in LAN2 use
+<tt class="FILENAME">lan2.cfg</tt>.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="TWO-LANS-1" name="TWO-LANS-1">5.1.1.1. LAN1
+Configuration</a></h4>
+
+<p><tt class="FILENAME">lan1.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.2.0/24
+context resolver_multicast_address 225.7.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.7.33.85
+context transport_lbtrm_multicast_address_high 225.7.33.89
+context transport_lbtrm_source_port_low 24000
+context transport_lbtrm_source_port_high 24999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.2.0/24
+source transport_lbtru_interface 10.29.2.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.7.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.2.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.2.0/24
+source transport_tcp_interface 10.29.2.0/24
+context transport_tcp_port_low 18000
+context transport_tcp_port_high 18999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="TWO-LANS-2" name="TWO-LANS-2">5.1.1.2. LAN2
+Configuration</a></h4>
+
+<p><tt class="FILENAME">lan2.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.8.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.8.33.85
+context transport_lbtrm_multicast_address_high 225.8.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.3.0/24
+source transport_lbtru_interface 10.29.3.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.8.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.3.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.3.0/24
+source transport_tcp_interface 10.29.3.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TWO-LANS-GATEWAY" name="TWO-LANS-GATEWAY">5.1.2. UM Gateway
+Configuration</a></h3>
+
+<p>This example uses the <tt class="FILENAME">two-lans.xml</tt> configuration file, which
+essentially consists of two endpoint portal configurations. If you notice in the <tt
+class="LITERAL">daemon</tt> section, we have turned on monitoring for the all endpoint
+portals in the gateway. The configuration specifies that all statistics be collected
+every 5 seconds and uses the <tt class="LITERAL">lbm</tt> transport module to send
+statistics to your monitoring application, that runs in LAN 1. See also <a
+href="../Design/monitoring.html" target="doccontent">Monitoring LBM</a>. The Web Monitor has
+also been turned on to monitor the performance of the gateway.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;!-- <b class="APPLICATION">UM</b> GW xml file- 2 endpoint portals --&#62;
+&lt;tnw-gateway version="1.0"&#62;
+  &lt;daemon&#62;
+    &lt;log type="console"/&#62;
+    &lt;lbm-license-file&#62;lic0014.txt&lt;/lbm-license-file&#62;
+    &lt;monitor interval="5"&#62;
+      &lt;transport-module module="lbm" options="config=lan1.cfg"/&#62;
+    &lt;/monitor&#62;
+    &lt;web-monitor&#62;*:15304&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN2&lt;/name&#62;
+      &lt;domain-id&#62;2&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan2.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+&lt;/tnw-gateway&#62;
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MULTIPLE-LANS" name="MULTIPLE-LANS">5.2. Spanning Multiple
+LANs</a></h2>
+
+<p>The network consists of three LANs. Within each LAN, full multicast connectivity
+exists. However, no multicast connectivity exists between the three LANs.</p>
+
+<div class="FIGURE"><a id="USECASE-2" name="USECASE-2"></a>
+<p><b>Figure 6. Multiple LANs Example</b></p>
+
+<p><img src="29W_Gateway_Usecase_2.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MULTIPLE-LANS-TNWCONFIG" name="MULTIPLE-LANS-TNWCONFIG">5.2.1.
+<b class="APPLICATION">UM</b> Configuration Files</a></h3>
+
+<p>Sources in LAN1 use <tt class="FILENAME">lan1.cfg</tt> and the receivers in LAN2 and
+LAN3 use <tt class="FILENAME">lan2.cfg</tt> and <tt class="FILENAME">lan3.cfg</tt>,
+respectively.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MULTIPLE-LANS-1" name="MULTIPLE-LANS-1">5.2.1.1. LAN1
+Configuration</a></h4>
+
+<p><tt class="FILENAME">lan1.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.2.0/24
+context resolver_multicast_address 225.7.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.7.33.85
+context transport_lbtrm_multicast_address_high 225.7.33.89
+context transport_lbtrm_source_port_low 24000
+context transport_lbtrm_source_port_high 24999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.2.0/24
+source transport_lbtru_interface 10.29.2.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.7.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.2.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.2.0/24
+source transport_tcp_interface 10.29.2.0/24
+context transport_tcp_port_low 18000
+context transport_tcp_port_high 18999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MULTIPLE-LANS-2" name="MULTIPLE-LANS-2">5.2.1.2. LAN2
+Configuration</a></h4>
+
+<p><tt class="FILENAME">lan2.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.8.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.8.33.85
+context transport_lbtrm_multicast_address_high 225.8.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.3.0/24
+source transport_lbtru_interface 10.29.3.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.8.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.3.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.3.0/24
+source transport_tcp_interface 10.29.3.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MULTIPLE-LANS-3" name="MULTIPLE-LANS-3">5.2.1.3. LAN3
+Configuration</a></h4>
+
+<p><tt class="FILENAME">lan3.cfg</tt></p>
+
+<pre class="SCREEN">
+## Major Options##
+source transport lbtrm
+
+## Multicast Resolver Network Options##
+context resolver_multicast_interface 10.29.3.0/24
+context resolver_multicast_address 225.9.32.85
+context resolver_multicast_port 13965
+
+##Transport LBT-RM Network Options##
+context transport_lbtrm_multicast_address_low 225.9.33.85
+context transport_lbtrm_multicast_address_high 225.9.33.89
+context transport_lbtrm_source_port_low 25000
+context transport_lbtrm_source_port_high 25999
+
+##Transport LBT-RM Operation Options##
+context transport_lbtrm_data_rate_limit 100000000
+context transport_lbtrm_retransmit_rate_limit 500000
+receiver transport_lbtrm_activity_timeout 10000
+
+##Transport LBT-RU Network Options##
+receiver transport_lbtru_interface 10.29.6.0/24
+source transport_lbtru_interface 10.29.6.0/24
+
+##Transport LBT_RU Operation Options##
+context transport_lbtru_data_rate_limit 1000000
+context transport_lbtru_retransmit_rate_limit 500000
+receiver transport_lbtru_activity_timeout 10000
+
+##Multicast Immediate Messaging Network Options##
+context mim_address 225.9.32.100
+
+##Request Network Options##
+context request_tcp_interface 10.29.6.0/24
+
+##Transport TCP Network Options##
+receiver transport_tcp_interface 10.29.6.0/24
+source transport_tcp_interface 10.29.6.0/24
+context transport_tcp_port_low 17000
+context transport_tcp_port_high 17999
+         
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MULTIPLE-LANS-GATEWAY" name="MULTIPLE-LANS-GATEWAY">5.2.2. UM
+Gateway Configuration</a></h3>
+
+<p>The configuration for this gateway, expressed in <tt
+class="FILENAME">multiple-lans.xml</tt> also has transport statistics monitoring and the
+WebMonitor turned on. In addition, Late Join has been activated primarily for any
+receivers in LAN2 or LAN 3 that start up late. The configuration specifies that all proxy
+sources (pSRC) always provide Late Join service even if the original source does not. It
+also specifies that the pSRC forward retransmissions from the original source if the pSRC
+cannot fill the retransmission request itself. See also <a
+href="../Design/lbm-features.html#USING-LATE-JOIN" target="doccontent">Using Late Join</a>.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;!-- <b class="APPLICATION">UM</b> GW xml file- 3 endpoint portals --&#62;
+&lt;tnw-gateway version="1.0"&#62;
+  &lt;daemon&#62;
+    &lt;log type="console"/&#62;
+    &lt;lbm-license-file&#62;lic0014.txt&lt;/lbm-license-file&#62;
+    &lt;monitor interval="5"&#62;
+      &lt;transport-module module="lbm" options="config=lan1.cfg"/&#62;
+    &lt;/monitor&#62;
+    &lt;web-monitor&#62;*:15304&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN2&lt;/name&#62;
+      &lt;domain-id&#62;2&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan2.cfg&lt;/lbm-config&#62;
+      &lt;late-join provide="always" forward="yes"/&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN3&lt;/name&#62;
+      &lt;domain-id&#62;3&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan3.cfg&lt;/lbm-config&#62;
+      &lt;late-join provide="always" forward="yes"/&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+&lt;/tnw-gateway&#62;
+         
+</pre>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="configuration.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="web-monitor.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">UM Gateway Configuration</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">UM Gateway Web Monitor</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Series 2.3 Releases</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.0ea1 / UME 1.0ea1 2006-09-29"
+href="sec3.0ea1.html" />
+<link rel="NEXT" title="Series 2.2 Releases" href="sec2.2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec3.0ea1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec2.2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC2.3" name="SEC2.3">77. Series 2.3 Releases</a></h1>
+
+<p>Key feature added in the 2.3 series releases:</p>
+
+<ul>
+<li>
+<p>Statistics monitoring capability added to all APIs</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.10" name="REL2.3.10">77.1. Release 2.3.10
+2007-01-17</a></h2>
+
+<ul>
+<li>
+<p>Fix to avoid unnecessary scheduling of the LBT-RU/RM rate controller once the
+retransmission rate limit has been reached.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.8" name="REL2.3.8">77.2. Release 2.3.8
+2006-12-21</a></h2>
+
+<ul>
+<li>
+<p>Added ABI support for future binary compatibility</p>
+</li>
+
+<li>
+<p>Bug fix for object deletion in JNI interface routines</p>
+</li>
+
+<li>
+<p>Bug fix in the setting of application IDs used in <b class="APPLICATION">LBM</b>
+statistics monitoring</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.7" name="REL2.3.7">77.3. Release 2.3.7
+2006-12-14</a></h2>
+
+<ul>
+<li>
+<p>Added ABI support for future binary compatibility</p>
+</li>
+
+<li>
+<p>Bug fix for object deletion in JNI interface routines</p>
+</li>
+
+<li>
+<p>Bug fix in the setting of application IDs used in <b class="APPLICATION">LBM</b>
+statistics monitoring</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.6EA1" name="REL2.3.6EA1">77.4. Release 2.3.6 EA1
+2006-12-01</a></h2>
+
+<ul>
+<li>
+<p>Bug fix for race condition in LBT-RU/LBT-RM rate controller</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.5" name="REL2.3.5">77.5. Release 2.3.5
+2006-11-29</a></h2>
+
+<ul>
+<li>
+<p>Bug fix to prevent session messages from backing up the lead sequence number to a
+previous state</p>
+</li>
+
+<li>
+<p>Bug fix for proper handling of immediate requests with long topic names on Solaris</p>
+</li>
+
+<li>
+<p>Bug fix in <code class="FUNCTION">lbm_license_str()</code>; the input string is no
+longer modified in place.</p>
+</li>
+
+<li>
+<p>Added <code class="FUNCTION">dispose</code> method to LBMMessage class in the Java
+API</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3.4" name="REL2.3.4">77.6. Release 2.3.4
+2006-10-30</a></h2>
+
+<ul>
+<li>
+<p>Added Event Queue attribute <code
+class="PARAMETER">queue_objects_purged_on_close</code> to control whether the Event Queue
+is "purged" when various object types (source, receivers, requests, wildcard receivers,
+timers) are closed</p>
+</li>
+
+<li>
+<p>Bug fix of off-by-one check for NAK buffer overflow</p>
+</li>
+
+<li>
+<p>.NET namespace changed to com.latencybusters.lbm</p>
+</li>
+
+<li>
+<p>.NET assembly (lbmcs.dll) signed with unique strong name</p>
+</li>
+
+<li>
+<p>Changed behavior of object-specific getopt functions <code
+class="FUNCTION">lbm_src_getopt()/lbm_src_str_getopt()</code>, <code
+class="FUNCTION">lbm_rcv_getopt()/lbm_rcv_str_getopt()</code>, and <code
+class="FUNCTION">lbm_event_queue_getopt()/lbm_event_queue_str_getopt()</code> to return a
+value for all options regardless of whether they are settable via the corresponding
+setopt function</p>
+</li>
+
+<li>
+<p>Added <b class="APPLICATION">LBM</b> version preprocessor definitions</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL2.3" name="REL2.3">77.7. Release 2.3 2006-08-04</a></h2>
+
+<ul>
+<li>
+<p>Split liblbmj.so (lbmj.dll) from liblbm.so (lbm.dll)</p>
+</li>
+
+<li>
+<p>Added statistics monitoring capability to C API</p>
+</li>
+
+<li>
+<p>Added statistics monitoring capability to Java API</p>
+</li>
+
+<li>
+<p>Added statistics monitoring capability to .NET API</p>
+</li>
+
+<li>
+<p>Added <b class="APPLICATION">LBM</b> API functions to enable initialization of an <b
+class="APPLICATION">LBM</b> license from a string or file.</p>
+</li>
+
+<li>
+<p>Changed default value for <code class="PARAMETER">resolver_multicast_ttl</code> from 1
+to 16</p>
+</li>
+
+<li>
+<p>Added a signature to verifiable messages (-V option) generated by example source
+programs, and checked for by example receiver programs. This prevents receivers, which
+are expecting verifiable messages, from incorrectly flagging every message from a
+non-verifiable message source as failing verification.</p>
+
+<p>This change introduces an incompatibility (with regard to example programs using
+verifiable messages only) with previous releases. Example programs from earlier releases
+will not work with example programs from Release 2.3 (when using verifiable
+messages).</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec3.0ea1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec2.2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.0ea1 / UME 1.0ea1 2006-09-29</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Series 2.2 Releases</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

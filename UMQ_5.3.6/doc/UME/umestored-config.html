@@ -1,0 +1,2518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Configuration Reference for Umestored</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="PREVIOUS" title="umqsltool" href="umqsltool.html" />
+<link rel="NEXT" title="Ultra Messaging Web Monitor" href="ume-store-web-monitor.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umqsltool.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="ume-store-web-monitor.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMESTORED-CONFIG" name="UMESTORED-CONFIG">12. Configuration
+Reference for Umestored</a></h1>
+
+<p>The operating parameters for <tt class="COMMAND">umestored</tt> come from an XML
+configuration file that must be supplied on the <a href="umestored-manpage.html">command
+line</a>. <tt class="COMMAND">umestored</tt> contains a <b class="APPLICATION">UM</b>
+context and receivers that may be configured with default values through a <b
+class="APPLICATION">UM</b> configuration file referenced in the XML configuration file.
+Default <b class="APPLICATION">UM</b> options my be overridden for each configured store
+using the XML configuration file.</p>
+
+<p>You configure <tt class="LITERAL">umestored</tt> to instantiate stores or queues with
+the <tt class="LITERAL">umestored</tt> XML configuration file which <b
+class="APPLICATION">UM</b> reads at start up. This <tt class="LITERAL">umestored</tt> XML
+configuration file has the following sections.</p>
+
+<ul>
+<li>
+<p>Daemon section - holds administrative parameters for such things as the location of
+log files, the <b class="APPLICATION">UM</b> Configuration File, etc.</p>
+</li>
+
+<li>
+<p>Stores section - holds parameters for any persistent stores and also the topics to be
+persisted.</p>
+</li>
+
+<li>
+<p>Queues section - holds parameters for the queues to be instantiated along with the
+topics it should accept and the application set definitions which contain sets of
+receivers.</p>
+</li>
+</ul>
+
+<p><b class="APPLICATION">High Level Stores Configuration File.</b></p>
+
+<pre class="SCREEN">
+&lt;ume-store version="1.2"&#62;
+  &lt;daemon&#62;
+    <tt class="REPLACEABLE"><i>Daemon configuration options</i></tt>
+  &lt;/daemon&#62;
+  &lt;stores&#62;
+    &lt;store <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+      &lt;topics&#62;
+        &lt;topic <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+          &lt;ume-attributes&#62;
+            &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+          &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+  &lt;/stores&#62;
+&lt;/ume-store&#62;
+     
+</pre>
+
+<p><b class="APPLICATION">High Level Stores and Queues Configuration File.</b> The stores
+and queues sections are both optional, although, you must specify at least one or the
+other.</p>
+
+<pre class="SCREEN">
+&lt;ume-store version="1.2"&#62;
+  &lt;daemon&#62;
+    <tt class="REPLACEABLE"><i>Daemon configuration options</i></tt>
+  &lt;/daemon&#62;
+  &lt;stores&#62;
+    &lt;store <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+      &lt;topics&#62;
+        &lt;topic <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+          &lt;ume-attributes&#62;
+            &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+          &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+  &lt;/stores&#62;
+  &lt;queues&#62;
+    &lt;queue <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+      &lt;queue-groups&#62;
+        &lt;queue-group <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+      &lt;/queue-groups&#62;
+      &lt;ume-attributes&#62;
+        &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+      &lt;/ume-attributes&#62;
+      &lt;indices&#62;
+        &lt;index <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+          &lt;ume-attributes&#62;
+            &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+          &lt;/ume-attributes&#62;
+        &lt;/index&#62;
+      &lt;/indices&#62;
+      &lt;application-sets&#62;
+        &lt;application-set <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+          &lt;ume-attributes&#62;
+            &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+          &lt;/ume-attributes&#62;
+          &lt;receiver-types&#62;
+            &lt;receiver-type <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+              &lt;ume-attributes&#62;
+                &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+              &lt;/ume-attributes&#62;
+              &lt;index-rules <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+                &lt;<tt class="REPLACEABLE"><i>rules</i></tt>&#62;
+              &lt;/index-rules&#62;
+            &lt;/receiver-type&#62;
+          &lt;/receiver-types&#62;
+        &lt;/application-set&#62;
+      &lt;/application-sets&#62;
+      &lt;topics&#62;
+        &lt;topic <tt class="REPLACEABLE"><i>attributes</i></tt>&#62;
+          &lt;ume-attributes&#62;
+            &lt;option <tt class="REPLACEABLE"><i>attributes</i></tt>/&#62;
+          &lt;/ume-attributes&#62;
+          &lt;application-sets&#62;
+            &lt;/application-set <tt class="REPLACEABLE"><i>attributes</i></tt>
+          &lt;/application-sets&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/queue&#62;
+  &lt;/queues&#62;
+&lt;/ume-store&#62;
+     
+</pre>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umestored-config.html#UMESTORED-DAEMON-TAGS"><i>Daemon Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-STORES-ELEMENT"><i>Stores Element</i></a></p>
+
+<ul>
+<li>
+<p><a href="umestored-config.html#UMESTORED-TOPICS-ELEMENT"><i>Topics Element</i></a></p>
+</li>
+</ul>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-QUEUES-ELEMENT"><i>Queues Element</i></a></p>
+
+<ul>
+<li>
+<p><a href="umestored-config.html#UMESTORED-QUEUE-ELEMENT"><i>Queue Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-INDICES-ELEMENT"><i>Indices
+Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-APPSETS-ELEMENT"><i>Application Sets
+Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-QTOPICS-ELEMENT"><i>QueueTopics
+Element</i></a></p>
+</li>
+</ul>
+</li>
+
+<li>
+<p><a href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-CONFIG-DTD"><i>umestored Configuration
+DTD</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#UMESTORED-CONFIG-EXAMPLE"><i>Store Configuration
+Example</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#QUEUE-CONFIG-EXAMPLE"><i>Queue Configuration
+Example</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMESTORED-DAEMON-TAGS" name="UMESTORED-DAEMON-TAGS">12.1.
+Daemon Element</a></h2>
+
+<p>The following table presents child elements allowed in the <code
+class="PARAMETER">daemon</code> configuration section.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3771" name="AEN3771"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Tag</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">log</tt></td>
+<td>Required. Pathname for log file.</td>
+<td>None--this is a required element.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">pidfile</tt></td>
+<td>Pathname for daemon process ID (pid) file</td>
+<td>No pidfile</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">uid</tt></td>
+<td>User ID (uid) for daemon process (if started as root)</td>
+<td>Daemon retains starting uid</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">gid</tt></td>
+<td>Group ID (gid) for daemon process (if started as root)</td>
+<td>Daemon retains starting gid</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm-config</tt></td>
+<td>Pathname for <b class="APPLICATION">UM</b> configuration file</td>
+<td>No config file; use <b class="APPLICATION">UM</b> defaults</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm-license-file</tt></td>
+<td>Pathname for <b class="APPLICATION">UM</b> license file</td>
+<td>License read from environment</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">web-monitor</tt></td>
+<td>Address:port where web monitor listens. Address of <tt class="LITERAL"><b
+class="APPLICATION">*</b></tt> listens on all interfaces. Also has a single attribute,
+<tt class="LITERAL"><b class="APPLICATION">permission</b></tt>, allowable values are <tt
+class="REPLACEABLE"><i>read-only</i></tt> and <tt
+class="REPLACEABLE"><i>read-write</i></tt>. Using <tt
+class="REPLACEABLE"><i>read-only</i></tt> disables the text fields and buttons on a Web
+Monitor "debug page" that can only be enabled by Informatica Support. Example: <tt
+class="LITERAL">&lt;:web-monitor
+permission="read-only"&#62;*:15304&lt;:/web-monitor&#62;</tt> </td>
+<td>No web monitor</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm-password-file</tt></td>
+<td>Pathname for Queue Browser authentication file.</td>
+<td><span class="emphasis"><i
+class="EMPHASIS">rel-id/platform-id</i></span>/bin/password.xml</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMESTORED-STORES-ELEMENT"
+name="UMESTORED-STORES-ELEMENT">12.2. Stores Element</a></h2>
+
+<p>The Stores Element is a container for individual store elements which define specific
+store instances. The below is an example of a Stores Element.</p>
+
+<pre class="SCREEN">
+  &lt;stores&#62;
+    &lt;store name="test-store-1" port="14567"&#62;
+      &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;topics&#62;
+        &lt;topic pattern="quote*" type="PCRE"&#62;
+          &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+        &lt;topic pattern="subject*" type="PCRE"&#62;
+          &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+    &lt;store name="test-store-2" port="14568"&#62;
+      &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;topics&#62;
+        &lt;topic pattern="issue*" type="PCRE"&#62;
+          &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+        &lt;topic pattern="topic*" type="PCRE"&#62;
+          &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+  &lt;/stores&#62;
+ 
+</pre>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-STORE-ELEMENT"
+name="UMESTORED-STORE-ELEMENT">12.2.1. Store Element</a></h3>
+
+<p>The Store Element contains information about an individual <b
+class="APPLICATION">UMP</b> store and has attributes, options and topics. See the example
+below.</p>
+
+<pre class="SCREEN">
+  &lt;store name="test-store-1" port="14567"&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;topics&#62;
+      &lt;topic pattern="quote*" type="PCRE"&#62;
+        &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;/topic&#62;
+      &lt;topic pattern="subject*" type="PCRE"&#62;
+        &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;/topic&#62;
+    &lt;/topics&#62;
+  &lt;/store&#62;
+ 
+</pre>
+
+<p>The following table gives attributes for <code class="PARAMETER">store</code>
+elements.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3842" name="AEN3842"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Specifies the name for the store.</td>
+<td>None--this is a required attribute</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">port</tt></td>
+<td>TCP port where <tt class="COMMAND">umestored</tt> should listen for this store.</td>
+<td>None--this is a required attribute and a valid (non-zero) port must be
+specified.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">interface</tt></td>
+<td>Specifies the network interface over which <tt class="COMMAND">umestored</tt> accepts
+connection requests for this store.</td>
+<td>0.0.0.0 (<code class="CONSTANT">INADDR_ANY</code>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UMESTORED-STORE-TAGS" name="UMESTORED-STORE-TAGS">12.2.1.1.
+Child Elements of the Store Element</a></h4>
+
+<p>The following table gives the child elements allowed in the <code
+class="PARAMETER">store</code> configuration section.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3872" name="AEN3872"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Child Element</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">topics</tt></td>
+<td>A container for <tt class="LITERAL">topic</tt> elements. See <a
+href="umestored-config.html#UMESTORED-TOPICS-ELEMENT"><i>Topics Element</i></a> for more
+information.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">ume-attributes</tt></td>
+<td>A container for <tt class="LITERAL">option</tt> elements. See <a
+href="umestored-config.html#UMESTORED-STORE-OPTIONS"><i>Options for a Store's
+ume-attributes Element</i></a> for more information.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UMESTORED-STORE-OPTIONS"
+name="UMESTORED-STORE-OPTIONS">12.2.1.2. Options for a Store's ume-attributes
+Element</a></h4>
+
+<p>You can configure context (scope) options with a <code class="PARAMETER">type</code>
+attribute of <code class="PARAMETER">lbm-context</code>. UM passes such options through
+the normal receiver and context configuration option setting mechanisms. See the <a
+href="../Config/index.html" target="doccontent">UM Configuration Guide</a> for details. Store
+options without a <code class="PARAMETER">type</code> attribute or those explicitly given
+a <code class="PARAMETER">type</code> attribute of <code class="PARAMETER">store</code>
+simply configure the store itself.</p>
+
+<p>The following table gives options allowed for a <code class="PARAMETER">store</code>
+element. Use the <tt class="LITERAL">store</tt> Option Type for these options. A Store's
+ume-attributes Element can also accept the <tt class="LITERAL">lbm-context</tt> Option
+Type. See <a href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3908" name="AEN3908"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">disk-cache-directory</tt></td>
+<td>Pathname for disk store message cache directory</td>
+<td>umestored-cache</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">disk-state-directory</tt></td>
+<td>Pathname for disk store state directory</td>
+<td>umestored-state</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">allow-proxy-source</tt></td>
+<td>Allows the store to act as a proxy source in case a registered source
+terminates.</td>
+<td>0 (Disable)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">context-name</tt></td>
+<td>Name of the store that can be used by sources to refer to the store instead of the
+address:request port. A store runs in its own context, therefore a name can used to
+represent the address:request port. This name facilitates <b class="APPLICATION">UMP</b>
+operation across the UM Gateway. Restricted to 128 characters in length, and may contain
+only alphanumeric characters, hyphens, and underscores.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">retransmission-request-processing-rate</tt></td>
+<td>Specifies the number of retransmission requests processed by a store per second
+across all topics. The store drops all retransmission requests that exceed this
+value.</td>
+<td>262144</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-TOPICS-ELEMENT"
+name="UMESTORED-TOPICS-ELEMENT">12.2.2. Topics Element</a></h3>
+
+<p>The Topics element is a container element for all the topics persisted by the <b
+class="APPLICATION">UMP</b> store. It is one of the two child elements of the Store
+Element. See the example below.</p>
+
+<pre class="SCREEN">
+  &lt;topics&#62;
+    &lt;topic pattern="issue*" type="PCRE"&#62;
+      &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;/topic&#62;
+    &lt;topic pattern="topic*" type="PCRE"&#62;
+      &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;/topic&#62;
+  &lt;/topics&#62;
+       
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UMESTORED-TOPIC-ELEMENT"
+name="UMESTORED-TOPIC-ELEMENT">12.2.2.1. Topic Element</a></h4>
+
+<p>The Topic Element defines an individual topic persisted on the <b
+class="APPLICATION">UMP</b> store. The following table gives attributes for the <code
+class="PARAMETER">topic</code> element.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3952" name="AEN3952"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">pattern</tt></td>
+<td>Specifies a pattern used to select topics for which a store provides persistence
+services.</td>
+<td>None--this is a required attribute</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">type</tt></td>
+<td>Specifies the type of matching to be performed on the <tt
+class="LITERAL">pattern</tt> attribute. A value of <tt class="LITERAL">direct</tt>
+selects an exact string match. A value of <tt class="LITERAL">PCRE</tt> selects a Perl
+Compatible Regular Expression match. A value of <tt class="LITERAL">regexp</tt> selects a
+POSIX extended regular expression. <tt class="LITERAL">PCRE</tt>, or <tt
+class="LITERAL">regexp</tt>.</td>
+<td><tt class="LITERAL">direct</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The Topic Element has one child element, <code
+class="PARAMETER">ume-attributes</code>, the options for which appear in <a
+href="umestored-config.html#UMESTORED-TOPIC-OPTIONS"><i>Options for a Topic's
+ume-attributes Element</i></a>.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="UMESTORED-TOPIC-OPTIONS"
+name="UMESTORED-TOPIC-OPTIONS">12.2.2.1.1. Options for a Topic's ume-attributes
+Element</a></h5>
+
+<p>The following table gives options allowed for a <code class="PARAMETER">topic</code>
+element. Use the <tt class="LITERAL">store</tt> Option Type for these options. You can
+also configure receiver (scope) options and source (scope) options in a Topic's
+ume-attributes Element by using the Option Types <tt class="LITERAL">lbm-receiver</tt>
+and <tt class="LITERAL">lbm-source</tt>, respectively. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3988" name="AEN3988"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">retransmission-request-forwarding</tt></td>
+<td>If enabled (value = 1), the store always forwards retransmission requests to sources
+and does not service any requests itself. If disabled (value = 0), the store services
+retransmission requests for data it has, and forwards requests to sources for data it
+does not have.</td>
+<td>0 (store services retransmission requests)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-type</tt></td>
+<td>Specifies how messages should be retained by the store. A value of <code
+class="PARAMETER">no-cache</code> does not retain messages, only state information. A
+value of <code class="PARAMETER">memory</code> retains messages only in the (presumably
+volatile) main memory of the store. A value of <code class="PARAMETER">disk</code>
+retains messages to (presumably non-volatile) disk storage as quickly as possible. In
+addition, messages are cached in main memory for a time as well. A value of <code
+class="PARAMETER">reduced-fd</code> retains messages in disk storage using significantly
+fewer File Descriptors. Use of this repository type may impact performance. (See <a
+href="architectures.html#STORE-ARCH"><i>Persistent Store Architecture</i></a>.) The <code
+class="PARAMETER">reduced-fd</code> disk storage option is not available on <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg;.</td>
+<td>no-cache</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-size-threshold</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">memory</code>, <code class="PARAMETER">disk</code> or <code
+class="PARAMETER">reduced-fd</code>, specifies the minimum number of message bytes
+(includes payload, headers, and store structure overhead) retained for a topic. For RPP
+repositories, this value only includes message payload. For the <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code> repository
+type, this value configures the size threshold of the memory cache. (units: bytes)</td>
+<td>25165824 (24 MB)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-size-limit</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">memory</code>, <code class="PARAMETER">disk</code> or <code
+class="PARAMETER">reduced-fd</code>, specifies the maximum number of message bytes
+(includes payload, headers, and store structure overhead) retained for each source. For
+RPP repositories, this value only includes message payload. For the <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code> repository
+type, this value configures the size of the memory cache. (units: bytes)</td>
+<td>50331648 (48 MB)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-age-threshold</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">memory</code>, <code class="PARAMETER">disk</code> or <code
+class="PARAMETER">reduced-fd</code>, specifies a message age threshold. Younger messages
+will be retained. Space used to store older messages may be reclaimed. A value of 0 means
+message age is not considered in retention decisions. (units: seconds)</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-max-async-cbs</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+maximum number of outstanding async I/O callbacks for reading and writing messages to
+disk. (units: async callbacks)</td>
+<td>16 callbacks</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-max-write-async-cbs</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+maximum number of outstanding async I/O callbacks for writing messages to disk. Reducing
+this option can improve throughput by batching more fragments into a single write.
+(units: async callbacks)</td>
+<td>16 callbacks</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-max-read-async-cbs</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+maximum number of outstanding async I/O callbacks for reading messages from disk. Raising
+this value can improve recovery rates. For topics with a repository-type of <code
+class="PARAMETER">reduced-fd</code>, Informatica recommendeds a value of 200 times the
+number of expected receivers per topic. (units: async callbacks)</td>
+<td>16 callbacks</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-file-size-limit</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+maximum amount of disk space that will be used to store retained messages. A minimum
+value of 196992 is enforced. (units: bytes)</td>
+<td>104857600 (100 MB)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-file-preallocate</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code>, If set to 1, <b class="APPLICATION">UMP</b> pre-allocates
+a store's cache files to match their maximum size on disk (as configured by <tt
+class="LITERAL">repository-disk-file-size-limit</tt>) upon creation, as opposed to
+growing to that size as the store receives new messages. For ext3/4 and NTFS file
+systems, this options creates a sparse file, which does not allocate all of the
+underlying data blocks. Advantages of pre-allocation include better performance on
+rotating disks due to less file fragmentation, and knowing that enough disk space exists
+for any new source that registers. Disadvantage is the time to create the cache files,
+especially if many sources register at once.</td>
+<td>0 (zero) - do not pre-allocate</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-async-buffer-length</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+size of the buffers that will be used in async I/O operations for reading and writing
+messages to disk. A minimum value of 65664 is enforced. (units: bytes)</td>
+<td>65664 (64 KB + 128)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-message-checksum</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies
+whether the messages saved to disk should include a checksum field or not for validation
+if the store is restarted. (units: flag)</td>
+<td>0 (disabled)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-activity-timeout</tt></td>
+<td>Establishes the period of time from a source's last activity to the release of the
+source's RegID. Stores return an error to any new source requesting the source's RegID
+during this period. If proxy sources are enabled ( <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_proxy_source</tt></a>) the store does not release
+the source's RegID and <b class="APPLICATION">UMP</b> elects a proxy source. If neither
+proxy sources nor <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">ume_state_lifetime</tt></a> are configured, the store
+also deletes the source's state and cache. Can be overridden by <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a>. See also <a
+href="ume-fault-tolerance.html#PROXYSOURCES"><i>Proxy Sources</i></a>. (units:
+milliseconds)</td>
+<td>30000 (30 seconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-state-lifetime</tt></td>
+<td>Establishes the period of time from a source's last activity to the deletion of the
+source's state and cache by the store, regardless of whether a proxy source has been
+created or not. You can also configure <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">ume_state_lifetime</tt></a> for the source. The store
+uses whichever is shorter. See also <a
+href="ume-fault-tolerance.html#PROXYSOURCES"><i>Proxy Sources</i></a>. (units:
+milliseconds)</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-activity-timeout</tt></td>
+<td>Establishes the period of time from a receiver's last activity to the release of the
+receiver's RegID. Stores return an error to any new request for the receiver's RegID
+during this period. Can be overridden by <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">ume_activity_timeout</tt></a>. See also <a
+href="ume-fault-tolerance.html#PROXYSOURCES"><i>Proxy Sources</i></a>. (units:
+milliseconds)</td>
+<td>30000 (30 seconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-state-lifetime</tt></td>
+<td>Establishes the period of time from a receiver's last activity to the deletion of the
+receiver's state and cache by the store. You can also configure <a
+href="../Config/ultramessagingpersistenceoptions.html#RECEIVERUMESTATELIFETIME"
+target="doccontent"><tt class="LITERAL">ume_state_lifetime</tt></a> for the receiver. The store
+uses whichever is shorter. See also <a
+href="ume-fault-tolerance.html#PROXYSOURCES"><i>Proxy Sources</i></a>. (units:
+milliseconds)</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-check-interval</tt></td>
+<td>Specifies how often a store will check for activity of sources and receivers. (units:
+milliseconds)</td>
+<td>100 (100 milliseconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">keepalive-interval</tt></td>
+<td>Specifies how often a store will generate keepalive traffic to sources and receivers
+if there has been no traffic required in the normal course of operation. (units:
+milliseconds)</td>
+<td>500 (500 milliseconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-new-registration-rollback</tt></td>
+<td>Specifies the number of stabilized messages that a newly registered receiver should
+consume. For example, setting this to 10, "rolls back" the new receiver's starting
+message to the 10th most recent message. This value must be positive and less than
+2147483648. The recommended value of 2147483647 indicates that the rollback should begin
+at the start of the stream. A value of 0 indicates the store should instruct the
+receivers to start with the next new message from the source known by the store. (units:
+messages)</td>
+<td>0 (no recovery requested)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">proxy-election-interval</tt></td>
+<td>Specifies the interval, in milliseconds, used when electing a proxy source. When a
+source, which requested that a proxy source be provided for it, has been detected as no
+longer active, each store eligible to provide a proxy source for it waits for an amount
+of time which is randomized in the range [0.5*<tt
+class="LITERAL">proxy-election_interval</tt> .. 1.5*<tt
+class="LITERAL">proxy-election_interval</tt>]. If no other store has been elected to
+serve as the proxy source, the store declares itself as the proxy source. (units:
+milliseconds)</td>
+<td>5000 (5 seconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">stability-ack-interval</tt></td>
+<td>Specifies the maximum amount of time that stability acknowledgments will be batched
+before being sent to a source. Batching stability ACKs can increase throughput of <b
+class="APPLICATION">UMP</b> stores (especially memory stores) significantly, but
+introduces a delay between when a message is actually stable in the <b
+class="APPLICATION">UMP</b> store and when the source is notified of message stability.
+(units: milliseconds)</td>
+<td>200 (200 milliseconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">stability-ack-minimum-number</tt></td>
+<td>Specifies the minimum number of message stability acknowledgments that must
+accumulate before a stability ACK is sent to a source. With the default value of 1,
+stability ACKs are sent immediately as soon as messages are stable. Increasing this value
+causes stability ACKs to be batched, which can increase throughput of <b
+class="APPLICATION">UMP</b> stores (especially memory stores) significantly, but
+introduces a delay between when a message is actually stable in the <b
+class="APPLICATION">UMP</b> store and when the source is notified of message stability.
+If using a stability ACK-based flight size on a <b class="APPLICATION">UMP</b> source in
+combination with this option, it is advisable to make sure <tt
+class="LITERAL">stability-ack-minimum-number</tt> is set less than or equal to the
+source's flight size. Otherwise, stability ACKs will only be sent upon expiration of the
+<tt class="LITERAL">stability-ack-interval</tt> timer, resulting in bursty stop-and-go
+sending. (units: number of message fragments)</td>
+<td>1 (1 fragment)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-allow-receiver-paced-persistence</tt></td>
+<td>Specifies if the repository allows receiver-paced persistence (1) or a source-paced
+persistence (0). The source must enable or disable this option with <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMERECEIVERPACEDPERSISTENCE"
+target="doccontent">ume_receiver_paced_persistence</a>, but cannot enable it if this value is
+set to 0.</td>
+<td>0 (source-paced persistence)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-allow-ack-on-reception</tt></td>
+<td>Specifies if the repository should acknowledge to the source that it has persisted a
+message as soon as the repository receives it instead of when it writes the message to
+disk. Set this option to 1 to allow this behavior. The source must also set this option
+with <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEREPOSITORYACKONRECEPTION"
+target="doccontent"><tt class="LITERAL">ume_repository_ack_on_reception</tt></a> to enable this
+behavior, but cannot enable it if this value is set to 0. For memory stores, this option
+has no effect. This option only applies to RPP repositories (<tt
+class="LITERAL">repository-allow-receiver-paced-persistence</tt> = 1).</td>
+<td>0 (store acknowledges persistence when the store writes the message to disk)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">repository-disk-write-delay</tt></td>
+<td>For topics with a <code class="PARAMETER">repository-type</code> of <code
+class="PARAMETER">disk</code> or <code class="PARAMETER">reduced-fd</code>, specifies the
+maximum delay in milliseconds before the repository persists a message to disk. If the
+repository sets this option a value other than the default, the source can reconfigure
+this option with <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEWRITEDELAY"
+target="doccontent"><tt class="LITERAL">ume_write_delay</tt></a> to a lower or equal value, but
+cannot increase it. (units: milliseconds)</td>
+<td>0 milliseconds</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-flight-size-bytes-maximum</tt></td>
+<td>Specifies the maximum message payload in bytes allowed to be inflight (un-stabilized
+at a store and without delivery confirmation) before a new message send either blocks or
+triggers a notification source event. <b class="APPLICATION">UMP</b> monitors both this
+option and <a href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZE"
+target="doccontent"><tt class="LITERAL">ume_flight_size</tt></a>. If either threshold is met,
+the configured blocking or notification behavior executes. See <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEFLIGHTSIZEBEHAVIOR"
+target="doccontent"><tt class="LITERAL">ume_flight_size_behavior</tt></a>. A source can
+reconfigure this option to a value of less than or equal to this value. This option only
+applies to RPP repositories (<tt
+class="LITERAL">repository-allow-receiver-paced-persistence</tt> = 1). (units:
+bytes)</td>
+<td>4194304 bytes (4MB)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMESTORED-QUEUES-ELEMENT"
+name="UMESTORED-QUEUES-ELEMENT">12.3. Queues Element</a></h2>
+
+<p>The Queues Element is a container element for all queues. An abbreviated queues
+section appears below.</p>
+
+<pre class="SCREEN">
+&lt;queues&#62;
+  &lt;queue name="Queue 1" interface=10.29.3.24" port="20555" group-index="0"&#62;
+    &lt;queue-groups&#62;
+      &lt;queue-group index="0" size="5"/&#62;
+      &lt;queue-group index="1" size="1"/&#62;
+    &lt;/queue-groups&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;application-sets&#62; ... &lt;/application-sets&#62;
+    &lt;topics&#62; ... &lt;/topics&#62;
+  &lt;/queue&#62;
+  &lt;queue name="Queue 2" interface=10.29.3.25" port="20555" group-index="0"&#62;
+    &lt;queue-groups&#62;
+      &lt;queue-group index="0" size="5"/&#62;
+      &lt;queue-group index="1" size="1"/&#62;
+    &lt;/queue-groups&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;application-sets&#62; ... &lt;/application-sets&#62;
+    &lt;topics&#62; ... &lt;/topics&#62;
+  &lt;/queue&#62;
+&lt;/queues&#62;
+   
+</pre>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-QUEUE-ELEMENT"
+name="UMESTORED-QUEUE-ELEMENT">12.3.1. Queue Element</a></h3>
+
+<p>The Queue Element defines a single queue. Each queue must have a unique <tt
+class="LITERAL">name</tt> and a <tt class="LITERAL">port</tt>. An <tt
+class="LITERAL">interface</tt>, <tt class="LITERAL">group-index</tt> and <tt
+class="LITERAL">group-size</tt> are optional. The following table gives attributes for a
+<code class="PARAMETER">queue</code> element.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4227" name="AEN4227"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Specifies the name for the queue. The queue name is the prime method for identifying
+the queue and must be unique. <b class="APPLICATION">UMQ</b> uses it during queue
+resolution, etc.</td>
+<td>None--this is a required attribute</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">port</tt></td>
+<td>TCP port where <tt class="COMMAND">umestored</tt> should listen for this queue. As
+with <b class="APPLICATION">UMP</b> stores, <b class="APPLICATION">UMQ</b> access the
+queue during registration and other operations with the port.</td>
+<td>None--this is a required attribute</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">interface</tt></td>
+<td>Specifies the network interface over which <tt class="COMMAND">umestored</tt> accepts
+connection requests for this queue.</td>
+<td>0.0.0.0 (<code class="CONSTANT">INADDR_ANY</code>)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">group-index</tt></td>
+<td>A number that identifies this queue instance's queue group. See <a
+href="ume-fault-tolerance.html#QUEUE-REDUNDANCY"><i>Queue Redundancy</i></a> for more
+information.</td>
+<td>0 - Valid values range from 0 to 65535.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">group-size</tt></td>
+<td>The number of queue instances in this queue's group. You can use this attribute to
+specify the number of queue instances instead of the <a
+href="umestored-config.html#QUEUE-GROUPS-ELEMENT"><i>Queue Groups Element</i></a> if the
+queue consists of only one group.</td>
+<td>1 - Valid values range from 1 to 65535.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The Queue Element can be configured with the <a
+href="umestored-config.html#QUEUE-GROUPS-ELEMENT"><i>Queue Groups Element</i></a>, <a
+href="umestored-config.html#UMESTORED-APPSETS-ELEMENT"><i>Application Sets
+Element</i></a> and <a
+href="umestored-config.html#UMESTORED-QTOPICS-ELEMENT"><i>QueueTopics Element</i></a>.
+The options for a Queue's <code class="PARAMETER">ume-attributes</code> appear in the
+following sections.</p>
+
+<ul>
+<li>
+<p><a href="umestored-config.html#GEN-QUEUE-OPTIONS"><i>General Options for a Queue's
+ume-attributes Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#MESSAGE-STORAGE-OPTIONS"><i>Message Storage Options for
+a Queue's ume-attributes Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#QUEUE-MANAGEMENT-OPTIONS"><i>Queue Management Options
+for a Queue's ume-attributes Element</i></a></p>
+</li>
+
+<li>
+<p><a href="umestored-config.html#QSI-OPTIONS"><i>Queue Slave Instance (QSI) Options for
+a Queue's ume-attributes Element</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUEUE-GROUPS-ELEMENT" name="QUEUE-GROUPS-ELEMENT">12.3.1.1.
+Queue Groups Element</a></h4>
+
+<p>The <code class="PARAMETER">queue-groups</code> element contains <code
+class="PARAMETER">queue-group</code> elements that define all the queue groups that make
+up the queue. In the abbreviated Queues section shown in <a
+href="umestored-config.html#UMESTORED-QUEUES-ELEMENT"><i>Queues Element</i></a>, the
+<code class="PARAMETER">queue</code> element,</p>
+
+<pre class="SCREEN">
+  &lt;queue name="Queue 1" interface=10.29.3.24" port="20555" group-index="0"&#62;
+       
+</pre>
+
+<p>specifies <tt class="LITERAL">Queue 1</tt> as a Queue Instance in Group 0. The <code
+class="PARAMETER">queue-groups</code> element in the same sample specifies that <tt
+class="LITERAL">Queue 1</tt> comprises two groups, Group 0, which has 5 queue instances
+and Group 1, which has 1 queue instance.</p>
+
+<pre class="SCREEN">
+    &lt;queue-groups&#62;
+      &lt;queue-group index="0" size="5"/&#62;
+      &lt;queue-group index="1" size="1"/&#62;
+    &lt;/queue-groups&#62;
+   
+</pre>
+
+<p>To completely configure <tt class="LITERAL">Queue 1</tt>, you must specify 6 queue
+instances in either one <tt class="LITERAL">umestored.xml</tt> file as individual queue
+elements within the queues element or in separate <tt class="LITERAL">umestored.xml</tt>
+files, one for each instance. The Queue Element for all 6 queue instances would be the
+same except for the <code class="PARAMETER">interface</code>, <code
+class="PARAMETER">port</code> and <code class="PARAMETER">group-index</code> because
+every instance of <tt class="LITERAL">Queue 1</tt> must have the same <code
+class="PARAMETER">name</code>. And all 6 queue instances would also have the same <code
+class="PARAMETER">queue-groups</code> configured.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4309" name="AEN4309"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">index</tt></td>
+<td>The queue's redundancy group. See <a
+href="ume-fault-tolerance.html#QUEUE-REDUNDANCY"><i>Queue Redundancy</i></a> for more
+information.</td>
+<td>0 - Valid values range from 0 to 65535.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">size</tt></td>
+<td>The number of queue instances in this queue's redundancy group.</td>
+<td>1 - Valid values range from 1 to 65535.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="GEN-QUEUE-OPTIONS" name="GEN-QUEUE-OPTIONS">12.3.1.2. General
+Options for a Queue's ume-attributes Element</a></h4>
+
+<p>The table below displays the general options available for a Queue Element. Use the
+<tt class="LITERAL">queue</tt> Option Type for these options. A Queue's ume-attributes
+Element can also accept Option Types <tt class="LITERAL">lbm-receiver</tt>, <tt
+class="LITERAL">lbm-context</tt> and <tt class="LITERAL">lbm-source</tt>. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4336" name="AEN4336"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">control-topic-name</tt></td>
+<td>The name of the queue's control topic. The queue sends all control information for <a
+href="ume-ops-operational-view.html#PQD"><i>Parallel Queue Dissemination (PQD)</i></a>
+and <a href="ume-ops-operational-view.html#SD"><i>Source Dissemination (SD)</i></a> to
+this topic.</td>
+<td><tt class="LITERAL">UMQ-cntl:qname</tt> where <tt class="LITERAL">qname</tt> is the
+name of the queue.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-advertisement-interval</tt></td>
+<td>The interval in milliseconds between advertisements of the queue for queue
+resolution.</td>
+<td>1000 (1.0 seconds). Value must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">forwarding-behavior</tt></td>
+<td>How <b class="APPLICATION">UMQ</b> forwards messages in the <a
+href="ume-ops-operational-view.html#SQD"><i>Serial Queue Dissemination (SQD)</i></a> and
+<a href="ume-ops-operational-view.html#PQD"><i>Parallel Queue Dissemination (PQD)</i></a>
+dissemination models. Valid values are <tt class="LITERAL">store-while-forward</tt> and
+<tt class="LITERAL">store-then-forward</tt>.</td>
+<td><tt class="LITERAL">store-while-forward</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">dissemination-model</tt></td>
+<td>The dissemination model used by the queue. Valid values are: <tt
+class="LITERAL">serial-queue-dissemination</tt>, <tt class="LITERAL">SQD</tt>, <tt
+class="LITERAL">parallel-queue-dissemination</tt>, <tt class="LITERAL">PQD</tt>, <tt
+class="LITERAL">source-dissemination</tt>, and <tt class="LITERAL">SD</tt>. See also <a
+href="ume-ops-operational-view.html#MESSAGE-PATHS"><i>Message Paths</i></a></td>
+<td><tt class="LITERAL">SQD</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sending-threads</tt></td>
+<td>The number of threads used to send control and data messages from the queue.</td>
+<td>1 (This must be greater than 0.)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">context-check-interval</tt></td>
+<td>The interval in milliseconds between activity checks by the queue of a source or
+receiver context. Each check looks at the context as well as any associated source and
+receiver activity.</td>
+<td>1000 (1.0) seconds This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">context-activity-timeout</tt></td>
+<td>The length of time a source or receiver context may be inactive before the queue
+disengages from the context.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">context-keepalive-interval</tt></td>
+<td>The interval in milliseconds between keepalives messages sent by the queue to
+determine whether a source or receiver context is alive or not.</td>
+<td>1000 (1.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-activity-timeout</tt></td>
+<td>The length of time a source may be inactive before the queue disengages from the
+source.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-keepalive-interval</tt></td>
+<td>The interval in milliseconds between keepalives messages sent by the queue to
+determine whether a source is alive or not.</td>
+<td>1000 (1.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rcr-save-timeout</tt></td>
+<td>The maximum time in milliseconds that the queue holds RCR information for
+retransmission to receivers or other queue instances.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">dead-letter-topic-prefix</tt></td>
+<td>Prefix to be used for Dead Letter topic name. <b class="APPLICATION">UMQ</b> creates
+a Dead Letter topic name composed of this prefix, the unconsumed message's topic name or
+string and the Application Set name. See also <a
+href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead Letter Queue</i></a>.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">dead-letter-topic-separator</tt></td>
+<td>The separator <b class="APPLICATION">UMQ</b> uses between the <tt
+class="LITERAL">dead-letter-topic-prefix</tt>, topic name or string and the Application
+Set name when it constructs the Dead Letter topic name. See also <a
+href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead Letter Queue</i></a>.</td>
+<td>/ (forward slash)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">allow-browsing</tt></td>
+<td>Allow observer receivers to retrieve lists of messages in the queue and to retrieve
+specific messages. Allowing browsing introduces some CPU and memory overhead within the
+queue, so if browsing support is not needed, setting this to 0 may increase
+performance.</td>
+<td>1 (browsing enabled). This must be 0 or 1.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">require-client-authentication</tt></td>
+<td>Certain actions (currently topic list, message list, and message retrieve actions by
+default) require greater access permissions than a default queue user is given. Normally,
+the queue requires the client that is requesting the queue to perform any of those
+actions to pass a once-per-session authentication challenge by providing the username and
+password credentials of a user authorized to perform the requested action. If the client
+fails the authentication challenge, an error is returned to the client by the queue and
+the action is not performed. Turning this option off causes the queue to respond to such
+requests <span class="emphasis"><i class="EMPHASIS">even if</i></span> the user fails the
+authentication challenge. It is therefore NOT recommended to turn this option off in
+production environments, as it will make the queue less secure, but it is provided for
+convenience in functional test or development environments where security is not
+needed.</td>
+<td>1 (authentication required). This must be 0 or 1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="MESSAGE-STORAGE-OPTIONS"
+name="MESSAGE-STORAGE-OPTIONS">12.3.1.3. Message Storage Options for a Queue's
+ume-attributes Element</a></h4>
+
+<p><b class="APPLICATION">UMQ</b> provides 3 basic modes or operation for message
+storage.</p>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Memory Storage</b>: <b class="APPLICATION">UMQ</b> stores
+messages and message state only in memory. A restarted <tt class="LITERAL">umestored</tt>
+does not resume any previous operation. In this configuration, <tt
+class="LITERAL">sinc-data-filename</tt>, <tt
+class="LITERAL">sinc-queue-swap-filename</tt>, and <tt
+class="LITERAL">sinc-log-filename</tt> are not set.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Disk Storage, no Persistence</b>: <b
+class="APPLICATION">UMQ</b> swaps messages and message state from memory to disk as
+needed to maintain low memory overhead. A restarted <tt class="LITERAL">umestored</tt>
+does not resume any previous operation. In this configuration, <tt
+class="LITERAL">sinc-data-filename</tt> and <tt
+class="LITERAL">sinc-queue-swap-filename</tt> are set. The <tt
+class="LITERAL">sinc-log-filename</tt> is not set.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Disk Storage, Persistence</b>: <b class="APPLICATION">UMQ</b>
+swaps messages and message state from memory to disk as needed to maintain low memory
+overhead. In addition, <b class="APPLICATION">UMQ</b> maintains a separate log file that
+contains all operations needed to reconstruct state when <b class="APPLICATION">UMQ</b>
+restores <tt class="LITERAL">umestored</tt>. In this configuration, <tt
+class="LITERAL">sinc-data-filename</tt>, <tt
+class="LITERAL">sinc-queue-swap-filename</tt>, and <tt
+class="LITERAL">sinc-log-filename</tt> are set.</p>
+</li>
+</ul>
+
+<p>Use the <tt class="LITERAL">queue</tt> Option Type for these options. A Queue's
+ume-attributes Element can also accept Option Types <tt
+class="LITERAL">lbm-receiver</tt>, <tt class="LITERAL">lbm-context</tt> and <tt
+class="LITERAL">lbm-source</tt>. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4480" name="AEN4480"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">sinc-data-filename</tt></td>
+<td>The filename used to store message data on disk.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-queue-swap-filename</tt></td>
+<td>The filename used to store message state for the queue.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-log-filename</tt></td>
+<td>The filename used to contain the queue log used to reconstruct state upon restarts.
+You can use the <a href="umqsltool.html">umqsltool</a> utility to manage this file.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-max-size</tt></td>
+<td>The storage area's maximum size in bytes. When exceeded, the queue drops new messages
+until more space room is available. For file-based storage areas, the value of this
+option is bytes on disk. For memory-based storage, the value of this option is bytes of
+memory.</td>
+<td>104857600 bytes</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-data-swap-threshold</tt></td>
+<td>The threshold, in bytes, where enough message data causes the oldest and least
+referred to messages to be swapped to disk and removed from memory.</td>
+<td>104857600 bytes. This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-block-swap-threshold</tt></td>
+<td>The threshold, in blocks, where enough message state information causes the oldest
+and least referred to information to be swapped to disk and removed from memory. A block
+is state for roughly 120 messages for the same topic and Application Set and is roughly
+4KB in size.</td>
+<td>128 blocks This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">sinc-data-readahead</tt></td>
+<td>The number of messages that are read in ahead of the current point in an Application
+Set's queue position. This helps to initiate asynchronous reads ahead of the time when
+they are needed for message assignment.</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QUEUE-MANAGEMENT-OPTIONS"
+name="QUEUE-MANAGEMENT-OPTIONS">12.3.1.4. Queue Management Options for a Queue's
+ume-attributes Element</a></h4>
+
+<p>The Queue Management options control how queue instances communicate regarding
+elections and how they monitor each other.</p>
+
+<p>Use the <tt class="LITERAL">queue</tt> Option Type for these options. A Queue's
+ume-attributes Element can also accept Option Types <tt
+class="LITERAL">lbm-receiver</tt>, <tt class="LITERAL">lbm-context</tt> and <tt
+class="LITERAL">lbm-source</tt>. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4533" name="AEN4533"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">queue-management-election-backoff-timeout</tt></td>
+<td>The period of time, in milliseconds, before the Queue Election Master (QEM) recalls
+an election. This backoff is initiated only if an error occurs during the election
+operation or multiple election calls appear. To avoid livelock, the actual timeout value
+used is in the range [0.5 * timeout, 1.5 * timeout].</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-election-bias</tt></td>
+<td>The bias used during elections to determine the Post Election Master (PEM). A higher
+value biases the election to that queue instance.</td>
+<td>0 - This option must be less than or equal to 1000.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-election-call-interval</tt></td>
+<td>The interval, in milliseconds, between Election Calls by the Queue Election Master
+(QEM) once an election is called due to an unresponsive master.</td>
+<td>500 (0.5 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-election-call-timeout</tt></td>
+<td>The period of time, in milliseconds, that an election call can take. If the Queue
+Election Master (QEM) can not end the election early, then this timeout signals the end
+of the election and causes the QEM to generate a New Instance List (NIL).</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-join-request-interval</tt></td>
+<td>The interval, in milliseconds, between Join Requests sent by queues that start
+up.</td>
+<td>500 (0.5 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-join-request-timeout</tt></td>
+<td>The period of time, in milliseconds, after which a starting queue instance gives up
+on joining an existing queue and starts its own and elects itself master.</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-master-activity-timeout</tt></td>
+<td>The period of time, in milliseconds, that a master must be active (by sending Queue
+Management Instance Lists) or be declared dead. A new Queue Election Master (QEM) calls
+an election after the expiration of this period.</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-master-check-interval</tt></td>
+<td>The interval, in milliseconds, between checks on the master by the slaves.</td>
+<td>1000 (1.0 second) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-new-instance-list-interval</tt></td>
+<td>The interval, in milliseconds, at which the Queue Election Master (QEM) retransmits
+the New Instance List (NIL) after an election call has been completed.</td>
+<td>200 (0.2 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-new-instance-list-timeout</tt></td>
+<td>The period, in milliseconds, by which a Queue Election Master (QEM) must receive
+confirmations of the New Instance List (NIL) that it has sent out. If insufficient
+confirmations come back with this period expires, the QEM calls a new election and resets
+the timeout.</td>
+<td>2000 (2.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-resume-operation-interval</tt></td>
+<td>The interval, in milliseconds, at which a Queue Election Master (QEM) sends a resume
+operation message to the new master after the New Instance List (NIL) has been
+confirmed.</td>
+<td>200 (0.2 seconds)This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-resume-operation-timeout</tt></td>
+<td>The timeout, in milliseconds, by which a Queue Election Master (QEM) must detect the
+resumption of operation after the New Instance List (NIL) has been confirmed. If
+resumption has not occurred when this timeout expires, the QEM calls a new election and
+resets the timeout.</td>
+<td>2000 (2.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-slave-activity-timeout</tt></td>
+<td>The period of time, in milliseconds, that a slave must be unresponsive before the
+master removes the slave from the Queue Management Instance List.</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue-management-slave-check-interval</tt></td>
+<td>The interval, in milliseconds, between checks of the slaves by the master. This also
+controls how often the master sends Queue Management Instance List messages out to all
+the slaves.</td>
+<td>1000 (1.0 second) This option must be greater than 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QSI-OPTIONS" name="QSI-OPTIONS">12.3.1.5. Queue Slave Instance
+(QSI) Options for a Queue's ume-attributes Element</a></h4>
+
+<p>Queue Slave Instances (QSIs) receive assignment information from the master queue
+using the control topic. These messages are called Receiver Control Records (RCR). If a
+queue instance misses an RCR, it can request it. The options below control the operation
+of requesting RCRs.</p>
+
+<p>The acronym, <tt class="LITERAL">qrcrr</tt>, refers to Queue Receiver Control Records
+Request.</p>
+
+<p>Use the <tt class="LITERAL">queue</tt> Option Type for these options. A Queue's
+ume-attributes Element can also accept Option Types <tt
+class="LITERAL">lbm-receiver</tt>, <tt class="LITERAL">lbm-context</tt> and <tt
+class="LITERAL">lbm-source</tt>. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4622" name="AEN4622"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">slave-qrcrr-generation-interval</tt></td>
+<td>The timeout, in milliseconds, before an RCR must be retransmitted before <b
+class="APPLICATION">UMQ</b> abandons the request.</td>
+<td>10000 (10.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">slave-qrcrr-interval</tt></td>
+<td>The interval, in milliseconds, between sending RCR retransmit requests.</td>
+<td>200 (0.2 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">slave-qrcrr-outstanding-maximum</tt></td>
+<td>The maximum number of outstanding Receiver Control Records (RCR) to request at a
+single time.</td>
+<td>100 This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-missing-message-timeout</tt></td>
+<td>Controls the period of time that <b class="APPLICATION">UMQ</b> instance tracks
+source messages that are missed before abandoning them.</td>
+<td>5000 (5.0 seconds) This option must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">source-save-timeout</tt></td>
+<td>The timeout, in milliseconds, that the queue instance maintains historical state for
+a source that has had all its messages consumed.</td>
+<td>600000 (10.0 minutes) This option must be greater than 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-INDICES-ELEMENT"
+name="UMESTORED-INDICES-ELEMENT">12.3.2. Indices Element</a></h3>
+
+<p>The Indices element is a container element for a queue's indices. (See <a
+href="umeconcepts.html#INDEXED-QUEUING"><i>Indexed Queuing</i></a>.) Configuration of
+indices is optional, however, specifically configured indices can have rules (allow or
+deny) applied to them on a per receiver type basis. See <a
+href="umestored-config.html#INDEX-RULES-ELEMENT"><i>Index Rules Element</i></a>. Messages
+sent to the queue with a specifically configured index can be treated with different
+attributes than a normal message or a message sent on a non specifically-configured
+index. In the abbreviated sample below, <span class="emphasis"><i class="EMPHASIS">Red
+Messages</i></span> is an example of a named index, and <span class="emphasis"><i
+class="EMPHASIS">Brown Messages</i></span> is an example of a ranged numeric index.</p>
+
+<pre class="SCREEN">
+&lt;indices&#62;
+  &lt;index name="Red Messages" type="named" value="red"&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+  &lt;/index&#62;
+  &lt;index name="Brown Messages" type="ranged" value="13, 44, 80-90"&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+  &lt;/index&#62;
+&lt;/indices&#62;
+     
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-INDEX-ELEMENT"
+name="UMESTORED-INDEX-ELEMENT">12.3.3. Index Element</a></h3>
+
+<p>The Index element defines a single index and has three attributes, a <tt
+class="LITERAL">name</tt>, <tt class="LITERAL">type</tt> and <tt
+class="LITERAL">value</tt>. See the following examples:</p>
+
+<pre class="SCREEN">
+&lt;index name="Red Messages" type="named" value="red"&#62; ... &lt;/index&#62;
+&lt;index name="Brown Messages" type="ranged" value="4"&#62; ... &lt;/index&#62;
+&lt;index name="Yellow Messages" type="ranged" value="-10, 30-40, 90, 400-"&#62; ... &lt;/index&#62;
+   
+</pre>
+
+<div class="INFORMALTABLE"><a id="AEN4672" name="AEN4672"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the index that also accompanies the message ( <a
+href="../API/structlbm__umq__index__info__t__stct.html" target="doccontent"><tt
+class="LITERAL">lbm_umq_index_info_t</tt></a>). Can be a string or an unsigned 64-bit
+integer.</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">type</tt></td>
+<td>An index type can be either the name of a single index or a range of indices. A <tt
+class="LITERAL">named</tt> index is simply a string literal no longer than 216
+characters. A <tt class="LITERAL">ranged</tt> index can specify several ranges of
+unsigned 64-bit integers at once, or individual integers, separated by commas. A dash
+(<tt class="LITERAL">-</tt>) can be used to indicate "and lower" or "and up".</td>
+<td>None.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">value</tt></td>
+<td>Either the index's string value (if a named index) or the index's range(s) of 64-bit
+unsigned numbers (if a ranged index).</td>
+<td>None.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Note that negative ranged indices are not allowed; the "<tt class="LITERAL">-10</tt>"
+value in the example <tt class="LITERAL">Yellow Messages</tt> index is shorthand for "<tt
+class="LITERAL">0-10</tt>". The notation "<tt class="LITERAL">400-</tt>" indicates "<tt
+class="LITERAL">400</tt> and up", "up" meaning up to the maximum 64-bit unsigned integer,
+so it is shorthand for "<tt class="LITERAL">400-18446744073709551615</tt>".</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INDEX-OPTIONS" name="INDEX-OPTIONS">12.3.4. Options for an
+Index's ume-attributes Element</a></h3>
+
+<p>Options for an index appear in the following table. Use the <tt
+class="LITERAL">queue</tt> Option Type for these options. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4712" name="AEN4712"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">log-audit-trail</tt></td>
+<td>Flag indicates whether or not the Queue logs receiver activity (assignments,
+consumption reports, reassignments, etc.) to the <tt class="LITERAL">umestored</tt> log.
+Valid values are 0 (no logging) or 1.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-lifetime</tt></td>
+<td>The maximum lifetime of a queue message in milliseconds. A value of 0 (zero)
+configures no lifetime.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-reassignment-timeout</tt></td>
+<td>The maximum amount of time, starting from assignment, that a message may remain
+unconsumed by its assigned receiver before the Queue reassigns it to another receiver. A
+value of 0 (zero) configures the queue to never reassign.</td>
+<td>10000 (10.0 seconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-max-reassignments</tt></td>
+<td>The maximum number of re-assignments allowed per message. <b
+class="APPLICATION">UMQ</b> applies the initial assignment to this maximum. The queue
+discards messages that exceed this maximum. Setting this option to 1 means that the
+message will never be reassigned. A value of 0 (zero) configures no maximum.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-activity-timeout</tt></td>
+<td>The length of time a receiver may be inactive before the Queue disengages from the
+receiver.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-keepalive-interval</tt></td>
+<td>The interval in milliseconds between keepalive messages sent by the Queue to
+determine whether a receiver is alive or not.</td>
+<td>1000 (1.0 seconds) This must be greater than 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-APPSETS-ELEMENT"
+name="UMESTORED-APPSETS-ELEMENT">12.3.5. Application Sets Element</a></h3>
+
+<p>The Application Sets element is a container element for every application set serviced
+by the queue. In the abbreviated sample below, <span class="emphasis"><i
+class="EMPHASIS">Set 1</i></span> is one application set and <span class="emphasis"><i
+class="EMPHASIS">Set 2</i></span> is another application set. Receiver Type ID of 100
+identifies receivers in <span class="emphasis"><i class="EMPHASIS">Set 1</i></span> and
+Receiver Type ID of 200 identifies receivers in <span class="emphasis"><i
+class="EMPHASIS">Set 2</i></span>.</p>
+
+<pre class="SCREEN">
+&lt;application-sets&#62;
+  &lt;application-set name="Set 1"&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+    &lt;receiver-types&#62;
+      &lt;receiver-type id="100"&#62;
+          &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;/receiver-type&#62;
+    &lt;/receiver-types&#62;
+  &lt;/application-set&#62;
+  &lt;application-set name="Set 2"&#62;
+    &lt;receiver-types&#62;
+        &lt;receiver-type id="200"/&#62;
+    &lt;/receiver-types&#62;
+  &lt;/application-set&#62;
+&lt;/application-sets&#62;
+     
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="APP-SET-ELEMENT" name="APP-SET-ELEMENT">12.3.5.1. Application
+Set Element</a></h4>
+
+<p>The Application Set element defines an individual application set and has only one
+attribute, <tt class="LITERAL">name</tt>, which identifies the application set. Each
+application set also requires a Receiver Type. See <a
+href="umestored-config.html#APP-SET-OPTIONS"><i>Options for an Application Set's
+ume-attributes Element</i></a> for application set options.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="APP-SET-OPTIONS" name="APP-SET-OPTIONS">12.3.5.2. Options for
+an Application Set's ume-attributes Element</a></h4>
+
+<p>Options for an application set appear in the following table. Use the <tt
+class="LITERAL">queue</tt> Option Type for these options. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4770" name="AEN4770"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">log-audit-trail</tt></td>
+<td>Flag indicates whether or not receiver activity (assignments, consumption reports,
+reassignments, etc.) are logged to the <tt class="LITERAL">umestored</tt> log. Valid
+values are 0 (no logging) or 1.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-lifetime</tt></td>
+<td>The maximum lifetime of a queue message in milliseconds. A value of 0 (zero)
+configures no lifetime.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-reassignment-timeout</tt></td>
+<td>The maximum amount of time, starting from assignment, that a message may remain
+unconsumed by its assigned receiver before the queue reassigns it to another
+receiver.</td>
+<td>10000 (10.0 seconds)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-max-reassignments</tt></td>
+<td>The maximum number of re-assignments allowed per message. <b
+class="APPLICATION">UMQ</b> applies the initial assignment to this maximum. The queue
+discards messages that exceed this maximum. Setting this option to 1 means that the
+message will never be reassigned. A value of 0 (zero) configures no maximum.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-activity-timeout</tt></td>
+<td>The length of time a receiver may be inactive before the queue disengages from the
+receiver.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">receiver-keepalive-interval</tt></td>
+<td>The interval in milliseconds between keepalive messages sent by the queue to
+determine whether a receiver is alive or not.</td>
+<td>1000 (1.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">discard-behavior</tt></td>
+<td>Queue behavior for unconsumed messages of the Application Set that have exceeded
+their <tt class="LITERAL">message-lifetime</tt>. If set to <tt
+class="LITERAL">dead-letter</tt>, <b class="APPLICATION">UMQ</b> places messages that
+exceed their <tt class="LITERAL">message-lifetime</tt> on the Dead Letter Queue. If set
+to <tt class="LITERAL">drop</tt>, <b class="APPLICATION">UMQ</b> discards such unconsumed
+messages. See also <a href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead Letter
+Queue</i></a>.</td>
+<td><tt class="LITERAL">drop</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="RECEIVER-TYPES-ELEMENT"
+name="RECEIVER-TYPES-ELEMENT">12.3.5.3. Receiver Types Element</a></h4>
+
+<p>The Receiver Types element is a container element for all the receiver types within
+the Application Set.</p>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="RECEIVER-TYPE-ELEMENT"
+name="RECEIVER-TYPE-ELEMENT">12.3.5.3.1. Receiver Type Element</a></h5>
+
+<p>The Receiver Type element defines an individual receiver type and has only one
+attribute, <tt class="LITERAL">id</tt>, which identifies the receiver type. A receiver
+type <tt class="LITERAL">id</tt> is a 32-bit integer. See <a
+href="umestored-config.html#RECEIVER-TYPE-OPTIONS"><i>Options for a Receiver Type's
+ume-attributes Element</i></a> for receiver type options.</p>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="RECEIVER-TYPE-OPTIONS"
+name="RECEIVER-TYPE-OPTIONS">12.3.5.3.2. Options for a Receiver Type's ume-attributes
+Element</a></h5>
+
+<p>Options for a Receiver Type appear in the following table. Use the <tt
+class="LITERAL">queue</tt> Option Type for these options. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4837" name="AEN4837"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">priority</tt></td>
+<td>The priority assigned to the receiver type when assigning messages. Lower values have
+higher priority. This value may be negative.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">portion</tt></td>
+<td>The maximum number of messages in flight for the receiver type.</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h5 class="SECTION"><a id="INDEX-RULES-ELEMENT" name="INDEX-RULES-ELEMENT">12.3.5.3.3.
+Index Rules Element</a></h5>
+
+<p>The Index Rules Element is a container element for index rule elements that can allow
+or deny receivers of the Receiver Type ID to process messages sent on specific configured
+indices. It contains one attribute, order, which specifies the order in which the Queue
+applies the index rules. Additionally, the <tt class="LITERAL">order</tt> attribute
+specifies the <span class="emphasis"><i class="EMPHASIS">default</i></span> rule (allow
+or deny) to apply to an index for a particular receiver type if it is not specifically
+configured. Valid orders are either <tt class="LITERAL">"allow, deny"</tt> or <tt
+class="LITERAL">"deny, allow"</tt>.</p>
+
+<ul>
+<li>
+<p>The Queue first applies rules of the first type specified in the <tt
+class="LITERAL">order</tt> attribute.</p>
+</li>
+
+<li>
+<p>The Queue then applies rules of the second type specified and overrides any
+overlapping rules of the first type for the indices in which they overlap.</p>
+</li>
+
+<li>
+<p>The Queue then applies the default rule to any indices not specifically
+configured.</p>
+</li>
+</ul>
+
+<p>The example below establishes the following rules for receivers with Receiver Type ID
+100.</p>
+
+<ol type="1">
+<li>
+<p>Allowed to process messages with any of the Red Messages indices.</p>
+</li>
+
+<li>
+<p>Explicitly prohibited from being assigned messages with any of the Brown Messages
+indices.</p>
+</li>
+
+<li>
+<p>Prohibited (via the default rule) from being assigned messages sent with any other
+indices that fall outside those defined in either Red Messages or Brown Messages.</p>
+</li>
+</ol>
+
+<pre class="SCREEN">
+&lt;receiver-type id="100"&#62;
+  &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+  &lt;index-rules order="allow, deny"&#62;
+    &lt;index-allow name="Red Messages" /&#62;
+    &lt;index-deny name="Brown Messages" /&#62;
+  &lt;/index-rules&#62;
+&lt;/receiver-type&#62;
+       
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Index Rules Element is not available to ULB receivers.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMESTORED-QTOPICS-ELEMENT"
+name="UMESTORED-QTOPICS-ELEMENT">12.3.6. QueueTopics Element</a></h3>
+
+<p>The Topics Element is a container element for all topics handled by the queue. In the
+abbreviated example below, application set <span class="emphasis"><i class="EMPHASIS">Set
+1</i></span> is associated with the configured topic. Since the topic is a PCRE regular
+expression, any topic message submitted to the queue that matches the pattern is sent to
+<span class="emphasis"><i class="EMPHASIS">Set 1</i></span>.</p>
+
+<pre class="SCREEN">
+&lt;topics&#62;
+  &lt;topic pattern="." type="PCRE"&#62;
+    &lt;ume-attributes&#62; ... &lt;/ume-attributes&#62;
+      &lt;application-sets&#62;
+        &lt;application-set name="Set 1"/&#62;
+    &lt;/application-sets&#62;
+  &lt;/topic&#62;
+&lt;/topics&#62;
+     
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QTOPIC-ELEMENT" name="QTOPIC-ELEMENT">12.3.6.1. Queue Topic
+Element</a></h4>
+
+<p>The Topic Element for a queue uses the same attributes for store topics listed in <a
+href="umestored-config.html#UMESTORED-TOPIC-ELEMENT"><i>Topic Element</i></a> and must
+also specify an Application Set that is configured in the Application Sets section. The
+options listed in <a href="umestored-config.html#QTOPIC-OPTIONS"><i>Options for a Queue
+Topic's ume-attributes Element</i></a> are also available.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="QTOPIC-OPTIONS" name="QTOPIC-OPTIONS">12.3.6.2. Options for a
+Queue Topic's ume-attributes Element</a></h4>
+
+<p>Options for a queue topic appear in the following table. Use the <tt
+class="LITERAL">queue</tt> Option Type for these options. A Queue's ume-attributes
+Element can also accept Option Types <tt class="LITERAL">lbm-receiver</tt>, <tt
+class="LITERAL">lbm-context</tt> and <tt class="LITERAL">lbm-source</tt>. See <a
+href="umestored-config.html#OPTION-TYPES"><i>Option Types for ume-attributes
+Elements</i></a> for more information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4900" name="AEN4900"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">message-management-check-interval</tt></td>
+<td>The interval in milliseconds between status checks of the outstanding assignments for
+all assigned messages on the topic. These checks are done for lifetime and
+re-assignment.</td>
+<td>1000 (1.0 seconds) This value must not be 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">topic-check-interval</tt></td>
+<td>The interval in milliseconds between checks for any sources and receivers of the
+topic. If none exist, the queue disengages from the topic.</td>
+<td>5000 (5.0 seconds) This value must not be 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rcr-save-timeout</tt></td>
+<td>The maximum time in milliseconds that the queue holds RCR information for
+retransmission to receivers or other queue instances.</td>
+<td>30000 (30.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-dissemination-hold-interval</tt></td>
+<td>The interval in milliseconds between dissemination of the same message to multiple
+receivers.</td>
+<td>10000 (10.0 seconds) This must be greater than 0.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">dead-letter-topic</tt></td>
+<td>Setting this option to <b class="APPLICATION">1</b> specifies this topic as a Dead
+Letter Topic to be used by <b class="APPLICATION">UMQ</b> to receive unconsumed messages
+of the Queue. (The <tt class="LITERAL">pattern</tt> for this topic should match the <tt
+class="LITERAL">dead-letter-topic-prefix</tt>.) This topic can only be configured with
+one Application Set that has its <tt class="LITERAL">discard-behavior</tt> set to <tt
+class="LITERAL">drop</tt> to prevent the chaining of Dead Letter Topics. See also <a
+href="umeconcepts.html#DEAD-LETTER-QUEUE"><i>Dead Letter Queue</i></a>.</td>
+<td>0 (zero)</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">message-total-lifetime</tt></td>
+<td>Establishes the period of time from when a queue enqueues a message until the time
+the message cannot be assigned or reassigned to a receiver. The queue deletes the message
+upon expiration of the lifetime. See also <a
+href="umeconcepts.html#MESSAGE-LIFETIMES"><i>Message Lifetimes</i></a>.</td>
+<td>0 (zero)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="OPTION-TYPES" name="OPTION-TYPES">12.4. Option Types for
+ume-attributes Elements</a></h2>
+
+<p>All options configured for <code class="PARAMETER">ume-attributes</code> require an
+Option Type. The following table describes the five Option Types.</p>
+
+<div class="INFORMALTABLE"><a id="AEN4950" name="AEN4950"></a>
+<table border="1" class="CALSTABLE">
+<col />
+<col />
+<col />
+<thead>
+<tr>
+<th>Option Type</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">lbm-receiver</tt></td>
+<td>Allows you to configure receiver (scope) options that you usually specify in a <b
+class="APPLICATION">UM</b> Configuration File or set using <tt
+class="LITERAL">lbm_*_attr_setopt()</tt>. This Option Type is appropriate for a Topic
+Element's <code class="PARAMETER">ume-attributes</code> child element. For example, you
+could turn off delivery of NAKs for a particular Topic by including the following within
+the Topic's <code class="PARAMETER">ume-attributes</code> element: <tt
+class="LITERAL">&lt;option type="lbm-receiver" name="transport_lbtrm_send_naks"
+value="0"&#62;</tt> .</td>
+<td>None - this is a required attribute.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm-context</tt></td>
+<td>Allows you to configure context (scope) options that you usually specify in a <b
+class="APPLICATION">UM</b> Configuration File or set using <tt
+class="LITERAL">lbm_*_attr_setopt()</tt>. This Option Type is appropriate for a Store
+Element's <code class="PARAMETER">ume-attributes</code> child element. For example, you
+could increase the receiver socket buffer by including the following within the <code
+class="PARAMETER">ume-attributes</code> element: <tt class="LITERAL">&lt;option
+type="lbm-context" name="transport_lbtrm_receiver_socket_buffer"
+value="1048576"&#62;</tt> .</td>
+<td>None - this is a required attribute.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm-source</tt></td>
+<td>Allows you to configure source (scope) options that you usually specify in a <b
+class="APPLICATION">UM</b> Configuration File or set using <tt
+class="LITERAL">lbm_*_attr_setopt()</tt>. This Option Type is appropriate for a Topic
+Element's <code class="PARAMETER">ume-attributes</code> child element. For example, you
+could change the transport by including the following within the <code
+class="PARAMETER">ume-attributes</code> element: <tt class="LITERAL">&lt;option
+type="lbm-source" name="transport" value="lbtru"&#62;</tt> .</td>
+<td>None - this is a required attribute.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">store</tt></td>
+<td>Use this option type for all options that directly configure a store or repository
+and appear in either a <code class="PARAMETER">store</code> or <code
+class="PARAMETER">topic</code> <code class="PARAMETER">ume-attributes</code> element. For
+example, <tt class="LITERAL">&lt;option type="store" name="context-name"
+value="remote-store"/&#62;</tt> or <tt class="LITERAL">&lt;option type="store"
+name="repository-type" value="disk"/&#62;</tt>.</td>
+<td>None - this is a required attribute.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">queue</tt></td>
+<td>Option type used for all <code class="PARAMETER">ume-attributes</code> configured for
+the <code class="PARAMETER">queue</code> element and its <code
+class="PARAMETER">application-set</code>, <code class="PARAMETER">receiver-type</code>
+and <code class="PARAMETER">topic</code> elements.</td>
+<td>None - this is a required attribute.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMESTORED-CONFIG-DTD" name="UMESTORED-CONFIG-DTD">12.5.
+umestored Configuration DTD</a></h2>
+
+<p>The DTD for version 1.2 of <tt class="LITERAL">umestored</tt> appears below. See also
+the DTD revision table below.</p>
+
+<div class="INFORMALTABLE"><a id="AEN5012" name="AEN5012"></a>
+<table border="1" class="CALSTABLE">
+<col width="48" />
+<col width="96" />
+<col width="144" />
+<col width="384" />
+<thead>
+<tr>
+<th>DTD Version</th>
+<th>Release Date</th>
+<th>Product Version</th>
+<th>Supported Features</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1.0</td>
+<td>Feb. 2007</td>
+<td><b class="APPLICATION">UME</b> 1.0</td>
+<td>Persistent Stores</td>
+</tr>
+
+<tr>
+<td>1.1</td>
+<td>April 2010</td>
+<td><b class="APPLICATION">UME</b> 3.0.1 / <b class="APPLICATION">UMQ</b> 1.0</td>
+<td>Persistent Stores, Queues and Ultra Load Balancing (ULB)</td>
+</tr>
+
+<tr>
+<td>1.2</td>
+<td>March 2011</td>
+<td><b class="APPLICATION">UME</b> 3.2 / <b class="APPLICATION">UMQ</b> 2.1</td>
+<td>Persistent Stores, Queues, Ultra Load Balancing (ULB), Dead Letter Queue, Indexed
+Queuing and Indexed ULB</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<pre class="SCREEN">
+&lt;!ELEMENT ume-store (daemon, stores?, queues?)&#62;
+&lt;!ATTLIST ume-store version CDATA #REQUIRED&#62;
+&lt;!ELEMENT daemon (log | uid | pidfile | gid | lbm-config | lbm-license-file | web-monitor)*&#62;
+&lt;!ELEMENT log ( #PCDATA )&#62;
+&lt;!ATTLIST log type CDATA #IMPLIED&#62;
+&lt;!ATTLIST log xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT pidfile ( #PCDATA )&#62;
+&lt;!ATTLIST pidfile xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT uid ( #PCDATA )&#62;
+&lt;!ATTLIST uid xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT gid ( #PCDATA )&#62;
+&lt;!ATTLIST gid xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT lbm-config ( #PCDATA )&#62;
+&lt;!ATTLIST lbm-config xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT lbm-license-file ( #PCDATA )&#62;
+&lt;!ATTLIST lbm-license-file xml:space (default | preserve) \"default\"&#62;
+&lt;!ELEMENT web-monitor ( #PCDATA )&#62;
+&lt;!ATTLIST web-monitor xml:space (default | preserve) \"default\"&#62;
+&lt;!ATTLIST web-monitor permission CDATA #IMPLIED&#62;
+&lt;!ELEMENT stores (store*)&#62;
+&lt;!ELEMENT store (ume-attributes | topics)+&#62;
+&lt;!ATTLIST store name CDATA #REQUIRED&#62;
+&lt;!ATTLIST store interface CDATA #IMPLIED&#62;
+&lt;!ATTLIST store port CDATA #REQUIRED&#62;
+&lt;!ELEMENT topics (topic+)&#62;
+&lt;!ELEMENT topic (ume-attributes | application-sets)*&#62;
+&lt;!ATTLIST topic pattern CDATA #REQUIRED&#62;
+&lt;!ATTLIST topic type (direct | PCRE | regexp) #IMPLIED&#62;
+&lt;!ELEMENT ume-attributes (option+)&#62;
+&lt;!ELEMENT option EMPTY&#62;
+&lt;!ATTLIST option type (lbm-receiver | lbm-context | lbm-source | store | queue) #IMPLIED&#62;
+&lt;!ATTLIST option name CDATA #REQUIRED&#62;
+&lt;!ATTLIST option value CDATA #REQUIRED&#62;
+&lt;!ELEMENT queues (queue*)&#62;
+&lt;!ELEMENT queue (indices | application-sets | ume-attributes | topics | queue-groups)+&#62;
+&lt;!ATTLIST queue name CDATA #REQUIRED&#62;
+&lt;!ATTLIST queue interface CDATA #IMPLIED&#62;
+&lt;!ATTLIST queue port CDATA #REQUIRED&#62;
+&lt;!ATTLIST queue group-index CDATA #IMPLIED&#62;
+&lt;!ATTLIST queue group-size CDATA #IMPLIED&#62;
+&lt;!ELEMENT receiver-types (receiver-type+)&#62;
+&lt;!ELEMENT indices (index+)&#62;
+&lt;!ELEMENT index (ume-attributes)*&#62;
+&lt;!ATTLIST index name CDATA #REQUIRED&#62;
+&lt;!ATTLIST index type CDATA #IMPLIED&#62;
+&lt;!ATTLIST index value CDATA #REQUIRED&#62;
+&lt;!ELEMENT application-sets (application-set+)&#62;
+&lt;!ELEMENT application-set (ume-attributes | receiver-types)*&#62;
+&lt;!ATTLIST application-set name CDATA #REQUIRED&#62;
+&lt;!ELEMENT receiver-type (ume-attributes*, index-rules?)&#62;
+&lt;!ATTLIST receiver-type id CDATA #REQUIRED&#62;
+&lt;!ELEMENT index-rules (index-allow | index-deny)*&#62;
+&lt;!ATTLIST index-rules order CDATA #IMPLIED&#62;
+&lt;!ELEMENT index-allow EMPTY&#62;
+&lt;!ATTLIST index-allow name CDATA #REQUIRED&#62;
+&lt;!ELEMENT index-deny EMPTY&#62;
+&lt;!ATTLIST index-deny name CDATA #REQUIRED&#62;
+&lt;!ELEMENT queue-groups (queue-group+)&#62;
+&lt;!ELEMENT queue-group EMPTY&#62;
+&lt;!ATTLIST queue-group index CDATA #REQUIRED&#62;
+&lt;!ATTLIST queue-group size CDATA #REQUIRED&#62;
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMESTORED-CONFIG-EXAMPLE"
+name="UMESTORED-CONFIG-EXAMPLE">12.6. Store Configuration Example</a></h2>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0"?&#62;
+&lt;ume-store version="1.2"&#62;
+  &lt;daemon&#62;
+    &lt;log&#62;stored.log&lt;/log&#62;
+    &lt;pidfile&#62;stored.pid&lt;/pidfile&#62;
+    &lt;web-monitor&#62;*:15304&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+
+  &lt;stores&#62;
+    &lt;store name="test-store" port="14567"&#62;
+      &lt;ume-attributes&#62;
+        &lt;option type="store" name="disk-cache-directory" value="cache"/&#62;
+        &lt;option type="store" name="disk-state-directory" value="state"/&#62;
+        &lt;option type="store" name="context-name" value="remote-store"/&#62;
+      &lt;/ume-attributes&#62;
+      &lt;topics&#62;
+        &lt;topic pattern="test*" type="PCRE"&#62;
+          &lt;ume-attributes&#62;
+            &lt;option type="store" name="repository-type" value="disk"/&#62;
+            &lt;option type="store" name="repository-size-threshold" value="104857600"/&#62;
+            &lt;option type="store" name="repository-size-limit" value="209715200"/&#62;
+            &lt;option type="store" name="repository-disk-file-size-limit" value="1073741824"/&#62;
+            &lt;option type="store" name="source-activity-timeout" value="120000"/&#62;
+            &lt;option type="store" name="receiver-activity-timeout" value="120000"/&#62;
+            &lt;option type="store" name="retransmission-request-forwarding" value="0"/&#62;
+          &lt;/ume-attributes&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/store&#62;
+  &lt;/stores&#62;
+&lt;/ume-store&#62;
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUE-CONFIG-EXAMPLE" name="QUEUE-CONFIG-EXAMPLE">12.7. Queue
+Configuration Example</a></h2>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8"?&#62;
+&lt;ume-store version="1.2"&#62;
+  &lt;daemon&#62;
+    &lt;log&#62;/tmp/qlog.txt&lt;/log&#62;
+    &lt;lbm-license-file&#62;/home/.ume_license&lt;/lbm-license-file&#62;
+    &lt;lbm-config&#62;/home/queues/lbm-config.cfg&lt;/lbm-config&#62;
+    &lt;web-monitor&#62;*:20395&lt;/web-monitor&#62;
+  &lt;/daemon&#62;
+  &lt;queues&#62;
+    &lt;queue name="sample_queue" port="20555" group-index="0"&#62;
+      &lt;queue-groups&#62;
+        &lt;queue-group index="0" size="5"/&#62;
+        &lt;queue-group index="1" size="1"/&#62;
+      &lt;/queue-groups&#62;
+      &lt;ume-attributes&#62;
+        &lt;option type="queue" name="dissemination-model" value="SQD"/&#62;
+        &lt;option type="queue" name="sinc-data-filename" value="/tmp/sample_queue_1-sd"/&#62;
+        &lt;option type="queue" name="sinc-queue-swap-filename" value="/tmp/sample_queue_1-sqs"/&#62;
+        &lt;option type="queue" name="sinc-log-filename" value="/tmp/sample_queue_1-sl"/&#62;
+        &lt;option type="queue" name="sinc-max-size" value="25000000"/&#62;
+        &lt;option type="queue" name="sending-threads" value="1"/&#62;
+        &lt;option type="queue" name="sinc-block-swap-threshold" value="100000"/&#62;
+        &lt;option type="queue" name="source-missing-message-timeout" value="5000"/&#62;
+        &lt;option type="lbm-source" name="transport" value="lbtrm"/&#62;
+      &lt;/ume-attributes&#62;
+      &lt;application-sets&#62;
+        &lt;application-set name="Set 1"&#62;
+          &lt;ume-attributes&#62;
+            &lt;option type="queue" name="log-audit-trail" value="0"/&#62;
+            &lt;option type="queue" name="message-lifetime" value="6000"/&#62;
+            &lt;option type="queue" name="message-reassignment-timeout" value="2000"/&#62;
+            &lt;option type="queue" name="message-max-reassignments" value="10"/&#62;
+          &lt;/ume-attributes&#62;
+          &lt;receiver-types&#62;
+            &lt;receiver-type id="100"&#62;
+              &lt;ume-attributes&#62;
+                &lt;option type="queue" name="priority" value="1"/&#62;
+                &lt;option type="queue" name="portion" value="10"/&#62;
+              &lt;/ume-attributes&#62;
+            &lt;/receiver-type&#62;
+            &lt;receiver-type id="101"&#62;
+              &lt;ume-attributes&#62;
+                &lt;option type="queue" name="priority" value="100"/&#62;
+                &lt;option type="queue" name="portion" value="10"/&#62;
+              &lt;/ume-attributes&#62;
+            &lt;/receiver-type&#62;
+          &lt;/receiver-types&#62;
+        &lt;/application-set&#62;
+        &lt;application-set name="Set 2"&#62;
+          &lt;ume-attributes&#62;
+            &lt;option type="queue" name="log-audit-trail" value="0"/&#62;
+            &lt;option type="queue" name="message-lifetime" value="6000"/&#62;
+            &lt;option type="queue" name="message-reassignment-timeout" value="2000"/&#62;
+            &lt;option type="queue" name="message-max-reassignments" value="10"/&#62;
+          &lt;/ume-attributes&#62;
+          &lt;receiver-types&#62;
+            &lt;receiver-type id="200"&#62;
+              &lt;ume-attributes&#62;
+                &lt;option type="queue" name="priority" value="1"/&#62;
+                &lt;option type="queue" name="portion" value="10"/&#62;
+              &lt;/ume-attributes&#62;
+            &lt;/receiver-type&#62;
+            &lt;receiver-type id="201"&#62;
+              &lt;ume-attributes&#62;
+                &lt;option type="queue" name="priority" value="100"/&#62;
+                &lt;option type="queue" name="portion" value="10"/&#62;
+              &lt;/ume-attributes&#62;
+            &lt;/receiver-type&#62;
+          &lt;/receiver-types&#62;
+        &lt;/application-set&#62;
+      &lt;/application-sets&#62;
+      &lt;topics&#62;
+        &lt;topic pattern="testA" type="PCRE"&#62;
+          &lt;application-sets&#62;
+            &lt;application-set name="Set 1"/&#62;
+          &lt;/application-sets&#62;
+        &lt;/topic&#62;
+        &lt;topic pattern="testB" type="PCRE"&#62;
+          &lt;application-sets&#62;
+            &lt;application-set name="Set 2"/&#62;
+          &lt;/application-sets&#62;
+        &lt;/topic&#62;
+        &lt;topic pattern="testC" type="PCRE"&#62;
+          &lt;application-sets&#62;
+            &lt;application-set name="Set 1"/&#62;
+            &lt;application-set name="Set 2"/&#62;
+          &lt;/application-sets&#62;
+        &lt;/topic&#62;
+      &lt;/topics&#62;
+    &lt;/queue&#62;
+  &lt;/queues&#62;
+&lt;/ume-store&#62;
+     
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umqsltool.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ume-store-web-monitor.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">umqsltool</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Web Monitor</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

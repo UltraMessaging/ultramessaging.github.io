@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="Automatic Monitoring,UM Monitoring,naks_sent,unrecovered_txw,unrecovered_tmo,retransmissions,lbm_msgs_no_topic_rcved,dgrams_dropped_*,LBM_MSG_UNRECOVERABLE_LOSS,LBM_MSG_UNRECOVERABLE_LOSS_BURST,sequence numbers,rxs_sent,naks_shed,retransmission requests,NAK,retransmit_rate_limiter,data_msgs,events,age_mean,age_max,data_msgs_svc_mean,data_msgs_svc_max" />
+    <title>Monitoring Transport Statistics</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html#3_5_4_1">Monitoring UM Statistics, Logs and Daemons</a> &gt; Monitoring Transport Statistics</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_5_4_1">Monitoring Transport Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_4_2">Monitoring the activity on your UM transport sessions is the most important component of your UM monitoring effort. UM provides the following four methods to monitor your </a><b class="Bold">UM</b> activities.</div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_4_4_2_2">Use </a><b class="Bold">UM</b> API function calls within your applications to retrieve statistics and deliver them to your monitoring application.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_4_4_2_4">Use the </a><b class="Bold">UM</b> Monitoring API to more easily retrieve and send statistics to your monitoring application.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_4_4_2_6">Use Automatic Monitoring to easily employ the </a><b class="Bold">UM</b> Monitoring API to monitor <b class="Bold">UM</b> activity at an <b class="Bold">UM</b> context level.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="List_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="List_1_inner" style="width: 18pt; white-space: nowrap;">
+                <img src="bullet1.bmp" alt="*" border="0" width="7" height="7" />
+              </div>
+            </td>
+            <td width="100%">
+              <div class="List_1_inner"><a name="3_5_4_4_2_8">Use the </a><b class="Bold">Ultra Messaging</b> <b class="Bold">SNMP Agent </b>and MIB (purchased separately to monitor statistics through a Network Management System). See <span class="Italic">The Ultra Messaging SNMP Agent </span>for detailed information.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="3_5_4_4_4">Automatic Monitoring is the easiest method to implement using configuration options or environment variables. Since many topics can use multiple transport sessions, UM Monitoring doesn't provide transport information for individual topics. From an Operations point of view, however, the health and behavior of your transport sessions is more correlated to system performance. Although UM Monitoring also provides statistics on event queues, these statistics are more specific to a single application and not a system wide health indication.</a></div>
+      <div class="Body"><a name="3_5_4_4_6">The optimum interval for collecting statistics is between 5-10 seconds. The shorter the interval, the greater the data collected which may require most advanced methods of evaluation.</a></div>
+      <div class="Body"><a name="3_5_4_4_8">This section lists some of the more important transport statistics to monitor listed by transport type.</a></div>
+      <div class="Heading_2"><a name="3_5_4_7_1">LBT-RM and LBT-RU Receiver Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_4_7_2">Essentially, aside from </a><span class="Keyword">msg_rcved</span> and <span class="Keyword">bytes_rcved</span>, if any receiver statistics increment, a problem may exist. The following lists the most important statistics.</div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_7_4_2_2">naks_sent</a></span>means a transport has a gap in sequence numbers, which can be recoverable or unrecoverable loss.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_7_4_2_4">unrecovered_txw</a></span> and <span class="Keyword">unrecovered_tmo</span> loss statistics. Indicates retransmissions not delivered to a receiver. (The receiving application will have received a LBM_MSG_UNRECOVERABLE_LOSS or LBM_MSG_UNRECOVERABLE_LOSS_BURST log message via its receive callback, which should be found in the streaming or API log file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_7_4_2_6">lbm_msgs_no_topic_rcved</a></span> indicates that receivers may be doing too much topic filtering (wasting CPU resource) because they are processing messages in which they have no interest. If this statistic is greater than 25% of msgs_rcvd , a problem may exist or topics may need to be distributed to different transport sessions.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">4. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_7_4_2_8">dgrams_dropped_*</a></span> - Indicates the reception of invalid datagrams, e.g. a non-UMS datagram or datagram from an incompatible version.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_4_9_1">LBT-RM and LBT-RU Source Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_4_9_2">The following lists the most important statistics.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_9_4_2_2">rxs_sent</a></span> indicates that some lost messages are being recovered, but the reason for the loss should be investigated and corrected.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_9_4_2_4">naks_shed</a></span> indicates the number of retransmission requests (NAKs) the source transport has not fulfilled, sending a NCF instead. This statistics can help pinpoint transport bottlenecks, such as <span class="Keyword">retransmit_rate_limiter</span> (configuration option).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Heading_2"><a name="3_5_4_11_1">TCP Receiver and Source Statistics</a></div>
+      <div class="Short_Description"><span class="Keyword"><a name="3_5_4_11_2">lbm_msgs_no_topic_rcvd</a></span>. Indicates that receivers may be doing too much topic filtering (wasting CPU resource) because they are processing messages in which they have no interest. If this statistic is greater than 25% of <span class="Keyword">msgs_rcvd</span> , a problem may exist or topics may need to be distributed to different transport sessions.</div>
+      <div class="Heading_2"><a name="3_5_4_13_1">LBT-IPC Receiver and Source Statistics</a></div>
+      <div class="Short_Description"><span class="Keyword"><a name="3_5_4_13_2">lbm_msgs_no_topic_rcvd</a></span>. Indicates that receivers may be doing too much topic filtering (wasting CPU resource) because they are processing messages in which they have no interest. If this statistic is greater than 25% of <span class="Keyword">msgs_rcvd</span>, a problem may exist or topics may need to be distributed to different transport sessions.</div>
+      <div class="Heading_2"><a name="3_5_4_15_1">Event Queue Statistics</a></div>
+      <div class="Short_Description"><a name="3_5_4_15_2">The following lists the most important statistics.</a></div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">1. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_15_4_2_2">data_msgs</a></span> &amp; <span class="Keyword">events</span> - Total data messages and events enqueued - check these not growing beyond pre-defined bounds</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">2. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_15_4_2_4">age_mean</a></span> &amp; <span class="Keyword">age_max</span> - If an application uses a receive-side event queue for message delivery rather than direct callbacks, this indicates average and longest time messages wait on that queue before the application starts processing them.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Numbered_1_outer" style="margin-left: 0pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Numbered_1_inner" style="width: 18pt; white-space: nowrap;">3. </div>
+            </td>
+            <td width="100%">
+              <div class="Numbered_1_inner"><span class="Keyword"><a name="3_5_4_15_4_2_6">data_msgs_svc_mean</a></span> &amp; <span class="Keyword">data_msgs_svc_max</span> - indicates average and longest time the application spends processing each event-queued message.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

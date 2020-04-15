@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebWorksHelpTOC version="5.0" xmlns="urn:WebWorks-Help-TOC-Schema">
+  <i t="Preface" l="0">
+    <i t="Informatica Resources" l="1">
+      <i t="Informatica My Support Portal" l="1#3_3_3_7_6_2" />
+      <i t="Informatica Documentation" l="1#3_3_3_7_7_2" />
+      <i t="Informatica Web Site" l="1#3_3_3_7_8_2" />
+      <i t="Informatica How-To Library" l="1#3_3_3_7_9_2" />
+      <i t="Informatica Knowledge Base" l="1#3_3_3_7_10_2" />
+      <i t="Informatica Support YouTube Channel" l="1#3_3_3_7_11_2" />
+      <i t="Informatica Marketplace" l="1#3_3_3_7_12_2" />
+      <i t="Informatica Velocity" l="1#3_3_3_7_13_2" />
+      <i t="Informatica Global Customer Support" l="1#3_3_3_7_14_2" />
+    </i>
+  </i>
+  <i t="Monitoring UM Statistics, Logs and Daemons" l="2">
+    <i t="Monitoring Transport Statistics" l="3">
+      <i t="LBT-RM and LBT-RU Receiver Statistics" l="3#3_5_4_7_1" />
+      <i t="LBT-RM and LBT-RU Source Statistics" l="3#3_5_4_9_1" />
+      <i t="TCP Receiver and Source Statistics" l="3#3_5_4_11_1" />
+      <i t="LBT-IPC Receiver and Source Statistics" l="3#3_5_4_13_1" />
+      <i t="Event Queue Statistics" l="3#3_5_4_15_1" />
+    </i>
+    <i t="Monitoring Application Log Messages" l="4" />
+    <i t="Monitoring the UMP Store Daemon (umestored)" l="5">
+      <i t="Store Log File" l="5#3_5_8_6_1" />
+      <i t="Monitoring a Store's Internal Transport Statistics" l="5#3_5_8_8_1" />
+      <i t="UMP Store Web Monitor" l="5#3_5_8_10_1" />
+      <i t="Detecting UMP Store Failures" l="5#3_5_8_12_1" />
+    </i>
+    <i t="Monitoring the UM Gateway (tnwgd)" l="6">
+      <i t="UM Gateway Log File" l="6#3_5_10_7_1" />
+      <i t="UM Gateway Transport Statistics" l="6#3_5_10_9_1" />
+      <i t="UM Gateway Web Monitor" l="6#3_5_10_11_1" />
+      <i t="Detecting UM Gateway Failures" l="6#3_5_10_13_1" />
+    </i>
+    <i t="Monitoring Messaging System Resources" l="7">
+      <i t="UMP Store System Considerations" l="7#3_5_12_6_1" />
+      <i t="Sources of Latency" l="7#3_5_12_8_1" />
+      <i t="Runtime Diagnostics" l="7#3_5_12_10_1" />
+    </i>
+    <i t="Startup/Shutdown Procedures 5.3" l="8">
+      <i t="Topic Resolution" l="8#3_5_14_7_1" />
+      <i t="UM Applications" l="8#3_5_14_9_1" />
+      <i t="Unicast Topic Resolver (lbmrd)" l="8#3_5_14_11_1" />
+      <i t="UMP Store (umestored)" l="8#3_5_14_13_1" />
+      <i t="UM Gateway (tnwgd)" l="8#3_5_14_15_1" />
+    </i>
+    <i t="UM Analysis Tools" l="9" />
+  </i>
+  <i t="Troubleshooting UM Applications" l="10">
+    <i t="Application Crashes" l="11" />
+    <i t="Assertions" l="12" />
+    <i t="Message Loss" l="13" />
+    <i t="Unrecoverable Loss" l="14" />
+    <i t="High Latency" l="15" />
+    <i t="Deaf Receivers" l="16" />
+    <i t="UMP Sending Problems" l="17" />
+    <i t="Contacting Informatica Support" l="18" />
+  </i>
+  <i t="UM 5.3 Log Messages" l="19">
+    <i t="UM 5.3 Core Messages" l="20" />
+    <i t="UM 5.3 Core API Messages" l="21" />
+    <i t="UM 5.3 Gateway Log Messages" l="22" />
+    <i t="UM 5.3 Lbmrd Log Messages" l="23" />
+    <i t="UM 5.3 Persistent Store Log Messages" l="24" />
+    <i t="UM 5.3 Persistent Store API Log Messages" l="25" />
+  </i>
+</WebWorksHelpTOC>

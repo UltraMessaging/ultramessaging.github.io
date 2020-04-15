@@ -1,0 +1,535 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport Acceleration Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-RDMA Operation Options"
+href="transportlbt-rdmaoperationoptions.html" />
+<link rel="NEXT" title="Multicast Immediate Messaging Network Options"
+href="multicastimmediatemessagingnetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="transportlbt-rdmaoperationoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="multicastimmediatemessagingnetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTACCELERATIONOPTIONS"
+name="TRANSPORTACCELERATIONOPTIONS">4.16. Transport Acceleration Options</a></h1>
+
+<p>Transport Acceleration Options enable Datagram Bypass Layer (DBL) acceleration in
+conjunction with DBL-enabled <a href="http://www.myri.com" target="_top"><span
+class="TRADEMARK">Myricom</span>&reg;</a> 10-Gigabit Ethernet NICs for Linux and <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg;. DBL
+is a kernel-bypass technology that accelerates sending and receiving UDP traffic. DBL
+does not support fragmentation and reassembly, so you must avoid sending messages larger
+than the MTU configured on the DBL interface.</p>
+
+<p>DBL acceleration is available for the following <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> transport types.</p>
+
+<ul>
+<li>
+<p>LBT-RM (UDP-based reliable multicast)</p>
+</li>
+
+<li>
+<p>LBT-RU (UDP-based reliable unicast)</p>
+</li>
+
+<li>
+<p>Multicast Immediate Messaging</p>
+</li>
+
+<li>
+<p>Multicast Topic Resolution</p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Transport Acceleration is not supported on the <span class="TRADEMARK">HP
+NonStop</span>&reg; platform.</p>
+</blockquote>
+</div>
+
+<p>To enable DBL Transport Acceleration,</p>
+
+<ol type="1">
+<li>
+<p>Install the Myricom 10-Gigabit Ethernet NIC.</p>
+</li>
+
+<li>
+<p>Install the DBL shared library.</p>
+</li>
+
+<li>
+<p>Update your search path to include the location of the DBL shared library.</p>
+</li>
+
+<li>
+<p>Include the appropriate Transport Acceleration Options in your <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> Configuration
+File.</p>
+</li>
+</ol>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> We recommend setting <a
+href="../Config/majoroptions.html#CONTEXTTRANSPORTDATAGRAMMAXSIZE" target="_top"><tt
+class="LITERAL">transport_datagram_max_size</tt></a> to a value at least 28 bytes smaller
+than the configured MTU.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDBLLBTRMACCELERATION"
+name="CONTEXTDBLLBTRMACCELERATION">4.16.1. <span class="lbm-option-name"><span
+class="PHRASE">dbl_lbtrm_acceleration (context)</span></span></a></h2>
+
+<p>Flag indicating if DBL acceleration is enabled for LBT-RM transports.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10422" name="AEN10422"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10445" name="AEN10445"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>DBL acceleration is enabled for LBT-RM.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>DBL acceleration is not enabled for LBT-RM. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDBLLBTRUACCELERATION"
+name="CONTEXTDBLLBTRUACCELERATION">4.16.2. <span class="lbm-option-name"><span
+class="PHRASE">dbl_lbtru_acceleration (context)</span></span></a></h2>
+
+<p>Flag indicating if DBL acceleration is enabled for LBT-RU transports.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10470" name="AEN10470"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10493" name="AEN10493"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>DBL acceleration is enabled for LBT-RU.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>DBL acceleration is not enabled for LBT-RU. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDBLMIMACCELERATION"
+name="CONTEXTDBLMIMACCELERATION">4.16.3. <span class="lbm-option-name"><span
+class="PHRASE">dbl_mim_acceleration (context)</span></span></a></h2>
+
+<p>Flag indicating if DBL acceleration is enabled for multicast immediate messaging
+(MIM).</p>
+
+<div class="INFORMALTABLE"><a id="AEN10518" name="AEN10518"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10541" name="AEN10541"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>DBL acceleration is enabled for MIM.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>DBL acceleration is not enabled for MIM. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTDBLRESOLVERACCELERATION"
+name="CONTEXTDBLRESOLVERACCELERATION">4.16.4. <span class="lbm-option-name"><span
+class="PHRASE">dbl_resolver_acceleration (context)</span></span></a></h2>
+
+<p>Flag indicating if DBL acceleration is enabled for topic resolution.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10566" name="AEN10566"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10589" name="AEN10589"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>DBL acceleration is enabled for topic resolution.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>DBL acceleration is not enabled for topic resolution. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERUDACCELERATION"
+name="CONTEXTRESOLVERUDACCELERATION">4.16.5. <span class="lbm-option-name"><span
+class="PHRASE">resolver_ud_acceleration (context)</span></span></a></h2>
+
+<p>Flag indicating if Accelerated Multicast is enabled for Topic Resolution. Accelerated
+Multicast requires InfiniBand or 10 Gigabit Ethernet hardware and the purchase and
+installation of the <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> Accelerated Multicast Module. See your <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> representative for licensing specifics. UD
+Acceleration relies on the network hardware supporting loopback which InfiniBand does,
+but current ConnectX and ConnectX2 10 Gigabit Ethernet hardware does not. Future 10gbe
+hardware should support loopback.</p>
+
+<ul>
+<li>
+<p>InfiniBand users should enable this option.</p>
+</li>
+
+<li>
+<p>10 Gigabit Ethernet users should have this option disabled (default) for current
+generation hardware.</p>
+</li>
+</ul>
+
+Check your hardware configuration to determine if this option needs to be changed. <br />
+<br />
+<div class="INFORMALTABLE"><a id="AEN10623" name="AEN10623"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 5.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10646" name="AEN10646"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Accelerated Topic Resolution is enabled.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Accelerated Topic Resolution is not enabled. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUDACCELERATION" name="CONTEXTUDACCELERATION">4.16.6.
+<span class="lbm-option-name"><span class="PHRASE">ud_acceleration
+(context)</span></span></a></h2>
+
+<p>Flag indicating if Accelerated Multicast is enabled for LBT-RM. Accelerated Multicast
+requires InfiniBand or 10 Gigabit Ethernet hardware and the purchase and installation of
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> Accelerated
+Multicast Module. See your <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> representative for licensing specifics.</p>
+
+<div class="INFORMALTABLE"><a id="AEN10675" name="AEN10675"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN10698" name="AEN10698"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Accelerated Multicast is enabled.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Accelerated Multicast is not enabled. <span class="bold"><b class="EMPHASIS">Default
+for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a
+href="transportlbt-rdmaoperationoptions.html" accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a
+href="multicastimmediatemessagingnetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-RDMA Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Multicast Immediate Messaging Network
+Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

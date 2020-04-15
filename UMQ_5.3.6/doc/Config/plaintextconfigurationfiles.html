@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Plain Text Configuration Files</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="PREVIOUS" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="NEXT" title="XML Configuration Files" href="xmlconfigurationfiles.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="configuringoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="10%" align="right" valign="bottom"><a href="xmlconfigurationfiles.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="PLAINTEXTCONFIGURATIONFILES"
+name="PLAINTEXTCONFIGURATIONFILES">1.2. Plain Text Configuration Files</a></h1>
+
+<p>The plain text configuration file, when invoked, writes option values into <b
+class="APPLICATION">UM</b>'s current default attributes. These are then read and used in
+the creation of all objects.</p>
+
+<p>See <a href="../Config/examples.html" target="_top">Example Configuration
+Scenarios</a> for example configuration files.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="READINGPLAINTEXTCONFIGURATIONFILES"
+name="READINGPLAINTEXTCONFIGURATIONFILES">1.2.1. Reading Plain Text Configuration
+Files</a></h2>
+
+<p>There are two ways to read a plain text configuration file to set values in current
+default attributes.</p>
+
+<ul>
+<li>
+<p><span class="bold"><b class="EMPHASIS">API function</b></span> <code
+class="FUNCTION">lbm_config()</code> - You can call the function multiple times with
+different file names to set configuration options in phases.</p>
+
+<p>When you create <b class="APPLICATION">UM</b> objects (such as a context or receiver),
+<b class="APPLICATION">UM</b> sets attributes for that object using the current default
+attributes. Hence, you must call <code class="FUNCTION">lbm_config()</code> before
+creating objects (<code class="FUNCTION">lbm_*_create()</code>).</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Environment variable
+LBM_DEFAULT_CONFIG_FILE</b></span> - reads configuration file when your application is
+started. You can set this variable to a full pathname or a URL; for example:</p>
+
+<p><tt class="LITERAL">export LBM_DEFAULT_CONFIG_FILE=/home/lbm/lbtrm.cfg</tt></p>
+
+<p>(You can still use the <code class="FUNCTION">lbm_config()</code> function on a
+different file to make additional changes.)</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PLAINTEXTCONFIGURATIONFILEFORMAT"
+name="PLAINTEXTCONFIGURATIONFILEFORMAT">1.2.2. Plain Text Configuration File
+Format</a></h2>
+
+<p>A plain text configuration file contains lines that each take the form</p>
+
+<pre class="SCREEN">
+<tt class="REPLACEABLE"><i>scope_keyword option_name option_value</i></tt>
+</pre>
+
+<p>where</p>
+
+<p><tt class="REPLACEABLE"><i>scope_keyword</i></tt> - the scope to which the option
+applies,</p>
+
+<p><tt class="REPLACEABLE"><i>option_name</i></tt> - the predefined name for the option,
+and</p>
+
+<p><tt class="REPLACEABLE"><i>option_value</i></tt> - the new value to be assigned to
+that option.</p>
+
+<p>Allowable values for these parameters are given throughout the rest of this document.
+Any text following a hash character <code class="CONSTANT">#</code> (also known as a
+pound sign, number sign, or octothorpe) is interpreted as comment text and is
+ignored.</p>
+
+<p>For example:</p>
+
+<pre class="SCREEN">
+<kbd class="USERINPUT"># Set transport_tcp_port_low to 4901
+context transport_tcp_port_low 4901
+# And set transport_tcp_port_high to 4920
+context transport_tcp_port_high 4920
+       </kbd>
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="configuringoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="xmlconfigurationfiles.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Configuring <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="34%" align="center" valign="top"><a href="configuringoptions.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">XML Configuration Files</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

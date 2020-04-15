@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>umqsltool</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="UP" title="Man Pages" href="umestored-manpage.html" />
+<link rel="PREVIOUS" title="umestoreds" href="umestoreds.html" />
+<link rel="NEXT" title="Configuration Reference for Umestored"
+href="umestored-config.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="REFENTRY" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umestoreds.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umestored-config.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<h1><a id="UMQSLTOOL" name="UMQSLTOOL"></a>umqsltool</h1>
+
+<div class="REFNAMEDIV"><a id="AEN3625" name="AEN3625"></a>
+<h2>Name</h2>
+
+umqsltool&nbsp;--&nbsp;UMQ SINC Log Tool</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN3628" name="AEN3628"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">umqsltool</tt> [<code class="OPTION">options</code>] <tt
+class="REPLACEABLE"><i>sinclogfile1</i></tt> [<code class="OPTION"><tt
+class="REPLACEABLE"><i>sinclogfile2</i></tt></code>]</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3638" name="AEN3638"></a>
+<h2>Description</h2>
+
+<p>This command provides SINC log file tools that let you dump to text, compare two
+files, or trim events to reduce file size (all without modifying the original log
+files).</p>
+
+<p>The <code class="OPTION">-t</code> <i class="FIRSTTERM">toolname</i> or <code
+class="OPTION">--tool=</code><i class="FIRSTTERM">toolname</i> invokes the desired tool.
+<i class="FIRSTTERM">Toolname</i> can be:</p>
+
+<div class="VARIABLELIST">
+<dl>
+<dt><tt class="FILENAME">dump</tt></dt>
+
+<dd>
+<p>Dumps the events from a SINC log file in a human-readable text format. Operates on a
+single SINC log file.</p>
+</dd>
+
+<dt><tt class="FILENAME">diff</tt></dt>
+
+<dd>
+<p>Compares events in two SINC log files, noting any differences. Requires two SINC log
+files to be specified.</p>
+</dd>
+
+<dt><tt class="FILENAME">analyze</tt></dt>
+
+<dd>
+<p>Analyzes a SINC log file for events that look suspicious. Operates on a single SINC
+log file.</p>
+</dd>
+
+<dt><tt class="FILENAME">prune</tt></dt>
+
+<dd>
+<p>Trims a SINC log file down to the minimum number of events needed to preserve correct
+queue state. This can sometimes dramatically reduce SINC log file size without any loss
+of state. SINC log files are not pruned during normal operation due to performance
+considerations.</p>
+
+<p>This tool operates on a single SINC log file, and outputs a new SINC log file in the
+same location and with the same name as the original plus an added ".pruned.n" suffix
+(where n is a counter starting at 1). The original SINC log file remains untouched. When
+pruning, we recommend to also specify the --config option, otherwise some state
+information may be lost in the pruned output.</p>
+</dd>
+</dl>
+</div>
+
+<p>The <code class="OPTION">-c</code> <i class="FIRSTTERM">configfile</i> or <code
+class="OPTION">--config=</code><i class="FIRSTTERM">configfile</i> uses the given
+umestored XML config file. Specifying the umestored XML configuration file is optional,
+but can improve the accuracy of various tools, so its use is recommended.</p>
+
+<p>The <code class="OPTION">-h</code> or <code class="OPTION">--help</code> displays this
+help and exits.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umestoreds.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umestored-config.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">umestoreds</td>
+<td width="34%" align="center" valign="top"><a href="umestored-manpage.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Configuration Reference for Umestored</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

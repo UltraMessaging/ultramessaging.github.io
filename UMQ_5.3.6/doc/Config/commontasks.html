@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Common Tasks</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="PREVIOUS" title="Interrelated Configuration Options"
+href="grouprelated.html" />
+<link rel="NEXT" title="Traversing a Firewall" href="firewalltraversal.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="CHAPTER" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="grouprelated.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="firewalltraversal.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="CHAPTER">
+<h1><a id="COMMONTASKS" name="COMMONTASKS"></a>Chapter 3. Common Tasks</h1>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>3.1. <a href="commontasks.html#MULTIHOMEDHOSTS">Configuring Multi-Homed
+Hosts</a></dt>
+
+<dt>3.2. <a href="firewalltraversal.html">Traversing a Firewall</a></dt>
+
+<dt>3.3. <a href="multipleapplications.html">Running Multiple Applications</a></dt>
+</dl>
+</div>
+
+<p>This chapter describes some common tasks.</p>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MULTIHOMEDHOSTS" name="MULTIHOMEDHOSTS">3.1. Configuring
+Multi-Homed Hosts</a></h1>
+
+<p>By default, <b class="APPLICATION">UM</b> will select the first multicast-capable,
+non-loopback interface for multicast topic resolution. If you are fortunate, on a
+multi-homed host, the correct interface will be selected. However, this fortuitous
+selection should <span class="emphasis"><i class="EMPHASIS">not</i></span> be relied
+upon. Moving the interface card to a different slot, a change in the operating system
+kernel, and numerous other factors can lead to a different ordering of interfaces as
+reported by the operating system. This in turn can lead <b class="APPLICATION">UM</b> to
+a select a different interface after the change.</p>
+
+<p>It is strongly recommended that the actual interface be specified. The <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTINTERFACE"><code
+class="PARAMETER">resolver_multicast_interface</code></a> option allows you to explicitly
+specify the multicast interface. Note that this also changes the interface for LBT-RM and
+multicast immediate messaging.</p>
+
+<p>Other options of interest include <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE"><code
+class="PARAMETER">resolver_unicast_interface</code></a> when using the unicast resolver,
+<a href="requestnetworkoptions.html#CONTEXTREQUESTTCPINTERFACE"><code
+class="PARAMETER">request_tcp_interface</code></a> when using the request/response
+messaging, <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUINTERFACE"><code
+class="PARAMETER">transport_lbtru_interface</code></a> and <a
+href="transporttcpnetworkoptions.html#RECEIVERTRANSPORTTCPINTERFACE"><code
+class="PARAMETER">transport_tcp_interface</code></a> for receivers, and <a
+href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUINTERFACE"><code
+class="PARAMETER">transport_lbtru_interface</code></a> and <a
+href="transporttcpnetworkoptions.html#SOURCETRANSPORTTCPINTERFACE"><code
+class="PARAMETER">transport_tcp_interface</code></a> for sources, depending on the
+transport being used.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="grouprelated.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="firewalltraversal.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Interrelated Configuration Options</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Traversing a Firewall</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,1391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Major Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Reference" href="reference.html" />
+<link rel="NEXT" title="Resolver Operation Options"
+href="resolveroperationoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="reference.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="resolveroperationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="MAJOROPTIONS" name="MAJOROPTIONS">4.2. Major Options</a></h1>
+
+<p>Options in this group have a major impact on the operation of <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b>. Most <b
+class="APPLICATION">UM</b> application developers will need to be aware of the default
+values of these options or perhaps override them.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTCONTEXTEVENTFUNCTION"
+name="CONTEXTCONTEXTEVENTFUNCTION">4.2.1. <span class="lbm-option-name"><span
+class="PHRASE">context_event_function (context)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a context
+event occurs. This callback may be called inline or from an event queue, if one is given.
+If called inline, the callback function used should not block or it will block the
+context thread processing. A value of NULL for the callback turns off the callback being
+called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2673" name="AEN2673"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTCONTEXTNAME" name="CONTEXTCONTEXTNAME">4.2.2. <span
+class="lbm-option-name"><span class="PHRASE">context_name
+(context)</span></span></a></h2>
+
+<p>The name of the context, limited to 128 alphanumeric characters, hyphens or
+underscores.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2705" name="AEN2705"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.3/UMP 3.3/UMQ 2.3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTFDMANAGEMENTTYPE" name="CONTEXTFDMANAGEMENTTYPE">4.2.3.
+<span class="lbm-option-name"><span class="PHRASE">fd_management_type
+(context)</span></span></a></h2>
+
+<p>Define the mechanism <b class="APPLICATION">UM</b> uses for socket file descriptor
+(FD) management. For more information, search on "file descriptors" in the <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx/"
+target="_top">Informatica Knowledge Base</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2739" name="AEN2739"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN2758" name="AEN2758"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">poll</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_POLL</code></td>
+<td>FD management uses <code class="FUNCTION">poll()</code>. <span class="emphasis"><i
+class="EMPHASIS">Unix only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">select</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_SELECT</code></td>
+<td>FD management uses <code class="FUNCTION">select()</code>. <span class="bold"><b
+class="EMPHASIS">Default for Unix.</b></span> <span class="emphasis"><i
+class="EMPHASIS">Unix only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">epoll</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_EPOLL</code></td>
+<td>FD management uses <code class="FUNCTION">epoll()</code>. <span class="emphasis"><i
+class="EMPHASIS">Linux kernel 2.6 or later only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">devpoll</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_DEVPOLL</code></td>
+<td>FD management uses the <code class="FUNCTION">/dev/poll</code> driver. <span
+class="emphasis"><i class="EMPHASIS">Solaris 8 or later only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">kqueue</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_KQUEUE</code></td>
+<td>FD management uses the BSD <code class="FUNCTION">kqueue</code> notification system.
+<span class="emphasis"><i class="EMPHASIS">Mac OS X only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">wsaeventselect</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_WSAEV</code></td>
+<td>FD management uses <code class="FUNCTION">WSAEventSelect()</code> and <code
+class="FUNCTION">WaitForMultipleObjects()</code>. Creates a limit of 64 file descriptors.
+<span class="bold"><b class="EMPHASIS">Default for Windows.</b></span> <span
+class="emphasis"><i class="EMPHASIS">Windows only</i></span>.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">wincompport</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_FDTYPE_WINCPORT</code></td>
+<td>FD management uses Windows completion ports and completion routines. Disables the 64
+file descriptor limit set by <code class="FUNCTION">WSAEventSelect()</code>. <span
+class="emphasis"><i class="EMPHASIS">Windows XP or later only</i></span>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERMESSAGESELECTOR" name="RECEIVERMESSAGESELECTOR">4.2.4.
+<span class="lbm-option-name"><span class="PHRASE">message_selector
+(receiver)</span></span></a></h2>
+
+<p>Enables <b class="APPLICATION">UM</b> to pass a message selector string to any
+receiver. The value must be an expression that conforms to JMS message selector syntax as
+defined in the Oracle JMS specification. For a <b class="APPLICATION">UM</b> receiver
+used with <b class="APPLICATION">UMP</b>, please see the Native Applications section in
+UM JMS Guide.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2840" name="AEN2840"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTNETWORKCOMPATIBILITYMODE"
+name="CONTEXTNETWORKCOMPATIBILITYMODE">4.2.5. <span class="lbm-option-name"><span
+class="PHRASE">network_compatibility_mode (context)</span></span></a></h2>
+
+<p>This option attempts to maintain wire-level backwards compatibility with older
+releases by blocking the sending of some (though possibly not all) newer message header
+types. See <a href="../Config/reference.html#NETWORKCOMPATIBILITY" target="_top">Network
+Compatibility Mode</a> for more information and option values.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2878" name="AEN2878"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2/UMQ 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTOPERATIONALMODE" name="CONTEXTOPERATIONALMODE">4.2.6.
+<span class="lbm-option-name"><span class="PHRASE">operational_mode
+(context)</span></span></a></h2>
+
+<p>The mode in which <b class="APPLICATION">UM</b> operates to process events. Refer to
+<a href="../Design/architecture.html#EMBEDDED-MODE" target="_top">Embedded and Sequential
+Mode</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2912" name="AEN2912"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN2931" name="AEN2931"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">embedded</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_OP_EMBEDDED</code></td>
+<td>A thread is spawned within <b class="APPLICATION">UM</b> to handle processing of
+events (timers and socket events). <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">sequential</code></td>
+<td><code class="CONSTANT">LBM_CTX_ATTR_OP_SEQUENTIAL</code></td>
+<td>The application is responsible for calling <code
+class="FUNCTION">lbm_context_process_events()</code> to process events. Sequential mode
+does not support <a href="../Design/fundamental-concepts.html#MULTITHREADED-TRANSPORTS"
+target="_top">Multi-Transport Threads</a>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERORDEREDDELIVERY" name="RECEIVERORDEREDDELIVERY">4.2.7.
+<span class="lbm-option-name"><span class="PHRASE">ordered_delivery
+(receiver)</span></span></a></h2>
+
+<p>For LBT-RM, LBT-RU, TCP-LB or LBT-IPC transport sessions only. (This option also
+applies to TCP when using Late Join because the Late Join messages are not part of the
+TCP message stream.) Indicates whether or not the topic should have its data delivered in
+order and reassembled. The default value guarantees ordering and reassembly of large
+messages. Reassembly of large messages is optional. Changing this option from the default
+value to a value of 0 (zero) results in messages being delivered as soon as they arrive.
+Value -1 allows arrival order delivery after the reassembly of large messages. See also
+<a href="../Design/architecture.html#ORDERED-DELIVERY" target="_top">Ordered Delivery</a>
+for more information about large message fragmentation and reassembly.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2968" name="AEN2968"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN2987" name="AEN2987"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">"1" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">1</code></td>
+<td><b class="APPLICATION">UM</b> delivers topic messages to a receiver in-order and
+reassembles large messages. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"0" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">0</code></td>
+<td><b class="APPLICATION">UM</b> delivers topic messages to a receiver as they arrive
+and may be out of order. Duplicate delivery is possible. <b class="APPLICATION">UM</b>
+delivers large messages as individual fragments of less than the maximum datagram size
+for the transport in use.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"-1" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">-1</code></td>
+<td><b class="APPLICATION">UM</b> delivers topic messages to a receiver as they arrive
+and may be out of order. Duplicate delivery is possible. However, <b
+class="APPLICATION">UM</b> reassembles large messages. Your application can use the <tt
+class="LITERAL">sequence_number</tt> field of <tt class="LITERAL">lbm_msg_t</tt> objects
+to order or discard messages.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRCVSYNCCACHE" name="RECEIVERRCVSYNCCACHE">4.2.8. <span
+class="lbm-option-name"><span class="PHRASE">rcv_sync_cache
+(receiver)</span></span></a></h2>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Cache</b> only - a valid cache address (such as
+TCP:192.168.5.11:4567) in the standard form of <tt class="LITERAL">TCP:address:port</tt>
+enables a <b class="APPLICATION">UM</b> receiver to use <b
+class="APPLICATION">UMCache</b> to receive a snapshot of larger, multiple-field messages
+stored by <b class="APPLICATION">UMCache</b>. Receiving applications can then become
+synchronized with the live stream of messages sent on the receiver's topic. <tt
+class="LITERAL">address</tt> is the IP address of the machine where the <b
+class="APPLICATION">UMCache</b> runs and <tt class="LITERAL">port</tt> is the configured
+port where the cache request handler listens.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3043" name="AEN3043"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">umcache_reqlib_request_info_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0/UMP 5.0/UMQ 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERRCVSYNCCACHETIMEOUT"
+name="RECEIVERRCVSYNCCACHETIMEOUT">4.2.9. <span class="lbm-option-name"><span
+class="PHRASE">rcv_sync_cache_timeout (receiver)</span></span></a></h2>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <b
+class="APPLICATION">Cache</b> only - The maximum time period that a <b
+class="APPLICATION">UM</b> receiver waits for a snapshot message from the <b
+class="APPLICATION">UMCache</b> .</p>
+
+<div class="INFORMALTABLE"><a id="AEN3088" name="AEN3088"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">2000 (2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0/UMP 5.0/UMQ 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRECEIVETHREADPOOLSIZE"
+name="CONTEXTRECEIVETHREADPOOLSIZE">4.2.10. <span class="lbm-option-name"><span
+class="PHRASE">receive_thread_pool_size (context)</span></span></a></h2>
+
+<p>For LBT-RM, LBT-RU, or TCP-LB transport sessions only. Defines the maximum number of
+threads available for transports (excluding the context thread). See <a
+href="../Design/fundamental-concepts.html#MULTITHREADED-TRANSPORTS"
+target="_top">Multi-Transport Threads</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3130" name="AEN3130"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">4</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL"
+name="CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL">4.2.11. <span
+class="lbm-option-name"><span class="PHRASE">resolver_context_advertisement_interval
+(context)</span></span></a></h2>
+
+<p>Interval between context advertisements. Setting this option to 0 disables context
+advertisements, though gateway and other functionality depends upon context
+advertisements, so a value of 0 is not generally recommended.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3170" name="AEN3170"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTRESOLVERSOURCENOTIFICATIONFUNCTION"
+name="CONTEXTRESOLVERSOURCENOTIFICATIONFUNCTION">4.2.12. <span
+class="lbm-option-name"><span class="PHRASE">resolver_source_notification_function
+(context)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a new
+source is seen for any topic. This callback is called directly in line and does not use
+the event queue. Therefore the callback function used should not block or it will block
+the context thread processing. A value of NULL for the callback turns off the callback
+being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3214" name="AEN3214"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_src_notify_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTSOURCECOSTEVALUATIONFUNCTION"
+name="CONTEXTSOURCECOSTEVALUATIONFUNCTION">4.2.13. <span class="lbm-option-name"><span
+class="PHRASE">source_cost_evaluation_function (context)</span></span></a></h2>
+
+<p>Callback function that you can use in the <tt
+class="LITERAL">lbm_src_cost_function_cb()</tt> to evaluate or determine the cost of a
+message path. The UM Gateway evaluates the cost of any new topic it detects. The callback
+supplied with this option can affect the cost of topics to bias the UM Gateway toward
+certain message paths. A value of NULL for the callback turns off the callback being
+called. See also <a href="../Gateway/concepts.html#APPS-SET-TOPIC-COST"
+target="_top">Applications Can Also Set the Topic Cost</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3256" name="AEN3256"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_src_cost_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMS 5.0/UMP 5.0/UMQ 5.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTSOURCEEVENTFUNCTION"
+name="CONTEXTSOURCEEVENTFUNCTION">4.2.14. <span class="lbm-option-name"><span
+class="PHRASE">source_event_function (context)</span></span></a></h2>
+
+<p>Callback function (and associated client data pointer) that is called when a context
+source event (such as a multicast immediate mode source wakeup event) occurs. This
+callback may be called inline or from an event queue, if one is given. If called inline,
+the callback function used should not block or it will block the context thread
+processing. A value of NULL for the callback turns off the callback being called.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3300" name="AEN3300"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_context_src_event_func_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">NULL</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Config File:</i></span></td>
+<td>Cannot be set from an UM configuration file.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.4/UME 2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTSOURCEINCLUDESTOPICINDEX"
+name="CONTEXTSOURCEINCLUDESTOPICINDEX">4.2.15. <span class="lbm-option-name"><span
+class="PHRASE">source_includes_topic_index (context)</span></span></a></h2>
+
+<p>Determines whether the topic index is included in the source string generated for
+messages and new source notifications.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3341" name="AEN3341"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3364" name="AEN3364"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates the topic index should be included in the source string. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates the topic index should not be included.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORT" name="SOURCETRANSPORT">4.2.16. <span
+class="lbm-option-name"><span class="PHRASE">transport (source)</span></span></a></h2>
+
+<p>The transport type to be used for created sources.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3389" name="AEN3389"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3408" name="AEN3408"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">tcp</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TRANSPORT_TCP</code></td>
+<td>TCP over IPv4 <span class="bold"><b class="EMPHASIS">Default for all.</b></span>
+</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbtrm</code>, <code class="CONSTANT">lbt-rm</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TRANSPORT_LBTRM</code></td>
+<td>UDP-based reliable multicast with unicast NAKs</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbtru</code>, <code class="CONSTANT">lbt-ru</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TRANSPORT_LBTRU</code></td>
+<td>UDP-based reliable unicast with unicast NAKs</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbtipc</code>, <code class="CONSTANT">lbt-ipc</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TRANSPORT_LBTIPC</code></td>
+<td>InterProcess Communication between processes on the same host using a shared memory
+area.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">lbtrdma</code>, <code class="CONSTANT">lbt-rdma</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TRANSPORT_LBTRDMA</code></td>
+<td><span class="TRADEMARK">Voltaire</span>&reg; InfiniBand Remote Direct Memory Access
+transport between hosts using a shared memory area.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTDEMUXTABLESZ"
+name="RECEIVERTRANSPORTDEMUXTABLESZ">4.2.17. <span class="lbm-option-name"><span
+class="PHRASE">transport_demux_tablesz (receiver)</span></span></a></h2>
+
+<p>Specifies the size of the table used for storing receiver delivery controllers used by
+<b class="APPLICATION">UM</b> for message delivery. Must be a power of two (1, 2, 4, 8,
+16, etc.). If not a power of two, <b class="APPLICATION">UM</b> generates a log warning
+and uses the next highest power of two. For most use cases with low to moderate numbers
+of topics per transport session, the default suffices. For large numbers of topics and in
+cases where the lowest latency is desired, set the option to the next highest power of
+two for the number of topics expected on the transport session.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3466" name="AEN3466"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">size_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTSESSIONMULTIPLESENDINGTHREADS"
+name="CONTEXTTRANSPORTSESSIONMULTIPLESENDINGTHREADS">4.2.18. <span
+class="lbm-option-name"><span class="PHRASE">transport_session_multiple_sending_threads
+(context)</span></span></a></h2>
+
+<p>Flag to indicate the application intends to use multiple sending threads per transport
+session.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3503" name="AEN3503"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3522" name="AEN3522"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates the application does intend to use multiple sending threads per transport
+session and that <b class="APPLICATION">UM</b> should make that assumption. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates the application does not intend to use multiple sending threads per
+transport session and that <b class="APPLICATION">UM</b> should make that
+assumption.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTSOURCESIDEFILTERINGBEHAVIOR"
+name="SOURCETRANSPORTSOURCESIDEFILTERINGBEHAVIOR">4.2.19. <span
+class="lbm-option-name"><span class="PHRASE">transport_source_side_filtering_behavior
+(source)</span></span></a></h2>
+
+<p>The filtering behavior desired when TCP and LBT-RU clients are connected. Any other
+value besides none requires that the clients send unicast messages to the source. These
+control messages are sent to the TCP request port of the senders context and processed
+internally. This option affects the transport session underlying the source rather than
+the source itself. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3550" name="AEN3550"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3569" name="AEN3569"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">none</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_SSF_NONE</code></td>
+<td>The source sends all data to all clients regardless of the topics they are listening
+to. <span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">inclusion</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_SSF_INCLUSION</code></td>
+<td>The source sends only that data to a client that the client specifically
+requests.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTOPICSEQUENCENUMBERINFOACTIVETHRESHOLD"
+name="SOURCETRANSPORTTOPICSEQUENCENUMBERINFOACTIVETHRESHOLD">4.2.20. <span
+class="lbm-option-name"><span
+class="PHRASE">transport_topic_sequence_number_info_active_threshold
+(source)</span></span></a></h2>
+
+<p>Duration in seconds that an inactive source sends contiguous Topic Sequence Number
+Info (TSNI) messages. (Inactive sources send TSNI messages according to the <a
+href="majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL">transport_topic_sequence_number_info_interval</a>.)
+A value of 0 indicates that sources continue sending TSNIs until data messages resume,
+with no timeout. See also <a href="../Config/grouprelated.html"
+target="_top">Interrelated Configuration Options</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3607" name="AEN3607"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>seconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">60</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"
+name="SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL">4.2.21. <span
+class="lbm-option-name"><span
+class="PHRASE">transport_topic_sequence_number_info_interval
+(source)</span></span></a></h2>
+
+<p>The interval between Topic Sequence Number Info (TSNI) messages that a source sends.
+TSNI messages are enabled on all transports and they carry the topic sequence number of
+the latest message sent by the source. The interval is also a source inactivity
+threshold. In other words, a source does not send TSNIs during normal data transmission,
+but once the source is inactive for as long as this interval, it starts sending TSNI
+messages. A value of 0 turns off TSNI messages for the source. See also <a
+href="../Config/grouprelated.html" target="_top">Interrelated Configuration
+Options</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3652" name="AEN3652"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5000 (5
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUSEEXTENDEDRECLAIMNOTIFICATIONS"
+name="SOURCEUSEEXTENDEDRECLAIMNOTIFICATIONS">4.2.22. <span class="lbm-option-name"><span
+class="PHRASE">use_extended_reclaim_notifications (source)</span></span></a></h2>
+
+<p>Specifies which reclaim notification your application receives. The expanded
+notification, LBM_SRC_EVENT_UME_MESSAGE_RECLAIMED_EX, contains a flag,
+LBM_SRC_EVENT_UME_MESSAGE_RECLAIMED_EX_FLAG_FORCED that <b class="APPLICATION">UMP</b>
+sets if the reclamation is a forced reclaim.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3690" name="AEN3690"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3713" name="AEN3713"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Indicates your application receives the expanded reclaim notification. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Indicates your application receives the standard reclaim notification that is
+identical to the expanded notification but without the "Forced" flag.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUSETRANSPORTTHREAD"
+name="RECEIVERUSETRANSPORTTHREAD">4.2.23. <span class="lbm-option-name"><span
+class="PHRASE">use_transport_thread (receiver)</span></span></a></h2>
+
+<p>For LBT-RM, LBT-RU, or TCP-LB transport sessions only. Determines whether <b
+class="APPLICATION">UM</b> uses a thread from the receiver thread pool to process message
+data or if it uses the context thread, which is the default. See <a
+href="../Design/fundamental-concepts.html#MULTITHREADED-TRANSPORTS"
+target="_top">Multi-Transport Threads</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN3740" name="AEN3740"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN3763" name="AEN3763"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">"1" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">1</code></td>
+<td><b class="APPLICATION">UM</b> uses a thread from the receiver thread pool.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"0" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">0</code></td>
+<td><b class="APPLICATION">UM</b> uses the context thread to process message data. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="reference.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="resolveroperationoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Reference</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Resolver Operation Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

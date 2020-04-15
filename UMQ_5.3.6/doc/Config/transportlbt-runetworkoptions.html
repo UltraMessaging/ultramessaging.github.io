@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport LBT-RU Network Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport LBT-RM Operation Options"
+href="transportlbt-rmoperationoptions.html" />
+<link rel="NEXT" title="Transport LBT-RU Reliability Options"
+href="transportlbt-rureliabilityoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="transportlbt-rmoperationoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="transportlbt-rureliabilityoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTLBT-RUNETWORKOPTIONS"
+name="TRANSPORTLBT-RUNETWORKOPTIONS">4.11. Transport LBT-RU Network Options</a></h1>
+
+<p>LBT-RU receivers initiate UDP connections toward LBT-RU sources for delivering NAKs
+and ACKs. LBT-RU sources then initiate connections toward LBT-RU receivers for delivery
+of <b class="APPLICATION">UMS</b> messages.</p>
+
+<div class="FIGURE"><a id="FIGLBTRU-NET" name="FIGLBTRU-NET"></a>
+<p><b>Figure 4-10. LBT-RU network options</b></p>
+
+<p><img src="LBTRU-Net.png" align="CENTER" /></p>
+</div>
+
+<p><a href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTLOW"><code
+class="PARAMETER">transport_lbtru_port_low</code></a> is the lowest port that <b
+class="APPLICATION">UMS</b> will allocate for LBT-RU sources in a context; <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTHIGH"><code
+class="PARAMETER">transport_lbtru_port_high</code></a> is the highest. No more than <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUMAXIMUMPORTS"><code
+class="PARAMETER">transport_lbtru_maximum_ports</code></a> ports will be assigned to
+LBT-RU sources within a single context.</p>
+
+<p>Creation of an <b class="APPLICATION">UMS</b> source on an LBT-RU transport will
+allocate an unused UDP port from the range if less than <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUMAXIMUMPORTS"><code
+class="PARAMETER">transport_lbtru_maximum_ports</code></a> ports have already been
+allocated. Setting <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUMAXIMUMPORTS"><code
+class="PARAMETER">transport_lbtru_maximum_ports</code></a> to a fraction of the range
+allows the corresponding multiple number of <b class="APPLICATION">UMS</b> processes to
+share a common configuration.</p>
+
+<p>If a particular UDP port is desired by a source, it may be given with <a
+href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUPORT"><code
+class="PARAMETER">transport_lbtru_port</code></a>. If the desired port is already in use,
+then an unused port will be sought as described above. A value of <tt
+class="LITERAL">0</tt> (the default) expresses no preference and results in the default
+open port seeking behavior described above.</p>
+
+<p><a href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUINTERFACE"><code
+class="PARAMETER">transport_lbtru_interface</code></a> may be used on LBT-RU sources to
+choose particular interface, overriding the default <tt class="LITERAL">INADDR_ANY</tt>
+which accepts connections on all interfaces. Similarly, <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUINTERFACE"><code
+class="PARAMETER">transport_lbtru_interface</code></a> may be used on receivers to choose
+a particular interface for outgoing connections.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUINTERFACE"
+name="RECEIVERTRANSPORTLBTRUINTERFACE">4.11.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_interface (receiver)</span></span></a></h2>
+
+<p>Specifies the network interface over which <b class="APPLICATION">UM</b> LBT-RU
+receivers read application data messages. Can specify full IP address of interface, or
+just network part (see <a href="reference.html#SPECIFYINGINTERFACES">Specifying
+Interfaces</a> for details).</p>
+
+<div class="INFORMALTABLE"><a id="AEN8220" name="AEN8220"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRUINTERFACE"
+name="SOURCETRANSPORTLBTRUINTERFACE">4.11.2. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_interface (source)</span></span></a></h2>
+
+<p>Specifies the network interface over which <b class="APPLICATION">UM</b> LBT-RU
+sources receive connection requests from topic receivers. Can specify full IP address of
+interface, or just network part (see <a
+href="reference.html#SPECIFYINGINTERFACES">Specifying Interfaces</a> for details). Be
+aware that this option is applied to the transport session when the first topic is
+created on that session. Thus, setting a different interface for a subsequent topic that
+maps onto the same transport session will have no effect. Default is set to INADDR_ANY,
+meaning that it will accept incoming connection requests from any interface.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8261" name="AEN8261"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ipv4_address_mask_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0.0.0.0 (</span></span><span
+class="lbm-option-default"><span class="PHRASE"><code
+class="CONSTANT">INADDR_ANY</code></span></span><span class="lbm-option-default"><span
+class="PHRASE">)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRUMAXIMUMPORTS"
+name="CONTEXTTRANSPORTLBTRUMAXIMUMPORTS">4.11.3. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_maximum_ports (context)</span></span></a></h2>
+
+<p>Maximum number of unicast port numbers that LBT-RU will use for all implicitly
+allocated sessions.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8303" name="AEN8303"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of ports</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTLBTRUPORT"
+name="SOURCETRANSPORTLBTRUPORT">4.11.4. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_port (source)</span></span></a></h2>
+
+<p>The preferred unicast port number for this Topic. If 0, the context will attempt to
+find one in the given LBT-RU source port range.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8346" name="AEN8346"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use open
+port)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Network</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRUPORTHIGH"
+name="CONTEXTTRANSPORTLBTRUPORTHIGH">4.11.5. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_port_high (context)</span></span></a></h2>
+
+<p>High unicast port number to assign LBT-RU sources to. Clients will send connection
+requests, ACKs, and NAKs to a port number in this range.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8389" name="AEN8389"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14389</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUPORTHIGH"
+name="RECEIVERTRANSPORTLBTRUPORTHIGH">4.11.6. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_port_high (receiver)</span></span></a></h2>
+
+<p>High port number to use for receiving LBT-RU data. All LBT-RU data for the topic will
+arrive on this range.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8432" name="AEN8432"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14379</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTLBTRUPORTLOW"
+name="CONTEXTTRANSPORTLBTRUPORTLOW">4.11.7. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_port_low (context)</span></span></a></h2>
+
+<p>Low unicast port number to assign LBT-RU sources to. Clients will send connection
+requests, ACKs, and NAKs to a port number in this range.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8475" name="AEN8475"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14380</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTLBTRUPORTLOW"
+name="RECEIVERTRANSPORTLBTRUPORTLOW">4.11.8. <span class="lbm-option-name"><span
+class="PHRASE">transport_lbtru_port_low (receiver)</span></span></a></h2>
+
+<p>Low port number to use for receiving LBT-RU data. All LBT-RU data for the topic will
+arrive on this range.</p>
+
+<div class="INFORMALTABLE"><a id="AEN8518" name="AEN8518"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint16_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">14360</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Byte order:</i></span></td>
+<td>Host</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="transportlbt-rmoperationoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a
+href="transportlbt-rureliabilityoptions.html" accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport LBT-RM Operation Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport LBT-RU Reliability Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

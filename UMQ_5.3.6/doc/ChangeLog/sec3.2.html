@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.2 2007-08-27</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.2.1 / UME 1.2 2007-09-06" href="sec1.2.html" />
+<link rel="NEXT" title="Release LBM 3.2ea2 2007-07-19" href="sec3.2ea2.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec1.2.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec3.2ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC3.2" name="SEC3.2">69. Release LBM 3.2 2007-08-27</a></h1>
+
+<ul>
+<li>
+<p>The <b class="APPLICATION">LBM</b> Gateway allows you to configure the use of blocking
+or non-blocking sends on the outbound direct side. The default is to use non-blocking
+sends. If a send blocks when using non-blocking sends, the message is dropped and the
+receiver is notified of loss; the notifying mechanism is the same one that notifies when
+a message exceeds the inbound Event Queue size or delay parameters.</p>
+</li>
+
+<li>
+<p>Avoid an array underflow that occurs when empty lines are encountered in configuration
+files.</p>
+</li>
+
+<li>
+<p>Fixed header parsing to prevent spurious messages, sent to an <b
+class="APPLICATION">LBM</b>/<b class="APPLICATION">UME</b> port, from forcing <b
+class="APPLICATION">LBM</b>/<b class="APPLICATION">UME</b> into an infinite loop.</p>
+</li>
+
+<li>
+<p>Fixed problem to prevent crash that occurs when debug logging is enabled on 64-bit
+Windows systems running 32-bit binaries.</p>
+</li>
+
+<li>
+<p>Added support for the response_tcp_interface context configuration attribute to
+specify TCP interface for outgoing response connections. Allow non-multicast capable
+interfaces (e.g., loopback) to be accepted by request_tcp_interface.</p>
+</li>
+
+<li>
+<p>Added the number of the failed port to bind-failure log messages.</p>
+</li>
+
+<li>
+<p>Fixed the condition where a receiver using arrival order delivery always drops the
+first message, if it is a fragment.</p>
+</li>
+
+<li>
+<p>Corrected condition that could cause a fatal assertion (fdm-&#62;poll_fds!=NULL) when
+fd_management_type is set to 'poll'.</p>
+</li>
+</ul>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec1.2.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec3.2ea2.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.2.1 / UME 1.2 2007-09-06</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.2ea2 2007-07-19</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

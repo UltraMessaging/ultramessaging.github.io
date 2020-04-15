@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Series 1.1 Releases</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Series 1.5 Releases" href="sec1.5.html" />
+<link rel="NEXT" title="Series 1.0 Releases" href="sec1.0.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="sec1.5.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="sec1.0.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SEC1.1" name="SEC1.1">83. Series 1.1 Releases</a></h1>
+
+<p>Key features added in the 1.1 series releases:</p>
+
+<ul>
+<li>
+<p>Unicast topic resolution</p>
+</li>
+
+<li>
+<p>Message fragmentation and reassembly</p>
+</li>
+
+<li>
+<p>Immediate messaging</p>
+</li>
+
+<li>
+<p>Solaris support</p>
+</li>
+
+<li>
+<p>Documentation additions and improvements</p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.5.2" name="REL1.1.5.2">83.1. Release 1.1.5.2
+2005-05-23</a></h2>
+
+<ul>
+<li>
+<p>Removed check of 0 when setting TTL so that a TTL of 0 can be used for
+resolver_multicast_ttl.</p>
+</li>
+
+<li>
+<p>Fixed an error with creating new receivers when multiple sources are defined already
+by the topic. Was leading to assertion failure when cleaning up on receiver deletion.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.5" name="REL1.1.5">83.2. Release 1.1.5
+2005-04-05</a></h2>
+
+<ul>
+<li>
+<p>Added LBM_EVENT_QUEUE_POLL arg to lbm_event_dispatch(). Also added
+LBM_EVENT_QUEUE_ENQUEUE_NOTIFICATION monitor function event type. Added
+queue_enqueue_notification config option to event queues.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.4.3" name="REL1.1.4.3">83.3. Release 1.1.4.3
+2005-03-21</a></h2>
+
+<ul>
+<li>
+<p>Changed default mim_destination_port to 4401 to avoid the default LBT-RM unicast
+source port range.</p>
+</li>
+
+<li>
+<p>Modified the LBT-RM multicast address range to be 224.10.10.10 to 224.10.10.14.</p>
+</li>
+
+<li>
+<p>Fixed forwarding of ads via lbmrd so that it fills in fields in the ads that are set
+to INADDR_ANY for sources.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.4" name="REL1.1.4">83.4. Release 1.1.4
+2005-03-08</a></h2>
+
+<ul>
+<li>
+<p>Added unicast topic resolution support.</p>
+</li>
+
+<li>
+<p>Added ability to specify a custom string hash function to use for hash table
+manipulation for topics. Added the ability to set the hash table sizes.</p>
+</li>
+
+<li>
+<p>Added new options:</p>
+
+<ul>
+<li>
+<p><code class="PARAMETER">resolver_unicast_address</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_interface</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_port</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_port_high</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_port_low</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_destination_port</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_unicast_receiver_socket_buffer</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_source_map_tablesz</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_receiver_map_tablesz</code></p>
+</li>
+
+<li>
+<p><code class="PARAMETER">resolver_string_hash_function</code></p>
+</li>
+</ul>
+
+<br />
+<br />
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.3.1" name="REL1.1.3.1">83.5. Release 1.1.3.1
+2005-03-01</a></h2>
+
+<ul>
+<li>
+<p>Fixed byte ordering issue on destination port for multicast immediate messages.</p>
+</li>
+
+<li>
+<p>Added ChangeLog, TechPres, and GetStart to Doc package.</p>
+</li>
+
+<li>
+<p>Moved ReadMe from doc subdirectory to release directory. ReadMe is also now included
+in code packages in case they get separated from doc packages.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.3" name="REL1.1.3">83.6. Release 1.1.3
+2005-02-28</a></h2>
+
+<ul>
+<li>
+<p>Added fragmentation/reassembly to handle large messages for senders and responses (not
+for immediate messages).</p>
+</li>
+
+<li>
+<p>Added -V arg to lbmsrc and lbmrcv examples to verify message contents.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.2" name="REL1.1.2">83.7. Release 1.1.2
+2005-02-11</a></h2>
+
+<ul>
+<li>
+<p>Added Solaris support.</p>
+</li>
+
+<li>
+<p>Separate doc package from binary packages.</p>
+</li>
+
+<li>
+<p>Doc package contains AppNotes, <b class="APPLICATION">LBM</b> Design, THPM, examples,
+and ReadMe.</p>
+</li>
+
+<li>
+<p>Added <code class="PARAMETER">delivery_control_maximum_burst_loss</code>. Documented
+<code class="PARAMETER">delivery_control_loss_tablesz</code> and <code
+class="PARAMETER">delivery_control_order_tablesz</code>.</p>
+</li>
+
+<li>
+<p>Added <tt class="LITERAL">LBM_MSG_UNRECOVERABLE_LOSS_BURST</tt> message type.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.1" name="REL1.1.1">83.8. Release 1.1.1
+2005-02-04</a></h2>
+
+<ul>
+<li>
+<p>Modified storage of topic name in topic structure so that it uses less memory for
+small topic names.</p>
+</li>
+
+<li>
+<p>Added warning to <b class="APPLICATION">LBM</b> API doc for functions that are not
+safe to call from context thread callbacks.</p>
+</li>
+
+<li>
+<p>Added -M I arg to lbmstrm example to have a sender that never stops sending data.
+Cleaned up lbmimsg and lbmireq to handle daemon mode operation.</p>
+</li>
+
+<li>
+<p>Added the usage of ctime_r and localtime_r when available. Fixed error in setting
+resolver multicast interface from the setopt() version.</p>
+</li>
+
+<li>
+<p>Changed default LBT-RM coalesce threshold to 15 to accommodate Solaris iov limitation.
+Also, on Solaris, when setting the value, it will not accept a value greater than 15.</p>
+</li>
+
+<li>
+<p>Added <b class="APPLICATION">LBM</b> daemon support to sending and receiving multicast
+immediate messages. Unicast immediate messages go directly to the target bypassing the
+daemon.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REL1.1.0.1" name="REL1.1.0.1">83.9. Release 1.1.0.1
+2005-01-15</a></h2>
+
+<ul>
+<li>
+<p>All multicast immediate message config options added.</p>
+</li>
+
+<li>
+<p>Added basic immediate message support (unicast and multicast).</p>
+</li>
+
+<li>
+<p>Fixed bug with priorities when TCP sessions dequeue loaded queues.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="sec1.5.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="sec1.0.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Series 1.5 Releases</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Series 1.0 Releases</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

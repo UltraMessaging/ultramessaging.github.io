@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>ummd</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="UP" title="Manpage for ummd" href="ummd-manpage.html" />
+<link rel="PREVIOUS" title="Manpage for ummd" href="ummd-manpage.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="REFENTRY" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Manager Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="ummd-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom">&nbsp;</td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<h1><a id="UMMD" name="UMMD"></a>ummd</h1>
+
+<div class="REFNAMEDIV"><a id="AEN1471" name="AEN1471"></a>
+<h2>Name</h2>
+
+ummd&nbsp;--&nbsp;<b class="APPLICATION">UM</b> Manager Daemon</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN1475" name="AEN1475"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">ummd</tt> [<code class="OPTION">-d</code> <tt
+class="REPLACEABLE"><i>JDBC Driver</i></tt>] [<code class="OPTION">-h</code> ] [<code
+class="OPTION">-n</code> <tt class="REPLACEABLE"><i>db username</i></tt>] [<code
+class="OPTION">-p</code> <tt class="REPLACEABLE"><i>port</i></tt>] [<code
+class="OPTION">-P</code> <tt class="REPLACEABLE"><i>properties filename</i></tt>] [<code
+class="OPTION">-s</code> <tt class="REPLACEABLE"><i>true/false</i></tt>] [<code
+class="OPTION">-u</code> <tt class="REPLACEABLE"><i>db url</i></tt>] [<code
+class="OPTION">-x</code> <tt class="REPLACEABLE"><i>db password</i></tt>]</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN1501" name="AEN1501"></a>
+<h2>Description</h2>
+
+<p><tt class="COMMAND">ummd</tt> provides <b class="APPLICATION">UM</b> Manager
+services.</p>
+
+<p>You can identify the database used to store configuration information with the <code
+class="OPTION">-u</code> <tt class="REPLACEABLE"><i>db url</i></tt> option. This option
+accepts JDBC format for a <span class="TRADEMARK">MySQL</span>&#8482; database (i.e. <tt
+class="LITERAL">jdbc:mysql://10.29.3.112:3306/name</tt>) or an <span
+class="TRADEMARK">Oracle</span>&reg; database (i.e. <tt
+class="LITERAL">jdbc:oracle:thin:@//localhost:1521/xe</tt>). You can also set the
+database's username with the <code class="OPTION">-n</code> option, the database password
+with the <code class="OPTION">-x</code>, and the database driver with the <code
+class="OPTION">-d</code>. All options set on the <tt class="COMMAND">ummd</tt> command
+line override any settings in the <tt class="LITERAL">umm.properties</tt> file.</p>
+
+<p>You can set an alternate properties file with the <code class="OPTION">-P</code> where
+you can also specify database information. The default properties file is <tt
+class="LITERAL">umm.properties</tt>.</p>
+
+<p>Command line help is available with <code class="OPTION">-h</code>.</p>
+
+<p>You can set the port for <tt class="COMMAND">ummd</tt> with the <code
+class="OPTION">-p</code> option. The default is 15701.</p>
+
+<p>The <code class="OPTION">-s</code> option let you specify the use of SSL encryption
+for communication between <tt class="COMMAND">ummd</tt> and your <b
+class="APPLICATION">UM</b> applications.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN1530" name="AEN1530"></a>
+<h2>Exit Status</h2>
+
+<p>The exit status from <tt class="COMMAND">ummd</tt> is 0 for success and some non-zero
+value for failure.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ummd-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Manpage for ummd</td>
+<td width="34%" align="center" valign="top"><a href="ummd-manpage.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

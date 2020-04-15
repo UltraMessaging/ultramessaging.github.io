@@ -1,0 +1,4 @@
+<area shape="rect" href="$structlbm__umq__msg__total__lifetime__info__t__stct.html" title="Structure that holds UMQ message total lifetime information." alt="" coords="5,5,264,32">
+<area shape="rect" href="$structlbm__umq__index__info__t__stct.html" title="Structure that holds information used for sending and receiving messages with UMQ..." alt="" coords="288,5,472,32">
+<area shape="rect" href="$structlbm__async__operation__func__t.html" title="Structure that holds information for asynchronous operation callbacks." alt="" coords="496,5,688,32">
+<area shape="rect" href="$unionlbm__hf__sequence__number__t__stct.html" title="Structure to hold a hot failover sequence number." alt="" coords="712,5,931,32">

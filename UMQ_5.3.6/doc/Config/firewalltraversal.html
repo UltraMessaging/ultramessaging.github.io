@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Traversing a Firewall</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Common Tasks" href="commontasks.html" />
+<link rel="PREVIOUS" title="Common Tasks" href="commontasks.html" />
+<link rel="NEXT" title="Running Multiple Applications"
+href="multipleapplications.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="commontasks.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 3. Common Tasks</td>
+<td width="10%" align="right" valign="bottom"><a href="multipleapplications.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="FIREWALLTRAVERSAL" name="FIREWALLTRAVERSAL">3.2. Traversing a
+Firewall</a></h1>
+
+<p>To use <b class="APPLICATION">UM</b> across a firewall, several port options may need
+to be changed. The options of interest include:</p>
+
+<ul>
+<li>
+<p>Multicast resolver: <a
+href="multicastresolvernetworkoptions.html#CONTEXTRESOLVERMULTICASTPORT"><code
+class="PARAMETER">resolver_multicast_port</code></a>.</p>
+</li>
+
+<li>
+<p>Unicast resolver: <a href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT"><code
+class="PARAMETER">resolver_unicast_port</code></a>, <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTLOW"><code
+class="PARAMETER">resolver_unicast_port_low</code></a>, <a
+href="unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTPORTHIGH"><code
+class="PARAMETER">resolver_unicast_port_high</code></a>, and <a
+href="deprecatedoptions.html#CONTEXTRESOLVERUNICASTDESTINATIONPORT"><code
+class="PARAMETER">resolver_unicast_destination_port</code></a>.</p>
+</li>
+
+<li>
+<p>TCP transport: <a
+href="transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTLOW"><code
+class="PARAMETER">transport_tcp_port_low</code></a> and <a
+href="transporttcpnetworkoptions.html#CONTEXTTRANSPORTTCPPORTHIGH"><code
+class="PARAMETER">transport_tcp_port_high</code></a> for contexts, and <a
+href="transporttcpnetworkoptions.html#SOURCETRANSPORTTCPPORT"><code
+class="PARAMETER">transport_tcp_port</code></a> for sources.</p>
+</li>
+
+<li>
+<p>LBT-RM transport: <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTLOW"><code
+class="PARAMETER">transport_lbtrm_source_port_low</code></a>, <a
+href="transportlbt-rmnetworkoptions.html#CONTEXTTRANSPORTLBTRMSOURCEPORTHIGH"><code
+class="PARAMETER">transport_lbtrm_source_port_high</code></a> for contexts, and <a
+href="transportlbt-rmnetworkoptions.html#SOURCETRANSPORTLBTRMDESTINATIONPORT"><code
+class="PARAMETER">transport_lbtrm_destination_port</code></a> for sources.</p>
+</li>
+
+<li>
+<p>LBT-RU transport: <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTLOW"><code
+class="PARAMETER">transport_lbtru_port_low</code></a> and <a
+href="transportlbt-runetworkoptions.html#CONTEXTTRANSPORTLBTRUPORTHIGH"><code
+class="PARAMETER">transport_lbtru_port_high</code></a> for contexts, <a
+href="transportlbt-runetworkoptions.html#SOURCETRANSPORTLBTRUPORT"><code
+class="PARAMETER">transport_lbtru_port</code></a> for sources, <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUPORTLOW"><code
+class="PARAMETER">transport_lbtru_port_low</code></a> and <a
+href="transportlbt-runetworkoptions.html#RECEIVERTRANSPORTLBTRUPORTHIGH"><code
+class="PARAMETER">transport_lbtru_port_high</code></a> for receivers.</p>
+</li>
+
+<li>
+<p>Multicast immediate messaging: <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMDESTINATIONPORT"><code
+class="PARAMETER">mim_destination_port</code></a>, <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMINCOMINGDESTINATIONPORT"><code
+ class="PARAMETER">mim_incoming_destination_port</code></a>, and <a
+href="multicastimmediatemessagingnetworkoptions.html#CONTEXTMIMOUTGOINGDESTINATIONPORT"><code
+ class="PARAMETER">mim_outgoing_destination_port</code></a>.</p>
+</li>
+
+<li>
+<p>Requests: <a href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORT"><code
+class="PARAMETER">request_tcp_port</code></a>, <a
+href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORTLOW"><code
+class="PARAMETER">request_tcp_port_low</code></a>, and <a
+href="requestnetworkoptions.html#CONTEXTREQUESTTCPPORTHIGH"><code
+class="PARAMETER">request_tcp_port_high</code></a>.</p>
+</li>
+</ul>
+
+<p>In addition, since machines acting as a firewall are often multi-homed as well,
+consult the section on <a href="commontasks.html#MULTIHOMEDHOSTS">Configuring Multi-Homed
+Hosts</a> for additional considerations.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="commontasks.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="multipleapplications.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Common Tasks</td>
+<td width="34%" align="center" valign="top"><a href="commontasks.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Running Multiple Applications</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

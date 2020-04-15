@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>UM Manager Daemon</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Manager Guide" href="index.html" />
+<link rel="PREVIOUS" title="Using the UMM API" href="umm-api.html" />
+<link rel="NEXT" title="Manpage for ummd" href="ummd-manpage.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Manager Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umm-api.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="ummd-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UMM-DAEMON" name="UMM-DAEMON">5. UM Manager Daemon</a></h1>
+
+<p>The UMM Daemon serves license and configuration information to <b
+class="APPLICATION">UM</b> applications. A UMM Daemon requires either a <tt
+class="LITERAL">umm.properties</tt> file or command line options. See <a
+href="../UMM/ummd.html" target="doccontent"><tt class="LITERAL">ummd</tt></a> for information
+about the daemon's command line options. The UMM Daemon requires a license for either <b
+class="APPLICATION">UMP</b> or <b class="APPLICATION">UMQ</b>.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umm-daemon.html#UMM-CONFIG"><i>UMM Configuration</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-daemon.html#UMM-ENVIRON-VAR"><i>Connecting Your Applications to the UMM
+Daemon</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-daemon.html#UMM-DB"><i>Configuring the</i> UMM Database</a></p>
+</li>
+
+<li>
+<p><a href="umm-daemon.html#UMM-SSL"><i>Securing UMM Daemon Communication with
+SSL</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMM-CONFIG" name="UMM-CONFIG">5.1. UMM Configuration</a></h2>
+
+<p>Follow the procedure below to configure <b class="APPLICATION">UMM</b>.</p>
+
+<ol type="1">
+<li>
+<p>Edit the <a href="umm-daemon.html#UMM-PROPERTIES"><i>umm.properties</i></a> file to
+specify your <b class="APPLICATION">UMM</b> database information, the daemon's port
+number and whether you will use SSL.</p>
+</li>
+
+<li>
+<p>Edit the <a href="umm-daemon.html#UMM-UMMDBATSH"><i>ummd.bat or ummd.sh</i></a> file
+that starts UMM Daemon. The appropriate driver jar file name must be added to the
+classpath. Specify your certificate file or Java keystore information if using SSL
+certificates.</p>
+</li>
+
+<li>
+<p>Edit the <a href="umm-daemon.html#UMM-UMMBATSH"><i>umm.bat or umm.sh</i></a> file that
+starts the <b class="APPLICATION">UMM</b> GUI. The appropriate driver jar file name must
+be added to the classpath.</p>
+</li>
+
+<li>
+<p>See <a href="umm-daemon.html#UMM-ENVIRON-VAR"><i>Connecting Your Applications to the
+UMM Daemon</i></a> to configure your applications with either environment variables or
+APIs so they can connect to UMM Daemon.</p>
+</li>
+
+<li>
+<p>Optional. See <a href="umm-daemon.html#UMM-SSL"><i>Securing UMM Daemon Communication
+with SSL</i></a> to configure SSL.</p>
+</li>
+</ol>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMM-PROPERTIES" name="UMM-PROPERTIES">5.1.1.
+umm.properties</a></h3>
+
+<p>Contains database information such as the database username, password and driver. The
+simplest way to configure <b class="APPLICATION">UMM</b> is to edit this file to reflect
+your configuration database. The other two batch files or shell scripts automatically
+look to <tt class="LITERAL">umm.properties</tt> for database information. This file,
+however, is optional. You could specify database information with options in the UMM
+Daemon and <b class="APPLICATION">UMM</b> GUI batch files or shell scripts. The <tt
+class="LITERAL">umm.properties</tt> provided with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+################## mySQL example ##############################
+LBM_LICENSE_FILENAME=lbm.lic
+database_password=admin
+database_jdbc_object=com.mysql.jdbc.Driver
+database_username=admin
+db_url=jdbc:mysql://10.29.3.112:3306/name
+secure=false    #Only used by ummd.
+port=15701  #Only used by ummd.
+################## Oracle example ##############################
+#database_password=admin
+#database_jdbc_object=oracle.jdbc.driver.OracleDriver
+#database_username=system
+#db_url=jdbc:oracle:thin:@//localhost:1521/xe
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMM-UMMDBATSH" name="UMM-UMMDBATSH">5.1.2. ummd.bat or
+ummd.sh</a></h3>
+
+<p>Specifies the needed information to run the UMM Daemon. By default, the <tt
+class="LITERAL">ummd.bat/sh</tt> looks to <tt class="LITERAL">umm.properties</tt> for
+database information. You can override the <tt class="LITERAL">umm.properties</tt> file
+settings with <tt class="LITERAL">ummd</tt> options. See <a
+href="ummd-manpage.html"><i>Manpage for ummd</i></a>. The <tt
+class="LITERAL">ummd.bat</tt> or <tt class="LITERAL">ummd.sh</tt> provided with
+installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMMD_1.6.0_02.jar -Xms512m -Xmx1024m umm.ummd.Server
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMM-UMMBATSH" name="UMM-UMMBATSH">5.1.3. umm.bat or
+umm.sh</a></h3>
+
+<p>Specifies the needed information to run the <b class="APPLICATION">UMM</b> GUI. By
+default, the <tt class="LITERAL">umm.bat/sh</tt> looks to <tt
+class="LITERAL">umm.properties</tt> for database information. You can override the <tt
+class="LITERAL">umm.properties</tt> file settings with <tt class="LITERAL">ummd</tt>
+options. The <tt class="LITERAL">umm.bat</tt> or <tt class="LITERAL">umm.sh</tt> provided
+with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMM_1.jar; -Xms256m -Xmx1024m umm.gui.MainFrame
+           
+</pre>
+
+<p>The same options available to the UMM Daemon (<a href="ummd-manpage.html"><i>Manpage
+for ummd</i></a>) are also available for the <tt class="LITERAL">umm.bat</tt> batch file
+and the <tt class="LITERAL">umm.sh</tt> shell script. The following two options are also
+available.</p>
+
+<ul>
+<li>
+<p><code class="OPTION">-a</code> <tt class="REPLACEABLE"><i>UMM username</i></tt></p>
+</li>
+
+<li>
+<p><code class="OPTION">-b</code> <tt class="REPLACEABLE"><i>UMM password</i></tt></p>
+</li>
+</ul>
+
+<p>These options allow the <b class="APPLICATION">UMM</b> GUI user to skip the username
+and password dialog box when starting the GUI, but limits you to one user. See <a
+href="umm-gui.html#UMMGUI-USERS"><i>Managing Users</i></a> for information about creating
+users and assigning passwords and applications to them.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMM-ENVIRON-VAR" name="UMM-ENVIRON-VAR">5.2. Connecting Your
+Applications to the UMM Daemon</a></h2>
+
+<p>To use <b class="APPLICATION">UMM</b> with your installation of Ultra Messaging, you
+must use the following environment variable for every application/user combination.</p>
+
+<pre class="SCREEN">
+<tt
+class="LITERAL">export LBM_UMM_INFO=&lt;application_name&#62;:&lt;user_name&#62;:&lt;password&#62;@&lt;ip&#62;:&lt;port&#62;</tt>
+       
+</pre>
+
+<p>For example:</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=lbmrcv:default:default@10.29.3.95:21273
+       
+</pre>
+
+<ol type="1">
+<li>
+<p>At start up, your <b class="APPLICATION">UM</b> application contacts the UMM Daemon at
+the given <tt class="LITERAL">ip</tt> and <tt class="LITERAL">port</tt>. You can specify
+multiple daemon locations in comma-separated format (<tt
+class="LITERAL">@&lt;ip&#62;:&lt;port&#62;, &lt;ip&#62;:&lt;port&#62;,
+&lt;ip&#62;:&lt;port&#62;</tt>). Your application tries to connect in a round robin
+fashion if the daemon with index 0 fails.</p>
+</li>
+
+<li>
+<p>If the connection succeeds, the UMM Daemon authenticates the connection with the <tt
+class="LITERAL">user_name</tt> and <tt class="LITERAL">password</tt> specified in the
+environment variable. (See <a href="umm-gui.html#UMMGUI-USERS"><i>Managing Users</i></a>
+for information about creating users and assigning passwords and applications to
+them.)</p>
+</li>
+
+<li>
+<p>Upon successful authentication, the UMM Daemon serves the license and configuration
+information associated with the user and <tt class="LITERAL">application_name</tt>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Your <b class="APPLICATION">UM</b> application ignores any local licenses
+if it is configured for <b class="APPLICATION">UMM</b>. <b class="APPLICATION">UMM</b>
+can't be used to configure licenses for other <b class="APPLICATION">UM</b> daemons, such
+as <tt class="LITERAL">umestored</tt>, <tt class="LITERAL">tnwgd</tt> and <tt
+class="LITERAL">lbmrd</tt>. These daemons must maintain their current local
+licensing.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>The UMM Daemon closes the connection with your application.</p>
+</li>
+</ol>
+
+<p>You can specify the same information directly in your applications with the <a
+href="../API/index.html" target="doccontent">C API</a>, <code
+class="FUNCTION">lbm_set_umm_info()</code>, and the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a>, <code class="FUNCTION">LBM.setUmmInfo(LBMUMMInfo)</code>. These must be the
+first calls made by your applications.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The UMM Daemon currently only supports the configuration of sending
+and/or receiving applications. It does not support <b class="APPLICATION">UM</b>
+configuration options for other <b class="APPLICATION">UM</b> daemons, such as <tt
+class="LITERAL">umestored</tt>, <tt class="LITERAL">tnwgd</tt> and <tt
+class="LITERAL">lbmrd</tt>. If running any of these daemons in the same environment, you
+should unset the LBM_UMM_INFO variable, start these other daemons and then reset
+LBM_UMM_INFO.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMM-DB" name="UMM-DB">5.3. Configuring the <b
+class="APPLICATION">UMM</b> Database</a></h2>
+
+<p>Informatica has demonstrated operation with JDBC interfaces to <span
+class="TRADEMARK">MySQL</span>&#8482; and <span class="TRADEMARK">Oracle</span>&reg;
+databases. You may be able to use other JDBC databases, but Informatica has only tested
+with <span class="TRADEMARK">MySQL</span> and <span class="TRADEMARK">Oracle</span>. This
+section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="umm-daemon.html#UMM-ORACLE"><i>Oracle Considerations</i></a></p>
+</li>
+
+<li>
+<p><a href="umm-daemon.html#UMM-MYSQL"><i>MySQL Considerations</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMM-ORACLE" name="UMM-ORACLE">5.3.1. <span
+class="TRADEMARK">Oracle</span>&reg; Considerations</a></h3>
+
+<p>Informatica does not supply an <span class="TRADEMARK">Oracle</span> database or any
+licensing to use <span class="TRADEMARK">Oracle</span>. You can install an <span
+class="TRADEMARK">Oracle</span> database either before or after installing <b
+class="APPLICATION">UM</b>. Drivers are not shipped with <b class="APPLICATION">UM</b>.
+The <span class="TRADEMARK">Oracle</span> driver can be downloaded at <a
+href="http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-10201-088211.html"
+ target="doccontent">http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-10201-088211.html</a>.
+The appropriate driver jar file name must be added to the classpath of the <tt
+class="LITERAL">umm.bat/umm.sh</tt> and <tt class="LITERAL">ummd.bat/ummd.sh</tt>
+scripts.</p>
+
+<p>Configure <span class="TRADEMARK">Oracle</span> with the following steps, which assume
+you have already installed <b class="APPLICATION">UM</b>.</p>
+
+<ol type="1">
+<li>
+<p>Install <span class="TRADEMARK">Oracle</span> and create a database. (You provide the
+UMM Daemon with the database name, username and password at start up. This user name and
+password should be kept secure.)</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">Oracle</span> command line or database home page, log
+into your <span class="TRADEMARK">Oracle</span> database.</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">Oracle</span> command line or database home page,
+load <tt class="FILENAME">/UMM/install_tables_oracle.sql</tt>. (This script installs the
+tables required by <b class="APPLICATION">UMM</b>.)</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">Oracle</span> command line or database home page,
+load <tt class="FILENAME">/UMM/oracle_templates.txt</tt>. (This script loads the example
+configuration templates for <a href="../Config/lowestlatency.html" target="doccontent">low
+latency</a> and <a href="../Config/examples.html#HIGHESTTHROUGHPUT" target="doccontent">high
+throughput</a>. These templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">Templates</b> in the object tree in the left pane.)</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">Oracle</span> command line or database home page,
+load <tt class="FILENAME">/UMM/oracle_application_jms.txt</tt> into the <tt
+class="FILENAME">Application</tt> table. (This script loads the ConnectionFactories and
+Destinations required to run the example JMS applications. These templates appear in the
+<b class="APPLICATION">UMM</b> GUI under <b class="APPLICATION">JMS/ConnectionFactory</b>
+and <b class="APPLICATION">JMS/Destination</b> in the object tree in the left pane.)</p>
+</li>
+</ol>
+
+<p>You can now start the UMM Daemon on the command line or with the <tt
+class="LITERAL">ummd.bat</tt> batch file or the <tt class="LITERAL">ummd.sh</tt> shell
+script.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMM-MYSQL" name="UMM-MYSQL">5.3.2. <span
+class="TRADEMARK">MySQL</span>&#8482; Considerations</a></h3>
+
+<p>Informatica does not supply <span class="TRADEMARK">MySQL</span> or any licensing to
+use <span class="TRADEMARK">MySQL</span>. You can install <span
+class="TRADEMARK">MySQL</span> either before or after installing <b
+class="APPLICATION">UM</b>. Drivers are not shipped with <b class="APPLICATION">UM</b>.
+The <span class="TRADEMARK">MySQL</span> driver can be downloaded at <a
+href="http://dev.mysql.com/downloads/connector/j/5.0.html"
+target="doccontent">http://dev.mysql.com/downloads/connector/j/5.0.html</a>. The appropriate
+driver jar file name must be added to the classpath of the <tt
+class="LITERAL">umm.bat/umm.sh</tt> and <tt class="LITERAL">ummd.bat/ummd.sh</tt>
+scripts.</p>
+
+<p>Configure <span class="TRADEMARK">MySQL</span> with the following steps, which assume
+you have already installed <b class="APPLICATION">UM</b>.</p>
+
+<ol type="1">
+<li>
+<p>Install <span class="TRADEMARK">MySQL</span>.</p>
+</li>
+
+<li>
+<p>Create a database. (You provide the UMM Daemon with the database name, username and
+password at start up. This user name and password should be kept secure.)</p>
+</li>
+
+<li>
+<p>Log into the <span class="TRADEMARK">MySQL</span> with <tt class="FILENAME">connect
+db_name</tt>.</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">MySQL</span> command prompt, run <tt
+class="FILENAME">source /UMM/install_tables_mysql.sql</tt>. (This script installs the
+tables required by <b class="APPLICATION">UMM</b>.)</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">MySQL</span> command prompt, run <tt
+class="FILENAME">LOAD DATA INFILE 'mysql_templates.txt' INTO TABLE TEMPLATE;</tt>. (This
+script loads the example configuration templates for <a
+href="../Config/lowestlatency.html" target="doccontent">low latency</a> and <a
+href="../Config/examples.html#HIGHESTTHROUGHPUT" target="doccontent">high throughput</a>. These
+templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">Templates</b> in the object tree in the left pane.)</p>
+</li>
+
+<li>
+<p>From the <span class="TRADEMARK">MySQL</span> command prompt, run <tt
+class="FILENAME">LOAD DATA INFILE 'mysql_application_jms.txt' INTO TABLE
+APPLICATION;</tt>. (This script loads the ConnectionFactories and Destinations required
+to run the example JMS applications. These templates appear in the <b
+class="APPLICATION">UMM</b> GUI under <b class="APPLICATION">JMS/ConnectionFactory</b>
+and <b class="APPLICATION">JMS/Destination</b> in the object tree in the left pane.)</p>
+</li>
+</ol>
+
+<p>You can now start the UMM Daemon on the command line or with the <tt
+class="LITERAL">ummd.bat</tt> batch file or the <tt class="LITERAL">ummd.sh</tt> shell
+script.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMM-SSL" name="UMM-SSL">5.4. Securing UMM Daemon Communication
+with SSL</a></h2>
+
+<p><b class="APPLICATION">UMM</b> allows you to secure the TCP transmission of <b
+class="APPLICATION">UMM</b> credentials and <b class="APPLICATION">UM</b> license keys
+between the UMM Daemon and <b class="APPLICATION">UM</b> applications using Secure
+Sockets Layer (SSL). You can implement a certificate-less, Transport Layer Security (TLS)
+option or provide your own certificate to authenticate the UMM Daemon. The following
+procedure explains how to secure UMM Daemon communications.</p>
+
+<ol type="1">
+<li>
+<p>In the <a href="umm-daemon.html#UMM-PROPERTIES"><i>umm.properties</i></a>, set the <tt
+class="LITERAL">secure</tt> option to <tt class="LITERAL">true</tt>.</p>
+
+<pre class="SCREEN">
+secure=true
+           
+</pre>
+
+<p>If you run the UMM Daemon from the command line, use <tt class="LITERAL">-s
+true</tt>.</p>
+</li>
+
+<li>
+<p>In the <a href="umm-daemon.html#UMM-ENVIRON-VAR"><i>Connecting Your Applications to
+the UMM Daemon</i></a>, pre-pend the application information with <tt
+class="LITERAL">ssl:</tt>.</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=ssl:lbmrcv:default:default@10.29.3.95:21273
+           
+</pre>
+</li>
+
+<li>
+<p>To specify a certificate, insert the certificate path and filename as shown below. Be
+sure to also configure <a href="umm-daemon.html#UMM-UMMDBATSH"><i>ummd.bat or
+ummd.sh</i></a> with your keystore.</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=ssl_cert_file=<tt
+class="FILENAME">path/filename</tt>:lbmrcv:default:default@10.29.3.95:21273
+           
+</pre>
+
+<p>A password for the certificate file is optional and would be specified as follows.</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=ssl_cert_file=<tt
+class="FILENAME">path/filename</tt>:ssl_cert_file_password=<tt
+class="FILENAME">psswrd</tt>:
+lbmrcv:default:default@10.29.3.95:21273
+           
+</pre>
+</li>
+</ol>
+
+<p>You can specify the same information directly in your applications with the <a
+href="../API/index.html" target="doccontent">C API</a>, <code
+class="FUNCTION">lbm_set_umm_info()</code>, and the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a>, <code class="FUNCTION">LBM.setUmmInfo(LBMUMMInfo)</code>. These must be the
+first calls made by your applications.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umm-api.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ummd-manpage.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Using the UMM API</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Manpage for ummd</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

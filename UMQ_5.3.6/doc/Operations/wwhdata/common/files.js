@@ -1,0 +1,29 @@
+function  WWHBookData_Files(P)
+{
+P.fA("Preface","GUID-A5236314-8998-420A-876C-97EB134F2283.1.1.html");
+P.fA("Informatica Resources","GUID-A5236314-8998-420A-876C-97EB134F2283.1.2.html");
+P.fA("Monitoring UM Statistics, Logs and Daemons","GUID-A5236314-8998-420A-876C-97EB134F2283.1.3.html");
+P.fA("Monitoring Transport Statistics","GUID-A5236314-8998-420A-876C-97EB134F2283.1.4.html");
+P.fA("Monitoring Application Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.5.html");
+P.fA("Monitoring the UMP Store Daemon (umestored)","GUID-A5236314-8998-420A-876C-97EB134F2283.1.6.html");
+P.fA("Monitoring the UM Gateway (tnwgd)","GUID-A5236314-8998-420A-876C-97EB134F2283.1.7.html");
+P.fA("Monitoring Messaging System Resources","GUID-A5236314-8998-420A-876C-97EB134F2283.1.8.html");
+P.fA("Startup/Shutdown Procedures 5.3","GUID-A5236314-8998-420A-876C-97EB134F2283.1.9.html");
+P.fA("UM Analysis Tools","GUID-A5236314-8998-420A-876C-97EB134F2283.1.10.html");
+P.fA("Troubleshooting UM Applications","GUID-A5236314-8998-420A-876C-97EB134F2283.1.11.html");
+P.fA("Application Crashes","GUID-A5236314-8998-420A-876C-97EB134F2283.1.12.html");
+P.fA("Assertions","GUID-A5236314-8998-420A-876C-97EB134F2283.1.13.html");
+P.fA("Message Loss","GUID-A5236314-8998-420A-876C-97EB134F2283.1.14.html");
+P.fA("Unrecoverable Loss","GUID-A5236314-8998-420A-876C-97EB134F2283.1.15.html");
+P.fA("High Latency","GUID-A5236314-8998-420A-876C-97EB134F2283.1.16.html");
+P.fA("Deaf Receivers","GUID-A5236314-8998-420A-876C-97EB134F2283.1.17.html");
+P.fA("UMP Sending Problems","GUID-A5236314-8998-420A-876C-97EB134F2283.1.18.html");
+P.fA("Contacting Informatica Support","GUID-A5236314-8998-420A-876C-97EB134F2283.1.19.html");
+P.fA("UM 5.3 Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.20.html");
+P.fA("UM 5.3 Core Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.21.html");
+P.fA("UM 5.3 Core API Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.22.html");
+P.fA("UM 5.3 Gateway Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.23.html");
+P.fA("UM 5.3 Lbmrd Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.24.html");
+P.fA("UM 5.3 Persistent Store Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.25.html");
+P.fA("UM 5.3 Persistent Store API Log Messages","GUID-A5236314-8998-420A-876C-97EB134F2283.1.26.html");
+}

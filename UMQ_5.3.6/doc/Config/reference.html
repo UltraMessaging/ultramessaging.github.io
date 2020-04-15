@@ -1,0 +1,757 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Reference</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="PREVIOUS" title="Running Multiple Applications"
+href="multipleapplications.html" />
+<link rel="NEXT" title="Major Options" href="majoroptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="CHAPTER" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="multipleapplications.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="majoroptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="CHAPTER">
+<h1><a id="REFERENCE" name="REFERENCE"></a>Chapter 4. Reference</h1>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>4.1. <a href="reference.html#REFERENCEINTRODUCTION">Introduction</a></dt>
+
+<dt>4.2. <a href="majoroptions.html">Major Options</a></dt>
+
+<dt>4.3. <a href="resolveroperationoptions.html">Resolver Operation Options</a></dt>
+
+<dt>4.4. <a href="multicastresolvernetworkoptions.html">Multicast Resolver Network
+Options</a></dt>
+
+<dt>4.5. <a href="unicastresolvernetworkoptions.html">Unicast Resolver Network
+Options</a></dt>
+
+<dt>4.6. <a href="transporttcpnetworkoptions.html">Transport TCP Network Options</a></dt>
+
+<dt>4.7. <a href="transporttcpoperationoptions.html">Transport TCP Operation
+Options</a></dt>
+
+<dt>4.8. <a href="transportlbt-rmnetworkoptions.html">Transport LBT-RM Network
+Options</a></dt>
+
+<dt>4.9. <a href="transportlbt-rmreliabilityoptions.html">Transport LBT-RM Reliability
+Options</a></dt>
+
+<dt>4.10. <a href="transportlbt-rmoperationoptions.html">Transport LBT-RM Operation
+Options</a></dt>
+
+<dt>4.11. <a href="transportlbt-runetworkoptions.html">Transport LBT-RU Network
+Options</a></dt>
+
+<dt>4.12. <a href="transportlbt-rureliabilityoptions.html">Transport LBT-RU Reliability
+Options</a></dt>
+
+<dt>4.13. <a href="transportlbt-ruoperationoptions.html">Transport LBT-RU Operation
+Options</a></dt>
+
+<dt>4.14. <a href="transportlbt-ipcoperationoptions.html">Transport LBT-IPC Operation
+Options</a></dt>
+
+<dt>4.15. <a href="transportlbt-rdmaoperationoptions.html">Transport LBT-RDMA Operation
+Options</a></dt>
+
+<dt>4.16. <a href="transportaccelerationoptions.html">Transport Acceleration
+Options</a></dt>
+
+<dt>4.17. <a href="multicastimmediatemessagingnetworkoptions.html">Multicast Immediate
+Messaging Network Options</a></dt>
+
+<dt>4.18. <a href="multicastimmediatemessagingreliabilityoptions.html">Multicast
+Immediate Messaging Reliability Options</a></dt>
+
+<dt>4.19. <a href="multicastimmediatemessagingoperationoptions.html">Multicast Immediate
+Messaging Operation Options</a></dt>
+
+<dt>4.20. <a href="latejoinoptions.html">Late Join Options</a></dt>
+
+<dt>4.21. <a href="off-transportrecoveryoptions.html">Off-Transport Recovery
+Options</a></dt>
+
+<dt>4.22. <a href="requestnetworkoptions.html">Request Network Options</a></dt>
+
+<dt>4.23. <a href="requestoperationoptions.html">Request Operation Options</a></dt>
+
+<dt>4.24. <a href="responseoperationoptions.html">Response Operation Options</a></dt>
+
+<dt>4.25. <a href="implicitbatchingoptions.html">Implicit Batching Options</a></dt>
+
+<dt>4.26. <a href="deliverycontroloptions.html">Delivery Control Options</a></dt>
+
+<dt>4.27. <a href="wildcardreceiveroptions.html">Wildcard Receiver Options</a></dt>
+
+<dt>4.28. <a href="eventqueueoptions.html">Event Queue Options</a></dt>
+
+<dt>4.29. <a href="ultramessagingpersistenceoptions.html">Ultra Messaging Persistence
+Options</a></dt>
+
+<dt>4.30. <a href="ultramessagingqueuingoptions.html">Ultra Messaging Queuing
+Options</a></dt>
+
+<dt>4.31. <a href="ultramessagingjmsoptions.html">Ultra Messaging JMS Options</a></dt>
+
+<dt>4.32. <a href="hotfailoveroperationoptions.html">Hot Failover Operation
+Options</a></dt>
+
+<dt>4.33. <a href="automaticmonitoringoptions.html">Automatic Monitoring Options</a></dt>
+
+<dt>4.34. <a href="deprecatedoptions.html">Deprecated Options</a></dt>
+
+<dt>4.35. <a href="portvalues.html"><b class="APPLICATION">UMS</b> Port Values</a></dt>
+
+<dt>4.36. <a href="mulcastgroupvalues.html"><b class="APPLICATION">UMS</b> Multicast
+Group Values</a></dt>
+
+<dt>4.37. <a href="timerintervalvalues.html"><b class="APPLICATION">UMS</b> Timer
+Interval Values</a></dt>
+
+<dt>4.38. <a href="maybesetduringoperation.html">Options That May Be Set During
+Operation</a></dt>
+
+<dt>4.39. <a href="cannotbesetfromconfigfile.html">Options (Callbacks) That Cannot Be Set
+From a UM Configuration File</a></dt>
+</dl>
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="REFERENCEINTRODUCTION" name="REFERENCEINTRODUCTION">4.1.
+Introduction</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CASESENSITIVITY" name="CASESENSITIVITY">4.1.1. Case
+Sensitivity</a></h2>
+
+<p>All <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b>
+scope, option, and value strings are case-insensitive. Thus, any of <code
+class="CONSTANT">context</code>, <code class="CONSTANT">CONTEXT</code>, and <code
+class="CONSTANT">Context</code> are recognized as specifying the "context" scope.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SPECIFYINGINTERFACES" name="SPECIFYINGINTERFACES">4.1.2.
+Specifying Interfaces</a></h2>
+
+<p>The <code class="PARAMETER">*_interface</code> options require a network interface,
+usually supplied as a string (from a config file via <code
+class="FUNCTION">lbm_config()</code> or in source code via <code
+class="FUNCTION">*_attr_str_setopt()</code>), the syntax used for network interface
+specifications is:</p>
+
+<pre class="SCREEN">
+<tt class="REPLACEABLE"><i>a.b.c.d/num</i></tt>
+</pre>
+
+where <tt class="REPLACEABLE"><i>num</i></tt> is the number of leading 1 bits in the
+netmask. If the <tt class="REPLACEABLE"><i>/num</i></tt> is omitted, it defaults to 32
+(netmask 255.255.255.255), which means that it must be an exact match for the interface's
+IP address. However, if <tt class="REPLACEABLE"><i>/num</i></tt> is supplied, it tells <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> to find an
+interface within that network. This makes it easier to share a configuration file between
+many (possibly multi-homed) machines on the same network. For example: 
+
+<pre class="SCREEN">
+context resolver_unicast_interface 192.168.0.0/24
+</pre>
+
+specifies a netmask of 255.255.255.0 and would match the interface <code
+class="CONSTANT">192.168.0.3</code> on one host, and <code
+class="CONSTANT">192.168.0.251</code> on another host. You can also set network
+interfaces by name. When setting a configuration option's interface by name, you must use
+quotes, as illustrated below. 
+
+<pre class="SCREEN">
+context resolver_unicast_interface "interfacename"
+</pre>
+
+<br />
+<br />
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOCKETBUFFERSIZE" name="SOCKETBUFFERSIZE">4.1.3. Socket Buffer
+Sizes</a></h2>
+
+<p>When specifying send or receive socket buffer sizes, keep the following
+platform-specific information in mind.</p>
+
+<ul>
+<li>
+<p>Linux</p>
+
+<p>The kernel value <code class="CONSTANT">net.core.rmem_max</code> dictates the highest
+value allowed for a receive socket. The kernel value <code
+class="CONSTANT">net.core.wmem_max</code> dictates the highest value allowed for a
+sending socket. Increase these values to increase the amount of buffering allowed.</p>
+</li>
+
+<li>
+<p>Windows</p>
+
+<p>Windows should allow socket buffer sizes to be set very high if needed without
+requiring registry changes.</p>
+</li>
+</ul>
+
+<p>See our whitepaper <a
+href="http://vip.informatica.com/content/Downloads?docid=1568&amp;=NA-Ongoing-2011Q1-JP-UM_Topics_in_High_Performance_WP_www"
+ target="_top">Topics in High Performance Messaging</a> for background and guidelines on
+UDP buffer sizing.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REFERENCEENTRYFORMAT" name="REFERENCEENTRYFORMAT">4.1.4.
+Reference Entry Format</a></h2>
+
+<p>This section describes the format of each option reference entry.</p>
+
+<p>Each entry begins with a brief description of the option. Following the description is
+a series of items which define the permissible usage and describes the values for the
+option.</p>
+
+<ul compact="COMPACT">
+<li>
+<p>Scope</p>
+
+<p>Defines the scope to which the option applies.</p>
+</li>
+
+<li>
+<p>Type</p>
+
+<p>Defines the data type of the option. The type is required for calls to the <code
+class="FUNCTION">*_setopt()</code> and <code class="FUNCTION">*_getopt()</code> API
+functions.</p>
+</li>
+
+<li>
+<p>Units</p>
+
+<p>Defines the units in which the option value is expressed. This item is optional.</p>
+</li>
+
+<li>
+<p>Default value</p>
+
+<p>For range-valued options, indicates the base default value for the option.</p>
+</li>
+
+<li>
+<p>Byte order</p>
+
+<p>For options whose value is an IP address or port, defines the byte ordering (Host or
+Network) expected by the API for <code class="FUNCTION">*_setopt()</code> calls, and
+returned by the API for <code class="FUNCTION">*_getopt()</code> calls.</p>
+</li>
+
+<li>
+<p>May be set during operation</p>
+
+<p>If an option may be set during operation, it is so indicated here.</p>
+</li>
+</ul>
+
+<p>Next, for enumerated-valued options, a table is provided which details the permissible
+string and integer values, a description of each value, and optional notes for each
+value. The default value is noted within the description.</p>
+
+<p>Alternately, for switch-valued options, a table is provided which describes the
+meaning of each of the two possible values. The default value is noted within the
+description.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="NETWORKCOMPATIBILITY" name="NETWORKCOMPATIBILITY">4.1.5.
+Network Compatibility Mode</a></h2>
+
+<p>This section lists the values for the <a
+href="../Config/majoroptions.html#CONTEXTNETWORKCOMPATIBILITYMODE" target="_top"><tt
+class="LITERAL">network_compatibility_mode</tt></a> option, that attempts to maintain
+wire-level backwards compatibility with older releases by blocking the sending of some
+(though possibly not all) newer message header types. An application using an older UM
+release typically logs a warning message when receiving an unknown message header type
+that did not yet exist in that older release. In a mixed UM version environment,
+Informatica recommnends that your applications filter these unknown message header
+warning log messages. This option should only be used if such filtering is undesired or
+not possible.</p>
+
+<p>Note that this option <b class="APPLICATION">does not</b> change any internal
+behaviors. It merely prevents the sending new message header types which disables any new
+functionality that relies on the new message header types for both old and new
+applications. Other than the warning log message for an application using an earlier
+release, new message header types do not cause any harm.</p>
+
+<div class="INFORMALTABLE"><a id="AEN2363" name="AEN2363"></a>
+<table border="1" class="CALSTABLE">
+<col width="72" />
+<col width="336" />
+<col width="192" />
+<thead>
+<tr>
+<th>String Value</th>
+<th>Integer Value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>default</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_DEFAULT</td>
+<td>Network compatibility mode is disabled. UM sends all new message header types.</td>
+</tr>
+
+<tr>
+<td>LBM_3.6</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_3_6</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 3.6 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_3.6.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_3_6_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 3.6.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_3.6.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_3_6_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 3.6.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_3.6.5</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_3_6_5</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 3.6.5 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.0</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_0</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.0 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.0.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_0_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.0.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.1.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_1_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.1.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_1_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.3 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.4</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_4</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.4 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.5</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_5</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.5 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.6</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_6</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.6 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.7</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_7</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.7 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>LBM_4.2.8</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_LBM_4_2_8</td>
+<td>Block any message headers that only an <b class="APPLICATION">LBM</b> 4.2.8 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.0</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_0</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.0 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.0.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_0_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.0.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.0.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_0_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.0.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.1.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_1_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.1.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.1.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_1_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.1.3 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.3 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.4</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_4</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.4 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.5</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_5</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.5 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.6</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_6</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.6 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.7</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_7</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.7 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UME_3.2.8</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UME_3_2_8</td>
+<td>Block any message headers that only an <b class="APPLICATION">UME</b> 3.2.8 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_1.0</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_1_0</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 1.0 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_1.1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_1_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 1.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.0</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_0</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.0 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.0.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_0_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.0.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.3 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.4</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_4</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.4 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.5</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_5</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.5 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.6</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_6</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.6 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.7</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_7</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.7 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.8</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_8</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.8 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.9</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_9</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.9 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UMQ_2.1.10</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UMQ_2_1_10</td>
+<td>Block any message headers that only an <b class="APPLICATION">UMQ</b> 2.1.10 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.0</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_0</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.0 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.0.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_0_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.0.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.1.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_1_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.1.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.1.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_1_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.1.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.2.1</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_2_1</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.2.1 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.2.2</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_2_2</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.2.2 or newer
+application would understand.</td>
+</tr>
+
+<tr>
+<td>UM_5.3</td>
+<td>LBM_CTX_ATTR_NET_COMPAT_MODE_UM_5_3</td>
+<td>Block any message headers that only an <b class="APPLICATION">UM</b> 5.3 or newer
+application would understand.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="multipleapplications.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="majoroptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Running Multiple Applications</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Major Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

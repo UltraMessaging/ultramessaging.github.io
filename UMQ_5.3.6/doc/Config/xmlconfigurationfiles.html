@@ -1,0 +1,2187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>XML Configuration Files</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="PREVIOUS" title="Plain Text Configuration Files"
+href="plaintextconfigurationfiles.html" />
+<link rel="NEXT" title="Configuration File Restrictions"
+href="configurationfilerestrictions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="plaintextconfigurationfiles.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="10%" align="right" valign="bottom"><a
+href="configurationfilerestrictions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="XMLCONFIGURATIONFILES" name="XMLCONFIGURATIONFILES">1.3. XML
+Configuration Files</a></h1>
+
+<p>XML configuration files let you address many different applications and operating
+requirements, removing the need to programmatically set and reset options for them. A
+single XML file can contain options for multiple applications. Moreover, for a single
+application, you can configure multiple named contexts, event queues, etc., with
+different values for the same options.</p>
+
+<p>See <a href="../Config/examples.html" target="_top">Example Configuration
+Scenarios</a> for example configuration files.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="READINGXMLCONFIGURATIONFILES"
+name="READINGXMLCONFIGURATIONFILES">1.3.1. Reading XML Configuration Files</a></h2>
+
+<p>There are several ways to read an XML configuration file to assign values while
+creating a primitive object.</p>
+
+<ul>
+<li>
+<p><span class="bold"><b class="EMPHASIS">API function</b></span> <code
+class="FUNCTION">lbm_config_xml_file()</code> - reads an XML configuration file into <b
+class="APPLICATION">UM</b>'s <span class="emphasis"><i class="EMPHASIS">XML config
+table</i></span>. Call this before the primitive create function. This does not change
+the current default attributes.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">API function</b></span> <code
+class="FUNCTION">lbm_config_xml_string()</code> - populates the XML config table directly
+from your application. Call this before the primitive create function. This does not
+change the current default attributes.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">API function</b></span> <code
+class="FUNCTION">lbm_*_attr_create_from_XML()</code> - creates a custom attributes object
+containing the values from an XML configuration file. The values can then be applied to a
+primitive object being created by calling function <code
+class="FUNCTION">lbm_*_create()</code> and specifying this custom attributes object in
+the second parameter.</p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Environment variable
+LBM_XML_CONFIG_FILENAME</b></span> - reads the file into <b class="APPLICATION">UM</b>'s
+XML config table. These settings are then is available to all applications when they
+start.</p>
+
+<p><tt class="LITERAL">export LBM_XML_CONFIG_FILENAME=filename</tt></p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Environment variable
+LBM_XML_CONFIG_APPNAME</b></span> - reads options for a specific application from the
+above variable's filename. This initiates the specified application's configuration; set
+this environment variable for every application.</p>
+
+<p><tt class="LITERAL">export LBM_XML_CONFIG_APPNAME=application_name</tt></p>
+</li>
+
+<li>
+<p><span class="bold"><b class="EMPHASIS">Environment variable LBM_UMM_INFO</b></span> -
+initiates UMM Daemon to read options for an application and user from the above
+variable's filename. Set this variable for every application/user combination, in this
+format:</p>
+
+<p><tt class="LITERAL">export
+LBM_UMM_INFO=application_name:user_name:password@ip:port</tt></p>
+</li>
+</ul>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Since these API functions and environment variables can be used without
+the UMM Daemon, no username or password can be set.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="GETTINGSTARTEDXMLCONFIG" name="GETTINGSTARTEDXMLCONFIG">1.3.2.
+Using XML Configuration Files With a UM Application</a></h2>
+
+<p>The following procedure describes a general approach to implementing XML configuration
+files.</p>
+
+<ol type="1">
+<li>
+<p>Create an XML configuration file using an XML editor or text editor. Just for this
+example, name the file, <tt class="LITERAL">UM_CONFIG.XML</tt>.</p>
+</li>
+
+<li>
+<p>Insert any desired templates in the <tt class="LITERAL">&lt;templates&#62;</tt>
+element to hold configuration option values shared by multiple applications or primitive
+<b class="APPLICATION">UM</b> objects (context, source, receiver, wildcard receiver or
+event queue). You can create and apply multiple templates to applications and primitive
+<b class="APPLICATION">UM</b> objects, however, if the same option appears in multiple
+templates, the option value in the last template overrides the option value in the
+previous template. See <a
+href="xmlconfigurationfiles.html#TEMPLATES-ELEMENT"><i>&lt;templates&#62;</i></a>.</p>
+</li>
+
+<li>
+<p>Insert an <tt class="LITERAL">&lt;application&#62;</tt> element for your <b
+class="APPLICATION">UM</b> application in the <tt
+class="LITERAL">&lt;applications&#62;</tt> element and include any relevant templates
+created in the previous step. Just for this example, name the application, <tt
+class="LITERAL">SENDAPP</tt>. See <a
+href="xmlconfigurationfiles.html#APPLICATIONS-ELEMENT"><i>&lt;applications&#62;</i></a>.</p>
+</li>
+
+<li>
+<p>Within the <tt class="LITERAL">&lt;Contexts&#62;</tt> element, configure the
+application's <tt class="LITERAL">&lt;Context&#62;</tt> element and context options. And
+since our example application, SENDAPP is a sending application, also configure its
+Source options. (If this was a receiving application, you would configure Receiver or
+Wildcard Receiver options. If your application creates multiple Contexts, enter multiple
+<tt class="LITERAL">&lt;Context&#62;</tt> elements within the Contexts element, inserting
+the appropriate source, receiver or wildcard receiver options. See <a
+href="xmlconfigurationfiles.html#CONTEXTS-ELEMENT"><i>&lt;contexts&#62;</i></a>.</p>
+</li>
+
+<li>
+<p>Configure the applications Event Queue options. See <a
+href="xmlconfigurationfiles.html#EQUES-ELEMENT"><i>&lt;event-queues&#62;</i></a></p>
+</li>
+
+<li>
+<p>Save the XML configuration file, <tt class="LITERAL">UM_CONFIG.XML</tt>, and load it
+onto the machine where the application (<tt class="LITERAL">SENDAPP</tt>) runs.</p>
+</li>
+
+<li>
+<p>Set the following environment variables on the machine where <tt
+class="LITERAL">SENDAPP</tt> runs.</p>
+
+<ul>
+<li>
+<p>Set LBM_XML_CONFIG_FILENAME to <tt class="LITERAL">UM_CONFIG.XML</tt>.</p>
+</li>
+
+<li>
+<p>Set LBM_XML_CONFIG_APPNAME to <tt class="LITERAL">SENDAPP</tt>.</p>
+</li>
+
+<li>
+<p>Optionally, you could also use <code
+class="FUNCTION">lbm_config_xml_file(UM_CONFIG.XML,SENDAPP)</code> in the <tt
+class="LITERAL">SENDAPP</tt> source.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Start <tt class="LITERAL">SENDAPP</tt>.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="XMLCONFIGURATIONFILEFORMAT"
+name="XMLCONFIGURATIONFILEFORMAT">1.3.3. XML Configuration File Format</a></h2>
+
+<p>An XML Configuration File follows standard XML conventions. Element declarations or a
+pointer to a DTD file are not needed, as these are handled by <b
+class="APPLICATION">UM</b>.</p>
+
+<p>An XML configuration file generally comprises two primary elements: <tt
+class="LITERAL">templates</tt> and <tt class="LITERAL">applications</tt>. Organized and
+contained within these are option value assignments. Applications containers let you set
+options for specific applications. To provide more global control over applications, or
+to simply reduce repetition, you can create templates to hold option settings that are to
+be used in one or more different applications.</p>
+
+<p>XML configuration files use the high-level structure shown in the following example.
+This example includes only some container elements, and no options.</p>
+
+<pre class="SCREEN">
+&lt;um-configuration version="1.0"/&#62;
+  &lt;templates&#62;
+    &lt;template name="SENDING"&#62;
+      &lt;options type="source"&#62;
+      &lt;/options&#62;
+      &lt;options type="context"&#62;
+      &lt;/options&#62;
+    &lt;/template&#62;
+   &lt;/templates&#62;
+  &lt;applications&#62;
+    &lt;application name="SENDING-TOPIC1"&#62;
+      &lt;contexts&#62;
+        &lt;context name="SENDING-LBTRM"&#62;
+          &lt;sources&#62;
+            &lt;topic topicname="TOPIC1"&#62;
+              &lt;options type="source"&#62;
+              &lt;/options&#62;
+            &lt;/topic&#62;
+          &lt;/sources&#62;
+        &lt;/context&#62;
+      &lt;/contexts&#62;
+      &lt;event-queues&#62;
+        &lt;event-queue/&#62;
+        &lt;event-queue name="EQ-1"/&#62;
+      &lt;/event-queues&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+&lt;/um-configuration&#62;
+       
+</pre>
+
+<p>Following are descriptions of the XML configuration file elements.</p>
+
+<ul>
+<li>
+<p><a
+href="xmlconfigurationfiles.html#UM-CONFIGURATION-ELEMENT"><i>&lt;um-configuration&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#LICENSE-ELEMENT"><i>&lt;license&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#ALLOW-ELEMENT"><i>&lt;allow&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#DENY-ELEMENT"><i>&lt;deny&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#TEMPLATES-ELEMENT"><i>&lt;templates&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#TEMPLATE-ELEMENT"><i>&lt;template&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#APPLICATIONS-ELEMENT"><i>&lt;applications&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#CONTEXTS-ELEMENT"><i>&lt;contexts&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#SOURCES-ELEMENT"><i>&lt;sources&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#RECEIVERS-ELEMENT"><i>&lt;receivers&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#WRECEIVERS-ELEMENT"><i>&lt;wildcard-receivers&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#WRECEIVER-ELEMENT"><i>&lt;wildcard-receiver&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#EQUES-ELEMENT"><i>&lt;event-queues&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#EQUE-ELEMENT"><i>&lt;event-queue&#62;</i></a></p>
+</li>
+
+<li>
+<p><a href="xmlconfigurationfiles.html#HFXS-ELEMENT"><i>&lt;hfxs&#62;</i></a></p>
+</li>
+
+<li>
+<p><a
+href="xmlconfigurationfiles.html#APP-DATA-ELEMENT"><i>&lt;application-data&#62;</i></a></p>
+</li>
+</ul>
+
+<p>See also <a href="xmlconfigurationfiles.html#SAMPLE-XML-CONFIG"><i>Sample XML
+Configuration File</i></a> and <a href="xmlconfigurationfiles.html#CONFIG-DTD"><i>XML
+Configuration File DTD</i></a>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UM-CONFIGURATION-ELEMENT"
+name="UM-CONFIGURATION-ELEMENT">1.3.3.1. &lt;um-configuration&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;um-configuration&#62;</tt> element is
+a required container for all <b class="APPLICATION">UM</b> configuration options residing
+in the XML configuration file. This is the top-level element.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Parents.</b></span> None.</p>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#TEMPLATES-ELEMENT"><i>&lt;templates&#62;</i></a> <a
+href="xmlconfigurationfiles.html#APPLICATIONS-ELEMENT"><i>&lt;applications&#62;</i></a>
+<a href="xmlconfigurationfiles.html#LICENSE-ELEMENT"><i>&lt;license&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN439" name="AEN439"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">version</tt></td>
+<td>The version of the DTD.</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+&lt;um-configuration version="1.0"&#62;
+  &lt;applications&#62;
+    &lt;application&#62;
+      . . .
+      . . .
+    &lt;/application&#62;
+  &lt;/applications&#62;
+&lt;/um-configuration&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="LICENSE-ELEMENT" name="LICENSE-ELEMENT">1.3.3.1.1.
+&lt;license&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;license&#62;</tt> element identifies
+the <b class="APPLICATION">UM</b> product license, either as the license key or as a
+pointer to a license file, as an alternative to setting it in an environment
+variable.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#UM-CONFIGURATION-ELEMENT"><i>&lt;um-configuration&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Children.</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN473" name="AEN473"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">format</tt></td>
+<td>The format for the license element data. <tt class="LITERAL">filename</tt> points to
+the file containing the license key. <tt class="LITERAL">string</tt> identifies the data
+as the license key itself.</td>
+<td><tt class="LITERAL">string</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">xml:space</tt></td>
+<td>How whitespace is handled. <tt class="LITERAL">default</tt> trims leading and
+trailing whitespace (e.g., tabs, spaces, linefeeds, etc.), and compresses multiple
+whitespace characters into a single space character. <tt class="LITERAL">preserve</tt>
+preserves the whitespace exactly as read.</td>
+<td><tt class="LITERAL">default</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+&lt;um-configuration&#62;
+  &lt;license format=filename&#62;
+  path/license-file-name
+  &lt;/license&#62;
+  &lt;applications&#62;
+    &lt;application&#62;
+      . . . 
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="OPTIONS-ELEMENT" name="OPTIONS-ELEMENT">1.3.3.2.
+&lt;options&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;options&#62;</tt> element is a
+container element for individual options. You specify the primitive object in the
+attribute <tt class="LITERAL">type</tt>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#TEMPLATE-ELEMENT"><i>&lt;template&#62;</i></a> <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a> <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a> <a
+href="xmlconfigurationfiles.html#WRECEIVER-ELEMENT"><i>&lt;wildcard-receiver&#62;</i></a>
+<a href="xmlconfigurationfiles.html#EQUE-ELEMENT"><i>&lt;event-queue&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a> <a
+href="xmlconfigurationfiles.html#APP-DATA-ELEMENT"><i>&lt;application-data&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN525" name="AEN525"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">type</tt></td>
+<td>The type of primitive object, which can be <tt class="LITERAL">event-queue</tt>, <tt
+class="LITERAL">context</tt>, <tt class="LITERAL">source</tt>, <tt
+class="LITERAL">receiver</tt>, <tt class="LITERAL">wildcard-receiver</tt>, or <tt
+class="LITERAL">hfx</tt>).</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+      &lt;options type="context"&#62;
+        &lt;option/&#62;
+        . . .
+        &lt;application-data/&#62;
+      &lt;/options&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="OPTION-ELEMENT" name="OPTION-ELEMENT">1.3.3.2.1.
+&lt;option&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;option&#62;</tt> element corresponds
+to any <b class="APPLICATION">UM</b> configuration option.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#ALLOW-ELEMENT"><i>&lt;allow&#62;</i></a> <a
+href="xmlconfigurationfiles.html#DENY-ELEMENT"><i>&lt;deny&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN568" name="AEN568"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the <b class="APPLICATION">UM</b> configuration option. See <a
+href="../Config/reference.html" target="_top">Reference</a> for all options.</td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">default-value</tt></td>
+<td>The value you are setting for this option.</td>
+<td>The default value for the option.</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Permit or restrict particular option values. Valid values are <tt
+class="LITERAL">deny,allow</tt> (deny what you specify, allow everything else) or <tt
+class="LITERAL">allow,deny</tt> (allow what you specify, deny everything else). If using
+this XML attribute, follow this element with <a
+href="xmlconfigurationfiles.html#ALLOW-ELEMENT"><i>&lt;allow&#62;</i></a> or <a
+href="xmlconfigurationfiles.html#DENY-ELEMENT"><i>&lt;deny&#62;</i></a> elements as
+needed. See also <a href="xmlconfigurationfiles.html#SAMPLE-XML-CONFIG"><i>Sample XML
+Configuration File</i></a>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Examples:</b></span></p>
+
+<p>To permit any application to choose any transport method except LBT-RU, configure the
+following in a template included in sending applications.</p>
+
+<pre class="SCREEN">
+    &lt;option default-value="tcp" name="transport" order="deny,allow"&#62;
+      &lt;deny&#62;LBTRU&lt;/deny&#62;
+    &lt;/option&#62;
+           
+</pre>
+
+<p>To restrict any application to only the LBT-RM or LBR-RU transport method, configure
+the following in a template included in sending applications.</p>
+
+<pre class="SCREEN">
+    &lt;option default-value="tcp" name="transport" order="allow,deny"&#62;
+      &lt;allow&#62;LBTRU&lt;/allow&#62;
+      &lt;allow&#62;LBTRM&lt;/allow&#62;
+    &lt;/option&#62;
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="ALLOW-ELEMENT" name="ALLOW-ELEMENT">1.3.3.2.2.
+&lt;allow&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> Use the <tt class="LITERAL">&lt;allow&#62;</tt> element with <a
+href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a> to set a
+condition for for that option to permit only a certain subset of possible <tt
+class="LITERAL">default value</tt> values for the option. See also <a
+href="xmlconfigurationfiles.html#ORDER-RULE-ATTR"><i>Using the Order and Rule XML
+Attributes</i></a>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Children.</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN625" name="AEN625"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">xml:space</tt></td>
+<td>How whitespace is handled. <tt class="LITERAL">default</tt> trims leading and
+trailing whitespace (e.g., tabs, spaces, linefeeds, etc.), and compresses multiple
+whitespace characters into a single space character. <tt class="LITERAL">preserve</tt>
+preserves the whitespace exactly as read.</td>
+<td><tt class="LITERAL">default</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+    &lt;option default-value="tcp" name="transport" order="allow,deny"&#62;
+      &lt;allow&#62;LBTRU&lt;/allow&#62;
+      &lt;allow&#62;LBTRM&lt;/allow&#62;
+    &lt;/option&#62;
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="DENY-ELEMENT" name="DENY-ELEMENT">1.3.3.2.3.
+&lt;deny&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> Use the <tt class="LITERAL">&lt;deny&#62;</tt> element with <a
+href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a> to set a
+condition for that option that restricts certain (otherwise) possible <tt
+class="LITERAL">default value</tt> values from being used by the option. See also <a
+href="xmlconfigurationfiles.html#ORDER-RULE-ATTR"><i>Using the Order and Rule XML
+Attributes</i></a>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#OPTION-ELEMENT"><i>&lt;option&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Children.</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN664" name="AEN664"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">xml:space</tt></td>
+<td>How whitespace is handled. <tt class="LITERAL">default</tt> trims leading and
+trailing whitespace (e.g., tabs, spaces, linefeeds, etc.), and compresses multiple
+whitespace characters into a single space character. <tt class="LITERAL">preserve</tt>
+preserves the whitespace exactly as read.</td>
+<td><tt class="LITERAL">default</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+    &lt;option default-value="tcp" name="transport" order="deny,allow"&#62;
+      &lt;deny&#62;LBTRU&lt;/deny&#62;
+    &lt;/option&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TEMPLATES-ELEMENT" name="TEMPLATES-ELEMENT">1.3.3.3.
+&lt;templates&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;templates&#62;</tt> element is a
+container element for all templates that contain configuration options that can be used
+in other templates or applications. A template can be very specific, such as configuring
+options only for LBT-RM sources, or more comprehensive, configuring common options for
+your applications.</p>
+</div>
+
+<p>Insert any desired templates in the <tt class="LITERAL">&lt;templates&#62;</tt>
+element to hold configuration option values shared by multiple applications or primitive
+objects. You can create and apply multiple templates to applications and primitive <b
+class="APPLICATION">UM</b> objects in a comma separated value (CSV) format. However, if
+the same option appears in multiple templates, the option value in the last or
+lower-level template overrides the option value in the previous or higher-level
+template.</p>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#UM-CONFIGURATION-ELEMENT"><i>&lt;um-configuration&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#TEMPLATE-ELEMENT"><i>&lt;template&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;templates&#62;
+    &lt;template name="SENDING"&#62;
+      &lt;options/&#62;
+    &lt;/template&#62;
+  &lt;/templates&#62;               
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="TEMPLATE-ELEMENT" name="TEMPLATE-ELEMENT">1.3.3.3.1.
+&lt;template&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;template&#62;</tt> element is a
+container for one uniquely named set of options.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#TEMPLATES-ELEMENT"><i>&lt;templates&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN724" name="AEN724"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the configuration template, which can be referenced elsewhere in this XML
+configuration file to assign to other configuration elements. Multiple templates can be
+specified in a comma separated value (CSV) format.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;templates&#62;
+    &lt;template name="SENDING",name="SENDING-LBTRM"&#62;
+      &lt;options/&#62;
+    &lt;/template&#62;
+  &lt;/templates&#62;               
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="APPLICATIONS-ELEMENT" name="APPLICATIONS-ELEMENT">1.3.3.4.
+&lt;applications&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;application&#62;</tt> element is a
+container element for all applications configured in the XML configuration file. <b
+class="APPLICATION">UM</b> lets you configure one or more applications.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#UM-CONFIGURATION-ELEMENT"><i>&lt;um-configuration&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application name="SENDING-IXCM-LBTRM" template="SENDING"&#62;
+      &lt;contexts/&#62;
+      &lt;event-queues/&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="APPLICATION-ELEMENT" name="APPLICATION-ELEMENT">1.3.3.4.1.
+&lt;application&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">application</tt> element contains option
+values for all object elements within a single, uniquely named, application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#APPLICATIONS-ELEMENT"><i>&lt;applications&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#APP-DATA-ELEMENT"><i>&lt;application-data&#62;</i></a>
+<a href="xmlconfigurationfiles.html#CONTEXTS-ELEMENT"><i>&lt;contexts&#62;</i></a> <a
+href="xmlconfigurationfiles.html#EQUES-ELEMENT"><i>&lt;event-queues&#62;</i></a> <a
+href="xmlconfigurationfiles.html#HFXS-ELEMENT"><i>&lt;hfxs&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN782" name="AEN782"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the application. Used as an optional parameter for <code
+class="FUNCTION">lbm_config_from_xml()</code>. If a name is not supplied, this must be
+the only occurrence of this element in the XML configuration file.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to use for the application.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application name="SENDING-IXCM-LBTRM" template="SENDING"&#62;
+      &lt;application-data/&#62;
+      &lt;contexts/&#62;
+      &lt;event-queues/&#62;
+    &lt;/application&#62;
+    &lt;application name="SENDING-IXCM-TCP" template="SENDING"&#62;
+      &lt;application-data/&#62;
+      &lt;contexts/&#62;
+      &lt;event-queues/&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONTEXTS-ELEMENT" name="CONTEXTS-ELEMENT">1.3.3.5.
+&lt;contexts&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;contexts&#62;</tt> element is a
+container element for all <b class="APPLICATION">UM</b> <a
+href="../Design/lbm-objects.html#CONTEXT-OBJECT" target="_top">contexts</a> configured
+for an application. <b class="APPLICATION">UM</b> lets you create one or more contexts
+for an application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN826" name="AEN826"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual context object
+configured within this element. Multiple templates can by applied by specifying them in a
+comma-separated-value manner, i.e., <tt class="LITERAL">"SENDING1,SENDING2"</tt>. Can be
+overridden by a different template configured for an individual context.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual context configured within
+this element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you
+specify, allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you
+specify, deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a> XML
+attribute, <tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts template="SENDING" order="deny,allow"&#62;
+        &lt;context name="SENDING-95" template="SENDING-LBTRM" rule="allow"&#62;
+          &lt;sources/&#62;
+          &lt;receivers/&#62;
+          &lt;wildcard-receivers/&#62;
+          &lt;options/&#62;
+        &lt;/context&#62;
+      &lt;/contexts&#62;
+      &lt;event-queues/&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+               
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONTEXT-ELEMENT" name="CONTEXT-ELEMENT">1.3.3.5.1.
+&lt;context&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;context&#62;</tt> element contains
+option values for a single context, organized into its child elements.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#CONTEXTS-ELEMENT"><i>&lt;contexts&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#SOURCES-ELEMENT"><i>&lt;sources&#62;</i></a> <a
+href="xmlconfigurationfiles.html#RECEIVERS-ELEMENT"><i>&lt;receivers&#62;</i></a> <a
+href="xmlconfigurationfiles.html#WRECEIVERS-ELEMENT"><i>&lt;wildcard-receivers&#62;</i></a>
+<a href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN875" name="AEN875"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the context. Used as a parameter for <code
+class="FUNCTION">lbm_context_attr_create_from_xml()</code> and <code
+class="FUNCTION">lbm_context_attr_set_from_xml()</code>. If no name is supplied, the
+contained settings are matched with all NULL-named contexts.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to use for the context object's options.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rule</tt></td>
+<td>Permits or restricts the creation of the context object. If <tt
+class="LITERAL">rule="deny"</tt>, the context object errors upon creation.</td>
+<td><tt class="LITERAL">allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts template="SENDING" order="deny,allow"&#62;
+        &lt;context name="SENDING-95" template="SENDING-LBTRM" rule="allow"&#62;
+          &lt;sources/&#62;
+          &lt;receivers/&#62;
+          &lt;wildcard-receivers/&#62;
+          &lt;options/&#62;
+        &lt;/context&#62;
+      &lt;/contexts&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+               
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="SOURCES-ELEMENT" name="SOURCES-ELEMENT">1.3.3.6.
+&lt;sources&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;sources&#62;</tt> element is a
+container for all <b class="APPLICATION">UM</b> <a
+href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">sources</a> configured for
+an application. <b class="APPLICATION">UM</b> lets you create one or more sources for an
+application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN927" name="AEN927"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual source object
+configured within this element. Multiple templates can by applied by specifying them in a
+comma-separated-value manner, i.e., <tt class="LITERAL">"SENDING1,SENDING2"</tt>. Can be
+overridden by a different template configured for an individual source.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual source configured within this
+element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you specify,
+allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you specify,
+deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a> XML attribute
+<tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts&#62;
+        &lt;context&#62;
+          &lt;sources template="SENDING" order="deny,allow"&#62;
+            &lt;topic topicname="ICXM" template="SENDING-LBTRM" rule="allow"/&#62;
+          &lt;/sources&#62;
+          &lt;receivers/&#62;
+          &lt;wildcard-receivers/&#62;
+          &lt;options/&#62;
+        &lt;/context&#62;
+      &lt;/contexts&#62;
+      &lt;event-queues/&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="TOPIC-ELEMENT" name="TOPIC-ELEMENT">1.3.3.6.1.
+&lt;topic&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;topic&#62;</tt> element contains
+option values for a single source or receiver.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#HFXS-ELEMENT"><i>&lt;hfxs&#62;</i></a> <a
+href="xmlconfigurationfiles.html#RECEIVERS-ELEMENT"><i>&lt;receivers&#62;</i></a>. <a
+href="xmlconfigurationfiles.html#SOURCES-ELEMENT"><i>&lt;sources&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN975" name="AEN975"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">topicname</tt></td>
+<td>The topic string for the topic that the source sends or the receiver accepts. Used as
+a parameter for <code class="FUNCTION">lbm_src_topic_alloc()</code>, <code
+class="FUNCTION">lbm_rcv_topic_lookup()</code>, <code
+class="FUNCTION">lbm_src_attr_create_from_xml()</code>, <code
+class="FUNCTION">lbm_src_attr_set_from_xml()</code>, <code
+class="FUNCTION">lbm_rcv_attr_create_from_xml()</code> and <code
+class="FUNCTION">lbm_rcv_attr_set_from_xml()</code>. Do not use with the <tt
+class="LITERAL">pattern</tt> attribute.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to use for this topic's source or receiver
+options.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rule</tt></td>
+<td>Permits or restricts the creation of the source or receiver object. If <tt
+class="LITERAL">rule="deny"</tt>, the object errors upon creation.</td>
+<td><tt class="LITERAL">allow</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">pattern</tt></td>
+<td>Identify the set of options for this topic with a topic string pattern. Any source
+created with a topic string that matches this pattern receives the configured option
+values. Do not use with the <tt class="LITERAL">topicname</tt> attribute.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+&lt;applications&#62;
+&lt;application name="Sending"&#62;
+  &lt;contexts order="deny,allow"&#62;
+    &lt;context rule="allow" template="Sending-LBTRM"&#62;
+      &lt;sources order="deny,allow"&#62;
+        &lt;topic rule="allow" topicname="IXCM"&#62;
+          &lt;options type="source"&#62;
+            &lt;option default-value="224.12.5.101" name="transport_lbtrm_multicast_address"/&#62;
+          &lt;/options&#62;
+        &lt;/topic&#62;
+      &lt;/sources&#62;
+    &lt;/context&#62;
+  &lt;/contexts&#62;
+&lt;/application&#62;
+&lt;/applications&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="RECEIVERS-ELEMENT" name="RECEIVERS-ELEMENT">1.3.3.7.
+&lt;receivers&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;receivers&#62;</tt> element is a
+container element for all <b class="APPLICATION">UM</b> <a
+href="../Design/lbm-objects.html#RECEIVER-OBJECT" target="_top">receivers</a> configured
+for an application. You can create one or more receivers for an application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1037" name="AEN1037"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual receiver object
+configured within this element. You can apply multiple templates by specifying them in a
+comma-separated-value manner, e.g., <tt class="LITERAL">"RECEIVING1,RECEIVING2"</tt>. A
+template applied to an individual receiver will override a <tt
+class="LITERAL">&lt;receivers&#62;</tt>-level template.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual receiver configured within
+this element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you
+specify, allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you
+specify, deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a> XML attribute
+<tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts&#62;
+        &lt;context&#62;
+          &lt;sources/&#62;
+          &lt;receivers template="RECEIVING" order="deny,allow"&#62;
+            &lt;topic topicname="ICXM" template="RECEIVING" rule="allow"/&#62;
+          &lt;/receivers&#62;
+          &lt;wildcard-receivers/&#62;
+          &lt;options/&#62;
+        &lt;/context&#62;
+      &lt;event-queues/&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="WRECEIVERS-ELEMENT" name="WRECEIVERS-ELEMENT">1.3.3.8.
+&lt;wildcard-receivers&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The &lt;wildcard-receivers&#62; element is a container element for
+all <b class="APPLICATION">UM</b> <a href="../Design/lbm-objects.html#WILDCARD-RECEIVER"
+target="_top">wildcard receivers</a> configured for an application. <b
+class="APPLICATION">UM</b> lets you create one or more wildcard receivers for an
+application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#WRECEIVER-ELEMENT"><i>&lt;wildcard-receiver&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1086" name="AEN1086"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual wildcard receiver
+object configured within this element. Multiple templates can by applied by specifying
+them in a comma-separated-value manner, i.e., <tt
+class="LITERAL">"RECEIVING1,RECEIVING2"</tt>. Can be overridden by a different template
+configured for an individual wildcard receiver.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual wildcard receiver configured
+within this element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you
+specify, allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you
+specify, deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#WRECEIVER-ELEMENT"><i>&lt;wildcard-receiver&#62;</i></a>
+XML attribute <tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts&#62;
+        &lt;context&#62;
+          &lt;sources&#62;
+          &lt;receivers/&#62;
+          &lt;wildcard-receivers template="RECEIVING" order="deny,allow"&#62;
+            &lt;wildcard-receiver template="RECEIVING-LBTRM" rule="allow" pattern="I*M" pattern-type="pcre"/&#62;
+          &lt;/wildcard-receivers&#62;
+        &lt;options/&#62;
+        &lt;/context&#62;
+      &lt;event-queues/&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="WRECEIVER-ELEMENT" name="WRECEIVER-ELEMENT">1.3.3.8.1.
+&lt;wildcard-receiver&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;wildcard-receiver&#62;</tt> element
+contains option values for a single wildcard receiver.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#WRECEIVERS-ELEMENT"><i>&lt;wildcard-receivers&#62;</i></a>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1132" name="AEN1132"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to use for the wildcard receiver object's
+options.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rule</tt></td>
+<td>Permits or restricts the creation of the wildcard receiver object. If <tt
+class="LITERAL">rule="deny"</tt>, the object errors upon creation.</td>
+<td><tt class="LITERAL">allow</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">pattern</tt></td>
+<td>The wildcard receiver topic string pattern for this wildcard receiver object.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">pattern-type</tt></td>
+<td>The type of pattern matching to use for the wildcard receiver object. Valid values
+are <tt class="LITERAL">pcre</tt>, <tt class="LITERAL">regex</tt> or <tt
+class="LITERAL">application-callback</tt>.</td>
+<td><tt class="LITERAL">pcre</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts&#62;
+        &lt;context&#62;
+          &lt;wildcard-receivers template="RECEIVING" order="deny,allow"&#62;
+            &lt;wildcard-receiver template="RECEIVING-LBTRM" rule="allow" pattern="I*M" pattern-type="pcre"/&#62;
+          &lt;/wildcard-receivers&#62;
+        &lt;/context&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="EQUES-ELEMENT" name="EQUES-ELEMENT">1.3.3.9.
+&lt;event-queues&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;event-queues&#62;</tt> Element is a
+container element for all <b class="APPLICATION">UM</b> <a
+href="../Design/lbm-objects.html#EVENT-QUEUE-OBJECT " target="_top">event queues</a>
+configured for an application. <b class="APPLICATION">UM</b> lets you create one or more
+event queues for an application.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#EQUE-ELEMENT"><i>&lt;event-queue&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1191" name="AEN1191"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual event queue object
+configured within this element. You can apply multiple templates specifying them in a
+comma-separated-value manner, e.g., <tt class="LITERAL">"EVQ-1,EVQ-2"</tt>. A template
+applied to an individual event queue will override an <tt
+class="LITERAL">&lt;event-queues&#62;</tt>-level template.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual event queue configured within
+this element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you
+specify, allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you
+specify, deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#EQUE-ELEMENT"><i>&lt;event-queue&#62;</i></a> XML
+attribute, <tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts/&#62;
+      &lt;event-queues template="RECEIVING" order="deny,allow"&#62;
+        &lt;event-queue name="EVQ-1" template="SENDING-LBTRM" rule="allow"/&#62;
+      &lt;/event-queues&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="EQUE-ELEMENT" name="EQUE-ELEMENT">1.3.3.9.1.
+&lt;event-queue&#62;</a></h4>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;event-queue&#62;</tt> element contains
+option values for a single event queue.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#EQUES-ELEMENT"><i>&lt;event-queues&#62;</i></a>.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1238" name="AEN1238"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">name</tt></td>
+<td>Name of the event queue. Used as a parameter for <code
+class="FUNCTION">lbm_event_queue_attr_create_from_xml()</code> and <code
+class="FUNCTION">lbm_event_queue_attr_set_from_xml()</code>.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to use for the event queue object's options.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">rule</tt></td>
+<td>Permits or restricts the creation of the event queue object. If <tt
+class="LITERAL">rule="deny"</tt>, the object errors upon creation.</td>
+<td><tt class="LITERAL">allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;contexts/&#62;
+      &lt;event-queues template="RECEIVING" order="deny,allow"&#62;
+        &lt;event-queue name="EVQ-1" template="SENDING-LBTRM" rule="allow"/&#62;
+      &lt;/event-queues&#62;
+      &lt;application-data/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="HFXS-ELEMENT" name="HFXS-ELEMENT">1.3.3.10.
+&lt;hfxs&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;hfxs&#62;</tt> element is a container
+for all <b class="APPLICATION">UM</b> <a href="../Design/lbm-features.html#HOT-FAILOVER"
+target="_top">HFX objects</a> configured for an application. Within the <tt
+class="LITERAL">&lt;hfxs&#62;</tt> element, options are organized by topic.</p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a></p>
+</div>
+
+<div class="FORMALPARA">
+<p><b>Children.</b> <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a></p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1290" name="AEN1290"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">template</tt></td>
+<td>Name of the configuration template to apply to each individual HFX object configured
+within this element. Multiple templates can by applied by specifying them in a
+comma-separated-value manner, i.e., <tt class="LITERAL">"SENDING1,SENDING2"</tt>. Can be
+overridden by a different template configured for an individual HFX object.</td>
+<td>None</td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">order</tt></td>
+<td>Establishes the permission semantic for each individual HFX object configured within
+this element. Valid values are <tt class="LITERAL">deny,allow</tt> (deny what you
+specify, allow everything else) or <tt class="LITERAL">allow,deny</tt> (allow what you
+specify, deny everything else). Works in conjunction with the <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a> XML attribute,
+<tt class="LITERAL">rule</tt>.</td>
+<td><tt class="LITERAL">deny,allow</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application&#62;
+      &lt;hfxs template="SENDING" order="deny,allow"&#62;
+        &lt;topic topicname="ICXM" template="SENDING-LBTRM" rule="allow"/&#62;
+      &lt;/hfxs&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="APP-DATA-ELEMENT" name="APP-DATA-ELEMENT">1.3.3.11.
+&lt;application-data&#62;</a></h3>
+
+<div class="FORMALPARA">
+<p><b>Description.</b> The <tt class="LITERAL">&lt;application-data&#62;</tt> element is
+a free-form text comment field that you can use to store application-specific or
+options-group-specific metadata. When defined at the options level, this content
+overrides &lt;application-data&#62; elements defined at the application level.</p>
+</div>
+
+<p>Your application can retrieve this data via the <code
+class="FUNCTION">lbm_*_attr_getopt()</code> and <code
+class="FUNCTION">lbm_*_attr_str_getopt()</code> API functions under the option name <tt
+class="LITERAL">application_data</tt>. You can also programmatically set it using the
+equivalent <code class="FUNCTION">*_setopt()</code> APIs. The <tt
+class="LITERAL">application_data</tt> option is defined for all option scopes.</p>
+
+<p>Also, you can set or retrieve this value at runtime via the <code
+class="FUNCTION">*_getopt()</code> and <code class="FUNCTION">*_setopt()</code> functions
+defined for the following types:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">lbm_context_t</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_src_t</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_rcv_t</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_wildcard_rcv_t</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_event_queue_t</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">lbm_hfx_t</tt></p>
+</li>
+</ul>
+
+<div class="FORMALPARA">
+<p><b>Parents.</b> <a
+href="xmlconfigurationfiles.html#APPLICATION-ELEMENT"><i>&lt;application&#62;</i></a>. <a
+href="xmlconfigurationfiles.html#OPTIONS-ELEMENT"><i>&lt;options&#62;</i></a>.</p>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Children.</b></span> None.</p>
+
+<p><span class="bold"><b class="EMPHASIS">XML Attributes:</b></span></p>
+
+<div class="INFORMALTABLE"><a id="AEN1363" name="AEN1363"></a>
+<table border="1" class="CALSTABLE">
+<col width="144" />
+<col width="384" />
+<col width="96" />
+<thead>
+<tr>
+<th>XML Attribute</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">xml:space</tt></td>
+<td>How whitespace is handled. <tt class="LITERAL">default</tt> trims leading and
+trailing whitespace (e.g., tabs, spaces, linefeeds, etc.), and compresses multiple
+whitespace characters into a single space character. <tt class="LITERAL">preserve</tt>
+preserves the whitespace exactly as read.</td>
+<td><tt class="LITERAL">default</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p><span class="bold"><b class="EMPHASIS">Example:</b></span></p>
+
+<pre class="SCREEN">
+  &lt;applications&#62;
+    &lt;application name="SENDING-IXCM-LBTRM" template="SENDING"&#62;
+      &lt;application-data&#62;
+      SENDING-IXCM-LBTRM options application data string
+      &lt;application-data/&#62;
+      &lt;contexts/&#62;
+        &lt;options type="context"&#62;
+          &lt;option/&#62;
+          . . .
+          &lt;application-data&#62;
+          context options application data string
+          &lt;application-data/&#62;
+        &lt;/options&#62;
+      &lt;event-queues/&#62;
+    &lt;/application&#62;
+  &lt;/applications&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SAMPLE-XML-CONFIG" name="SAMPLE-XML-CONFIG">1.3.4. Sample XML
+Configuration File</a></h2>
+
+<p>A sample XML configuration file appears below and has the following notable
+aspects.</p>
+
+<ul>
+<li>
+<p>Contains object attributes for a <b class="APPLICATION">UM</b> context and source.</p>
+</li>
+
+<li>
+<p>Application name is <tt class="LITERAL">Sending</tt>.</p>
+</li>
+
+<li>
+<p>Uses a template of attributes also called <tt class="LITERAL">Sending-LBTRM</tt>.</p>
+</li>
+
+<li>
+<p>The template, <tt class="LITERAL">Sending-LBTRM</tt>, uses the <tt
+class="LITERAL">order</tt> attribute for the <tt class="LITERAL">fd_management_type</tt>
+to allow all file descriptor types except DEVPOLL. However the <tt
+class="LITERAL">Sending-LBTRM</tt> application further restricts the file descriptor
+types to exclude EPOLL in addition to DEVPOLL.</p>
+</li>
+</ul>
+
+<pre class="SCREEN">
+&lt;um-configuration version="1.0"&#62;
+&lt;templates&#62;
+&lt;template name="Sending-LBTRM"&#62;
+  &lt;options type="source"&#62;
+    &lt;option default-value="0" name="late_join"/&#62;
+    &lt;option default-value="500" name="resolver_advertisement_maximum_initial_interval"/&#62;
+    &lt;option default-value="5000" name="resolver_advertisement_minimum_initial_duration"/&#62;
+    &lt;option default-value="10" name="resolver_advertisement_minimum_initial_interval"/&#62;
+    &lt;option default-value="60" name="resolver_advertisement_minimum_sustain_duration"/&#62;
+    &lt;option default-value="1000" name="resolver_advertisement_sustain_interval"/&#62;
+    &lt;option default-value="lbtrm" name="transport"/&#62;
+    &lt;option default-value="14400" name="transport_lbtrm_destination_port"/&#62;
+    &lt;option default-value="0.0.0.0" name="transport_lbtrm_multicast_address"/&#62;
+  &lt;/options&#62;
+  &lt;options type="context"&#62;
+    &lt;option default-value="wsaeventselect" name="fd_management_type" order="deny,allow"&#62;
+      &lt;deny&#62;wincompport&lt;/deny&#62;
+    &lt;/option&#62;
+    &lt;option default-value="5000" name="mim_delivery_control_activity_check_interval"/&#62;
+    &lt;option default-value="60000" name="mim_delivery_control_activity_timeout"/&#62;
+    &lt;option default-value="6000" name="mim_delivery_control_loss_check_interval"/&#62;
+    &lt;option default-value="2000000" name="resolver_initial_advertisement_bps"/&#62;
+    &lt;option default-value="2000" name="resolver_initial_advertisements_per_second"/&#62;
+    &lt;option default-value="2000" name="resolver_initial_queries_per_second"/&#62;
+    &lt;option default-value="2000000" name="resolver_initial_query_bps"/&#62;
+  &lt;/options&#62;
+&lt;/template&#62;
+&lt;/templates&#62;
+&lt;applications&#62;
+&lt;application name="Sending"&#62;
+  &lt;contexts order="deny,allow"&#62;
+    &lt;context rule="allow" template="Sending-LBTRM"&#62;
+      &lt;sources order="deny,allow"&#62;
+        &lt;topic rule="allow" topicname="IXCM"&#62;
+          &lt;options type="source"&#62;
+            &lt;option default-value="1" name="late_join"/&#62;
+            &lt;option default-value="lbtrm" name="transport"/&#62;
+            &lt;option default-value="14488" name="transport_lbtrm_destination_port"/&#62;
+            &lt;option default-value="224.12.5.101" name="transport_lbtrm_multicast_address"/&#62;
+          &lt;/options&#62;
+        &lt;/topic&#62;
+      &lt;/sources&#62;
+      &lt;receivers order="deny,allow"/&#62;
+      &lt;wildcard-receivers order="deny,allow"/&#62;
+      &lt;options type="context"&#62;
+        &lt;option default-value="224.9.10.11" name="resolver_multicast_address"/&#62;
+        &lt;option default-value="224.9.10.11" name="resolver_multicast_incoming_address"/&#62;
+        &lt;option default-value="12965" name="resolver_multicast_incoming_port"/&#62;
+        &lt;option default-value="224.9.10.11" name="resolver_multicast_outgoing_address"/&#62;
+        &lt;option default-value="12965" name="resolver_multicast_outgoing_port"/&#62;
+        &lt;option default-value="12965" name="resolver_multicast_port"/&#62;
+        &lt;option default-value="224.9.10.12" name="resolver_multicast_interface"/&#62;
+        &lt;option default-value="0" name="resolver_multicast_receiver_socket_buffer"/&#62;
+        &lt;option default-value="wsaeventselect" name="fd_management_type" order="deny,allow"&#62;
+          &lt;deny&#62;wincompport&lt;/deny&#62;
+        &lt;/option&#62;
+      &lt;/options&#62;
+    &lt;/context&#62;
+  &lt;/contexts&#62;
+  &lt;event-queues order="deny,allow"&#62;
+    &lt;event-queue rule="allow"&#62;
+      &lt;options type="event-queue"&#62;
+        &lt;option default-value="lbm" name="monitor_transport"/&#62;
+        &lt;option default-value="" name="monitor_appid"/&#62;
+      &lt;/options&#62;
+    &lt;/event-queue&#62;
+  &lt;/event-queues&#62;
+&lt;/application&#62;
+&lt;/applications&#62;
+&lt;/um-configuration&#62;
+</pre>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="ORDER-RULE-ATTR" name="ORDER-RULE-ATTR">1.3.4.1. Using the
+Order and Rule XML Attributes</a></h3>
+
+<p>The <tt class="LITERAL">order</tt> and <tt class="LITERAL">rule</tt> XML attributes
+combine to enable you to permit or restrict the creation of primitive <b
+class="APPLICATION">UM</b> objects. The container elements such as the <a
+href="xmlconfigurationfiles.html#CONTEXTS-ELEMENT"><i>&lt;contexts&#62;</i></a>, <a
+href="xmlconfigurationfiles.html#SOURCES-ELEMENT"><i>&lt;sources&#62;</i></a>, <a
+href="xmlconfigurationfiles.html#RECEIVERS-ELEMENT"><i>&lt;receivers&#62;</i></a>, etc.
+have the <tt class="LITERAL">order</tt> attribute. The single object elements, such as
+the <a href="xmlconfigurationfiles.html#CONTEXT-ELEMENT"><i>&lt;context&#62;</i></a>, <a
+href="xmlconfigurationfiles.html#TOPIC-ELEMENT"><i>&lt;topic&#62;</i></a>, etc., have the
+<tt class="LITERAL">rule</tt> attribute. The default for both attributes allows creation
+of all objects. You can however, exert some administrative control over your applications
+by allowing the creation of only certain objects.</p>
+
+<p>You can vary the <tt class="LITERAL">order</tt> attribute values to suit whether
+permission or restriction is more prevalent. In the example below, only a single topic
+needs to be restricted, so we use the default values for the <tt
+class="LITERAL">order</tt> attribute with only a single topic restricted with a <tt
+class="LITERAL">rule="deny"</tt> attribute.</p>
+
+<pre class="SCREEN">
+      &lt;sources order="deny,allow"&#62;
+        &lt;topic topicname="CDEF" rule="deny"/&#62;
+        &lt;!-- all other source topics allowed --&#62;
+      &lt;/sources&#62;
+               
+</pre>
+
+<p>In contrast, the following example requires the creation of only a single receiver
+topic object, so you can change the <tt class="LITERAL">order</tt> attribute to <tt
+class="LITERAL">allow,deny</tt>, which restricts the creation of all receiver topic
+objects except the one allowed.</p>
+
+<pre class="SCREEN">
+      &lt;receivers order="allow,deny"&#62;
+        &lt;topic topicname="AARM" rule="allow"/&#62;
+        &lt;!-- all other receive topics denied --&#62;
+      &lt;/receivers&#62;
+               
+</pre>
+
+<p>You can also combine topic names with topic patterns. In the example below, we set the
+<tt class="LITERAL">order</tt> attribute to the default. Topic <tt
+class="LITERAL">ISM</tt> is denied with its <tt class="LITERAL">order</tt> attribute.
+Topics <tt class="LITERAL">IRM</tt> and <tt class="LITERAL">SRM</tt> satisfy both their
+own <tt class="LITERAL">allow</tt> rules and the pattern <tt class="LITERAL">*R*</tt> <tt
+class="LITERAL">deny</tt> rule. So when you allocate a source topic with <code
+class="FUNCTION">lbm_src_topic_alloc()</code>, <b class="APPLICATION">UM</b> accepts the
+rule that matches the <tt class="LITERAL">order</tt> attribute default, which is <tt
+class="LITERAL">allow</tt>.</p>
+
+<pre class="SCREEN">
+      &lt;sources order="deny,allow"&#62;
+        &lt;topic topicname="ISM" rule="deny"/&#62;
+        &lt;topic topicname="IRM" rule="allow"/&#62;
+        &lt;topic pattern="*R*" rule="deny"/&#62;
+        &lt;topic topicname="SRM" rule="allow"/&#62;
+      &lt;/sources&#62;
+               
+</pre>
+
+<p>As a result of the above configuration, <b class="APPLICATION">UM</b> allows the
+creation of source topic objects <tt class="LITERAL">IRM</tt> and <tt
+class="LITERAL">SRM</tt>, and all other topics, except those that match the pattern <tt
+class="LITERAL">*R*</tt>.</p>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONFIG-DTD" name="CONFIG-DTD">1.3.5. XML Configuration File
+DTD</a></h2>
+
+<p>The XML configuration file DTD is integrated into <b class="APPLICATION">UM</b> and
+appears below.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8"?&#62;
+&lt;!ELEMENT um-configuration (license | templates | applications)*&#62;
+&lt;!ATTLIST um-configuration version CDATA #REQUIRED&#62;
+
+&lt;!ELEMENT license ( #PCDATA )&#62;
+&lt;!ATTLIST license format (filename | string) "string"&#62;
+&lt;!ATTLIST license xml:space (default | preserve) "default"&#62;
+
+&lt;!ELEMENT templates (template*)&#62;
+
+&lt;!ELEMENT template (options+)&#62;
+&lt;!ATTLIST template name CDATA #REQUIRED&#62;
+
+&lt;!ELEMENT options (option | application-data)*&#62;
+&lt;!ATTLIST options type (event-queue | context | source | receiver | wildcard-receiver | hfx) #IMPLIED&#62;
+
+&lt;!ELEMENT option (allow | deny)*&#62;
+&lt;!ATTLIST option name CDATA #REQUIRED&#62;
+&lt;!ATTLIST option default-value CDATA #IMPLIED&#62;
+&lt;!ATTLIST option order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT application-data ( #PCDATA )&#62;
+&lt;!ATTLIST application-data xml:space (default | preserve) "default"&#62;
+
+&lt;!ELEMENT allow ( #PCDATA )&#62;
+&lt;!ATTLIST allow xml:space (default | preserve) "default"&#62;
+
+&lt;!ELEMENT deny ( #PCDATA )&#62;
+&lt;!ATTLIST deny xml:space (default | preserve) "default"&#62;
+
+&lt;!ELEMENT applications (application*)&#62;
+
+&lt;!ELEMENT application (contexts | event-queues | hfxs | application-data)+&#62;
+&lt;!ATTLIST application name CDATA #IMPLIED&#62;
+&lt;!ATTLIST application template CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT contexts (context*)&#62;
+&lt;!ATTLIST contexts template CDATA #IMPLIED&#62;
+&lt;!ATTLIST contexts order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT event-queues (event-queue*)&#62;
+&lt;!ATTLIST event-queues template CDATA #IMPLIED&#62;
+&lt;!ATTLIST event-queues order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT hfxs (topic*)&#62;
+&lt;!ATTLIST hfxs template CDATA #IMPLIED&#62;
+&lt;!ATTLIST hfxs order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT event-queue (options*)&#62;
+&lt;!ATTLIST event-queue name CDATA #IMPLIED&#62;
+&lt;!ATTLIST event-queue template CDATA #IMPLIED&#62;
+&lt;!ATTLIST event-queue rule (allow | deny) "allow"&#62;
+
+&lt;!ELEMENT context (sources | receivers | wildcard-receivers | options)+&#62;
+&lt;!ATTLIST context name CDATA #IMPLIED&#62;
+&lt;!ATTLIST context template CDATA #IMPLIED&#62;
+&lt;!ATTLIST context rule (allow | deny) "allow"&#62;
+
+&lt;!ELEMENT sources (topic*)&#62;
+&lt;!ATTLIST sources template CDATA #IMPLIED&#62;
+&lt;!ATTLIST sources order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT receivers (topic*)&#62;
+&lt;!ATTLIST receivers template CDATA #IMPLIED&#62;
+&lt;!ATTLIST receivers order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT wildcard-receivers (wildcard-receiver*)&#62;
+&lt;!ATTLIST wildcard-receivers template CDATA #IMPLIED&#62;
+&lt;!ATTLIST wildcard-receivers order CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT topic (options*)&#62;
+&lt;!ATTLIST topic template CDATA #IMPLIED&#62;
+&lt;!ATTLIST topic rule (allow | deny) "allow"&#62;
+&lt;!ATTLIST topic pattern CDATA #IMPLIED&#62;
+&lt;!ATTLIST topic topicname CDATA #IMPLIED&#62;
+
+&lt;!ELEMENT wildcard-receiver (options*)&#62;
+&lt;!ATTLIST wildcard-receiver template CDATA #IMPLIED&#62;
+&lt;!ATTLIST wildcard-receiver rule (allow | deny) "allow"&#62;
+&lt;!ATTLIST wildcard-receiver pattern CDATA #IMPLIED&#62;
+&lt;!ATTLIST wildcard-receiver pattern-type (pcre | regex | application-callback) #IMPLIED&#62;
+           
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="plaintextconfigurationfiles.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="configurationfilerestrictions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Plain Text Configuration Files</td>
+<td width="34%" align="center" valign="top"><a href="configuringoptions.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Configuration File Restrictions</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

@@ -1,0 +1,514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Attributes Objects</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Configuring Ultra Messaging Options"
+href="configuringoptions.html" />
+<link rel="PREVIOUS" title="Configuration File Restrictions"
+href="configurationfilerestrictions.html" />
+<link rel="NEXT" title="Modifying Current Attributes"
+href="modifyingcurrentattributes.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="configurationfilerestrictions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 1. Configuring <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> Options</td>
+<td width="10%" align="right" valign="bottom"><a href="modifyingcurrentattributes.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ATTRIBUTESOBJECTS" name="ATTRIBUTESOBJECTS">1.5. Attributes
+Objects</a></h1>
+
+<p>Many <b class="APPLICATION">UM</b> primitive objects have a corresponding <span
+class="emphasis"><i class="EMPHASIS">attributes object</i></span>, which lets you create
+<span class="emphasis"><i class="EMPHASIS">custom attributes</i></span>. From here you
+can set options specific to an object (but different from default option settings) prior
+to creating that object. The following table lists the <b class="APPLICATION">UM</b>
+primitive objects and corresponding attributes objects.</p>
+
+<div class="TABLE"><a id="AEN1464" name="AEN1464"></a>
+<p><b>Table 1-1. UM Objects and Corresponding Attributes Objects</b></p>
+
+<table border="1" class="CALSTABLE">
+<col width="144" title="COL1" />
+<col width="336" title="COL2" />
+<thead>
+<tr>
+<th align="CENTER"><b class="APPLICATION">UM</b> object</th>
+<th align="CENTER">Corresponding Attributes Object(s)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><tt class="LITERAL">lbm_context_t</tt></td>
+<td><tt class="LITERAL">lbm_context_attr_t</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_topic_t</tt></td>
+<td><tt class="LITERAL">lbm_src_topic_attr_t</tt>, <tt
+class="LITERAL">lbm_rcv_topic_attr_t</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_wildcard_rcv_t</tt></td>
+<td><tt class="LITERAL">lbm_wildcard_rcv_attr_t</tt> </td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_event_queue_t</tt></td>
+<td><tt class="LITERAL">lbm_event_queue_attr_t</tt></td>
+</tr>
+
+<tr>
+<td><tt class="LITERAL">lbm_hfx_t</tt></td>
+<td><tt class="LITERAL">lbm_hfx_attr_t</tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>You call API functions to create attributes objects and set, retrieve, or delete their
+values. These function names are based on the attributes object name and are shown in the
+following table, using the context object as an example. See the <a
+href="../API/index.html" target="_top">C API</a> for all context attribute functions.</p>
+
+<div class="TABLE"><a id="AEN1504" name="AEN1504"></a>
+<p><b>Table 1-2. UM API Functions For Working With <tt
+class="LITERAL">lbm_context_attr_t</tt> Attributes Objects</b></p>
+
+<table border="1" class="CALSTABLE">
+<col width="288" title="COL1" />
+<col width="240" title="COL2" />
+<thead>
+<tr>
+<th align="CENTER">Action</th>
+<th align="CENTER"><b class="APPLICATION">UM</b> API function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Create</td>
+<td><code class="FUNCTION">lbm_context_attr_create()</code></td>
+</tr>
+
+<tr>
+<td>Set Option from Binary Value</td>
+<td><code class="FUNCTION">lbm_context_attr_setopt()</code></td>
+</tr>
+
+<tr>
+<td>Set Option from String Value</td>
+<td><code class="FUNCTION">lbm_context_attr_str_setopt()</code></td>
+</tr>
+
+<tr>
+<td>Get Option as Binary Value</td>
+<td><code class="FUNCTION">lbm_context_attr_getopt()</code></td>
+</tr>
+
+<tr>
+<td>Get Option as String Value</td>
+<td><code class="FUNCTION">lbm_context_attr_str_getopt()</code></td>
+</tr>
+
+<tr>
+<td>Delete</td>
+<td><code class="FUNCTION">lbm_context_attr_delete()</code></td>
+</tr>
+
+<tr>
+<td colspan="2">For other object types, replace <tt class="LITERAL">context</tt> with <tt
+class="LITERAL">event_queue</tt>, <tt class="LITERAL">hfx</tt>, <tt
+class="LITERAL">rcv_topic</tt>, <tt class="LITERAL">src_topic</tt>, or <tt
+class="LITERAL">wildcard_rcv</tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The following sections describe in detail the use of these <b
+class="APPLICATION">UM</b> API functions. The functions related to <tt
+class="LITERAL">lbm_context_attr_t</tt> objects are used for the purpose of illustration,
+but the instructions (if not the specifics) apply to all <b class="APPLICATION">UM</b>
+attributes objects.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTCREATE" name="ATTRIBUTESOBJECTCREATE">1.5.1.
+Creating An Attributes Object</a></h2>
+
+<p>In the following example, the call to <code
+class="FUNCTION">lbm_context_attr_create()</code> creates the custom attributes object,
+and initializes each attribute from the current default values. Subsequent calls to <code
+class="FUNCTION">lbm_context_attr_setopt()</code> or <code
+class="FUNCTION">lbm_context_attr_str_setopt()</code> modify only the attributes object
+values.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib;
+int rc;
+int errnum;
+const char * errmsg;
+
+rc = lbm_context_attr_create(&amp;attrib);
+if (rc != 0)
+{
+   errnum = lbm_errnum();
+   errmsg = lbm_errmsg();
+   fprintf(stderr, "Error %d returned from lbm_context_attr_create(), %s\n",
+      errnum, errmsg);
+}
+</pre>
+
+<p>This example also illustrates the proper way to determine the success or failure of an
+<b class="APPLICATION">UM</b> API call. Most <b class="APPLICATION">UM</b> API calls
+return <code class="CONSTANT">0</code> to indicate success, and <code
+class="CONSTANT">-1</code> to indicate failure. To retrieve the specific <b
+class="APPLICATION">UM</b> error code for the failure, call <code
+class="FUNCTION">lbm_errnum()</code>. To retrieve a text string describing the error
+code, call <code class="FUNCTION">lbm_errmsg()</code>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTSET" name="ATTRIBUTESOBJECTSET">1.5.2. Setting
+an Option from a Binary Value</a></h2>
+
+<p>For an option of type other than "string", call <code
+class="FUNCTION">lbm_context_attr_setopt()</code> to set its value. (See the C API
+reference for details on this function.) The final two parameters in the function are a
+pointer to a variable containing the option value, and a pointer to a variable of type
+<tt class="LITERAL">size_t</tt> that contains the correct length of the option value
+variable.</p>
+
+<p><b class="APPLICATION">UM</b> options are of three general types that:</p>
+
+<ul>
+<li>
+<p>accept values in a well-defined range (Examples include <code class="CONSTANT">context
+transport_tcp_port_low</code> and <code class="CONSTANT">context
+transport_tcp_port_high</code>. Each requires a value which corresponds to a valid TCP
+port number.)</p>
+</li>
+
+<li>
+<p>accept values from an enumerated set, (For example, <code class="CONSTANT">context
+operational_mode</code>. Manifest constants are provided in <tt
+class="FILENAME">lbm.h</tt> for each permitted value. In the case of <code
+class="CONSTANT">context operational_mode</code>, those constants are <code
+class="CONSTANT">LBM_CTX_ATTR_OP_EMBEDDED</code> and <code
+class="CONSTANT">LBM_CTX_ATTR_OP_SEQUENTIAL</code>.)</p>
+</li>
+
+<li>
+<p>act as switches, enabling or disabling a particular feature (For example, <code
+class="CONSTANT">context resolver_cache</code>. The set of allowed values is limited to
+<code class="CONSTANT">0</code> (indicating off, no, false, or disabled), and <code
+class="CONSTANT">1</code>, indicating on, yes, true, or enabled.)</p>
+</li>
+</ul>
+
+<p>The example code below sets four options. First, we set the operational mode to
+sequential. Then we set the transport TCP port low and high values to 4901 and 4920,
+respectively. Finally, we tell <b class="APPLICATION">UM</b> that our application will
+not be using multiple sending threads per transport session.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib; /* Must have already been created */
+int rc;
+unsigned short int optval;
+size_t optlen;
+
+/* Set the operational_mode */
+optlen = sizeof(optval);
+optval = LBM_CTX_ATTR_OP_SEQUENTIAL;
+rc = lbm_context_attr_setopt(attrib, "operational_mode", &amp;optval, optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_tcp_port_low */
+optlen = sizeof(optval);
+optval = 4901;
+rc = lbm_context_attr_setopt(attrib, "transport_tcp_port_low", &amp;optval, optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_tcp_port_high */
+optlen = sizeof(optval);
+optval = 4920;
+rc = lbm_context_attr_setopt(attrib, "transport_tcp_port_high", &amp;optval, optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_session_multiple_sending_threads */
+optlen = sizeof(optval);
+optval = 0;
+rc = lbm_context_attr_setopt(attrib, "transport_session_multiple_sending_threads",
+                             &amp;optval, optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTSETSTRING"
+name="ATTRIBUTESOBJECTSETSTRING">1.5.3. Setting an Option from a String Value</a></h2>
+
+<p>Setting an option from a string value effectively does the same thing that setting an
+option from a binary value does. However, the option value is passed as a null-terminated
+string, rather than as value and length pointers. <b class="APPLICATION">UM</b> uses this
+mechanism to process options in a configuration file. Thus, the format used for option
+values must match the format you would use in a configuration file.</p>
+
+<p>In the following example, as before, we set the operational mode to sequential. Then
+we set the transport TCP port low and high values to 4901 and 4920, respectively.
+Finally, we tell <b class="APPLICATION">UM</b> that our application will not be using
+multiple sending threads per transport session.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib; /* Must have already been created */
+int rc;
+
+/* Set the operational_mode */
+rc = lbm_context_attr_str_setopt(attrib, "operational_mode", "sequential");
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_tcp_port_low */
+rc = lbm_context_attr_str_setopt(attrib, "transport_tcp_port_low", "4901");
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_tcp_port_high */
+rc = lbm_context_attr_str_setopt(attrib, "transport_tcp_port_high", "4920");
+if (rc != 0)
+{
+   /* Handle error */
+}
+
+/* Set transport_session_multiple_sending_threads */
+rc = lbm_context_attr_str_setopt(attrib, "transport_session_multiple_sending_threads",
+                                 "0");
+if (rc != 0)
+{
+   /* Handle error */
+}
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTGET" name="ATTRIBUTESOBJECTGET">1.5.4. Getting
+an Option as a Binary Value</a></h2>
+
+<p>Getting an option as a binary value is very similar to setting an option from a binary
+value: it requires knowledge of not only the option name, but its type as well. The final
+two parameters in the call to <code class="FUNCTION">lbm_context_attr_getopt()</code> are
+a pointer to a variable to receive the current option value, and a pointer to a variable
+of type <span class="TYPE">size_t</span> which contains the length of the option value
+variable. This length must be be correct for the specified option.</p>
+
+<p>In the example code below, we set the option values for operational mode, the
+transport TCP port low and high values, and retrieve multiple sending threads.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib; /* Must have already been created */
+int rc;
+unsigned short int optval;
+size_t optlen;
+
+/* Get the operational_mode */
+optlen = sizeof(optval);
+rc = lbm_context_attr_getopt(attrib, "operational_mode", &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains LBM_CTX_ATTR_OP_EMBEDDED or LBM_CTX_ATTR_OP_SEQUENTIAL */
+
+/* Get transport_tcp_port_low */
+optlen = sizeof(optval);
+rc = lbm_context_attr_getopt(attrib, "transport_tcp_port_low", &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains the value of transport_tcp_port_low, which should be 4901 */
+
+/* Get transport_tcp_port_high */
+optlen = sizeof(optval);
+rc = lbm_context_attr_getopt(attrib, "transport_tcp_port_high", &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains the value of transport_tcp_port_high, which should be 4920 */
+
+/* Get transport_session_multiple_sending_threads */
+optlen = sizeof(optval);
+rc = lbm_context_attr_getopt(attrib, "transport_session_multiple_sending_threads",
+                             &amp;optval, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval now contains the value of transport_session_multiple_sending_threads,
+   which should be 0. */
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTGETSTRING"
+name="ATTRIBUTESOBJECTGETSTRING">1.5.5. Getting an Option as a String Value</a></h2>
+
+<p>Getting an option as a string value effectively does the same thing that getting an
+option as a binary value does. However, the option value is returned as a null-terminated
+string, just as you would specify the option value in a configuration file. The final two
+parameters in the call to <code class="FUNCTION">lbm_context_attr_str_getopt()</code> are
+a pointer to a string variable to receive the current option value, and a pointer to a
+variable of type <span class="TYPE">size_t</span> which contains the maximum size of the
+option value string variable.</p>
+
+<p>In the example code below, the option values for operational mode, the transport TCP
+port low and high values, and multiple sending threads are retrieved.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib; /* Must have already been created */
+int rc;
+char optval_string[256];
+
+/* Get the operational_mode */
+optlen = sizeof(optval_string);
+rc = lbm_context_attr_str_getopt(attrib, "operational_mode", optval_string, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval_string now contains either "embedded" or "sequential" */
+
+/* Get transport_tcp_port_low */
+optlen = sizeof(optval_string);
+rc = lbm_context_attr_str_getopt(attrib, "transport_tcp_port_low",
+                                 optval_string, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval_string now contains the string value of transport_tcp_port_low,
+   which should be "4901" */
+
+/* Get transport_tcp_port_high */
+optlen = sizeof(optval_string);
+rc = lbm_context_attr_str_getopt(attrib, "transport_tcp_port_high",
+                                 optval_string, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval_string now contains the string value of transport_tcp_port_high,
+   which should be "4920" */
+
+/* Get transport_session_multiple_sending_threads */
+optlen = sizeof(optval_string);
+rc = lbm_context_attr_str_getopt(attrib, "transport_session_multiple_sending_threads",
+                                 optval_string, &amp;optlen);
+if (rc != 0)
+{
+   /* Handle error */
+}
+/* optval_string now contains the value of transport_session_multiple_sending_threads,
+   which should be "0". */
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTEOBJECTSDELETE" name="ATTRIBUTEOBJECTSDELETE">1.5.6.
+Deleting an Attributes Object</a></h2>
+
+<p>Once the attributes object is no longer needed, it should be deleted.</p>
+
+<pre class="SCREEN">
+lbm_context_attr_t * attrib; /* Must have already been created */
+int rc;
+
+rc = lbm_context_attr_delete(attrib);
+if (rc != 0)
+{
+   /* Handle error */
+}
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ATTRIBUTESOBJECTRESTRICTIONS"
+name="ATTRIBUTESOBJECTRESTRICTIONS">1.5.7. Restrictions</a></h2>
+
+<p>There are no restrictions on setting options via attributes objects. Any option which
+can be set via a configuration file, can also be set via an attributes object. In
+addition, attributes objects allow setting certain options (such as function pointers)
+which cannot be set with a configuration file.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="configurationfilerestrictions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="modifyingcurrentattributes.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Configuration File Restrictions</td>
+<td width="34%" align="center" valign="top"><a href="configuringoptions.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Modifying Current Attributes</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

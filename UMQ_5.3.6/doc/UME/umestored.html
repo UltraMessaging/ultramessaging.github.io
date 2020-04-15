@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>umestored</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title=" The Ultra Messaging Guide for Persistence and Queuing"
+href="index.html" />
+<link rel="UP" title="Man Pages" href="umestored-manpage.html" />
+<link rel="PREVIOUS" title="Man Pages" href="umestored-manpage.html" />
+<link rel="NEXT" title="umestoreds" href="umestoreds.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="REFENTRY" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Guide for Persistence and Queuing</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="umestored-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="umestoreds.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<h1><a id="UMESTORED" name="UMESTORED"></a>umestored</h1>
+
+<div class="REFNAMEDIV"><a id="AEN3506" name="AEN3506"></a>
+<h2>Name</h2>
+
+umestored&nbsp;--&nbsp;Persistent Store and Queue Daemon</div>
+
+<div class="REFSYNOPSISDIV"><a id="AEN3509" name="AEN3509"></a>
+<h2>Synopsis</h2>
+
+<p><tt class="COMMAND">umestored</tt> [<code class="OPTION">-d</code>] [<code
+class="OPTION">--dump-dtd</code>] [<code class="OPTION">-f</code>] [<code
+class="OPTION">--detach</code>] [<code class="OPTION">-h</code>] [<code
+class="OPTION">--help</code>] [<code class="OPTION">-v</code>] [<code
+class="OPTION">--validate</code>] <tt class="REPLACEABLE"><i>configfile</i></tt></p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3530" name="AEN3530"></a>
+<h2>Description</h2>
+
+<p>Persistent Store and Queue services are provided by <tt
+class="COMMAND">umestored</tt>. A store configuration file is required.</p>
+
+<p>The DTD used to validate a configuration file will be dumped to standard output with
+the <code class="OPTION">-d</code> or <code class="OPTION">--dump-dtd</code>. After
+dumping the DTD, <tt class="COMMAND">umestored</tt> exits instead of providing
+persistence services as usual.</p>
+
+<p>The configuration file will be validated against the DTD if either the <code
+class="OPTION">-v</code> or <code class="OPTION">--validate</code> options are given.
+After attempting validation, <tt class="COMMAND">umestored</tt> exits instead of
+providing persistence services as usual. The exit status will be 0 for a configuration
+file validated by the DTD and non-zero otherwise.</p>
+
+<p><tt class="COMMAND">Umestored</tt> normally remains attached to the controlling
+terminal and runs until interrupted. If the <code class="OPTION">-f</code> or <code
+class="OPTION">--detach</code> options are given, <tt class="COMMAND">umestored</tt>
+instead forks, detaches the child from the controlling terminal, and the parent exits
+immediately.</p>
+
+<p>Command line help is available with <code class="OPTION">-h</code>.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3549" name="AEN3549"></a>
+<h2>Usage Notes</h2>
+
+<p>When shutting down the <b class="APPLICATION">UM</b> Persistent Store or Queue daemon,
+use a SIGINT to trigger a clean shutdown, which attempts to cleanly finish outstanding IO
+requests before shutting down. Two successive SIGINTs force an immediate shutdown.</p>
+</div>
+
+<div class="REFSECT1"><a id="AEN3553" name="AEN3553"></a>
+<h2>Exit Status</h2>
+
+<p>The exit status from <tt class="COMMAND">umestored</tt> is 0 for success and some
+non-zero value for failure.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="umestored-manpage.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="umestoreds.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Man Pages</td>
+<td width="34%" align="center" valign="top"><a href="umestored-manpage.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">umestoreds</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright 2007 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

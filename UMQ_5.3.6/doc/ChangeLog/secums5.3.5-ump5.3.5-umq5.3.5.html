@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.3.5 / UMP 5.3.5 / UMQ 5.3.5 - November - 2013</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release UMS 5.3.6 / UMP 5.3.6 / UMQ 5.3.6 - March - 2014"
+href="secums5.3.6-ump5.3.6-umq5.3.6.html" />
+<link rel="NEXT" title="Release UMS 5.3.4 / UMP 5.3.4 / UMQ 5.3.4 - July - 2013"
+href="secums5.3.4-ump5.3.4-umq5.3.4.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="secums5.3.6-ump5.3.6-umq5.3.6.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="secums5.3.4-ump5.3.4-umq5.3.4.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.3.5-UMP5.3.5-UMQ5.3.5"
+name="SECUMS5.3.5-UMP5.3.5-UMQ5.3.5">3. Release UMS 5.3.5 / UMP 5.3.5 / UMQ 5.3.5 -
+November - 2013</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.3.5" name="UMS5.3.5">3.1. UMS 5.3.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.5-UPDATES" name="UMS5.3.5-UPDATES">3.1.1.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>The unicast resolver daemon, lbmrd, now has command-line options to set buffer size in
+bytes for the receive socket buffer (-r flag) and the send socket buffer (-s flag).</p>
+</li>
+
+<li>
+<p>When an error occurs on a socket while sending an ACK in LBT-RU, UM now generates an
+EOS immediately.</p>
+</li>
+
+<li>
+<p>The following error log messages are added to the Operations Guide:</p>
+
+<ul>
+<li>
+<p>Core-5688-3375: unicast resolver %s:%u went inactive.</p>
+</li>
+
+<li>
+<p>Core-5688-3387: LBMR Extended Type 0x0 incorrect (%s:%d len %d). [%s]. Dropping.</p>
+</li>
+
+<li>
+<p>CoreApi-5688-3287: could not find open unicast source port in range [%d-%d]</p>
+</li>
+
+<li>
+<p>CoreApi-5688-3320: lbm_socket_recv recv/recvfrom: %s</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>In the .NET API, UM now re-uses LBMChannelInfo, UMQMessageId, and UMQIndexInfo objects
+between different LBMMessage objects for delivery, reducing garbage collection
+overhead.</p>
+</li>
+
+<li>
+<p>The lbmrd resolver daemon now uses blocking sends for all outgoing data.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.5-FIXES" name="UMS5.3.5-FIXES">3.1.2. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>In the UM Gateway, single TCP peer connections under Windows now function
+correctly.</p>
+</li>
+
+<li>
+<p>UM no longer returns -1 from <code
+class="FUNCTION">lbm_context_process_events()</code> for non-critical errors.</p>
+</li>
+
+<li>
+<p>Corrected a problem with how UM handles connect failures under Windows, which was
+causing the UM Gateway to not reconnect with other UM Gateway peer portals after a
+timeout condition.</p>
+</li>
+
+<li>
+<p>Corrected a problem where a fatal assert would occur when a receiver received a
+message containing a TSNI request. This could happen when a receiver late joined from an
+older-version source.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.5-KNOWNISSUES" name="UMS5.3.5-KNOWNISSUES">3.1.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When calling lbm_src_send() from the context thread inside a lbm_timer callback, a
+source can freeze when it hits rate limiter limits, requiring an application restart.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.5-INCOMPATIBILITIES"
+name="UMS5.3.5-INCOMPATIBILITIES">3.1.4. Version Compatibilities</a></h3>
+
+<ul>
+<li>
+<p>LBT-IPC, when used on UM 5.3.x, is not compatible with LBT-IPC used on UM 5.2.x or
+earlier.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.3.5" name="UMP5.3.5">3.2. UMP 5.3.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.5-UPDATES" name="UMP5.3.5-UPDATES">3.2.1.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>In the Ultra Messaging Guide for Persistence, the following sections have been changed
+or added:</p>
+
+<ul>
+<li>
+<p>2.1.5 Message Stability</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>The following error log message is updated in the Operations Guide:</p>
+
+<ul>
+<li>
+<p>Core-5688-542: received ACK for unknown source from %s:%d\n</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.3.5" name="UMQ5.3.5">3.3. UMQ 5.3.5</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.5-UPDATES" name="UMQ5.3.5-UPDATES">3.3.1.
+Updates</a></h3>
+
+<ul>
+<li>
+<p>In the Ultra Messaging Guide for Persistence and Queuing, the following sections have
+been changed or added:</p>
+
+<ul>
+<li>
+<p>1.2 Queuing</p>
+</li>
+
+<li>
+<p>1.3 Semantic Responsibilities</p>
+</li>
+
+<li>
+<p>2.2.2 Message Stability</p>
+</li>
+
+<li>
+<p>2.2.3 Once-and-Only-Once Delivery</p>
+</li>
+
+<li>
+<p>2.2.8 Queue Fault Tolerance</p>
+</li>
+
+<li>
+<p>2.2.9 Indexed Queuing</p>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>If you are considering queuing semantics for your application, please contact
+Informatica.</p>
+
+<ul>
+<li>
+<p>In the Ultra Messaging JMS Guide the following sections have been changed:</p>
+
+<ul>
+<li>
+<p>1. Introduction, known issues.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.5-KNOWNISSUES" name="UMQ5.3.5-KNOWNISSUES">3.3.2. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Configurations with multiple queue instances (slaves) can lead to inconsistent states,
+which can cause message loss, crashes or an inability to restart without removal of files
+(also resulting in message loss). For guidance, see Section 2.2.8 of the Ultra Messaging
+Guide for Persistence and Queuing.</p>
+</li>
+
+<li>
+<p>A queue instance may crash with the following log message if <tt
+class="LITERAL">allow-queue-browsing</tt> is set to <tt class="LITERAL">1</tt>: <tt
+class="LITERAL">[EMERGENCY]: FATAL: failed assertion [sinc_q_msg_info_node!=NULL] at line
+5998 in ../../../../src/stored/umqueue.c.</tt></p>
+</li>
+
+<li>
+<p>UMQ flags reassigned messages upon delivery, but when a queue restarts, UMQ may
+re-deliver some messages without flagging them.</p>
+</li>
+
+<li>
+<p>Queues may occasionally crash upon restart if the queue option <tt
+class="LITERAL">forwarding-behavior</tt> is set to <tt
+class="LITERAL">store-while-forward</tt>. Set this option to <tt
+class="LITERAL">store-then-forward</tt>.</p>
+</li>
+
+<li>
+<p>A queue instance may crash with the following log message if messages are of 0 length:
+<tt class="LITERAL">[EMERGENCY]: FATAL: failed assertion [msg-&#62;lbm_msg!=NULL] at line
+3896 in ../../../../src/stored/umqsinc.c</tt></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="secums5.3.6-ump5.3.6-umq5.3.6.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="secums5.3.4-ump5.3.4-umq5.3.4.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release UMS 5.3.6 / UMP 5.3.6 / UMQ 5.3.6 -
+March - 2014</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UMS 5.3.4 / UMP 5.3.4 / UMQ 5.3.4 -
+July - 2013</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

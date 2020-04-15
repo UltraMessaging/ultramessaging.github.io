@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.6.2 / UME 3.0 - February 2010</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.6.3 / UME 3.0.1 / UMQ 1.0 - April 2010"
+href="seclbm3.6.3-ume3.0.1-umq1.0.html" />
+<link rel="NEXT" title="Release LBM 3.6.1 - February 2010" href="seclbm3.6.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.6.3-ume3.0.1-umq1.0.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.6.1.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.6.2-UME3.0" name="SECLBM3.6.2-UME3.0">38. Release LBM
+3.6.2 / UME 3.0 - February 2010</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.6.2" name="LBM3.6.2">38.1. LBM 3.6.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM3.6.2-FIXES" name="LBM3.6.2-FIXES">38.1.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem in Java and .NET that produced an exception when uninitialized fields
+in an <tt class="LITERAL">lbm_msg_t</tt> caused a bad pointer to be passed to your
+application code. The fields in question were only uninitialized in messages of
+unrecoverable loss that were delivered from hot failover receivers or immediate messages
+larger than the <a href="../Config/config.html#CONTEXTTRANSPORTDATAGRAMMAXSIZE"
+target="doccontent"><tt class="LITERAL">transport_datagram_max_size</tt></a> setting. This
+issue was introduced in LBM 3.6.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.0" name="UME3.0">38.2. UME 3.0</a></h2>
+
+<p>See also <a href="seclbm3.6.1.html#LBM3.6.1"><i>LBM 3.6.1</i></a>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.0-NEW" name="UME3.0-NEW">38.2.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Added the <b class="APPLICATION">Proxy Source</b> feature that allows you to configure
+stores to automatically assume sending activity for a source or sources that cease
+operation. After the source returns, the store automatically stops acting as a proxy
+source. The main benefit of a Proxy Source is the continuation of source's topic
+advertisements which contain store information used by new receivers. Without the store
+Reg ID, address and TCP port contained in the source's Topic Information Records (TIR),
+new receivers cannot register with the store or request retransmissions. Proxy Source
+requires a Quorum/Consensus store configuration. See <a
+href="../UME/ume-fault-tolerance.html#PROXYSOURCES" target="doccontent">Proxy Sources</a> for
+more information.</p>
+</li>
+
+<li>
+<p>Added large file support to the UME store on 32-bit and 64-bit Windows, and 64-bit
+Linux and Solaris platforms. The maximum size of individual disk cache files (controlled
+by the "repository-disk-file-size-limit" store configuration option) can now exceed
+4GB.</p>
+</li>
+
+<li>
+<p>To reduce disk fragmentation, the UME store can now optionally pre-allocate disk cache
+files at source registration time. To enable disk file pre-allocation, set the new <tt
+class="LITERAL">repository-disk-file-preallocate</tt> store configuration option. See <a
+href="../UME/umestored-config.html" target="doccontent">Configuration Reference for
+Umestored</a> for more information.</p>
+</li>
+
+<li>
+<p>Added the ability to batch stability acknowledgments sent to sources from the UME
+store. In some cases -- especially with a memory store -- this feature can increase
+overall throughput, at the cost of a small delay between the time a message is actually
+stable at the store and the time the source is informed of message stability. Stability
+ACK batching behavior can be controlled via two new UME store topic configuration
+options, <tt class="LITERAL">stability-ack-minimum-number</tt> and <tt
+class="LITERAL">stability-ack-interval</tt>. Please see <a
+href="../UME/umestored-config.html" target="doccontent">Configuration Reference for
+Umestored</a> for a description of the new options.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.0-FIXES" name="UME3.0-FIXES">38.2.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Improved the ability of a Store in a Quorum/Consensus group to handle large amounts of
+loss. Previously, if a Store suspended operation and a source continued sending while the
+Store was down, the Store would perpetually handle loss after resuming operation with a
+high CPU consumption. The Store now processes loss messages more efficiently.</p>
+</li>
+
+<li>
+<p>Fixed a bug that could cause a UME store to consume a lot of CPU at startup during a
+period of initially heavy loss.</p>
+</li>
+
+<li>
+<p>Fixed a bug that could cause a UME store to crash at startup if using a configuration
+file containing unknown options.</p>
+</li>
+
+<li>
+<p>Fixed handling of "connection timedout" socket errors for Linux to <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; TCP
+connections. These errors occurred on a Linux <tt class="LITERAL">umestored</tt> process
+after a <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>
+<b class="APPLICATION">UME</b> source or receiver was terminated.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.0-KNOWNISSUES" name="UME3.0-KNOWNISSUES">38.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.6.3-ume3.0.1-umq1.0.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.6.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.6.3 / UME 3.0.1 / UMQ 1.0 - April
+2010</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.6.1 - February 2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

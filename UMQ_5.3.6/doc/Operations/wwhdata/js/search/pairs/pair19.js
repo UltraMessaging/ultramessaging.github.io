@@ -1,0 +1,26 @@
+function FileData_Pairs(x)
+{
+x.t("persistent","store");
+x.t("5.3","persistent");
+x.t("5.3","lbmrd");
+x.t("5.3","gateway");
+x.t("5.3","core");
+x.t("5.3","log");
+x.t("lbmrd","log");
+x.t("includes","following");
+x.t("api","messages");
+x.t("api","log");
+x.t("gateway","log");
+x.t("store","api");
+x.t("store","log");
+x.t("messages","5.3");
+x.t("messages","chapter");
+x.t("messages","informatica");
+x.t("chapter","includes");
+x.t("informatica","http://mysupport.informatica.com");
+x.t("core","api");
+x.t("core","messages");
+x.t("topics","5.3");
+x.t("following","topics");
+x.t("log","messages");
+}

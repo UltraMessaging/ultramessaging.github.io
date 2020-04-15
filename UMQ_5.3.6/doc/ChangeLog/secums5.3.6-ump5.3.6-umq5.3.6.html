@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.3.6 / UMP 5.3.6 / UMQ 5.3.6 - March - 2014</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="NEXT" title="Release UMS 5.3.5 / UMP 5.3.5 / UMQ 5.3.5 - November - 2013"
+href="secums5.3.5-ump5.3.5-umq5.3.5.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="secums5.3.5-ump5.3.5-umq5.3.5.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.3.6-UMP5.3.6-UMQ5.3.6"
+name="SECUMS5.3.6-UMP5.3.6-UMQ5.3.6">2. Release UMS 5.3.6 / UMP 5.3.6 / UMQ 5.3.6 - March
+- 2014</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.3.6" name="UMS5.3.6">2.1. UMS 5.3.6</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.6-FIXES" name="UMS5.3.6-FIXES">2.1.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Sometimes an application receives and acts upon retransmit response information
+intended for a different application. This solution makes retransmit requests more unique
+to the application issuing the request to prevent potential cross-contamination of
+retransmit response information during application restarts.</p>
+</li>
+
+<li>
+<p>A source sends Late Join responses with an unintialized header field, which can cause
+a fatal assertion on the requesting receiver.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.3.6-KNOWNISSUES" name="UMS5.3.6-KNOWNISSUES">2.1.2. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When calling lbm_src_send() from the context thread inside a lbm_timer callback, a
+source can freeze when it hits rate limiter limits, requiring an application restart.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.3.6" name="UMP5.3.6">2.2. UMP 5.3.6</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.3.6-FIXES" name="UMP5.3.6-FIXES">2.2.1. Bug
+Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fatal assertion <tt class="LITERAL">[dest] at line 481 in
+../../../../src/lib/lbm/lbmrxrctlr.c</tt> in a UM application or daemon if the
+application receives malformed data on a UM tcp socket or under other extreme edge case
+conditions.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.3.6" name="UMQ5.3.6">2.3. UMQ 5.3.6</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.3.6-KNOWNISSUES" name="UMQ5.3.6-KNOWNISSUES">2.3.1. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Configurations with multiple queue instances (slaves) can lead to inconsistent states,
+which can cause message loss, crashes or an inability to restart without removal of files
+(also resulting in message loss). For guidance, see Section 2.2.8 of the Ultra Messaging
+Guide for Persistence and Queuing.</p>
+</li>
+
+<li>
+<p>A queue instance may crash with the following log message if <tt
+class="LITERAL">allow-queue-browsing</tt> is set to <tt class="LITERAL">1</tt>: <tt
+class="LITERAL">[EMERGENCY]: FATAL: failed assertion [sinc_q_msg_info_node!=NULL] at line
+5998 in ../../../../src/stored/umqueue.c.</tt></p>
+</li>
+
+<li>
+<p>UMQ flags reassigned messages upon delivery, but when a queue restarts, UMQ may
+re-deliver some messages without flagging them.</p>
+</li>
+
+<li>
+<p>Queues may occasionally crash upon restart if the queue option <tt
+class="LITERAL">forwarding-behavior</tt> is set to <tt
+class="LITERAL">store-while-forward</tt>. Set this option to <tt
+class="LITERAL">store-then-forward</tt>.</p>
+</li>
+
+<li>
+<p>A queue instance may crash with the following log message if messages are of 0 length:
+<tt class="LITERAL">[EMERGENCY]: FATAL: failed assertion [msg-&#62;lbm_msg!=NULL] at line
+3896 in ../../../../src/stored/umqsinc.c</tt></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="secums5.3.5-ump5.3.5-umq5.3.5.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">UMS / UMP / UMQ Change Log</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release UMS 5.3.5 / UMP 5.3.5 / UMQ 5.3.5 -
+November - 2013</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

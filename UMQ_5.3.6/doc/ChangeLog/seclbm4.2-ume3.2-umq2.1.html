@@ -1,0 +1,666 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 4.2 / UME 3.2 / UMQ 2.1 - March 2011</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 4.2.1 / UME 3.2.1 / UMQ 2.1.1 - April 2011"
+href="seclbm4.2.1-ume3.2.1-umq2.1.1.html" />
+<link rel="NEXT" title="Release LBM 4.1.3 / UME 3.1.3 / UMQ 2.0.1 - November 2010"
+href="seclbm4.1.3-ume3.1.3-umq2.0.1.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm4.2.1-ume3.2.1-umq2.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="seclbm4.1.3-ume3.1.3-umq2.0.1.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM4.2-UME3.2-UMQ2.1" name="SECLBM4.2-UME3.2-UMQ2.1">27.
+Release LBM 4.2 / UME 3.2 / UMQ 2.1 - March 2011</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM4.2" name="LBM4.2">27.1. LBM 4.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2-NEW" name="LBM4.2-NEW">27.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Added new receiver scope configuration option, <a
+href="../Config/majoroptions.html#RECEIVERTRANSPORTDEMUXTABLESZ" target="doccontent"><tt
+class="LITERAL">transport_demux_tablesz</tt></a> that sets the size of the table used for
+mapping topic indices to delivery controllers.</p>
+</li>
+
+<li>
+<p>Added new configuration option, <a
+href="../Config/majoroptions.html#CONTEXTNETWORKCOMPATIBILITYMODE" target="doccontent"><tt
+class="LITERAL">network_compatibility_mode</tt></a> to restrict the types of message
+headers that can be sent onto the network, for the purpose of improved backward
+compatibility.</p>
+</li>
+
+<li>
+<p>Added new configuration option, <a
+href="../Config/latejoinoptions.html#RECEIVERRETRANSMITINITIALSEQUENCENUMBERREQUEST"
+target="doccontent"><tt class="LITERAL">retransmit_initial_sequence_number_request</tt></a>
+that allows topic advertisements (TIR) to trigger a late join if receivers detect a gap
+in messages instead of waiting for either a subsequent message or a TSNI.</p>
+</li>
+
+<li>
+<p>Added <code class="FUNCTION">lbm_send_request_ex()</code> call to the <b
+class="APPLICATION">LBM</b> C API (with corresponding <tt
+class="LITERAL">LBMSource.send()</tt> methods in the Java and .NET APIs) to allow sending
+requests with <tt class="LITERAL">lbm_src_send_ex_info_t</tt> or <tt
+class="LITERAL">LBMSourceSendExInfo</tt> objects and per-send client objects.</p>
+</li>
+
+<li>
+<p>Added a new environment variable, LBM_DEBUG_MAXSIZE, that allows the LBM DEBUG log to
+roll over when the DEBUG log exceeds the maximum size specified by this variable (in
+bytes). The log rolls over slightly before reaching the limit, because adding the current
+log message to the log would exceed the maximum set with the environment variable.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2-UPDATES" name="LBM4.2-UPDATES">27.1.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added the Hot Failover Concentrator (HFX) feature that allows Hot Failover streams on
+multiple contexts to be treated as a single hot failover stream. See <a
+href="../Design/lbm-features.html#HFX" target="doccontent">Hot Failover Across Multiple
+Contexts</a>.</p>
+</li>
+
+<li>
+<p>TSNIs (transport topic sequence number information) have been enabled by default on
+TCP transports. See also <a
+href="../Config/majoroptions.html#SOURCETRANSPORTTOPICSEQUENCENUMBERINFOINTERVAL"
+target="doccontent"><tt
+class="LITERAL">transport_topic_sequence_number_info_interval</tt></a>.</p>
+</li>
+
+<li>
+<p>Modified internal timer handling to be more judicious when waking up the context
+thread to schedule a timer.</p>
+</li>
+
+<li>
+<p>Added command line delay option in seconds (<tt class="LITERAL">-d, --delay=NUM</tt>)
+for C, Java and .NET sample applications that send messages.</p>
+</li>
+
+<li>
+<p>Implemented batching in communication between UM Gateway peer portals to improve
+throughput.</p>
+</li>
+
+<li>
+<p>The UM Gateway now allows empty (zero-length) topics and wildcard topic patterns.</p>
+</li>
+
+<li>
+<p>Context topic advertisements may now be disabled by setting, <a
+href="../Config/majoroptions.html#CONTEXTRESOLVERCONTEXTADVERTISEMENTINTERVAL"
+target="doccontent"><tt class="LITERAL">resolver_context_advertisement_interval</tt></a> to 0
+(zero). <b class="APPLICATION">Note:</b> Disabling context advertisements is not
+recommended unless specifically advised to do so.</p>
+</li>
+
+<li>
+<p>Zero Object Delivery (ZOD) is now enabled by default for both Java and .NET.
+Applications wishing to take advantage of ZOD should call <code
+class="FUNCTION">Dispose()</code> on messages before the end of the message callback.</p>
+
+<p><b class="APPLICATION">Addendum:</b> To clarify, please note that ZOD is now an
+always-on feature whenever you call <code class="FUNCTION">Dispose()</code>. If you do
+not call <code class="FUNCTION">Dispose()</code>, you must call <code
+class="FUNCTION">Promote()</code> to promote the message to an object. Conversely, if you
+do not call <code class="FUNCTION">Promote()</code>, you must call <code
+class="FUNCTION">Dispose()</code>.</p>
+</li>
+
+<li>
+<p>Added the new configuration option <a
+href="../Config/deliverycontroloptions.html#CONTEXTMIMDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">mim_delivery_control_loss_check_interval</tt></a> to
+periodically check Multicast Immediate Messaging (MIM) delivery controllers for loss.
+Option defaults to 0 and follows the same basic semantics as <a
+href="../Config/deliverycontroloptions.html#RECEIVERDELIVERYCONTROLLOSSCHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">delivery_control_loss_check_interval</tt></a>.</p>
+</li>
+
+<li>
+<p>Application linking with the SmartHeap memory manager is no longer permitted under any
+provision of an <b class="APPLICATION">LBM</b> license alone. Existing Informatica
+applications that use the SmartHeap allocator, such as the <b class="APPLICATION">UME</b>
+store daemon (<tt class="LITERAL">umestored</tt>) and the <b
+class="APPLICATION">UMCache</b> daemon (<tt class="LITERAL">umcached</tt>) will continue
+to use the SmartHeap allocator.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2-FIXES" name="LBM4.2-FIXES">27.1.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Added an <code class="FUNCTION">isClosed()</code> function to <tt
+class="LITERAL">LBMSource.cs</tt> and <tt class="LITERAL">LBMSource.java</tt> to check if
+a source object has a valid C reference.</p>
+</li>
+
+<li>
+<p>Fixed a Fatal Assert caused by a race condition that could occur when deleting an
+LBT-RDMA receiver at the same moment a source disconnect event was being processed.</p>
+</li>
+
+<li>
+<p>Corrected a problem with LBT-RU and LBT-RDMA that caused receivers to bind to the
+wrong source address. These transports now check the IN_ADDRANY value before overwriting
+the source IP address.</p>
+</li>
+
+<li>
+<p>Corrected a problem when running a context in sequential mode that prevented the
+transport threads from creating the event processing thread. Transport threads now force
+embedded mode.</p>
+</li>
+
+<li>
+<p>Fixed a problem that prevented non-blocking sends from returning EWOULDBLOCK when
+either the rate limiter was met or the inflight messages met the flight size.</p>
+</li>
+
+<li>
+<p>Corrected a UM Gateway issue that caused the fatal assertion, <tt
+class="LITERAL">FATAL: failed assertion [wt-&#62;topic!=NULL] at line 4444 in
+../../../../src/gateway/tnwgendpoint.c</tt>.</p>
+</li>
+
+<li>
+<p>Fixed a problem on Solaris i386 that caused TCP sends to always be blocking sends.</p>
+</li>
+
+<li>
+<p>Corrected misspellings on the UM Gateway peer portal Web Monitor page.</p>
+</li>
+
+<li>
+<p>Corrected several UM Gateway Web Monitor statistics that were being updated
+incorrectly, resulting in values which were too large. The statistics involved are:</p>
+
+<p>On the main page:</p>
+
+<ul>
+<li>
+<p>Unknown transport fragment bytes received</p>
+</li>
+</ul>
+
+<p>Endpoint sending:</p>
+
+<ul>
+<li>
+<p>Transport topic bytes dropped due to no source</p>
+</li>
+
+<li>
+<p>Duplicate transport topic bytes dropped</p>
+</li>
+</ul>
+
+<p>Endpoint receiving:</p>
+
+<ul>
+<li>
+<p>Transport topic bytes received from an unknown source</p>
+</li>
+
+<li>
+<p>Transport topic request bytes received with no forwarding info</p>
+</li>
+
+<li>
+<p>Immediate topic bytes received for an an unknown topic</p>
+</li>
+
+<li>
+<p>Immediate topic bytes received</p>
+</li>
+
+<li>
+<p>Transport topic bytes received</p>
+</li>
+
+<li>
+<p>Immediate topicless bytes received</p>
+</li>
+
+<li>
+<p>Unicast data bytes received</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Fixed a seg fault that could occur when canceling a recurring timer from within the
+callback of that recurring timer.</p>
+</li>
+
+<li>
+<p>Added the ability to forward (flood) Multicast Immediate Messaging (MIM) traffic from
+a UM Gateway portal. You enable this feature by configuring the portal with the <tt
+class="LITERAL">&lt;flood-mim/&#62;</tt> element in the UM Gateway configuration
+file.</p>
+</li>
+
+<li>
+<p>Fixed a problem in the UM Gateway that prevented topic Multicast Immediate Messaging
+(MIM) messages for which no receiver exists at the endpoint portal from updating the
+endpoint's MIM statistics. The endpoint now accurately reports the number of topic MIM
+messages that have been dropped due to no receiver for the topic.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the Multi-Transport Threads feature that consisted of the
+control block managing the thread pool per context never being freed. It is now freed
+upon context deletion.</p>
+</li>
+
+<li>
+<p>Corrected two small memory leaks in the UM Gateway.</p>
+</li>
+
+<li>
+<p>Corrected a problem with Multicast Immediate Messaging (MIM) that resulted in the
+callback specified by <a
+href="../Config/multicastimmediatemessagingoperationoptions.html#CONTEXTIMMEDIATEMESSAGERECEIVERFUNCTION"
+ target="doccontent"><tt class="LITERAL">immediate_message_receiver_function</tt></a> not to be
+called if a wildcard receiver existed in the context.</p>
+</li>
+
+<li>
+<p>Removed the statistics, <tt class="LITERAL">Transport topic loss/loss burst events
+received</tt> and <tt class="LITERAL">Immediate loss events received</tt> from the UM
+Gateway Web Monitor for Endpoint Portals. Since the UM Gateway uses arrival order
+delivery, no loss events are ever delivered, so these statistics would always be
+zero.</p>
+</li>
+
+<li>
+<p>An issue was corrected in the UM Gateway which could lead to the non-fatal assert, <tt
+class="LITERAL">WARNING: failed assertion [result!=0] at line 416
+in../../../../src/lib/lbm/lbmrxsctlr.c</tt>. This could also lead to another fatal
+assert, <tt class="LITERAL">FATAL: failed assertion [info-&#62;sqn==ctlr-&#62;trail_sqn]
+at line 249 in../../../../src/lib/lbm/lbmrxsctlr.c</tt></p>
+</li>
+
+<li>
+<p>Fixed a problem that could cause some of multiple threads calling <code
+class="FUNCTION">lbm_send_response()</code> to hang indefinitely.</p>
+</li>
+
+<li>
+<p>Corrected numerous problems with the stability and reliability of the UM Gateway.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could sometimes cause <code
+class="FUNCTION">lbm_context_topic_resolution_request()</code> to incorrectly return
+failure when it had actually succeeded.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.2-KNOWNISSUES" name="LBM4.2-KNOWNISSUES">27.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using LBT-IPC, a seg fault can occur when sending messages larger than 65,535
+bytes when <a href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY"
+target="doccontent"><tt class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero). The
+seg fault occurs when fragments are lost. Setting <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt> avoids the seg fault by eliminating loss. Informatica
+is investigating this issue.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">LBM</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">LBM</b> may leave a monitoring thread running after
+context deletion. This situation produces the following error: <tt class="LITERAL">VMA
+ERROR : epoll_wait_call:36:epoll_wait_call() epfd 48 not found</tt>. Informatica is
+investigating this problem.</p>
+</li>
+
+<li>
+<p>A requesting application using a UM Gateway may not receive the expected number of
+responses. The problem occurs if the responses exceed the maximum datagram size, are
+fragmented and the gateway must forward simultaneous fragmented responses. In this case
+the fragments may become intermingled and result in a response not being delivered as
+expected. The requesting application receives a warning similar to: <tt
+class="LITERAL">WARNING: failed assertion [offset==0] at line 1627 in
+../../../../src/lib/lbm/lbmqr.c</tt>. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bt applications using
+the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a 32-bit
+application using LBT-IPC. It can only interact with a 64-bit application. Likewise, a
+32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support queuing at this time, only streaming and
+persistence. This will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>When using the UM Gateway in a four gateway "full-mesh" configuration (i.e., all
+gateways connected) the following instabilities have been observed.</p>
+
+<ul>
+<li>
+<p>Requesting applications can receive multiple or unending responses.</p>
+</li>
+
+<li>
+<p>Restarting a single gateway has resulted in the crash of other gateways.</p>
+</li>
+
+<li>
+<p>Running the same set of tests simultaneously in 2 opposite directions over a set of
+gateways causes fatal asserts in the UM Gateways. Although this is not a typical user
+configuration, more complex gateway configurations could simulate this effect. The UM
+Gateway is designed to successfully forward the same set of topic messages sent both ways
+across a set of gateways.</p>
+</li>
+</ul>
+
+<p>These behaviors have not been seen in other, more typical gateway configurations.
+Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>Under certain extreme conditions manufactured by configuring atypically low timeout
+settings, the UM Gateway has been observed to terminate with various fatal assertions. We
+believe this to be the result of a race condition exploited by the unusually low timer
+settings. This issue has not been seen with less aggressive or default timer settings.
+Informatica continues to investigate this problem.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="LBM4.0-CHANGES-2" name="LBM4.0-CHANGES-2">27.1.5. LBM 4.0
+Changes</a></h3>
+
+<p>The following changes were implemented in <b class="APPLICATION">LBM</b> Release 4.0
+but omitted from the <b class="APPLICATION">LBM</b> 4.0 <a
+href="seclbm4.0.html#LBM4.0-UPDATES"><i>Updated Features</i></a> section. They have also
+been added to that section.</p>
+
+<ul>
+<li>
+<p>Added ability to set a <b class="APPLICATION">LBM</b> Configuration Option interface
+by name. When setting by name the configuration option's value must be wrapped in
+quotes.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME3.2" name="UME3.2">27.2. UME 3.2</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.2-NEW" name="UME3.2-NEW">27.2.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Added new source scope configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#SOURCEUMEUSEEXTENDEDRECLAIMNOTIFICATIONS"
+ target="doccontent"><tt class="LITERAL">use_extended_reclaim_notifications</tt></a> that
+allows your application to receive the new, expanded message reclaim notification or the
+standard notification. The new notification or source event,
+LBM_SRC_EVENT_UME_MESSAGE_RECLAIMED_EX, contains a new field,
+LBM_SRC_EVENT_UME_MESSAGE_RECLAIMED_EX_FLAG_FORCED that <b class="APPLICATION">UME</b>
+sets if the reclamation is a forced reclaim.</p>
+</li>
+
+<li>
+<p>Added new configuration option, <a
+href="../Config/ultramessagingpersistenceoptions.html#CONTEXTUMESESSIONID"
+target="doccontent"><tt class="LITERAL">ume_session_id</tt></a> that specifies a Session ID for
+a source, receiver or a context. A Session ID is a 64-bit value that uniquely identifies
+any set of sources with unique topics and receivers with unique topics. A single Session
+ID allows UME stores to correctly identify all the sources and receivers for a particular
+application. See also <a href="../UME/designing-persistent-applications.html#SESSION-IDS"
+target="doccontent">Managing RegIDs with Session IDs</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.2-FIXES" name="UME3.2-FIXES">27.2.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem that could cause a fatal assert in a <b class="APPLICATION">UME</b>
+store in a quorum/consensus configuration that uses a low <tt
+class="LITERAL">source-activity-timeout</tt> setting when a source is rapidly added and
+then deleted.</p>
+</li>
+
+<li>
+<p>Fixed an issue with memory stores that could cause messages received by a store via
+late join to be discarded when the source starts.</p>
+</li>
+
+<li>
+<p>Fixed a problem that allowed <b class="APPLICATION">UME</b> stores with <tt
+class="LITERAL">allow-proxy-source</tt> set to 0 (Disable) to participate in proxy source
+elections.</p>
+</li>
+
+<li>
+<p>Fixed a problem that causes <b class="APPLICATION">UME</b> receivers to report
+unrecoverable loss during recovery for messages that were unavailable at some stores, but
+still available at others.</p>
+</li>
+
+<li>
+<p>Corrected an issue where <b class="APPLICATION">UME</b> PREG error responses were not
+being forwarded through the gateway.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UME3.2-KNOWNISSUES" name="UME3.2-KNOWNISSUES">27.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ2.1" name="UMQ2.1">27.3. UMQ 2.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ2.1-NEW" name="UMQ2.1-NEW">27.3.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Implemented Indexed Queuing which allows sources to send messages with an index (an
+unsigned 64-bit integer or a string up to 216 characters in length). The Queue assigns
+all messages sent with a particular index to an individual receiver in each Application
+Set. You can set policies for index assignment in the Queue's umestored XML configuration
+file. See <a href="../UME/umeconcepts.html#INDEXED-QUEUING" target="doccontent">Indexed
+Queuing</a>.</p>
+</li>
+
+<li>
+<p>Implemented a Dead Letter Queue feature to isolate unconsumed messages which prevents
+these messages from causing application or queuing system problems. See <a
+href="../UME/umeconcepts.html#DEAD-LETTER-QUEUE" target="doccontent">Dead Letter Queue</a>.</p>
+</li>
+
+<li>
+<p>Added the ability to set a message's total lifetime for both <b
+class="APPLICATION">UMQ</b> and ULB sources. See <a
+href="../UME/umeconcepts.html#MESSAGE-LIFETIMES" target="doccontent">Message Lifetimes</a>.</p>
+</li>
+
+<li>
+<p>Added <code class="FUNCTION">lbm_msg_umq_reassign()</code> in the <a
+href="../API/index.html" target="doccontent">C API</a> to allow a <b
+class="APPLICATION">UMQ</b> or ULB receiver to either reassign or discard a message.
+Corresponding methods have been added in the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and the <a href="../DotNetAPI/doc/Index.html"
+target="doccontent">.NET API</a>.</p>
+</li>
+
+<li>
+<p>Added two new receiver configuration options, <a
+href="../Config/ultramessagingqueuingoptions.html#RECEIVERUMQULBSOURCECHECKINTERVAL"
+target="doccontent"><tt class="LITERAL">umq_ulb_source_check_interval</tt></a> and <a
+href="../Config/ultramessagingqueuingoptions.html#RECEIVERUMQULBSOURCEACTIVITYTIMEOUT"
+target="doccontent"><tt class="LITERAL">umq_ulb_source_activity_timeout</tt></a> to allow a ULB
+receiver to proactively attempt re-registration with a ULB source if the receiver has not
+seen any activity (including keepalives) from that source in a specified amount of time,
+but the source's transport session is still alive and valid.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ2.1-FIXES" name="UMQ2.1-FIXES">27.3.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed a problem that caused a Queue using Serial Queue Dissemination (SQD) to
+incorrectly flag certain messages sent to receivers as IMMEDIATE.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could cause message data corruption when a Queue received large,
+fragmented responses or late join messages with application header data.</p>
+</li>
+
+<li>
+<p>Fixed a problem that could prevent a receiver from requesting the retransmission of
+assigned messages from the Queue.</p>
+</li>
+
+<li>
+<p>Fixed a potential bus error on Solaris SPARC platforms that could occur upon the
+restart of a Queue's <tt class="LITERAL">umestored</tt> daemon.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm4.2.1-ume3.2.1-umq2.1.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.1.3-ume3.1.3-umq2.0.1.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 4.2.1 / UME 3.2.1 / UMQ 2.1.1 -
+April 2011</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.1.3 / UME 3.1.3 / UMQ 2.0.1 -
+November 2010</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

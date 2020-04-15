@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JMSConfig>
+    <ConnectionFactories>
+        <ConnectionFactory name="uJMSConnectionFactory">
+            <FactoryAttributes>
+                <Attribute name="DEBUG" value="false"/>
+                <Attribute name="DEFAULT_TOPIC_TYPE" value="UME"/> <!-- UME, LBM -->
+                <Attribute name="DEFAULT_TEMP_TOPIC_TYPE" value="UME"/> <!-- UME, LBM -->
+                <Attribute name="USE_APP_HEADER" value="true"/>
+                <Attribute name="DEFAULT_MESSAGE_TYPE" value="TextMessage"/> <!-- BytesMessage, TextMessage, MapMessage, ObjectMessage, StreamMessage -->
+                <Attribute name="CLIENT_ID" value="Client1"/> <!-- For multiple connections, instead use Connection setClientID function to provide a unique client id -->
+                <Attribute name="USE_UMP_SESSION_IDS" value="false"/>
+            </FactoryAttributes>
+            <ContextAttributes>
+                <Attribute name="operational_mode" value="sequential"/>
+                <Attribute name="resolver_multicast_ttl" value="16"/>
+                <Attribute name="resolver_multicast_address" value="225.72.39.173"/>
+                <Attribute name="mim_address" value="225.72.39.174"/>
+                <Attribute name="transport_lbtrm_multicast_address_low" value="225.73.39.200"/>
+                <Attribute name="transport_lbtrm_multicast_address_high" value="225.73.39.210"/>
+                <Attribute name="request_tcp_port_low" value="16000"/>
+                <Attribute name="request_tcp_port_high" value="16100"/>
+                <Attribute name="transport_lbtrm_source_port_low" value="15000"/>
+                <Attribute name="transport_lbtrm_source_port_high" value="15500"/>
+                <Attribute name="transport_tcp_maximum_ports" value="20"/>
+                <Attribute name="transport_tcp_port_low" value="16500"/>
+                <Attribute name="transport_tcp_port_high" value="16600"/>
+                <Attribute name="resolver_unicast_port_high" value="45000"/>
+                <Attribute name="transport_lbtrm_data_rate_limit" value="500000000"/>
+                <Attribute name="transport_lbtrm_retransmit_rate_limit" value="1000000"/>
+                <Attribute name="transport_lbtrm_receiver_socket_buffer" value="8000000"/>
+                <Attribute name="request_tcp_reuseaddr" value="1"/>
+                <Attribute name="response_tcp_nodelay" value="1"/>
+            </ContextAttributes>
+            <SourceAttributes>
+                <Attribute name="transport" value="lbtrm"/>
+                <Attribute name="late_join" value="1"/>
+                <Attribute name="ume_store_name" value="JMSStore1"/>
+                <Attribute name="ume_store_name" value="JMSStore2"/>
+                <Attribute name="ume_store_name" value="JMSStore3"/>
+                <Attribute name="ume_store_behavior" value="qc"/>
+                <Attribute name="ume_proxy_source" value="1"/>
+                <Attribute name="umq_queue_name" value="JMSQueue"/>
+                <!-- Change implicit_batching_minimum_length to 1 from 2000 for low latency -->
+                <Attribute name="implicit_batching_minimum_length" value="2000"/>
+            </SourceAttributes>
+            <ReceiverAttributes>
+                <Attribute name="umq_receiver_type_id" value="100"/>
+                <Attribute name="umq_delayed_consumption_report_interval" value="10"/>
+            </ReceiverAttributes>
+        </ConnectionFactory>
+        <ConnectionFactory name="TopicConnectionFactory">
+            <FactoryAttributes>
+                <Attribute name="CLIENT_ID" value="TopicClient1"/> <!-- For multiple connections, instead use Connection setClientID function to provide a unique client id -->
+                <Attribute name="USE_UMP_SESSION_IDS" value="false"/>
+            </FactoryAttributes>
+            <ContextAttributes>
+                <Attribute name="operational_mode" value="sequential"/>
+                <Attribute name="resolver_multicast_ttl" value="16"/>
+                <Attribute name="resolver_multicast_address" value="225.72.39.173"/>
+                <Attribute name="mim_address" value="225.72.39.174"/>
+                <Attribute name="transport_lbtrm_multicast_address_low" value="225.73.39.200"/>
+                <Attribute name="transport_lbtrm_multicast_address_high" value="225.73.39.210"/>
+                <Attribute name="request_tcp_port_low" value="16000"/>
+                <Attribute name="request_tcp_port_high" value="16100"/>
+                <Attribute name="transport_lbtrm_source_port_low" value="15000"/>
+                <Attribute name="transport_lbtrm_source_port_high" value="15500"/>
+                <Attribute name="transport_tcp_maximum_ports" value="20"/>
+                <Attribute name="transport_tcp_port_low" value="16500"/>
+                <Attribute name="transport_tcp_port_high" value="16600"/>
+                <Attribute name="resolver_unicast_port_high" value="45000"/>
+                <Attribute name="transport_lbtrm_data_rate_limit" value="500000000"/>
+                <Attribute name="transport_lbtrm_retransmit_rate_limit" value="1000000"/>
+                <Attribute name="transport_lbtrm_receiver_socket_buffer" value="8000000"/>
+                <Attribute name="request_tcp_reuseaddr" value="1"/>
+            </ContextAttributes>
+            <SourceAttributes>
+                <Attribute name="transport" value="lbtrm"/>
+                <Attribute name="ume_store_name" value="JMSStore1"/>
+                <Attribute name="ume_store_name" value="JMSStore2"/>
+                <Attribute name="ume_store_name" value="JMSStore3"/>
+                <Attribute name="ume_store_behavior" value="qc"/>
+                <Attribute name="ume_proxy_source" value="1"/>
+            </SourceAttributes>
+        </ConnectionFactory>
+        <ConnectionFactory name="QueueConnectionFactory">
+            <FactoryAttributes>
+                <Attribute name="CLIENT_ID" value="QueueClient1"/> <!-- For multiple connections, instead use Connection setClientID function to provide a unique client id -->
+                <Attribute name="USE_UMP_SESSION_IDS" value="false"/>
+            </FactoryAttributes>
+            <ContextAttributes>
+                <Attribute name="operational_mode" value="sequential"/>
+                <Attribute name="resolver_multicast_ttl" value="16"/>
+                <Attribute name="resolver_multicast_address" value="225.72.39.173"/>
+                <Attribute name="mim_address" value="225.72.39.174"/>
+                <Attribute name="transport_lbtrm_multicast_address_low" value="225.73.39.200"/>
+                <Attribute name="transport_lbtrm_multicast_address_high" value="225.73.39.210"/>
+                <Attribute name="request_tcp_port_low" value="16000"/>
+                <Attribute name="request_tcp_port_high" value="16100"/>
+                <Attribute name="transport_lbtrm_source_port_low" value="15000"/>
+                <Attribute name="transport_lbtrm_source_port_high" value="15500"/>
+                <Attribute name="transport_tcp_maximum_ports" value="20"/>
+                <Attribute name="transport_tcp_port_low" value="16500"/>
+                <Attribute name="transport_tcp_port_high" value="16600"/>
+                <Attribute name="resolver_unicast_port_high" value="45000"/>
+                <Attribute name="transport_lbtrm_data_rate_limit" value="500000000"/>
+                <Attribute name="transport_lbtrm_retransmit_rate_limit" value="1000000"/>
+                <Attribute name="transport_lbtrm_receiver_socket_buffer" value="8000000"/>
+                <Attribute name="request_tcp_reuseaddr" value="1"/>
+            </ContextAttributes>
+            <SourceAttributes>
+                <Attribute name="transport" value="lbtru"/>
+                <Attribute name="late_join" value="1"/>
+                <Attribute name="umq_queue_name" value="JMSQueue"/>
+            </SourceAttributes>
+            <ReceiverAttributes>
+                <Attribute name="umq_receiver_type_id" value="100"/>
+            </ReceiverAttributes>
+        </ConnectionFactory>
+    </ConnectionFactories>
+    <Destinations>
+        <Destination name="TempQueue" type="Queue">
+            <DestinationAttributes>
+                <Attribute name="Name" value="TempQueue"/>
+                <Attribute name="WILDCARD" value="false"/>
+                <Attribute name="TYPE" value="UMQ"/>
+            </DestinationAttributes>
+        </Destination>
+        <Destination name="UMETopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="UMETopic"/>
+                <Attribute name="REGID" value="2000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+        <Destination name="DurableTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="DurableTopic"/>
+                <Attribute name="REGID" value="6000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+        <Destination name="DestTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="DestTopic"/>
+                <Attribute name="REGID" value="3000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+        <Destination name="BytesTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="BytesTopic"/>
+                <Attribute name="REGID" value="7000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+        <Destination name="ObjectTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="ObjectTopic"/>
+                <Attribute name="REGID" value="6000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+        <Destination name="TempTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="TempTopic"/>
+                <Attribute name="REGID" value="4000"/>
+                <Attribute name="WILDCARD" value="false"/>
+            </DestinationAttributes>
+            <ReceiverAttributes>
+            </ReceiverAttributes>
+        </Destination>
+
+        <Destination name="ReplyTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="REPLY"/>
+                <Attribute name="REGID" value="4400"/>
+                <Attribute name="WILDCARD" value="false"/>
+                <Attribute name="TYPE" value="LBM"/>
+
+            </DestinationAttributes>
+        </Destination>
+        <Destination name="RequestTopic" type="Topic">
+            <DestinationAttributes>
+                <Attribute name="Name" value="RequestTopic"/>
+                <Attribute name="REGID" value="5000"/>
+                <Attribute name="WILDCARD" value="false"/>
+                <Attribute name="TYPE" value="LBM"/>
+
+            </DestinationAttributes>
+        </Destination>
+    </Destinations>
+</JMSConfig>

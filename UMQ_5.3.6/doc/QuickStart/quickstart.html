@@ -1,0 +1,2335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Quick Start Guide</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="ARTICLE" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="ARTICLE">
+<div class="TITLEPAGE">
+<h1 class="TITLE"><a id="AEN2" name="AEN2"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Quick Start Guide</a></h1>
+
+<p class="COPYRIGHT">Copyright &copy; 2005 - 2014 Informatica</p>
+
+<div class="LEGALNOTICE"><a id="INFACOPYRIGHT" name="INFACOPYRIGHT"></a>
+<p>Informatica Ultra Messaging</p>
+
+<p>Version 5.3</p>
+
+<p>March 2014</p>
+
+<p>Copyright (c) 1998-2014 Informatica Corporation. All rights reserved.</p>
+
+<p>This software and documentation contain proprietary information of Informatica
+Corporation and are provided under a license agreement containing restrictions on use and
+disclosure and are also protected by copyright law. Reverse engineering of the software
+is prohibited. No part of this document may be reproduced or transmitted in any form, by
+any means (electronic, photocopying, recording or otherwise) without prior consent of
+Informatica Corporation. This Software may be protected by U.S. and/or international
+Patents and other Patents Pending.</p>
+
+<p>Use, duplication, or disclosure of the Software by the U.S. Government is subject to
+the restrictions set forth in the applicable software license agreement and as provided
+in DFARS 227.7202-1(a) and 227.7702-3(a) (1995), DFARS 252.227-7013(c)(1)(ii) (OCT 1988),
+FAR 12.212(a) (1995), FAR 52.227-19, or FAR 52.227-14 (ALT III), as applicable.</p>
+
+<p>The information in this product or documentation is subject to change without notice.
+If you find any problems in this product or documentation, please report them to us in
+writing.</p>
+
+<p>Informatica, Informatica Platform, Informatica Data Services, PowerCenter,
+PowerCenterRT, PowerCenter Connect, PowerCenter Data Analyzer, PowerExchange, PowerMart,
+Metadata Manager, Informatica Data Quality, Informatica Data Explorer, Informatica B2B
+Data Transformation, Informatica B2B Data Exchange Informatica On Demand, Informatica
+Identity Resolution, Informatica Application Information Lifecycle Management,
+Informatica Complex Event Processing, Ultra Messaging and Informatica Master Data
+Management are trademarks or registered trademarks of Informatica Corporation in the
+United States and in jurisdictions throughout the world. All other company and product
+names may be trade names or trademarks of their respective owners.</p>
+
+<p>Portions of this software and/or documentation are subject to copyright held by third
+parties, including without limitation: Copyright DataDirect Technologies. All rights
+reserved. Copyright (c) Sun Microsystems. All rights reserved. Copyright (c) RSA Security
+Inc. All Rights Reserved. Copyright (c) Ordinal Technology Corp. All rights
+reserved.Copyright (c) Aandacht c.v. All rights reserved. Copyright Genivia, Inc. All
+rights reserved. Copyright Isomorphic Software. All rights reserved. Copyright (c) Meta
+Integration Technology, Inc. All rights reserved. Copyright (c) Intalio. All rights
+reserved. Copyright (c) Oracle. All rights reserved. Copyright (c) Adobe Systems
+Incorporated. All rights reserved. Copyright (c) DataArt, Inc. All rights reserved.
+Copyright (c) ComponentSource. All rights reserved. Copyright (c) Microsoft Corporation.
+All rights reserved. Copyright (c) Rogue Wave Software, Inc. All rights reserved.
+Copyright (c) Teradata Corporation. All rights reserved. Copyright (c) Yahoo! Inc. All
+rights reserved. Copyright (c) Glyph &amp; Cog, LLC. All rights reserved. Copyright (c)
+Thinkmap, Inc. All rights reserved. Copyright (c) Clearpace Software Limited. All rights
+reserved. Copyright (c) Information Builders, Inc. All rights reserved. Copyright (c) OSS
+Nokalva, Inc. All rights reserved. Copyright Edifecs, Inc. All rights reserved. Copyright
+Cleo Communications, Inc. All rights reserved. Copyright (c) International Organization
+for Standardization 1986. All rights reserved. Copyright (c) ej-technologies GmbH. All
+rights reserved. Copyright (c) Jaspersoft Corporation. All rights reserved. Copyright (c)
+is International Business Machines Corporation. All rights reserved. Copyright (c) yWorks
+GmbH. All rights reserved. Copyright (c) Lucent Technologies. All rights reserved.
+Copyright (c) University of Toronto. All rights reserved. Copyright (c) Daniel Veillard.
+All rights reserved. Copyright (c) Unicode, Inc. Copyright IBM Corp. All rights reserved.
+Copyright (c) MicroQuill Software Publishing, Inc. All rights reserved. Copyright (c)
+PassMark Software Pty Ltd. All rights reserved. Copyright (c) LogiXML, Inc. All rights
+reserved. Copyright (c) 2003-2010 Lorenzi Davide, All rights reserved. Copyright (c) Red
+Hat, Inc. All rights reserved. Copyright (c) The Board of Trustees of the Leland Stanford
+Junior University. All rights reserved. Copyright (c) EMC Corporation. All rights
+reserved. Copyright (c) Flexera Software. All rights reserved. Copyright (c) Jinfonet
+Software. All rights reserved. Copyright (c) Apple Inc. All rights reserved. Copyright
+(c) Telerik Inc. All rights reserved.</p>
+
+<p>This product includes software developed by the Apache Software Foundation
+(http://www.apache.org/), and/or other software which is licensed under various versions
+of the Apache License (the "License"). You may obtain a copy of these Licenses at
+http://www.apache.org/licenses/. Unless required by applicable law or agreed to in
+writing, software distributed under these Licenses is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Licenses
+for the specific language governing permissions and limitations under the Licenses.</p>
+
+<p>This product includes software which was developed by Mozilla
+(http://www.mozilla.org/), software copyright The JBoss Group, LLC, all rights reserved;
+software copyright (c) 1999-2006 by Bruno Lowagie and Paulo Soares and other software
+which is licensed under various versions of the GNU Lesser General Public License
+Agreement, which may be found at http:// www.gnu.org/licenses/lgpl.html. The materials
+are provided free of charge by Informatica, "as-is", without warranty of any kind, either
+express or implied, including but not limited to the implied warranties of
+merchantability and fitness for a particular purpose.</p>
+
+<p>The product includes ACE(TM) and TAO(TM) software copyrighted by Douglas C. Schmidt
+and his research group at Washington University, University of California, Irvine, and
+Vanderbilt University, Copyright (c) 1993-2006, all rights reserved.</p>
+
+<p>This product includes software developed by the OpenSSL Project for use in the OpenSSL
+Toolkit (copyright The OpenSSL Project. All Rights Reserved) and redistribution of this
+software is subject to terms available at http://www.openssl.org and
+http://www.openssl.org/source/license.html.</p>
+
+<p>This product includes Curl software which is Copyright 1996-2007, Daniel Stenberg,
+&lt;daniel@haxx.se&gt;. All Rights Reserved. Permissions and limitations regarding this
+software are subject to terms available at http://curl.haxx.se/docs/copyright.html.
+Permission to use, copy, modify, and distribute this software for any purpose with or
+without fee is hereby granted, provided that the above copyright notice and this
+permission notice appear in all copies.</p>
+
+<p>The product includes software copyright 2001-2005 (c) MetaStuff, Ltd. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http://www.dom4j.org/ license.html.</p>
+
+<p>The product includes software copyright (c) 2004-2007, The Dojo Foundation. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http://dojotoolkit.org/license.</p>
+
+<p>This product includes ICU software which is copyright International Business Machines
+Corporation and others. All rights reserved. Permissions and limitations regarding this
+software are subject to terms available at
+http://source.icu-project.org/repos/icu/icu/trunk/license.html.</p>
+
+<p>This product includes software copyright (c) 1996-2006 Per Bothner. All rights
+reserved. Your right to use such materials is set forth in the license which may be found
+at http:// www.gnu.org/software/ kawa/Software-License.html.</p>
+
+<p>This product includes OSSP UUID software which is Copyright (c) 2002 Ralf S.
+Engelschall, Copyright (c) 2002 The OSSP Project Copyright (c) 2002 Cable &amp; Wireless
+Deutschland. Permissions and limitations regarding this software are subject to terms
+available at http://www.opensource.org/licenses/mit-license.php.</p>
+
+<p>This product includes software developed by Boost (http://www.boost.org/) or under the
+Boost software license. Permissions and limitations regarding this software are subject
+to terms available at http:/ /www.boost.org/LICENSE_1_0.txt.</p>
+
+<p>This product includes software copyright (c) 1997-2007 University of Cambridge.
+Permissions and limitations regarding this software are subject to terms available at
+http:// www.pcre.org/license.txt.</p>
+
+<p>This product includes software copyright (c) 2007 The Eclipse Foundation. All Rights
+Reserved. Permissions and limitations regarding this software are subject to terms
+available at http:// www.eclipse.org/org/documents/epl-v10.php.</p>
+
+<p>This product includes software licensed under the terms at
+http://www.tcl.tk/software/tcltk/license.html,
+http://www.bosrup.com/web/overlib/?License, http://www.stlport.org/doc/ license.html,
+http:// asm.ow2.org/license.html, http://www.cryptix.org/LICENSE.TXT,
+http://hsqldb.org/web/hsqlLicense.html, http://httpunit.sourceforge.net/doc/
+license.html, http://jung.sourceforge.net/license.txt ,
+http://www.gzip.org/zlib/zlib_license.html,
+http://www.openldap.org/software/release/license.html, http://www.libssh2.org,
+http://slf4j.org/license.html, http://www.sente.ch/software/OpenSourceLicense.html,
+http://fusesource.com/downloads/license-agreements/fuse-message-broker-v-5-3-
+license-agreement; http://antlr.org/license.html; http://aopalliance.sourceforge.net/;
+http://www.bouncycastle.org/licence.html; http://www.jgraph.com/jgraphdownload.html;
+http://www.jcraft.com/jsch/LICENSE.txt; http://jotm.objectweb.org/bsd_license.html; .
+http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231;
+http://www.slf4j.org/license.html; http://nanoxml.sourceforge.net/orig/copyright.html;
+http://www.json.org/license.html; http://forge.ow2.org/projects/javaservice/,
+http://www.postgresql.org/about/licence.html, http://www.sqlite.org/copyright.html,
+http://www.tcl.tk/software/tcltk/license.html, http://www.jaxen.org/faq.html,
+http://www.jdom.org/docs/faq.html, http://www.slf4j.org/license.html;
+http://www.iodbc.org/dataspace/iodbc/wiki/iODBC/License;
+http://www.keplerproject.org/md5/license.html;
+http://www.toedter.com/en/jcalendar/license.html;
+http://www.edankert.com/bounce/index.html; http://www.net-snmp.org/about/license.html;
+http://www.openmdx.org/#FAQ; http://www.php.net/license/3_01.txt;
+http://srp.stanford.edu/license.txt; http://www.schneier.com/blowfish.html;
+http://www.jmock.org/license.html; http://xsom.java.net; and
+http://benalman.com/about/license/;
+https://github.com/CreateJS/EaselJS/blob/master/src/easeljs/display/Bitmap.js;
+http://www.h2database.com/html/license.html#summary; and
+http://jsoncpp.sourceforge.net/LICENSE.</p>
+
+<p>This product includes software licensed under the Academic Free License
+http://www.opensource.org/licenses/afl-3.0.php), the Common Development and Distribution
+License (http://www.opensource.org/licenses/cddl1.php) the Common Public License
+(http://www.opensource.org/licenses/cpl1.0.php), the Sun Binary Code License Agreement
+Supplemental License Terms, the BSD License (http://
+www.opensource.org/licenses/bsd-license.php) the MIT License
+(http://www.opensource.org/licenses/mit-license.php) and the Artistic License
+(http://www.opensource.org/licenses/artistic-license-1.0).</p>
+
+<p>This product includes software copyright (c) 2003-2006 Joe WaInes, 2006-2007 XStream
+Committers. All rights reserved. Permissions and limitations regarding this software are
+subject to terms available at http://xstream.codehaus.org/license.html. This product
+includes software developed by the Indiana University Extreme! Lab. For further
+information please visit http://www.extreme.indiana.edu/.</p>
+
+<p>This Software is protected by U.S. Patent Numbers 5,794,246; 6,014,670; 6,016,501;
+6,029,178; 6,032,158; 6,035,307; 6,044,374; 6,092,086; 6,208,990; 6,339,775; 6,640,226;
+6,789,096; 6,820,077; 6,823,373; 6,850,947; 6,895,471; 7,117,215; 7,162,643; 7,243,110,
+7,254,590; 7,281,001; 7,421,458; 7,496,588; 7,523,121; 7,584,422; 7676516; 7,720,842;
+7,721,270; and 7,774,791, international Patents and other Patents Pending.</p>
+
+<p>DISCLAIMER: Informatica Corporation provides this documentation "as is" without
+warranty of any kind, either express or implied, including, but not limited to, the
+implied warranties of noninfringement, merchantability, or use for a particular purpose.
+Informatica Corporation does not warrant that this software or documentation is error
+free. The information provided in this software or documentation may include technical
+inaccuracies or typographical errors. The information in this software and documentation
+is subject to change at any time without notice.</p>
+
+<p>NOTICES</p>
+
+<p>This Informatica product (the "Software") includes certain drivers (the "DataDirect
+Drivers") from DataDirect Technologies, an operating company of Progress Software
+Corporation ("DataDirect") which are subject to the following terms and conditions:</p>
+
+<p>1. THE DATADIRECT DRIVERS ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</p>
+
+<p>2. IN NO EVENT WILL DATADIRECT OR ITS THIRD PARTY SUPPLIERS BE LIABLE TO THE END-USER
+CUSTOMER FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR OTHER DAMAGES
+ARISING OUT OF THE USE OF THE ODBC DRIVERS, WHETHER OR NOT INFORMED OF THE POSSIBILITIES
+OF DAMAGES IN ADVANCE. THESE LIMITATIONS APPLY TO ALL CAUSES OF ACTION, INCLUDING,
+WITHOUT LIMITATION, BREACH OF CONTRACT, BREACH OF WARRANTY, NEGLIGENCE, STRICT LIABILITY,
+MISREPRESENTATION AND OTHER TORTS.</p>
+</div>
+
+<div class="DOCFORAMTNAVI">[ <a href="./index.html">Split HTML</a> / <a
+href="quickstart.html">Single HTML</a> / <a href="quickstart.pdf">Single PDF</a> ]</div>
+
+<hr />
+</div>
+
+<div class="TOC">
+<dl>
+<dt><b>Table of Contents</b></dt>
+
+<dt>1. <a href="#INTRODUCTION">Introduction</a></dt>
+
+<dt>2. <a href="#LBM-BINARY-QUICK-START"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Binary Quick Start</a></dt>
+
+<dt>3. <a href="#LBM-PROGRAMMING-QUICK-START"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Programming Quick Start</a></dt>
+
+<dt>4. <a href="#UNICAST-ONLY">Unicast-Only Operation</a></dt>
+
+<dt>5. <a href="#JMS-BINARY-QUICK-START">Ultra Messaging JMS Quick Start</a></dt>
+
+<dt>6. <a href="#JMS-PROGRAMMING-QUICK-START">Ultra Messaging JMS Programming Quick
+Start</a></dt>
+
+<dt>7. <a href="#START-DAEMONS">Starting Ultra Messaging Daemons</a></dt>
+
+<dt>8. <a href="#NEXT-STEPS">Next Steps</a></dt>
+</dl>
+</div>
+
+<blockquote class="ABSTRACT">
+<div class="ABSTRACT"><a id="AEN41" name="AEN41"></a>
+<p>This document provides step-by-step instructions on how to rapidly get started using
+<b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span>&reg;</b> high
+performance message streaming. For information about <b class="APPLICATION"><span
+class="TRADEMARK">Parallel Persistence</span>&reg;</b> and <b class="APPLICATION">UMQ</b>
+operations see <a href="../UME/index.html" target="doccontent">The Ultra Messaging Guide for
+Persistence and Queuing</a>.</p>
+</div>
+</blockquote>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="INTRODUCTION" name="INTRODUCTION">1. Introduction</a></h2>
+
+<p>This document gets you started using our pre-compiled evaluation binaries to test
+performance, and then walks you through the steps of writing minimal source (sender) and
+receiver applications.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="LBM-BINARY-QUICK-START" name="LBM-BINARY-QUICK-START">2. <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> Binary Quick
+Start</a></h2>
+
+<p>A <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> software
+evaluation kit consists of the documentation package (which includes this document) and
+one or more binary packages. These instructions will help get you started evaluating <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> quickly. You can
+run pre-compiled commands from a <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> binary distribution to get some quick performance numbers in your
+environment. (A subsequent section guides you through creation of simple programs for
+local compilation.)</p>
+
+<div class="IMPORTANT">
+<blockquote class="IMPORTANT">
+<p><b>Important:</b> If you plan to test multiple machines communicating with each other,
+the machines will need multicast connectivity between them. Contact your network
+administrator for information on multicast connectivity. If multicast connectivity is not
+possible, the test applications can all be run on the same machine. Alternatively, it is
+possible to configure <b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span></b> to avoid multicast, see <a href="#UNICAST-ONLY"><i>Unicast-Only
+Operation</i></a>.</p>
+</blockquote>
+</div>
+
+<p>A binary package consists of:</p>
+
+<ul>
+<li>
+<p>Binary versions of source code examples (see the <tt class="FILENAME">bin</tt>
+directory)</p>
+</li>
+
+<li>
+<p>Header files (see the <tt class="FILENAME">include</tt> directory)</p>
+</li>
+
+<li>
+<p>Link libraries (see the <tt class="FILENAME">lib</tt> directory)</p>
+</li>
+
+<li>
+<p>Shared libraries (see the <tt class="FILENAME">lib</tt> directory on Unix for <tt
+class="FILENAME">.so</tt> files or the <tt class="FILENAME">bin</tt> directory on Windows
+for <tt class="FILENAME">.dll</tt> files)</p>
+</li>
+</ul>
+
+<p>The <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> code and
+documentation are copyrighted and confidential information owned by Informatica and are
+covered under the terms of our Software License Agreement or Non-Disclosure Agreement as
+appropriate. Use of this code and documentation without a valid Non-Disclosure Agreement
+or Software License Agreement with Informatica Corporation is strictly prohibited. If
+this code and documentation is being supplied under the terms of a Non Disclosure
+Agreement, all copies, in any form, must be returned or destroyed at the end of the
+evaluation period or as requested by Informatica.</p>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="BINARY-QUICK-START-WINDOWS"
+name="BINARY-QUICK-START-WINDOWS">2.1. Binary Quick Start on <span
+class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg;</a></h3>
+
+<p>The following steps assume that the windows package is installed on all test machines
+in the standard place:</p>
+
+<a id="AEN93" name="AEN93"></a>
+<blockquote class="BLOCKQUOTE">
+<p><tt class="FILENAME">C:\Program Files\29West\</tt><tt
+class="REPLACEABLE"><i>rel-id</i></tt><tt class="FILENAME">\Win2k-i386</tt></p>
+</blockquote>
+
+<p>where <tt class="REPLACEABLE"><i>rel-id</i></tt> is the release identifier. It is also
+assumed that the <tt class="FILENAME">\bin</tt> directory is included in the windows <tt
+class="FILENAME">PATH</tt> environment variable. This is needed so that the <tt
+class="FILENAME">.EXE</tt> and <tt class="FILENAME">.DLL</tt> files can be found.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window on the machine you want to use for receiving messages and
+enter the command <tt class="COMMAND">lbmrcv topic</tt> to start a receiver. Note that
+<kbd class="USERINPUT">topic</kbd> can be any string. You should see output that looks
+something like this:</p>
+
+<pre class="SCREEN">
+1.006 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+1.019 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+1.010 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+</pre>
+
+<p>A new line will be printed about once per second showing the elapsed time, messages
+received, and data received. As long as there are no sources yet running on <kbd
+class="USERINPUT">topic</kbd>, the number of messages received will continue to be
+zero.</p>
+</li>
+
+<li>
+<p>Open a command prompt window on the machine you want to use for sending messages and
+enter the command <tt class="COMMAND">lbmsrc topic</tt> to start sending messages. The
+receiver will automatically discover the source, at which time its output will change to
+something like this:</p>
+
+<pre class="SCREEN">
+1.010 secs. 451.9 Kmsgs/sec.  90.4 Mbps
+1.010 secs. 451.4 Kmsgs/sec.  90.3 Mbps
+1.010 secs. 445.1 Kmsgs/sec.  89.0 Mbps
+</pre>
+</li>
+
+<li>
+<p>With no options given, the source will send 10,000,000 small (25 byte) messages. If
+you would like to test different size packets or number of packets sent, you can set
+options. Enter <kbd class="USERINPUT">lbmsrc -h</kbd> at the command line, you will get a
+list of options you can control.</p>
+</li>
+
+<li>
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill the source or
+receiver.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="BINARY-QUICK-START-UNIX" name="BINARY-QUICK-START-UNIX">2.2.
+Binary Quick Start on Unix</a></h3>
+
+<p>The following steps assume that the Unix package is installed on all test machines
+under a normal user account:</p>
+
+<a id="AEN127" name="AEN127"></a>
+<blockquote class="BLOCKQUOTE">
+<p><tt class="FILENAME">/home/</tt><tt class="REPLACEABLE"><i>user-id</i></tt><tt
+class="FILENAME">/lbmeval/</tt><tt class="REPLACEABLE"><i>rel-id</i></tt><tt
+class="FILENAME">/</tt><tt class="REPLACEABLE"><i>platform-id</i></tt></p>
+</blockquote>
+
+<p>where <tt class="REPLACEABLE"><i>rel-id</i></tt> is the release identifier and <tt
+class="REPLACEABLE"><i>platform-id</i></tt> describes the ABI (Application Binary
+Interface - e.g. <tt class="FILENAME">Linux-2.4-glibc-2.2-i686</tt>). It is also assumed
+that the <tt class="FILENAME">/bin</tt> directory is included in the <tt
+class="FILENAME">PATH</tt> environment variable and the <tt class="FILENAME">/lib</tt>
+directory is in the appropriate loader library search path environment variable (e.g. <tt
+class="FILENAME">LD_LIBRARY_PATH</tt> for Linux; see <a
+href="http://bhami.com/rosetta.html" target="doccontent">http://bhami.com/rosetta.html</a> for
+equivalences in other flavors of Unix).</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window on the machine you want to use for receiving messages and
+enter the command <tt class="COMMAND">lbmrcv topic</tt> to start a receiver. Note that
+<kbd class="USERINPUT">topic</kbd> can be any string. You should see output that looks
+something like this:</p>
+
+<pre class="SCREEN">
+1.006 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+1.019 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+1.010 secs.   0.0 Kmsgs/sec.   0.0 Kbps
+</pre>
+
+<p>A new line will be printed about once per second showing the elapsed time, messages
+received, and data received. As long as there are no sources yet running on <kbd
+class="USERINPUT">topic</kbd>, the number of messages received will continue to be
+zero.</p>
+</li>
+
+<li>
+<p>Open a command prompt window on the machine you want to use for sending messages and
+enter the command <tt class="COMMAND">lbmsrc topic</tt> to start sending messages. The
+receiver will automatically discover the source, at which time its output will change to
+something like this:</p>
+
+<pre class="SCREEN">
+1.010 secs. 451.9 Kmsgs/sec.  90.4 Mbps
+1.010 secs. 451.4 Kmsgs/sec.  90.3 Mbps
+1.010 secs. 445.1 Kmsgs/sec.  89.0 Mbps
+</pre>
+</li>
+
+<li>
+<p>With no options given, the source will send 10,000,000 small (25 byte) messages. If
+you would like to test different size packets or number of packets sent, you can set
+options. Enter <kbd class="USERINPUT">lbmsrc -h</kbd> at the command line, you will get a
+list of options you can control.</p>
+</li>
+
+<li>
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill the source or
+receiver.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="LBM-EVALUATION-NOTES" name="LBM-EVALUATION-NOTES">2.3. Binary
+Evaluation Notes</a></h3>
+
+<ol type="1">
+<li>
+<p>There are many other example programs available. See <a href="../example/index.html"
+target="doccontent">doc/example/index.html</a> for documentation on all of them.</p>
+</li>
+
+<li>
+<p>For general information on measuring performance, see the <b
+class="APPLICATION">UM</b> Knowledgebase article <a
+href="https://communities.informatica.com/infakb/faq/5/Pages/80054.aspx"
+target="doccontent">Performance Testing</a>.</p>
+</li>
+
+<li>
+<p>For information on testing the LBT-RM (multicast) transport, see the following <a
+href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">UM</b> Knowledgebase</a> articles:</p>
+
+<ul>
+<li>
+<p><a href="https://communities.informatica.com/infakb/faq/5/Pages/80071.aspx"
+target="doccontent">Testing with LBT-RM</a></p>
+</li>
+
+<li>
+<p><a href="https://communities.informatica.com/infakb/faq/5/Pages/80072.aspx"
+target="doccontent">Interpreting LBT-RM Source Statistics</a></p>
+</li>
+
+<li>
+<p><a href="https://communities.informatica.com/infakb/faq/5/Pages/80074.aspx"
+target="doccontent">Tuning LBT-RM</a></p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Microsoft has batching issues in its networking stack, so the performance results can
+vary. We have a work around if this is an issue for you.</p>
+</li>
+
+<li>
+<p>The Linux version was compiled on Fedora Core 1.</p>
+</li>
+
+<li>
+<p>The Windows version was compiled on Windows XP with Microsoft Visual C++ version
+7.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="LBM-PROGRAMMING-QUICK-START"
+name="LBM-PROGRAMMING-QUICK-START">3. <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Programming Quick Start</a></h2>
+
+<p>The C programs below contain the minimum code and supporting material. Their purpose
+is to verify that the user's build and run-time environments are set up correctly. They
+also give a basic introduction to the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> API.</p>
+
+<p>We also have equivalent Java and C# programs available in source form. See <a
+href="MinSrc.java" target="doccontent">MinSrc.java</a> and <a href="MinRcv.java"
+target="doccontent">MinRcv.java</a> or <a href="MinSrc.cs" target="doccontent">MinSrc.cs</a> and <a
+href="MinRcv.cs" target="doccontent">MinRcv.cs</a> We also have an example of how application
+callbacks are coded in C++ programs. See <a href="minrcv.cpp"
+target="doccontent">minrcv.cpp</a> (Most browsers let you right-click on the link and use the
+<span class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation.)</p>
+
+<p>Note that these programs do not allow the user to override any of the default
+configuration values. As a result, operation is fixed according to the normal LBM
+defaults; for example TCP is the transport protocol, topic resolution is performed using
+multicast, etc. See the <a href="../Config/index.html" target="doccontent">Ultra Messaging
+Configuration Guide</a>.</p>
+
+<p>The <a href="../example/index.html" target="doccontent">Ultra Messaging Examples page</a>
+provides a much richer set of source files that use a wide variety of features. However,
+those programs double as performance testing tools, so they tend to be more complex than
+just demonstrating the features. We recommend to first build and run these minimal
+examples.</p>
+
+<p>This source code example is provided by Informatica for educational and evaluation
+purposes only.</p>
+
+<p>Error handling in these programs is primitive. A production program would want to have
+better error handling, but for the purposes of a minimal example, it would just be a
+distraction. Also, a production program would want to support a configuration file to
+override default values on options.</p>
+
+<p>When building on Windows, the following notes are applicable.</p>
+
+<ol type="1">
+<li>
+<p>Make sure the preprocessor variable "WIN32" is defined. From Visual Studio 6,
+navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">C/C++</kbd>", "<kbd
+class="USERINPUT">Category:General</kbd>", "<kbd class="USERINPUT">Preprocessor
+definitions:</kbd>".</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">C:\Program
+Files\29West\&lt;VERS&#62;\Win2k-i386\include\lbm</tt> as an additional include directory
+(where "&lt;VERS&#62;" is the appropriate version identifier). From Visual Studio 6,
+navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">C/C++</kbd>", "<kbd
+class="USERINPUT">Category:Preprocessor</kbd>", "<kbd class="USERINPUT">Additional
+include directories:</kbd>"</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">lbm.lib</tt> and <tt class="FILENAME">wsock32.lib</tt> as
+Object/library modules. From Visual Studio 6, navigate: "<kbd
+class="USERINPUT">Project</kbd>"-&#62;"<kbd class="USERINPUT">Settings...</kbd>", "<kbd
+class="USERINPUT">Link</kbd>", "<kbd class="USERINPUT">Category:General</kbd>", "<kbd
+class="USERINPUT">Object/library modules:</kbd>"</p>
+</li>
+
+<li>
+<p>Add <tt class="FILENAME">C:\Program Files\29West\<tt
+class="REPLACEABLE"><i>VERS</i></tt>\Win2k-i386\lib</tt> as an additional library path
+(where <tt class="REPLACEABLE"><i>VERS</i></tt> is the appropriate version identifier).
+From Visual Studio 6, navigate: "<kbd class="USERINPUT">Project</kbd>"-&#62;"<kbd
+class="USERINPUT">Settings...</kbd>", "<kbd class="USERINPUT">Link</kbd>", "<kbd
+class="USERINPUT">Category:Input</kbd>", "<kbd class="USERINPUT">Additional library
+path:</kbd>"</p>
+</li>
+
+<li>
+<p>The install procedure should already have added the LBM <tt class="FILENAME">bin</tt>
+directory to the Windows PATH. This is necessary so that <tt
+class="FILENAME">lbm.dll</tt> can be found when a program is run. To modify the Windows
+PATH from Windows XP, navigate: "<kbd class="USERINPUT">right-click My
+Computer</kbd>"-&#62;"<kbd class="USERINPUT">properties</kbd>", "<kbd
+class="USERINPUT">Advanced</kbd>", "<kbd class="USERINPUT">Environment variables</kbd>",
+"<kbd class="USERINPUT">System variables:Path</kbd>", "<kbd
+class="USERINPUT">Edit</kbd>"</p>
+</li>
+</ol>
+
+<p>When building on Unix, the following notes are applicable.</p>
+
+<ol type="1">
+<li>
+<p>Sample build command:</p>
+
+<pre class="SCREEN">
+cc -I$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/include
+   -L$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/lib -llbm -lm -o min_src min_src.c
+</pre>
+
+(This should be all one line.) <br />
+<br />
+</li>
+
+<li>
+<p>The appropriate library search path should be updated to include the <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> <tt
+class="FILENAME">lib/</tt> directory. For example, on Linux:</p>
+
+<pre class="SCREEN">
+LD_LIBRARY_PATH="$HOME/lbm/&lt;VERS&#62;/&lt;PLATFORM&#62;/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH
+</pre>
+
+(For other flavors of Unix, see <a href="http://bhami.com/rosetta.html"
+target="doccontent">http://bhami.com/rosetta.html</a>.) Alternatively, the shared library can
+be copied from the LBM <tt class="FILENAME">lib/</tt> directory to a directory which is
+already in the library search path. <br />
+<br />
+</li>
+</ol>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MINIMAL-LBM-SOURCE-IMPLEMENTATION"
+name="MINIMAL-LBM-SOURCE-IMPLEMENTATION">3.1. Minimal <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Source Implementation</a></h3>
+
+<p>This is a source code listing of a minimal source (sender) program. You may find it
+helpful to <a href="minsrc.c" target="doccontent">download the source code</a> (most browsers
+let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation). We also have
+equivalent Java and C# programs available in source form. See <a href="MinSrc.java"
+target="doccontent">MinSrc.java</a> and <a href="MinSrc.cs" target="doccontent">MinSrc.cs</a>.</p>
+
+<pre class="PROGRAMLISTING">
+/*file: minsrc.c - minimal source (sender) program.
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+
+#include &lt;stdio.h&gt;
+
+#if defined(_MSC_VER)
+/* Windows-only includes */
+#include &lt;winsock2.h&gt;
+#define SLEEP(s) Sleep((s)*1000)
+#else
+/* Unix-only includes */
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#define SLEEP(s) sleep(s)
+#endif
+
+#include &lt;lbm/lbm.h&gt;
+
+main()
+{
+    lbm_context_t *ctx;    /* pointer to context object */
+    lbm_topic_t *topic;    /* pointer to topic object */
+    lbm_src_t *src;        /* pointer to source (sender) object */
+    int err;               /* return status of lbm functions (true=error) */
+
+#if defined(_MSC_VER)
+    /* windows-specific code */
+    WSADATA wsadata;
+    int wsStat = WSAStartup(MAKEWORD(2,2), &amp;wsadata);
+    if (wsStat != 0)
+    {
+        printf("line %d: wsStat=%d\n",__LINE__,wsStat);
+        exit(1);
+    }
+#endif
+
+    err = lbm_context_create(&amp;ctx, NULL, NULL, NULL);   <a id="MINSRC.C-CONTEXT-CO"
+name="MINSRC.C-CONTEXT-CO"><img src="./imagelib/callouts/1.png" hspace="0" vspace="0"
+border="0" alt="(1)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_src_topic_alloc(&amp;topic, ctx, "Greeting", NULL);   <a
+id="MINSRC.C-TOPIC-CO" name="MINSRC.C-TOPIC-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_src_create(&amp;src, ctx, topic, NULL, NULL, NULL);   <a
+id="MINSRC.C-SRC-CO" name="MINSRC.C-SRC-CO"><img src="./imagelib/callouts/3.png"
+hspace="0" vspace="0" border="0" alt="(3)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    SLEEP(3);   <a id="MINSRC.C-SLEEP1-CO" name="MINSRC.C-SLEEP1-CO"><img
+src="./imagelib/callouts/4.png" hspace="0" vspace="0" border="0" alt="(4)" /></a>
+
+    err = lbm_src_send(src, "Hello!", 6, LBM_MSG_FLUSH | LBM_SRC_BLOCK);   <a
+id="MINSRC.C-SEND-CO" name="MINSRC.C-SEND-CO"><img src="./imagelib/callouts/5.png"
+hspace="0" vspace="0" border="0" alt="(5)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    /* Finished all sending to this topic, delete the source object. */
+    SLEEP(2);   <a id="MINSRC.C-SLEEP2-CO" name="MINSRC.C-SLEEP2-CO"><img
+src="./imagelib/callouts/6.png" hspace="0" vspace="0" border="0" alt="(6)" /></a>
+    lbm_src_delete(src);
+
+    /* Do not need to delete the topic object - LBM keeps track of topic
+     * objects and deletes them as-needed.  */
+
+    /* Finished with all LBM functions, delete the context object. */
+    lbm_context_delete(ctx);
+
+#if defined(_MSC_VER)
+    WSACleanup();
+#endif
+}  /* main */
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="#MINSRC.C-CONTEXT-CO"><img src="./imagelib/callouts/1.png" hspace="0"
+vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a context object. A context is an environment in which LBM functions. Note
+that the first parameter is a pointer to a pointer variable; lbm_context_create writes
+the pointer to the context object into "ctx". Also, by passing NULL to the context
+attribute parameter, the default option values are used. For most applications only a
+single context is required regardless of how many sources and receivers are created.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINSRC.C-TOPIC-CO"><img src="./imagelib/callouts/2.png" hspace="0"
+vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Allocate a topic object. A topic object is little more than a string (the topic
+name). During operation, LBM keeps some state information in the topic object as well.
+The topic is bound to the containing context, and will also be bound to a source object.
+Note that the first parameter is a pointer to a pointer variable; lbm_src_topic_alloc
+writes the pointer to the topic object into "topic". Also, by passing NULL to the source
+topic attribute, the default option values are used. The string "Greeting" is the topic
+string.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINSRC.C-SRC-CO"><img src="./imagelib/callouts/3.png" hspace="0" vspace="0"
+border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create the source object. A source object is used to send messages. It must be bound
+to a topic. Note that the first parameter is a pointer to a pointer variable;
+lbm_src_create writes the pointer to the source object to into "src". Use of the third
+and fourth parameters is optional but recommended in a production program - some source
+events can be important to the application. The last parameter is an optional event queue
+(not used in this example).</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINSRC.C-SLEEP1-CO"><img src="./imagelib/callouts/4.png" hspace="0"
+vspace="0" border="0" alt="(4)" /></a></dt>
+
+</td><td valign=top>
+<dd>Need to wait for receivers to find us before first send. There are other ways to
+accomplish this, but sleep is easy. See
+https://communities.informatica.com/infakb/faq/5/Pages/80061.aspx for details.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINSRC.C-SEND-CO"><img src="./imagelib/callouts/5.png" hspace="0"
+vspace="0" border="0" alt="(5)" /></a></dt>
+
+</td><td valign=top>
+<dd>Send a message to the "Greeting" topic. The flags make sure the call to lbm_src_send
+doesn't return until the message is sent.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINSRC.C-SLEEP2-CO"><img src="./imagelib/callouts/6.png" hspace="0"
+vspace="0" border="0" alt="(6)" /></a></dt>
+
+</td><td valign=top>
+<dd>For some transport types (mostly UDP-based), a short delay before deleting the source
+is advisable. Even though the message is sent, there may have been packet loss, and some
+transports need a bit of time to request re-transmission. Also, if the above lbm_src_send
+call didn't include the flush, some time might also be needed to empty the batching
+buffer.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MINIMAL-LBM-RECEIVER-IMPLEMENTATION"
+name="MINIMAL-LBM-RECEIVER-IMPLEMENTATION">3.2. Minimal <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> Receiver Implementation</a></h3>
+
+<p>This is a source code listing of a minimal receiver program. You may find it helpful
+to <a href="minrcv.c" target="doccontent">download the source code</a> (most browsers let you
+right-click on the link and use the <span class="emphasis"><i class="EMPHASIS">save link
+target</i></span> function, or some variation). We also have equivalent Java, C#, and C++
+programs available in source form. See <a href="MinRcv.java"
+target="doccontent">MinRcv.java</a> <a href="MinRcv.cs" target="doccontent">MinRcv.cs</a> and <a
+href="minrcv.cpp" target="doccontent">minrcv.cpp</a>.</p>
+
+<pre class="PROGRAMLISTING">
+/*file: minrcv.c - minimal receiver program.
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+
+#include &lt;stdio.h&gt;
+
+#if defined(_MSC_VER)
+/* Windows-only includes */
+#include &lt;winsock2.h&gt;
+#define SLEEP(s) Sleep((s)*1000)
+#else
+/* Unix-only includes */
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#define SLEEP(s) sleep(s)
+#endif
+
+#include &lt;lbm/lbm.h&gt;
+
+/*
+ * A global variable is used to communicate from the receiver callback to
+ * the main application thread.
+ */
+int msgs_rcvd = 0;
+
+int app_rcv_callback(lbm_rcv_t *rcv, lbm_msg_t *msg, void *clientd)   <a
+id="MINRCV.C-CALLBACK-CO" name="MINRCV.C-CALLBACK-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a>
+{
+    /* There are several different events that can cause the receiver callback
+     * to be called.  Decode the event that caused this.  */
+    switch (msg-&gt;type)
+    {
+    case LBM_MSG_DATA:    /* a received message */
+        printf("Received %d bytes on topic %s: '%.*s'\n",   <a id="MINRCV.C-PRINTF-CO"
+name="MINRCV.C-PRINTF-CO"><img src="./imagelib/callouts/2.png" hspace="0" vspace="0"
+border="0" alt="(2)" /></a>
+               msg-&gt;len, msg-&gt;topic_name, msg-&gt;len, msg-&gt;data);
+
+        /* Tell main thread that we've received our message. */
+        ++ msgs_rcvd;
+        break;
+
+    case LBM_MSG_BOS:
+    printf("[%s][%s], Beginning of Transport Session\n", msg-&gt;topic_name, msg-&gt;source);
+    break;
+
+    case LBM_MSG_EOS:
+    printf("[%s][%s], End of Transport Session\n", msg-&gt;topic_name, msg-&gt;source);
+    break;
+    
+    default:    /* unexpected receiver event */
+        printf("Received lbm_msg_t type %x [%s][%s]\n", msg-&gt;type, msg-&gt;topic_name, msg-&gt;source);
+        break;
+    }  /* switch msg-&gt;type */
+
+    return 0;
+}  /* app_rcv_callback */
+
+
+main()
+{
+    lbm_context_t *ctx;    /* pointer to context object */
+    lbm_topic_t *topic;    /* pointer to topic object */
+    lbm_rcv_t *rcv;        /* pointer to receiver object */
+    int err;               /* return status of lbm functions (true=error) */
+
+#if defined(_MSC_VER)
+    /* windows-specific code */
+    WSADATA wsadata;
+    int wsStat = WSAStartup(MAKEWORD(2,2), &amp;wsadata);
+    if (wsStat != 0)
+    {
+        printf("line %d: wsStat=%d\n",__LINE__,wsStat);
+        exit(1);
+    }
+#endif
+
+    err = lbm_context_create(&amp;ctx, NULL, NULL, NULL);   <a id="MINRCV.C-CONTEXT-CO"
+name="MINRCV.C-CONTEXT-CO"><img src="./imagelib/callouts/3.png" hspace="0" vspace="0"
+border="0" alt="(3)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_rcv_topic_lookup(&amp;topic, ctx, "Greeting", NULL);   <a
+id="MINRCV.C-TOPIC-CO" name="MINRCV.C-TOPIC-CO"><img src="./imagelib/callouts/4.png"
+hspace="0" vspace="0" border="0" alt="(4)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    err = lbm_rcv_create(&amp;rcv, ctx, topic, app_rcv_callback, NULL, NULL);   <a
+id="MINRCV.C-RCV-CO" name="MINRCV.C-RCV-CO"><img src="./imagelib/callouts/5.png"
+hspace="0" vspace="0" border="0" alt="(5)" /></a>
+    if (err)
+    {
+        printf("line %d: %s\n", __LINE__, lbm_errmsg());
+        exit(1);
+    }
+
+    while (msgs_rcvd == 0)
+        SLEEP(1);
+
+    /* Finished all receiving from this topic, delete the receiver object. */
+    lbm_rcv_delete(rcv);
+
+    /* Do not need to delete the topic object - LBM keeps track of topic
+     * objects and deletes them as-needed.  */
+
+    /* Finished with all LBM functions, delete the context object. */
+    lbm_context_delete(ctx);
+
+#if defined(_MSC_VER)
+    WSACleanup();
+#endif
+}  /* main */
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="#MINRCV.C-CALLBACK-CO"><img src="./imagelib/callouts/1.png" hspace="0"
+vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>LBM passes received messages to the application by means of a callback. I.e. the LBM
+context thread reads the network socket, performs its higher-level protocol functions,
+and then calls an application-level function that was set up during initialization. This
+callback function has some severe limitations placed upon it. It must execute very
+quickly; any potentially blocking calls it might make will interfere with the proper
+execution of the LBM context thread. One common desire is for the receive function to
+send an LBM message (via lbm_src_send), however this has the potential to produce a
+deadlock condition. If it is desired for the receive callback function to call LBM or
+other potentially blocking functions, it is strongly advised to make use of an event
+queue, which causes the callback to be executed from an application thread. See the
+example tool lbmrcvq.c for an example of using a receiver event queue.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINRCV.C-PRINTF-CO"><img src="./imagelib/callouts/2.png" hspace="0"
+vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Note - printf can block, which is normally a bad idea for a callback (unless an event
+queue is being used). However, for this minimal application, only one message is
+expected.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINRCV.C-CONTEXT-CO"><img src="./imagelib/callouts/3.png" hspace="0"
+vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a context object. A context is an environment in which LBM functions. Note
+that the first parameter is a pointer to a pointer variable; lbm_context_create writes
+the pointer to the context object into "ctx". Also, by passing NULL to the context
+attribute parameter, the default option values are used. For most applications only a
+single context is required regardless of how many sources and receivers are created.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINRCV.C-TOPIC-CO"><img src="./imagelib/callouts/4.png" hspace="0"
+vspace="0" border="0" alt="(4)" /></a></dt>
+
+</td><td valign=top>
+<dd>Lookup a topic object. A topic object is little more than a string (the topic name).
+During operation, LBM keeps some state information in the topic object as well. The topic
+is bound to the containing context, and will also be bound to a receiver object. Note
+that the first parameter is a pointer to a pointer variable; lbm_rcv_topic_lookup writes
+the pointer to the topic object into "topic". Also, by passing NULL to the source topic
+attribute, the default option values are used. The string "Greeting" is the topic
+string.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#MINRCV.C-RCV-CO"><img src="./imagelib/callouts/5.png" hspace="0" vspace="0"
+border="0" alt="(5)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create the receiver object and bind it to a topic. Note that the first parameter is a
+pointer to a pointer variable; lbm_rcv_create writes the pointer to the source object to
+into "rcv". The second and third parameters are the function and application data
+pointers. When a message is received, the function is called with the data pointer passed
+in as its last parameter. The last parameter is an optional event queue (not used in this
+example).</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="UNICAST-ONLY" name="UNICAST-ONLY">4. Unicast-Only
+Operation</a></h2>
+
+<p>One of <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>'s
+great strengths is its use of the network hardware and protocols to achieve very high
+performance and scalability. By default, <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> uses multicast for topic resolution so that
+data sources and receivers can find each other.</p>
+
+<p>In general, we recommend the use of multicast whenever possible because it provides
+the best performance and scalability. However, we recognize that it is not always
+possible to provide multicast connectivity between the machines. For those cases, we
+support unicast-only operation.</p>
+
+<p>There are two parts to unicast-only operation. One is to use a unicast form of
+transport. <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> uses
+TCP by default for transport, but LBT-RU is also available and has some performance
+advantages. For initial "quick start" testing, we recommend not changing the default
+TCP.</p>
+
+<p>The second part of unicast-only operation is to use the <tt class="COMMAND">lbmrd</tt>
+(<b class="APPLICATION">UM</b> Resolver Daemon) for topic resolution. (NOTE: this does
+<span class="emphasis"><i class="EMPHASIS">not</i></span> route message data through a
+daemon. This is a helper process that lets data sources and receivers find each other.)
+To enable unicast topic resolution, do the following:</p>
+
+<ol type="1">
+<li>
+<p>Choose one machine to host the resolver daemon and enter the <tt
+class="COMMAND">lbmrd</tt> command (use <tt class="COMMAND">lbmrd -h</tt> for full
+instructions).</p>
+</li>
+
+<li>
+<p>Create a <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+configuration file containing:</p>
+
+<pre class="PROGRAMLISTING">
+context resolver_unicast_daemon <tt
+class="REPLACEABLE"><i>[Iface[:Src_Port]-&gt;]IP:Dest_Port</i></tt>
+</pre>
+
+<p>where</p>
+
+<ul>
+<li>
+<p><tt class="REPLACEABLE"><i>Iface</i></tt> is the interface to use (previously set with
+<a href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTINTERFACE"
+target="doccontent"><tt class="LITERAL">resolver_unicast_interface</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>Src_Port</i></tt> is the source port to use (previously set
+with <a href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTPORT"
+target="doccontent"><tt class="LITERAL">resolver_unicast_port</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>IP</i></tt> is the resolver daemon's IP address (previously
+set with <a href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTADDRESS"
+target="doccontent"><tt class="LITERAL">resolver_unicast_address</tt></a>).</p>
+</li>
+
+<li>
+<p><tt class="REPLACEABLE"><i>Dest_Port</i></tt> is the resolver daemon's UDP port
+(previously set with <a
+href="../Config/deprecatedoptions.html#CONTEXTRESOLVERUNICASTDESTINATIONPORT"
+target="doccontent"><tt class="LITERAL">resolver_unicast_destination_port</tt></a>).</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Run the test applications with the option <tt class="COMMAND">-c</tt> <tt
+class="REPLACEABLE"><i>filename</i></tt> where <tt
+class="REPLACEABLE"><i>filename</i></tt> is the configuration file created in step 2.</p>
+</li>
+</ol>
+
+<p>See also <a
+href="../Config/unicastresolvernetworkoptions.html#CONTEXTRESOLVERUNICASTDAEMON"
+target="doccontent"><tt class="LITERAL">resolver_unicast_daemon</tt></a>.</p>
+
+<p>Due to the fact that the minimal source programs presented in this document (<tt
+class="FILENAME">minsrc.c</tt> and <tt class="FILENAME">minrcv.c</tt>) do not allow the
+use of a configuration file, it is not possible to configure them for unicast-only
+operation. If multicast operation is not possible on your network, then please use the
+binary test programs (described in <a href="#LBM-BINARY-QUICK-START">Section 2</a>) which
+which <span class="emphasis"><i class="EMPHASIS">do</i></span> allow unicast-only
+configuration.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="JMS-BINARY-QUICK-START" name="JMS-BINARY-QUICK-START">5. Ultra
+Messaging JMS Quick Start</a></h2>
+
+<p><b class="APPLICATION">UMQ</b> also includes a Ultra Messaging JMS evaluation package.
+You can run pre-compiled commands from an Ultra Messaging JMS distribution to get some
+quick performance numbers in your environment. (A subsequent section guides you through
+creation of simple programs for local compilation.)</p>
+
+<div class="IMPORTANT">
+<blockquote class="IMPORTANT">
+<p><b>Important:</b> The application demonstrations described below assume that you will
+use a single machine. If you plan to test multiple machines communicating with each
+other, the machines will need multicast connectivity between them. Contact your network
+administrator for information on multicast connectivity.</p>
+</blockquote>
+</div>
+
+<p>An Ultra Messaging JMS evaluation package includes the following.</p>
+
+<ul>
+<li>
+<p>Ultra Messaging JMS jar file that contains the Ultra Messaging JMS and compiled
+example applications. (See the <tt class="FILENAME">jmsclient/lib</tt> directory.)</p>
+</li>
+
+<li>
+<p>JMS jar file and other 3rd party jar files (See the <tt
+class="FILENAME">jmsclient/lib</tt> directory.)</p>
+</li>
+
+<li>
+<p>Example source code (see the <tt class="FILENAME">doc/jms_example/*.java</tt>
+directory)</p>
+</li>
+
+<li>
+<p><a href="../jms_concepts/index.html" target="doccontent">The Ultra Messaging JMS
+Guide</a></p>
+</li>
+
+<li>
+<p><a href="../JMSAPI/html/index.html" target="doccontent">JMS Application Programmer's
+Interface</a></p>
+</li>
+</ul>
+
+<p>The Ultra Messaging JMS code and documentation are copyrighted and confidential
+information owned by Informatica Corporation and are covered under the terms of our
+Software License Agreement or Non-Disclosure Agreement as appropriate. Use of this code
+and documentation without a valid Non-Disclosure Agreement or Software License Agreement
+with Informatica, Inc. is strictly prohibited. If this code and documentation is being
+supplied under the terms of a Non Disclosure Agreement, all copies, in any form, must be
+returned or destroyed at the end of the evaluation period or as requested by Informatica
+Corporation.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> For Windows installations, you must also install the Microsoft Visual C++
+2005 Service Pack 1 Redistributable Package MFC Security Update, which is available on
+the download page and contains runtime components of the Visual C++ Libraries.</p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The Ultra Messaging JMS JAR installation is not compatible with <span
+class="TRADEMARK">Microsoft</span>&reg; <span class="TRADEMARK">Windows</span>&reg; due
+to a new dependency on <tt class="FILENAME">libeay32.dll</tt>. As a workaround, set <tt
+class="LITERAL">use_native_loader=false</tt> and load the dependencies from the PATH.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="CONFIGURE-JMS" name="CONFIGURE-JMS">5.1. Configure Your
+Environment to Run Ultra Messaging JMS Examples</a></h3>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="CONFIGURE-JMS-UNIX" name="CONFIGURE-JMS-UNIX">5.1.1. Configure
+Ultra Messaging JMS for Unix</a></h4>
+
+<p>Perform the following steps to configure Ultra Messaging JMS for a Unix
+environment.</p>
+
+<ol type="1">
+<li>
+<p>Edit the <tt class="LITERAL">bin/env.sh</tt> file to configure your environment. You
+must set the following two variables.</p>
+
+<pre class="SCREEN">
+export JAVA_HOME="/usr/local/jdk1.6.0_16"
+export LBM_LICENSE_FILENAME=/home/user/lbm.lic
+           
+</pre>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">startJMS.sh</tt>. You can now run any of the example
+applications with the appropriate script. See <a href="#WIDOWS-OR-UNIX"><i>Microsoft
+Windows or Unix</i></a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you make any changes to the config.xml file to test different aspects
+of Ultra Messaging JMS, you must re-run the "config.sh" script. This re-creates a <tt
+class="LITERAL">.bindings</tt> file from the <a href="../jms_example/config.xml"
+target="doccontent">config.xml</a> file that all example programs use.</p>
+</blockquote>
+</div>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h4 class="SECTION"><a id="CONFIGURE-JMS-WINDOWS" name="CONFIGURE-JMS-WINDOWS">5.1.2.
+Configure Ultra Messaging JMS for <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span></a></h4>
+
+<p>The following steps assume that <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> is installed in the standard place.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> It is critical that you set the <span class="TRADEMARK">Microsoft</span>
+<span class="TRADEMARK">Windows</span> <tt class="LITERAL">PATH</tt> environment variable
+to include the location of the <b class="APPLICATION">UMQ</b> product installation bin
+directory. In particular, <tt class="FILENAME">iconv.dll</tt> from the <tt
+class="LITERAL">bin</tt> directory must be in the executable's <tt
+class="LITERAL">dll</tt> search path at runtime.</p>
+</blockquote>
+</div>
+
+<ol type="1">
+<li>
+<p>Set the following three environment variables.</p>
+
+<pre class="SCREEN">
+set JAVA_HOME=C:\Program Files\Java\jdk1.6
+set JAVA_BIN=%JAVA_HOME%\bin
+set LBM_LICENSE_FILENAME=C:\lbm.lic
+           
+</pre>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Your Java directory may be different, such as <tt
+class="LITERAL">jre6</tt>. Also, your license file path or name may vary.</p>
+</blockquote>
+</div>
+</li>
+
+<li>
+<p>Run <tt class="LITERAL">startJMS.bat</tt>. You can now run any of the example
+applications with the appropriate script.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> If you make any changes to the config.xml file to test different aspects
+of Ultra Messaging JMS, you must re-run the "config.bat" script. This re-creates a <tt
+class="LITERAL">.bindings</tt> file from the <a href="../jms_example/config.xml"
+target="doccontent">config.xml</a> file that all example programs use.</p>
+</blockquote>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="WIDOWS-OR-UNIX" name="WIDOWS-OR-UNIX">5.2. <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> or
+Unix</a></h3>
+
+<p>All source for the following example applications is Java.</p>
+
+<ul>
+<li>
+<p>If you are running on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> you will execute a <tt class="LITERAL">.bat</tt>
+file.</p>
+</li>
+
+<li>
+<p>If you are running a Unix system, you will execute a <tt class="LITERAL">.sh</tt>
+file.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="DEMO-REQUEST-REPLY" name="DEMO-REQUEST-REPLY">5.3.
+Demonstrating Request/Reply</a></h3>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS request/reply. This
+demonstration uses <a href="../jms_example/Reply.java" target="doccontent">Reply.java</a> and
+<a href="../jms_example/Request.java" target="doccontent">Request.java</a> source files and
+requires a UME server.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt class="LITERAL">reply.sh</tt>
+or <tt class="LITERAL">reply.bat</tt> for <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">request.sh</tt> or <tt class="LITERAL">request.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>You will see output that indicates the message has been sent back and forth. Press <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill either application.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="DEMO-SYNCH-ASYNCH" name="DEMO-SYNCH-ASYNCH">5.4. Demonstrating
+Synch and Async Reads</a></h3>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS synchronous and asynchronous
+message delivery. This demonstration uses <a href="../jms_example/AsyncConsumer.java"
+target="doccontent">AsyncConsumer.java</a>, <a href="../jms_example/Producer.java"
+target="doccontent">Producer.java</a> and <a href="../jms_example/SyncConsumer.java"
+target="doccontent">SyncConsumer.java</a> source files.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt
+class="LITERAL">AsyncConsumer.sh</tt> or <tt class="LITERAL">AsyncConsumer.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">Producer.sh</tt> or <tt class="LITERAL">Producer.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a third command prompt window and enter the command <tt
+class="LITERAL">SyncConsumer.sh</tt> or <tt class="LITERAL">SyncConsumer.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+</ol>
+
+<p>For the <tt class="LITERAL">Producer</tt>, you will see output similar to the
+following.</p>
+
+<pre class="SCREEN">
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+Sent ********* This is a test *********** 
+   
+</pre>
+
+<p>For the <tt class="LITERAL">AsyncConsumer</tt> and the <tt
+class="LITERAL">SyncConsumer</tt>, you will see output similar to the following.</p>
+
+<pre class="SCREEN">
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test ***********
+Received message: ********* This is a test *********** 
+   
+</pre>
+
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill any application.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="DEMO-DURABLE-CONUMER" name="DEMO-DURABLE-CONUMER">5.5.
+Demonstrating A Durable Consumer</a></h3>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS durable consumer messaging.
+This demonstration uses <a href="../jms_example/DurableConsumer.java"
+target="doccontent">DurableConsumer.java</a> and <a href="../jms_example/DurableProducer.java"
+target="doccontent">DurableProducer.java</a> source files and requires a UME server.</p>
+
+<ol type="1">
+<li>
+<p>Open a command prompt window and enter the command <tt
+class="LITERAL">DurableConsumer.sh</tt> or <tt class="LITERAL">DurableConsumer.bat</tt>
+for <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a second command prompt window and enter the command <tt
+class="LITERAL">DurableProducer.sh</tt> or <tt class="LITERAL">DurableProducer.bat</tt>
+for <span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>. The
+<tt class="LITERAL">DurableProducer</tt> sends 20 messages.</p>
+</li>
+
+<li>
+<p>In the command prompt window for the <tt class="LITERAL">DurableConsumer</tt>, you
+should see output similar to the following.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 1
+Reading message: This is message 2
+Reading message: This is message 3
+Reading message: This is message 4
+Reading message: This is message 5
+Reading message: This is message 6
+Reading message: This is message 7
+Reading message: This is message 8
+   
+</pre>
+</li>
+
+<li>
+<p>After message 8, press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill the
+<tt class="LITERAL">DurableConsumer</tt>. Then restart the consumer. The remaining 12
+messages sent by the <tt class="LITERAL">DurableProducer</tt> appear in the window.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 9
+Reading message: This is message 10
+Reading message: This is message 11
+Reading message: This is message 12
+Reading message: This is message 13
+Reading message: This is message 14
+Reading message: This is message 15
+Reading message: This is message 16
+Reading message: This is message 17
+Reading message: This is message 18
+Reading message: This is message 19
+Reading message: This is message 20
+   
+</pre>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="DEMO-UMQ" name="DEMO-UMQ">5.6. Demonstrating UMQ</a></h3>
+
+<p>Follow the steps below to demonstrate Ultra Messaging JMS queuing. This demonstration
+uses <a href="../jms_example/QueueReceiver.java" target="doccontent">QueueReceiver.java</a> and
+<a href="../jms_example/QueueSender.java" target="doccontent">QueueSender.java</a>.java source
+files and requires a UMQ server.</p>
+
+<ol type="1">
+<li>
+<p>Open two command prompt windows and in each window, enter the command <tt
+class="LITERAL">QueueReceiver.sh</tt> or <tt class="LITERAL">QueueReceiver.bat</tt> for
+<span class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Open a third command prompt window and enter the command <tt
+class="LITERAL">QueueSender.sh</tt> or <tt class="LITERAL">QueueSender.bat</tt> for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span>. The <tt
+class="LITERAL">QueueSender</tt> sends 15 messages; odd numbered messages go to the <tt
+class="LITERAL">QueueReceiver</tt> in Window 1 and even numbered messages to <tt
+class="LITERAL">QueueReceiver</tt> in Window 2.</p>
+
+<p>Output for <tt class="LITERAL">QueueReceiver</tt> in Window 1.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 1
+Reading message: This is message 3
+Reading message: This is message 5
+Reading message: This is message 7
+Reading message: This is message 9
+Reading message: This is message 11
+Reading message: This is message 13
+Reading message: This is message 15
+   
+</pre>
+
+<p>Output for <tt class="LITERAL">QueueReceiver</tt> in Window 2.</p>
+
+<pre class="SCREEN">
+Reading message: This is message 2
+Reading message: This is message 4
+Reading message: This is message 6
+Reading message: This is message 8
+Reading message: This is message 10
+Reading message: This is message 12
+Reading message: This is message 14 
+   
+</pre>
+</li>
+</ol>
+
+<p>Press <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b> to kill any application.</p>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="OTHER-APPS" name="OTHER-APPS">5.7. Other Example
+Applications</a></h3>
+
+<p></p>
+
+<ol type="1">
+<li>
+<p><a href="../jms_example/MyExceptionListener.java"
+target="doccontent">MyExceptionListener.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/MyListener.java" target="doccontent">MyListener.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/Ping.java" target="doccontent">Ping.java</a></p>
+
+<p>To achieve lower latency for this example application, you should change the value of
+<tt class="LITERAL">implicit_batching_minimum_length</tt> from 2000 to 1 in the <a
+href="../jms_example/config.xml" target="doccontent">config.xml</a> file.</p>
+</li>
+
+<li>
+<p><a href="../jms_example/Pong.java" target="doccontent">Pong.java</a></p>
+
+<p>To achieve lower latency for this example application, you should change the value of
+<tt class="LITERAL">implicit_batching_minimum_length</tt> from 2000 to 1 in the <a
+href="../jms_example/config.xml" target="doccontent">config.xml</a> file.</p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleBytePublisher.java"
+target="doccontent">SimpleBytePublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleByteSubscriber.java"
+target="doccontent">SimpleByteSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleDestinationPublisher.java"
+target="doccontent">SimpleDestinationPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleDestinationSubscriber.java"
+target="doccontent">SimpleDestinationSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleMapPublisher.java"
+target="doccontent">SimpleMapPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleMapSubscriber.java"
+target="doccontent">SimpleMapSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleObjectPublisher.java"
+target="doccontent">SimpleObjectPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleObjectSubscriber.java"
+target="doccontent">SimpleObjectSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleTopicPublisher.java"
+target="doccontent">SimpleTopicPublisher.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/SimpleTopicSubscriber.java"
+target="doccontent">SimpleTopicSubscriber.java</a></p>
+</li>
+
+<li>
+<p><a href="../jms_example/Version.java" target="doccontent">Version.java</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="JMS-PROGRAMMING-QUICK-START"
+name="JMS-PROGRAMMING-QUICK-START">6. Ultra Messaging JMS Programming Quick
+Start</a></h2>
+
+<p>This source code example is provided by Informatica for educational and evaluation
+purposes only. Error handling in these programs is primitive. A production program would
+want to have better error handling, but for the purposes of a minimal example, it would
+just be a distraction. Also, a production program would want to support a configuration
+file to override default values on options.</p>
+
+<p>When building on Windows, use the following compile line. (<tt
+class="LITERAL">QueueReceiver.java</tt> is the application being compiled.)</p>
+
+<pre class="SCREEN">
+$JAVA_HOME/bin/javac QueueReceiver.java -cp $JMS_HOME/lib/uJMS_1.0.jar;$JMS_HOME/lib/jms.jar
+     
+</pre>
+
+<p>When building on Unix, use the following compile line. (<tt
+class="LITERAL">QueueReceiver.java</tt> is the application being compiled.)</p>
+
+<pre class="SCREEN">
+$JAVA_HOME/bin/javac QueueReceiver.java -cp $JMS_HOME/lib/JMS_API.jar:$JMS_HOME/lib/jms.jar
+     
+</pre>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MINIMAL-JMS-SYNCHRONOUS-CONSUMER-IMPLEMENTATION"
+name="MINIMAL-JMS-SYNCHRONOUS-CONSUMER-IMPLEMENTATION">6.1. Ultra Messaging JMS
+Synchronous Consumer Implementation</a></h3>
+
+<p>This is a source code listing of a simple synchronous consumer program. You may find
+it helpful to <a href="SimpleSyncConsumer.java" target="doccontent">download the source
+code</a> (most browsers let you right-click on the link and use the <span
+class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleSyncConsumer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;
+
+   <a id="SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"
+name="SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a>
+import javax.jms.*;
+import javax.naming.*;
+
+public class SyncConsumer implements ExceptionListener {
+
+    public static void main(String[] args) {
+        new SyncConsumer();
+    }
+
+    public SyncConsumer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"
+name="SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {   <a id="SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            Connection connection = factory.createConnection();
+
+            // Create a Session
+            Session session = connection.createSession(false,
+                    javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+            // set the exception listener callback
+            connection.setExceptionListener(this);
+
+            // Create a topic destination
+            Destination destination = session.createTopic("TOPIC.1");
+
+            // create the consumer
+            MessageConsumer msgConsumer = session.createConsumer(destination);
+            connection.start();
+
+            while (true) {
+                System.out.println("Received message " + msgConsumer.receive());
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+// The exception listener
+    public void onException(JMSException e) {
+        // print the connection exception status
+        System.err.println("Exception occurred: " + e.getMessage());
+    }
+}
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="#SIMPLESYNCCONSUMER.JAVA-SYNC-CONSUMER-INTRO-CO"><img
+src="./imagelib/callouts/1.png" hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleSyncConsumer class consists only of a main method, which receives one or
+more messages from a topic using synchronous message delivery Run this program in
+conjunction with SimpleProducer.&#13;</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLESYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLESYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MINIMAL-JMS-ASYNCHRONOUS-CONSUMER-IMPLEMENTATION"
+name="MINIMAL-JMS-ASYNCHRONOUS-CONSUMER-IMPLEMENTATION">6.2. Ultra Messaging JMS
+Asynchronous Consumer Implementation</a></h3>
+
+<p>This is a source code listing of a simple asynchronous consumer program. You may find
+it helpful to <a href="SimpleAsyncConsumer.java" target="doccontent">download the source
+code</a> (most browsers let you right-click on the link and use the <span
+class="emphasis"><i class="EMPHASIS">save link target</i></span> function, or some
+variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleAsyncConsumer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;   <a id="SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"><img src="./imagelib/callouts/1.png" hspace="0"
+vspace="0" border="0" alt="(1)" /></a>
+
+import javax.jms.*;
+import javax.naming.*;
+
+public class AsyncConsumer implements MessageListener, ExceptionListener {
+
+    public static void main(String[] args) {
+        new AsyncConsumer();
+        while (true) {
+            try {
+                Thread.sleep(1000000);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public AsyncConsumer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {   <a id="SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            Connection connection = factory.createConnection();
+
+            // Create a Session
+            Session session = connection.createSession(false,
+                    javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+            // set the exception listener callback
+            connection.setExceptionListener(this);
+
+            // Create a topic destination
+            Destination destination = session.createTopic("TOPIC.1");
+            // create the consumer
+            MessageConsumer msgConsumer = session.createConsumer(destination);
+
+            // set the message listener callback
+            msgConsumer.setMessageListener(this);
+            // start the connection
+            connection.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+// The exception listener
+    public void onException(JMSException e) {
+        // print the connection exception status
+        e.printStackTrace();
+    }
+
+// The message listener callback
+    public void onMessage(Message msg) {
+        try {
+            System.err.println("Received message: " + msg);
+        } catch (Exception e) {
+            System.err.println("Exception occurred: " + e.getMessage());
+            System.exit(-1);
+        }
+    }
+}
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="#SIMPLEASYNCCONSUMER.JAVA-INTRO-CO"><img src="./imagelib/callouts/1.png"
+hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleAsyncConsumer class consists only of a main method, which receives one or
+more messages from a topic using asynchronous message delivery. It uses the message
+listener TextListener. Run this program in conjunction with SimpleProducer. To end the
+program, enter Q or q on the command line.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLEASYNCCONSUMER.JAVA-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLEASYNCCONSUMER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="MINIMAL-JMS-SIMPLE-PRODUCER-IMPLEMENTATION"
+name="MINIMAL-JMS-SIMPLE-PRODUCER-IMPLEMENTATION">6.3. Ultra Messaging JMS Simple
+Producer Implementation</a></h3>
+
+<p>This is a source code listing of a simple producer program. You may find it helpful to
+<a href="SimpleProducer.java" target="doccontent">download the source code</a> (most browsers
+let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation).</p>
+
+<pre class="PROGRAMLISTING">
+/*file: SimpleProducer.java
+ *
+ * Copyright (c) 2005-2014 Informatica Corporation. All Rights Reserved.
+ * Permission is granted to licensees to use
+ * or alter this software for any purpose, including commercial applications,
+ * according to the terms laid out in the Software License Agreement.
+ */
+package examples;
+
+import javax.jms.*;   <a id="SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"
+name="SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"><img src="./imagelib/callouts/1.png"
+hspace="0" vspace="0" border="0" alt="(1)" /></a>
+import javax.naming.*;
+
+public class Producer {
+
+    public static void main(String[] args) {
+        new Producer();
+    }
+
+    public Producer() {
+        Context jndiContext = null;
+
+        try {   <a id="SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"
+name="SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"><img src="./imagelib/callouts/2.png"
+hspace="0" vspace="0" border="0" alt="(2)" /></a>
+            jndiContext = new InitialContext();
+        } catch (NamingException e) {
+            System.out.println("Could not create JNDI API "
+                    + "context: " + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        Connection connection = null;   <a
+id="SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"
+name="SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a>
+        try {
+            ConnectionFactory factory = (ConnectionFactory) jndiContext.lookup("uJMSConnectionFactory");
+            connection = factory.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            connection.start();
+            Destination destination = session.createTopic("TOPIC.1");
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage();
+            for (int i = 0; i &lt; 10; i++) {
+                ((TextMessage) message).setText("********* This is a test *********** ");
+                producer.send(message);
+                Thread.sleep(10);
+                System.out.println("Sent " + message.getText());
+            }
+        } catch (Exception e) {
+            System.out.println("JNDI API lookup failed: "
+                    + e.toString());
+            e.printStackTrace();
+            System.exit(1);
+
+        } finally {
+            if (connection != null) {
+                try {
+
+                    connection.close();
+                    System.exit(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}&#13;
+</pre>
+
+<p><span class="emphasis"><i class="EMPHASIS">Notes:</i></span></p>
+
+<div class="CALLOUTLIST">
+<dl compact="COMPACT">
+<table><tr><td valign=top width=37>
+<dt><a href="#SIMPLEPRODUCER.JAVA-PRODUCER-INTRO-CO"><img src="./imagelib/callouts/1.png"
+hspace="0" vspace="0" border="0" alt="(1)" /></a></dt>
+
+</td><td valign=top>
+<dd>The SimpleProducer class consists only of a main method, which sends10 messages to a
+topic. Run this program in conjunction with SimpleAsyncConsumer and
+SimpleSyncConsumer.&#13;</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLEPRODUCER.JAVA-CREATE-CONTEXT-OBJECT-CO"><img
+src="./imagelib/callouts/2.png" hspace="0" vspace="0" border="0" alt="(2)" /></a></dt>
+
+</td><td valign=top>
+<dd>Create a JNDI API InitialContext object if none exists yet.</dd>
+
+</td></tr><tr valign=top><td>
+<dt><a href="#SIMPLEPRODUCER.JAVA-CONNECTION-FACTORY-LOOKUP-CO"><img
+src="./imagelib/callouts/3.png" hspace="0" vspace="0" border="0" alt="(3)" /></a></dt>
+
+</td><td valign=top>
+<dd>Look up connection factory and topic. If either does not exist, exit.</dd>
+</dl>
+</td></tr></table>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="START-DAEMONS" name="START-DAEMONS">7. Starting Ultra
+Messaging Daemons</a></h2>
+
+<p>Starting <b class="APPLICATION">UM</b> daemons is not really a quick start operation,
+but the information provided in this should provide a good overview of the type of
+activities required to start these important <b class="APPLICATION">UM</b>
+components.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="#START-TNWGD"><i>Ultra Messaging Gateway</i></a></p>
+</li>
+
+<li>
+<p><a href="#START-UMMD"><i>UMM Daemon</i></a></p>
+</li>
+
+<li>
+<p><a href="#START-UMESTORED"><i>Persistent Store and Queue Daemon</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="START-TNWGD" name="START-TNWGD">7.1. Ultra Messaging
+Gateway</a></h3>
+
+<p>The UM Gateway bridges disjoint topic resolution domains by forwarding multicast
+and/or unicast topic resolution traffic across gateways. Before installing and starting a
+gateway daemon (<a href="../Gateway/runningthegateway.html" target="doccontent"><tt
+class="LITERAL">tnwgd</tt></a>) clear objectives and proper planning are very important.
+Approach this planning with the consideration that a gateway condenses your network into
+a single process. You must be clear about the traffic you expect to forward through a
+gateway. The following highlights some other specifics.</p>
+
+<ol type="1">
+<li>
+<p>Know your Topic Resolution Domains. See <a href="../Gateway/concepts.html#TR-DOMAIN"
+target="doccontent">Topic Resolution Domain</a>.</p>
+</li>
+
+<li>
+<p>Consider the size and quality of network paths into and out of your gateways.
+Obviously, gateways cannot efficiently forward message from a 1 GB path to a 100 MB
+path.</p>
+</li>
+
+<li>
+<p>Fully examine any use of Late Join, taking care to configure retransmission options
+correctly.</p>
+</li>
+
+<li>
+<p>All remote stores must be named stores.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="START-UMMD" name="START-UMMD">7.2. UMM Daemon</a></h3>
+
+<p>The UMM Daemon stores <b class="APPLICATION">UM</b> XML configuration information
+defined in the GUI as well as user and license information. It serves license and
+configuration information to <b class="APPLICATION">UM</b> applications. The UMM Daemon
+requires either a <span class="TRADEMARK">MySQL</span>&#8482; or <span
+class="TRADEMARK">Oracle</span>&reg; database installation. Informatica does not supply
+<span class="TRADEMARK">MySQL</span> or <span class="TRADEMARK">Oracle</span> nor any
+licensing to use them. For additional information about the steps in this process, see <a
+href="../UMM/umm-daemon.html" target="doccontent">UM Manager Daemon</a>.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> The <b class="APPLICATION">UMM</b> GUI requires Java Version 1.6.x.</p>
+</blockquote>
+</div>
+
+<ol type="1">
+<li>
+<p>Install <span class="TRADEMARK">MySQL</span> or <span class="TRADEMARK">Oracle</span>
+according to the user documentation.</p>
+</li>
+
+<li>
+<p>Create a database. (You provide the UMM Daemon with the database name, username and
+password at start up. This user name and password should be kept secure.)</p>
+</li>
+
+<li>
+<p>Log into the database.</p>
+</li>
+
+<li>
+<p>From the database's command line or home page, execute the <tt
+class="FILENAME">/UMM/install_tables_oracle.sql</tt> or <tt class="FILENAME">source
+/UMM/install_tables_mysql.sql</tt> script. (This script installs the tables required by
+<b class="APPLICATION">UMM</b>.)</p>
+</li>
+
+<li>
+<p>From the database's command line or home page, load <tt
+class="FILENAME">/UMM/oracle_templates.txt</tt> or <tt
+class="FILENAME">/UMM/mysql_templates.txt</tt>. (This script loads the example
+configuration templates for <a href="../Config/lowestlatency.html" target="doccontent">low
+latency</a> and <a href="../Config/examples.html#HIGHESTTHROUGHPUT" target="doccontent">high
+throughput</a>. These templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">Templates</b> in the object tree in the left pane.</p>
+
+<ul>
+<li>
+<p>For <span class="TRADEMARK">Oracle</span>, load <tt
+class="FILENAME">/UMM/oracle_templates.txt</tt>.</p>
+</li>
+
+<li>
+<p>For <span class="TRADEMARK">MySQL</span>, run <tt class="FILENAME">LOAD DATA INFILE
+'mysql_templates.txt' INTO TABLE TEMPLATE;</tt>.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>From the database's command line or home page, load <tt
+class="FILENAME">/UMM/oracle_application_jms.txt</tt> or <tt
+class="FILENAME">/UMM/mysql_application_jms.txt</tt>. (This script loads the
+ConnectionFactories and Destinations required to run the example JMS applications. These
+templates appear in the <b class="APPLICATION">UMM</b> GUI under <b
+class="APPLICATION">JMS/ConnectionFactory</b> and <b
+class="APPLICATION">JMS/Destination</b> in the object tree in the left pane.)</p>
+
+<ul>
+<li>
+<p>For <span class="TRADEMARK">Oracle</span>, load <tt
+class="FILENAME">/UMM/oracle_application_jms.txt</tt> into the <tt
+class="FILENAME">Application</tt> table.</p>
+</li>
+
+<li>
+<p>For <span class="TRADEMARK">MySQL</span>, run <tt class="FILENAME">LOAD DATA INFILE
+'mysql_application_jms.txt' INTO TABLE APPLICATION;</tt>.</p>
+</li>
+</ul>
+</li>
+
+<li>
+<p>Modify the <tt class="FILENAME">/UMM/umm.properties</tt> to indicate the database
+username, password and driver to reflect your configuration database.</p>
+</li>
+
+<li>
+<p>Edit the <tt class="LITERAL">ummd.bat</tt> or <tt class="LITERAL">ummd.sh</tt> file
+that starts UMM Daemon. The appropriate driver jar file name must be added to the
+classpath. Specify your certificate file or Java keystore information if using SSL
+certificates. The <tt class="LITERAL">ummd.bat</tt> or <tt class="LITERAL">ummd.sh</tt>
+provided with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMMD_1.6.0_02.jar -Xms512m -Xmx1024m umm.ummd.Server
+           
+</pre>
+</li>
+
+<li>
+<p>Start the UMM Daemon with <tt class="FILENAME">/UMM/ummd.bat</tt> or <tt
+class="FILENAME">/UMM/ummd.sh</tt>.</p>
+</li>
+
+<li>
+<p>Edit the <tt class="LITERAL">umm.bat</tt> or <tt class="LITERAL">umm.sh</tt> file that
+starts the <b class="APPLICATION">UMM</b> GUI. The appropriate driver jar file name must
+be added to the classpath. The <tt class="LITERAL">umm.bat</tt> or <tt
+class="LITERAL">umm.sh</tt> provided with installation appears below.</p>
+
+<pre class="PROGRAMLISTING">
+java -cp .;mysql-connector-java-5.0.8-bin.jar;UMM_1.jar; -Xms256m -Xmx1024m umm.gui.MainFrame
+           
+</pre>
+</li>
+
+<li>
+<p>Start the <b class="APPLICATION">UMM</b> GUI with <tt
+class="FILENAME">/UMM/umm.bat</tt> or <tt class="FILENAME">/UMM/umm.sh</tt>.</p>
+</li>
+
+<li>
+<p>Log into the <b class="APPLICATION">UMM</b> GUI with username, <tt
+class="LITERAL">default</tt> and password <tt class="LITERAL">default</tt>. Either change
+the default user's password or create new administrative user and delete the default
+user. See <a href="../UMM/umm-gui.html#UMMGUI-USERS" target="doccontent">Managing Users</a></p>
+</li>
+
+<li>
+<p>To enable your <b class="APPLICATION">UM</b> applications to be served configuration
+information by UMM Daemon, set the following environment variable for every
+application/user combination.</p>
+
+<pre class="SCREEN">
+<tt
+class="LITERAL">export LBM_UMM_INFO=&lt;application_name&#62;:&lt;user_name&#62;:&lt;password&#62;@&lt;ip&#62;:&lt;port&#62;</tt>
+           
+</pre>
+
+<p>For example:</p>
+
+<pre class="SCREEN">
+export LBM_UMM_INFO=lbmrcv:lbmrcv:default:default@10.29.3.95:21273
+           
+</pre>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<hr />
+<h3 class="SECTION"><a id="START-UMESTORED" name="START-UMESTORED">7.3. Persistent Store
+and Queue Daemon</a></h3>
+
+<p>The daemon, <tt class="LITERAL">umestored</tt>, provides persistent store and queue
+services. Follow the steps below to start <tt class="LITERAL">umestored</tt>.</p>
+
+<ol type="1">
+<li>
+<p>Create the cache and state directories. <tt class="LITERAL">$ mkdir umestored-cache ;
+mkdir umestored-state</tt></p>
+</li>
+
+<li>
+<p>Create a simple <tt class="LITERAL">umestored</tt> XML configuration file (see <a
+href="../UME/umestored-config.html" target="doccontent">Configuration Reference for
+Umestored</a>) or use a sample configuration, <a href="../UME/ume-example-config.xml"
+target="doccontent">ume-example-config.xml</a> or <a href="../UME/q-example-config.xml"
+target="doccontent">q-example-config.xml</a></p>
+</li>
+
+<li>
+<p>Start the daemon. <tt class="LITERAL">$ umestored config.xml</tt></p>
+
+<p>See also <a href="../UME/umestored-manpage.html" target="doccontent">Manpage for
+umestored</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div class="SECTION">
+<hr />
+<h2 class="SECTION"><a id="NEXT-STEPS" name="NEXT-STEPS">8. Next Steps</a></h2>
+
+<p>The <a href="../Design/index.html" target="doccontent">Ultra Messaging Concepts</a>
+introduces the important fundamental concepts you will need to design and code your
+applications.</p>
+
+<p>The <a href="../example/index.html" target="doccontent">Ultra Messaging Examples page</a>
+contains descriptions and links to source files for the binary tools used for evaluation
+and performance measurements. They can be a valuable resource for seeing how various
+features can be implemented.</p>
+
+<p><a href="../UME/index.html" target="doccontent">The Ultra Messaging Guide for Persistence
+and Queuing</a> contains concepts, tutorials and configuration information for <b
+class="APPLICATION">UMP</b> and <b class="APPLICATION">UMQ</b> , along with discussions
+about designing persistent or queuing applications. It also contains detailed
+configuration information for the <tt class="LITERAL">umestored</tt> daemon.</p>
+
+<p>The <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> API
+documentation ( <a href="../API/index.html" target="doccontent">C API</a>, <a
+href="../JavaAPI/html/index.html" target="doccontent">Java API</a> or <a
+href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>) is a reference guide to
+the <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> API. See
+also <a href="../JMSAPI/html/index.html" target="doccontent">JMS API</a>, a reference that
+shows which classes Ultra Messaging JMS supports.</p>
+
+<p>The <a href="https://communities.informatica.com/infakb/kbexternal/default.aspx"
+target="doccontent"><b class="APPLICATION">UM</b> Knowledgebase</a> contains a wealth of
+articles answering common support questions, error messages, new hardware issues, source
+code examples and more.</p>
+</div>
+</div>
+
+<hr />
+<p align="center">Copyright 2005 - 2014 Informatica Corporation.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

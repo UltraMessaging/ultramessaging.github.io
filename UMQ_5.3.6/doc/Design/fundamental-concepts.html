@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Fundamental Concepts</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Concepts" href="index.html" />
+<link rel="NEXT" title="UM Objects" href="lbm-objects.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Concepts</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="lbm-objects.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="FUNDAMENTAL-CONCEPTS" name="FUNDAMENTAL-CONCEPTS">2.
+Fundamental Concepts</a></h1>
+
+<p>A <b class="APPLICATION">UM</b> application can function either as a <i
+class="FIRSTTERM">source</i> or a <i class="FIRSTTERM">receiver</i>. A source application
+sends messages, and a receiver application receives them. (It is also common for an
+application to function as <span class="emphasis"><i class="EMPHASIS">both</i></span>
+source and receiver; we separate the concepts for organizational purposes.)</p>
+
+<p>This section discusses the following concepts.</p>
+
+<ul>
+<li>
+<p><a href="fundamental-concepts.html#TOPICS"><i>Topic Structure and
+Management</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#PERSISTENCE"><i>Persistence</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#QUEUING"><i>Queuing</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#LATE-JOIN"><i>Late Join</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#REQUEST-RESPONSE"><i>Request/Response</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#TRANSPORTS"><i>Transports</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#EVENT-DELIVERY"><i>Event Delivery</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#RATE-CONTROLS"><i>Rate Controls</i></a></p>
+</li>
+
+<li>
+<p><a href="fundamental-concepts.html#OPERATIONAL-STATISTICS"><i>Operational
+Statistics</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TOPICS" name="TOPICS">2.1. Topic Structure and
+Management</a></h2>
+
+<p><b class="APPLICATION">UM</b> offers the <i class="FIRSTTERM">Publish/Subscribe</i>
+model for messaging ("Pub/Sub"), whereby one or more receiver programs express interest
+in a <i class="FIRSTTERM">topic</i>, and one or more source programs send to that topic.
+So, a topic can be thought of as a data stream that can have multiple producers and
+multiple consumers. One of the functions of the messaging layer is to make sure that all
+messages sent to a given topic are distributed to all receivers listening to that topic.
+<b class="APPLICATION">UM</b> does this through an automatic process known as <i
+class="FIRSTTERM">topic resolution</i>.</p>
+
+<p>A topic is just an arbitrary string. For example:</p>
+
+<table border="0">
+<tbody>
+<tr>
+<td>Deals</td>
+</tr>
+
+<tr>
+<td>Market/US/DJIA/Sym1</td>
+</tr>
+</tbody>
+</table>
+
+<p>It is not unusual for an application system to have many thousands of topics, perhaps
+even more than a million, with each one carrying a very specific range of information
+(e.g. quotes for a single stock symbol).</p>
+
+<p>It is also possible to configure receiving programs to match multiple topics using
+wildcards. <b class="APPLICATION">UM</b> uses powerful regular expression pattern
+matching to allow applications to match topics in a very flexible way. At the present
+time, messages cannot be <span class="emphasis"><i class="EMPHASIS">sent</i></span> to
+wildcarded topic names. See <a href="lbm-objects.html#WILDCARD-RECEIVER"><i>Wildcard
+Receiver</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PERSISTENCE" name="PERSISTENCE">2.2. Persistence</a></h2>
+
+<p><b class="APPLICATION">UMP</b> - which contains the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> <b class="APPLICATION">Streaming
+Edition</b> (<b class="APPLICATION">UMS</b>) functionality - includes a component known
+as the <i class="FIRSTTERM">persistent store</i>, which provides stable storage (disk or
+memory) of message streams. <b class="APPLICATION">UMP</b> delivers a persisted message
+stream to receiving applications with no additional latency in the vast majority of
+cases. This offers the functionality of durable subscriptions and confirmed message
+delivery. <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+streaming applications build and run with the <b class="APPLICATION">UMP</b> persistence
+feature without modification. See <a href="../UME/index.html" target="doccontent">The Ultra
+Messaging Guide for Persistence and Queuing</a> for more information.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="QUEUING" name="QUEUING">2.3. Queuing</a></h2>
+
+<p><b class="APPLICATION">UMQ</b> - which contains both the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> <b class="APPLICATION">Streaming Edition</b>
+(<b class="APPLICATION">UMS</b>) functionality and the <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> <b class="APPLICATION">Persistence
+Edition</b> (<b class="APPLICATION">UMP</b>) functionality - includes message queuing
+capabilities that allows sources to submit messages asynchronously to a queue and permits
+receivers to retrieve messages from a queue in an entirely different asynchronous manner.
+<b class="APPLICATION">UMQ</b> also supports Once and Only Once (OAOO) delivery and
+Application Sets that allow you to load balance processing or support multiple processing
+purposes for single topics. See <a href="../UME/index.html" target="doccontent">The Ultra
+Messaging Guide for Persistence and Queuing</a> for more information.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LATE-JOIN" name="LATE-JOIN">2.4. Late Join</a></h2>
+
+<p>In many applications, a new receiver may be interested in messages that were sent
+before it existed. <b class="APPLICATION">UM</b> provides a late join feature that allows
+a new receiver to join a group of others already listening to a source. Without the late
+join feature, the joining receiver would only receive messages sent after the time it
+joined. With late join, the source stores sent messages according to its Late Join
+configuration options so a joining receiver can receive any of these messages that were
+sent before it joined the group. See <a href="lbm-features.html#USING-LATE-JOIN"><i>Using
+Late Join</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="REQUEST-RESPONSE" name="REQUEST-RESPONSE">2.5.
+Request/Response</a></h2>
+
+<p><b class="APPLICATION">UM</b> also offers a <i class="FIRSTTERM">Request/Response</i>
+messaging model. A sending application (the requester) sends a message to a topic. Every
+receiving application listening to that topic gets a copy of the request. One or more of
+those receiving applications (responder) can then send one or more responses back to the
+original requester. <b class="APPLICATION">UM</b> sends the request message via the
+normal pub/sub method, whereas <b class="APPLICATION">UM</b> delivers the response
+message directly to the requester.</p>
+
+<p>An important aspect of <b class="APPLICATION">UM</b>'s Request/Response model is that
+it allows the application to keep track of which request corresponds to a given response.
+Due to the asynchronous nature of <b class="APPLICATION">UM</b> requests, any number of
+requests can be outstanding, and as the responses come in, they can be matched to their
+corresponding requests.</p>
+
+<p>Request/Response can be used in many ways and is often used during the initialization
+of <b class="APPLICATION">UM</b> receiver objects. When an application starts a receiver,
+it can issue a request on the topic the receiver is interested in. Source objects for the
+topic can respond and begin publishing data. This method prevents the <b
+class="APPLICATION">UM</b> source objects from publishing to a topic without
+subscribers.</p>
+
+<p>Be careful not to be confused with the sending/receiving terminology. Any application
+can send a request, including one that creates and manages <b class="APPLICATION">UM</b>
+receiver objects. And any application can receive and respond to a request, including one
+that creates and manages <b class="APPLICATION">UM</b> source objects.</p>
+
+<p>See <a href="lbm-features.html#REQUEST-RESPONSE-MESSAGES"><i>Request/Response
+Model</i></a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TRANSPORTS" name="TRANSPORTS">2.6. Transports</a></h2>
+
+<p>A source application uses an <i class="FIRSTTERM">UMS transport</i> to send messages
+to a receiver application. A <b class="APPLICATION">UM</b> transport is built on top of a
+standard IP protocol. The different <b class="APPLICATION">UM</b> transport types have
+different tradeoffs in terms of latency, scalability, throughput, bandwidth sharing, and
+flexibility. The sending application chooses the transport type that is most appropriate
+for the data being sent, at the topic level. A programmer might choose different
+transport types for different topics within the same application.</p>
+
+<p>A <b class="APPLICATION">UM</b> sending application can make use of very many topics
+(over a million). <b class="APPLICATION">UM</b> maps those topics onto a much smaller
+number of <i class="FIRSTTERM">transport sessions</i>. A transport session can be thought
+of as a specific instance of a transport type. A given transport session might carry a
+single topic, or might carry hundreds of thousands of topics. A receiving application may
+express interest in a small set of those topics, in which case <b
+class="APPLICATION">UM</b> will join the transport session, receiving messages for <span
+class="emphasis"><i class="EMPHASIS">all</i></span> topics carried on that transport
+session. <b class="APPLICATION">UM</b> will then discard any messages for topics that the
+application is not interested in. This <i class="FIRSTTERM">user-space filtering</i> does
+consume system resources (primarily CPU and bandwidth), and can be minimized by carefully
+mapping topics onto transport sessions according to receiving application interest.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Non-multicast <b class="APPLICATION">UM</b> transport types can also use
+<i class="FIRSTTERM">source-side filtering</i> to decrease user-space filtering on the
+receiving side by doing the filtering on the sending side. However, while this might
+sound attractive at first glance, be aware that system resources consumed on the source
+side affect <span class="emphasis"><i class="EMPHASIS">all</i></span> receivers, and that
+the filtering for multiple receivers must be done serially, whereas letting the receivers
+do the filtering allows that filtering to be done in parallel, only affecting those
+receivers that need the filtering.</p>
+</blockquote>
+</div>
+
+<p>See <a href="lbm-objects.html#TRANSPORT-OBJECTS"><i>Transport Objects</i></a>.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MULTITHREADED-TRANSPORTS"
+name="MULTITHREADED-TRANSPORTS">2.6.1. Multi-Transport Threads</a></h3>
+
+<p>Part of <b class="APPLICATION">UM</b>'s design is a single threaded model for message
+data delivery which reduces latency in the receiving CPU. <b class="APPLICATION">UM</b>,
+however, also has the ability to distribute data delivery across multiple CPUs by using a
+receiving thread pool. Receivers created with the configuration option, <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> set to <b class="APPLICATION">1</b> use a
+thread from the thread pool instead of the context thread. The option, <a
+href="../Config/majoroptions.html#CONTEXTRECEIVETHREADPOOLSIZE" target="doccontent"><tt
+class="LITERAL">receive_thread_pool_size</tt></a> controls the pool size.</p>
+
+<p>As receivers discover new sources through Topic Resolution, <b
+class="APPLICATION">UM</b> assigns the network sockets created for the receivers to
+receive data to either the context thread (default) or to a thread from the pool if <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> is set for the receiver. It is important to
+understand that thread assignment occurs at the socket level - not the transport level.
+Transports aggregated on to the same network socket use the same thread.</p>
+
+<p><b class="APPLICATION">UM</b> distributes data from different sockets to different
+threads allowing better process distribution and higher aggregate throughput.
+Distributing transports across threads also ensures that activity on each transport has
+no impact on transports assigned to other threads leading to lower latencies in some
+traffic patterns, e.g. heavy loss conditions.</p>
+
+<p>The following lists restrictions to using multi-transport threads.</p>
+
+<ul>
+<li>
+<p>Only <a href="../Design/lbm-objects.html#TRANSPORT-LBT-RM" target="doccontent">LBT-RM</a>,
+<a href="../Design/lbm-objects.html#TRANSPORT-LBT-RU" target="doccontent">LBT-RU</a>, <a
+href="../Design/lbm-objects.html#TRANSPORT-TCP" target="doccontent">TCP</a> and <a
+href="../Design/lbm-objects.html#TRANSPORT-TCP-LB" target="doccontent">TCP-LB</a> transport
+types may be distributed to threads.</p>
+</li>
+
+<li>
+<p>Multi-Transport threads are not supported under <a
+href="../Config/majoroptions.html#CONTEXTOPERATIONALMODE" target="doccontent"><tt
+class="LITERAL">sequential mode</tt></a>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UM</b> processes sources using the same transport socket, e.g.
+multicast address and port, on the same thread (regardless of the <a
+href="../Config/majoroptions.html#RECEIVERUSETRANSPORTTHREAD" target="doccontent"><tt
+class="LITERAL">use_transport_thread</tt></a> setting. To leverage threading of different
+sources, assign each source to a different transport destination, e.g. multicast
+address/port.</p>
+</li>
+
+<li>
+<p>Hot failover sources using LBT-RM on the same topic must not be distributed across
+threads because they must share the same multicast address and port.</p>
+</li>
+
+<li>
+<p>Hot failover sources using other transport types may not be distributed across threads
+and must use the context thread.</p>
+</li>
+
+<li>
+<p>Each transport thread has its own Unicast Listener (request) port. <b
+class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> recommends that
+you expand the range <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPPORTLOW" target="doccontent"><tt
+class="LITERAL">request_tcp_port_low</tt></a> - <a
+href="../Config/requestnetworkoptions.html#CONTEXTREQUESTTCPPORTHIGH" target="doccontent"><tt
+class="LITERAL">request_tcp_port_high</tt></a> to a larger range when using transport
+threads. When late join is occurring, <b class="APPLICATION">UM</b> creates a TCP
+connection from the transport thread to the source.</p>
+</li>
+
+<li>
+<p>Multi-transport threads are not recommended for use over the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or persistent receivers</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads do not support queues (<b class="APPLICATION">UMQ</b>) or
+queing receivers.</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads are not compatible with UMDS Server or <b
+class="APPLICATION">UMCache</b></p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="EVENT-DELIVERY" name="EVENT-DELIVERY">2.7. Event
+Delivery</a></h2>
+
+<p>There are many different <i class="FIRSTTERM">events</i> that <b
+class="APPLICATION">UM</b> may want to deliver to the application. Many events carry data
+with them (e.g. received messages); some do not (e.g. end-of-stream events). Some
+examples of <b class="APPLICATION">UM</b> events:</p>
+
+<ol type="1">
+<li>
+<p>A received message on a topic that the application has expressed interest in.</p>
+</li>
+
+<li>
+<p>A timer expiring. Applications can schedule timers to expire in a desired number of
+milliseconds (although the OS may not deliver them with millisecond precision).</p>
+</li>
+
+<li>
+<p>An application-managed file descriptor event. The application can register its own
+file descriptors with <b class="APPLICATION">UM</b> to be monitored for state changes
+(readable, writable, error, etc).</p>
+</li>
+
+<li>
+<p>New source notification. <b class="APPLICATION">UM</b> can inform the application when
+sources are discovered by topic resolution.</p>
+</li>
+
+<li>
+<p>Receiver loss. <b class="APPLICATION">UM</b> can inform the application when a data
+gap is detected that could not be recovered through the normal retransmission
+mechanism.</p>
+</li>
+
+<li>
+<p>End of Stream. <b class="APPLICATION">UM</b> can inform a receiving application when a
+data stream (transport session) has terminated.</p>
+</li>
+</ol>
+
+<p><b class="APPLICATION">UM</b> delivers events to the application by <i
+class="FIRSTTERM">callbacks</i>. The application explicitly gives <b
+class="APPLICATION">UM</b> a pointer to one of its functions to be the handler for a
+particular event, and <b class="APPLICATION">UM</b> calls that function to deliver the
+event, passing it the parameters that the application requires to process the event. In
+particular, the last parameter of each callback type is a <i class="FIRSTTERM">client
+data pointer</i> (<code class="PARAMETER">clientdp</code>). This pointer can be used at
+the application's discretion for any purpose. It's value is specified by the application
+when the callback function is identified to <b class="APPLICATION">UM</b> (typically when
+<b class="APPLICATION">UM</b> objects are created), and that same value is passed back to
+the application when the callback function is called.</p>
+
+<p>There are two methods that <b class="APPLICATION">UM</b> can use to call the
+application callbacks: through <i class="FIRSTTERM">context thread callback</i>, or <i
+class="FIRSTTERM">event queue dispatch</i>.</p>
+
+<p>In the context thread callback method (sometimes called <i class="FIRSTTERM">direct
+callback</i>), the <b class="APPLICATION">UM</b> context thread calls the application
+function directly. This offers the lowest latency, but imposes significant restrictions
+on the application function. See <a href="lbm-objects.html#EVENT-QUEUE-OBJECT"><i>Event
+Queue Object</i></a>.</p>
+
+<p>The event queue dispatch of application callback introduces a dynamic buffer into
+which the <b class="APPLICATION">UM</b> context thread writes events. The application
+then uses a thread of its own to dispatch the buffered events. Thus, the application
+callback functions are called from the application thread, not directly from the context
+thread.</p>
+
+<p>With event queue dispatching, the use of the application thread to make the callback
+allows the application function to make full, unrestricted use of the <b
+class="APPLICATION">UM</b> API. It also allows parallel execution of <b
+class="APPLICATION">UM</b> processing and application processing, which can significantly
+improve throughput on multi-processor hardware. The dynamic buffering provides resilience
+between the rate of event generation and the rate of event consumption (e.g. message
+arrival rate v.s. message processing rate).</p>
+
+<p>In addition, an <b class="APPLICATION">UM</b> event queue allows the application to be
+warned when the queue exceeds a threshold of event count or event latency. This allows
+the application to take corrective action if it is running too slow, such as throwing
+away all events older than a threshold, or all events that are below a given
+priority.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RATE-CONTROLS" name="RATE-CONTROLS">2.8. Rate
+Controls</a></h2>
+
+<p>For UDP-based transports (LBT-RU and LBT-RM), <b class="APPLICATION">UM</b> network
+stability is insured through the use of <i class="FIRSTTERM">rate controls</i>. Without
+rate controls, sources can send UDP data so fast that the network can be flooded. Using
+rate controls, the source's bandwidth usage is limited. If the source attempts to exceed
+its bandwidth allocation, it is slowed down.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="OPERATIONAL-STATISTICS" name="OPERATIONAL-STATISTICS">2.9.
+Operational Statistics</a></h2>
+
+<p><b class="APPLICATION">UM</b> maintains a variety of transport-level statistics which
+gives a real-time snapshot of <b class="APPLICATION">UM</b>'s internal handling. For
+example, it gives counts for transport messages transferred, bytes transferred,
+retransmissions requested, unrecoverable loss, etc.</p>
+
+<p>The <b class="APPLICATION">UM</b> <i class="FIRSTTERM">monitoring</i> API provides
+framework to allow the convenient gathering and transmission of <b
+class="APPLICATION">UM</b> statistics to a central monitoring point. See <a
+href="monitoring.html"><i>Monitoring UMS</i></a>.</p>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="lbm-objects.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top"><b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Concepts</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top"><b class="APPLICATION">UM</b> Objects</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

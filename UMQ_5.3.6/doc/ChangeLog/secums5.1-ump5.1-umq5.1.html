@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release UMS 5.1 / UMP 5.1 / UMQ 5.1 - November 2011</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 4.2.10 / UME 3.2.10 / UMQ 2.1.10 - November 2011"
+href="seclbm4.2.10-ume3.2.10-umq2.1.10.html" />
+<link rel="NEXT" title="Release LBM 4.2.9 / UME 3.2.9 / UMQ 2.1.9 - November 2011"
+href="seclbm4.2.9-ume3.2.9-umq2.1.9.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="seclbm4.2.10-ume3.2.10-umq2.1.10.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a
+href="seclbm4.2.9-ume3.2.9-umq2.1.9.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECUMS5.1-UMP5.1-UMQ5.1" name="SECUMS5.1-UMP5.1-UMQ5.1">15.
+Release UMS 5.1 / UMP 5.1 / UMQ 5.1 - November 2011</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMS5.1" name="UMS5.1">15.1. UMS 5.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.1-NEW" name="UMS5.1-NEW">15.1.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Added the message property object that allows your application to insert named, typed
+metadata to topic messages and implement functionality that depends on the message
+properties. <b class="APPLICATION">UMS</b> allows eight property types: boolean, byte,
+short, int, long, float, double, and string. See <a
+href="../Design/lbm-objects.html#MESSAGEPROPERTIESOBJECT" target="doccontent">Message
+Properties Object</a> for more.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.1-UPDATES" name="UMS5.1-UPDATES">15.1.2. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added the functions, <code class="FUNCTION">lbm_hf_rcv_topic_dump()</code>, <code
+class="FUNCTION">lbm_hfx_attr_dump()</code>, <code
+class="FUNCTION">lbm_hfx_dump()</code>, and <code
+class="FUNCTION">lbm_hfx_rcv_topic_dump()</code>, in the <a href="../API/index.html"
+target="doccontent">C API</a> to dump the attributes of HFXs, HFX receivers, and hot failover
+receivers. Also added corresponding functions in the <a href="../JavaAPI/html/index.html"
+target="doccontent">Java API</a> and <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET
+API</a> to dump attributes of HFXs and HFX receivers.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.1-FIXES" name="UMS5.1-FIXES">15.1.3. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Improved multi-thread locking algorithms for Multi-Transport Threads to eliminate the
+possibility of receiver (or wildcard receiver) creation or deletion returning error EOP
+due to locking contention of the transport threads. Lock contention no longer requires an
+application to retry receiver creation or deletion.</p>
+</li>
+
+<li>
+<p>Corrected a memory leak in the UM Gateway that occurred when an endpoint portal was
+unable to send a message.</p>
+</li>
+
+<li>
+<p>Corrected a problem with the UM Gateway that occurred if the gateway was stopped and
+restarted. In this event, certain unicast control messages to destination contexts which
+were currently unknown to the gateway were dropped, but no effort was made to locate
+those destination contexts. Now those messages are still dropped, but the gateway sends
+queries to locate the destination context.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.1-KNOWNISSUES" name="UMS5.1-KNOWNISSUES">15.1.4. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>With <a href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> turned ON for VMA support in
+Infiniband, receivers are unable to resolve sources from within the same process.
+Similarly, sources are unable to discover themselves within the same process. No
+resolution issues exist if sources and receivers run in different process. Informatica is
+investigating this issue.</p>
+</li>
+
+<li>
+<p>Late join initiated from receivers in a context configured for Multi-Transport Threads
+(MTT) will not work through the UM Gateway if the gateway is configured to forward late
+join traffic. Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Hot Failover is not currently supported with Multi-Transport Threads.</p>
+</li>
+
+<li>
+<p>Configuring sources with LBT-RU, source-side filtering, and adaptive batching may
+cause a crash. All three options must be set to cause the problem. Informatica is working
+to address this issue.</p>
+</li>
+
+<li>
+<p>When using the UM Gateway Informatica recommends that you <b class="APPLICATION">do
+not</b> enable the Multi-Transport Threads feature. Informatica does not support nor test
+the operation of Multi-Transport Threads across the UM Gateway.</p>
+</li>
+
+<li>
+<p>Multi-Transport Threads do not support persistent stores (<b
+class="APPLICATION">UMP</b>) or queues (<b class="APPLICATION">UMQ</b>).</p>
+</li>
+
+<li>
+<p>When using Event Queues with the Java API on Mac OS X kernel 9.4, core dumps have
+occurred. Mac OS X kernel versions prior to 9.4 have not produced this behavior.
+Informatica is investigating this issue.</p>
+</li>
+
+<li>
+<p>Sending LBT-IPC messages larger than 65,535 bytes is not supported when <a
+href="../Config/majoroptions.html#RECEIVERORDEREDDELIVERY" target="doccontent"><tt
+class="LITERAL">ordered_delivery</tt></a> has been set to 0 (zero) unless you set <a
+href="../Config/transportlbt-ipcoperationoptions.html#SOURCETRANSPORTLBTIPCBEHAVIOR"
+target="doccontent"><tt class="LITERAL">transport_lbtipc_behavior</tt></a> to <tt
+class="LITERAL">receiver_paced</tt>.</p>
+</li>
+
+<li>
+<p>When using the LBT-RDMA transport with Java applications, a segfault can occur if you
+kill a receiver with <b class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>. As a workaround,
+use the JVM option, <tt class="LITERAL">-Xrs</tt>. Informatica is investigating this
+problem.</p>
+</li>
+
+<li>
+<p>If you use the current version of VMS (3.2.8), <b class="APPLICATION">UMS</b> 4.1
+issues the following warning: <tt class="LITERAL">LOG Level 5: LBT-RDMA: VMS Logger
+Message (Error): vmss_create_store: 196[E] vms_listen: rdma_bind_addr failed (r=-1)</tt>.
+This warning indicates that <tt class="LITERAL">rdma_bind</tt> failed for ethernet
+interfaces, which is expected behavior. Currently, VMS attempts <tt
+class="LITERAL">rdma_bind</tt> on all interfaces. When released, VMS version 3.2.9 will
+only run <tt class="LITERAL">rdma_bind</tt> on infiniband-capable interfaces.</p>
+</li>
+
+<li>
+<p>When using <a href="../Config/automaticmonitoringoptions.html" target="doccontent"><tt
+class="LITERAL">Automatic Monitoring</tt></a> with <a
+href="../Config/transportaccelerationoptions.html#CONTEXTUDACCELERATION"
+target="doccontent"><tt class="LITERAL">ud_acceleration</tt></a> and the epoll file descriptor
+option, <b class="APPLICATION">UMS</b> may leave a monitoring thread running after
+context deletion. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support responses that exceed the maximum datagram
+size.</p>
+</li>
+
+<li>
+<p>At the present time, 32-bit applications cannot interact with 64-bit applications
+using the LBT-IPC transport. As a result, a 64-bit UM Gateway cannot interact with a
+32-bit application using LBT-IPC. It can only interact with a 64-bit application.
+Likewise, a 32-bit UM Gateway can only interact with a 32-bit application.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support queuing at this time, only streaming and
+persistence. This will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway is not supported as a standalone Windows service at this time. This
+will be resolved in a future release.</p>
+</li>
+
+<li>
+<p>The UM Gateway does not currently support a four gateway "full-mesh" configuration
+(i.e., all gateways connected).</p>
+</li>
+
+<li>
+<p>If using LBT-RDMA across the UM Gateway and you exit the gateway with <b
+class="KEYCAP">Ctrl</b>-<b class="KEYCAP">C</b>, you may see a segfault. Informatica is
+aware of this and has not observed any ill effects from this segfault.</p>
+</li>
+
+<li>
+<p>Informatica recommends against configuring UM Gateways in a ring of peer portals - use
+configurations utilizing gateway endpoints (parallel paths) to break the ring.</p>
+</li>
+
+<li>
+<p>Informatica recommends not stopping and restarting UM Gateways within the transport's
+activity timeout period (<tt class="LITERAL">transport_*_activity_timeout</tt> defaults
+to 60 seconds for LBTRU and LBTRM).</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMS5.1-INCOMPATIBILITIES"
+name="UMS5.1-INCOMPATIBILITIES">15.1.5. Version Compatibilities</a></h3>
+
+<ul>
+<li>
+<p>Although <b class="APPLICATION">UMS</b> 5.0 applications should run well with <b
+class="APPLICATION">LBM</b> 4.2 UM Gateways, all Gateways should always run the same
+version.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMP5.1" name="UMP5.1">15.2. UMP 5.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.1-NEW" name="UMP5.1-NEW">15.2.1. New Features</a></h3>
+
+<ul>
+<li>
+<p>Enabled the use of the <b class="APPLICATION">UMM</b> API that allows you to
+programmatically create and store application configurations in the <b
+class="APPLICATION">UMM</b> database. The <b class="APPLICATION">UMM</b> GUI uses the
+same API to create users, passwords, applications configurations and configuration
+templates. See <a href="../UMMJavaAPI/html/index.html" target="doccontent">UMM Java API</a> for
+<b class="APPLICATION">UMM</b> objects, constructors and methods.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.1-FIXES" name="UMP5.1-FIXES">15.2.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Corrected a problem with the <b class="APPLICATION">UMM</b> GUI Permissions dialog box
+that caused the dialog box to be deleted after rearranging the column headings.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMP5.1-KNOWNISSUES" name="UMP5.1-KNOWNISSUES">15.2.3. Known
+Issues</a></h3>
+
+<ul>
+<li>
+<p>Receivers using event queues and Spectrum with <b class="APPLICATION">UME</b> can
+experience a SIGSEGV while shutting down if events still exist on the event queue when it
+is deleted. As a workaround, use LBM_EVQ_BLOCK when dispatching event queues. During
+application shutdown, call <tt class="LITERAL">lbm_evq_unblock()</tt> after deleting
+receivers associated with the event queue, but before deleting any context objects. Once
+the dispatch thread exits, it is safe to proceed with context deletion. 29West is working
+on a solution to this problem.</p>
+</li>
+
+<li>
+<p>When running a store on a Solaris machine, you may experience registration failures
+after a few minutes. The store repeatedly reports the error, <tt
+class="LITERAL">[WARNING]: wait returned error 4 [select: (22) Invalid argument]</tt>.
+Changing <a href="../Config/majoroptions.html#CONTEXTFDMANAGEMENTTYPE" target="doccontent"><tt
+class="LITERAL">fd_management_type</tt></a> to <tt class="LITERAL">devpoll</tt> prevents
+this problem. Informatica is investigating this problem.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">UMP</b> proxy source elections can only occur among stores in
+the same topic resolution domain connected directly via peer links. Informatica is
+investigating this problem.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UMQ5.1" name="UMQ5.1">15.3. UMQ 5.1</a></h2>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.1-UPDATES" name="UMQ5.1-UPDATES">15.3.1. Updated
+Features</a></h3>
+
+<ul>
+<li>
+<p>Added support for the JMS message properties specification through the <a
+href="../JMSAPI/html/index.html" target="doccontent"><b class="APPLICATION">UM</b> JMS
+API</a>.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="UMQ5.1-FIXES" name="UMQ5.1-FIXES">15.3.2. Bug Fixes</a></h3>
+
+<ul>
+<li>
+<p>Fixed an issue with <b class="APPLICATION">UMQ</b> indexed queuing from a Java source
+that prevented the queue from sending correctly which produced the following exception:
+<tt class="LITERAL">com.latencybusters.lbm.LBMEInvalException: UMQ index too
+long</tt>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm4.2.10-ume3.2.10-umq2.1.10.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm4.2.9-ume3.2.9-umq2.1.9.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 4.2.10 / UME 3.2.10 / UMQ 2.1.10 -
+November 2011</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 4.2.9 / UME 3.2.9 / UMQ 2.1.9 -
+November 2011</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

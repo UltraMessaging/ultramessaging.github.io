@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Unicast Resolver</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="PREVIOUS" title="Disabling Aspects of Topic Resolution "
+href="disable-topic-res.html" />
+<link rel="NEXT" title="Configure Previous Port Defaults" href="previousports.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="disable-topic-res.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 2. Example Configuration
+Scenarios</td>
+<td width="10%" align="right" valign="bottom"><a href="previousports.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="UNICASTRESOLVER" name="UNICASTRESOLVER">2.5. Unicast
+Resolver</a></h1>
+
+<p>To use the unicast resolver, the following configuration file may be used.</p>
+
+<pre class="SCREEN">
+#
+# Topic resolution can be configured to use unicast traffic with an
+# LBM resolver daemon (lbmrd) instead of the default which uses multicast.
+# Be sure to insert the IP address of your lbmrd below.
+#
+context resolver_unicast_address 127.0.0.1
+</pre>
+
+<p>You may <a href="Examples/UnicastResolver.cfg" target="_top">download the file</a>.
+Most browsers let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation.</p>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UNICAST-RESOLVER-NAT-EXAMPLE"
+name="UNICAST-RESOLVER-NAT-EXAMPLE">2.5.1. Unicast Resolution Across Administrative
+Domains</a></h2>
+
+<p>The following network architecture shows a source or publisher (<b
+class="APPLICATION">src</b>) on a <span class="emphasis"><i
+class="EMPHASIS">private</i></span> LAN.</p>
+
+<div class="FIGURE"><a id="LBMRD-NAT-EXAMPLE" name="LBMRD-NAT-EXAMPLE"></a>
+<p><b>Figure 2-1. Unicast Topic Resolution Across Domains</b></p>
+
+<p><img src="lbmrd_NAT_example.png" align="CENTER" /></p>
+</div>
+
+<p>The following <tt class="LITERAL">lbmrd</tt> configuration file allows <b
+class="APPLICATION">rcv1</b> and <b class="APPLICATION">rcv2</b> to connect to <b
+class="APPLICATION">src</b> for receipt of topic messages.</p>
+
+<pre class="SCREEN">
+&lt;?xml version="1.0" encoding="UTF-8" ?&#62;
+&lt;lbmrd version="1.0"&#62;
+   &lt;domains&#62;
+      &lt;domain name="NAT"&#62;
+         &lt;network&#62;192.168.130.0/24&lt;/network&#62;
+      &lt;/domain&#62;
+      &lt;domain name="OPEN"&#62;
+         &lt;network&#62;10.200.2.31&lt;/network&#62;
+         &lt;network&#62;10.200.2.30&lt;/network&#62;
+      &lt;/domain&#62;
+   &lt;/domains&#62;
+   &lt;transformations&#62;
+      &lt;transform source="NAT" destination="OPEN"&#62;
+         &lt;rule&#62;
+            &lt;match address="192.168.130.14" port="*"/&#62;
+            &lt;replace address="10.200.1.14" port="*"/&#62;
+         &lt;/rule&#62;
+      &lt;/transform&#62;
+   &lt;/transformations&#62;
+&lt;/lbmrd&#62;
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="disable-topic-res.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="previousports.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Disabling Aspects of Topic Resolution</td>
+<td width="34%" align="center" valign="top"><a href="examples.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Configure Previous Port Defaults</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

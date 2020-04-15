@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Lowest Latency</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="PREVIOUS" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="NEXT" title="Creating Multicast Sources" href="multicastsource.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="examples.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 2. Example Configuration
+Scenarios</td>
+<td width="10%" align="right" valign="bottom"><a href="multicastsource.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="LOWESTLATENCY" name="LOWESTLATENCY">2.2. Lowest
+Latency</a></h1>
+
+<p>This is an example configuration that favors low latency at the expense of higher CPU
+utilization and potentially lower throughput.</p>
+
+<pre class="SCREEN">
+#
+# Latency can be reduced at the expense of network efficiency and
+# system CPU time by adjusting implicit batching parameters.  The
+# default parameters hold messages for up to 200 milliseconds or until
+# 2048 bytes are waiting to go.  The lowest possible latency is
+# obtained by setting the minimum batching length to 1 byte, which
+# effectively disables the implicit batching feature.  For example:
+#
+context mim_implicit_batching_minimum_length 1
+source      implicit_batching_minimum_length 1
+#
+# Latency can be kept to a minimum with UM by writing receiving
+# applications that can accept messages in the order they arrive.
+# See https://communities.informatica.com/infakb/faq/5/Pages/80043.aspx and
+# http://www.29West.Com/docs/THPM/tcp-latency.html#TCP-RECEIVER-SIDE-LATENCY
+# for more information.  Here's how to use arrival-order delivery:
+#
+receiver ordered_delivery 0
+#
+# Disable Nagel's algorithm (batching) for TCP responses to eliminate
+# queuing latency when sending only single responses.
+#
+context response_tcp_nodelay 1
+#
+# If you are running a LAN environment with under 100 machines, you can 
+# drastically improve your recovery related latencies without significant 
+# additional network overhead by using the following UM loss 
+# recovery parameter. See https://communities.informatica.com/infakb/faq/5/Pages/80070.aspx 
+# for additional information about this and other recovery parameters. 
+#
+receiver transport_lbtrm_nak_backoff_interval 10
+#
+# Use of a zero value for the following parameter sends an immediate NAK upon 
+# loss detection, which can further reduce repair latency. (Immediate NAKs do 
+# not elicit an NCF by the source.) It is critical you understand the implications 
+# of this feature and we recommend that you contact http://29west.com/support to 
+# learn more before enabling it.
+#
+# receiver transport_lbtrm_nak_initial_backoff_interval 0
+#
+</pre>
+
+<p>You may <a href="Examples/LowestLatency.cfg" target="_top">download the file</a>. Most
+browsers let you right-click on the link and use the <span class="emphasis"><i
+class="EMPHASIS">save link target</i></span> function, or some variation.</p>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="examples.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="multicastsource.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Example Configuration Scenarios</td>
+<td width="34%" align="center" valign="top"><a href="examples.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Creating Multicast Sources</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

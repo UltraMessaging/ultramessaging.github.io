@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta name="keywords" content="monitoring statistics,msgs_sent,bytes_sent,msgs_rcvd,bytes_rcvd,num_clients,End of Session,EOS,lbmrd,Process ID,PID,tr_rcv_unresolved_topics" />
+    <title>Deaf Receivers</title>
+    <link rel="StyleSheet" href="css/GUID-A5236314-8998-420A-876C-97EB134F2283.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+  <body style="font-family:Verdana, Arial, Helvetica, sans-serif;font-size:11px" onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <a class="WebWorks_Breadcrumb_Link" href="GUID-A5236314-8998-420A-876C-97EB134F2283.1.11.html#3_7_14_1">Troubleshooting UM Applications</a> &gt; Deaf Receivers</div>
+    <hr align="left" />
+    <blockquote>
+      <div class="Heading_1"><a name="3_7_14_1">Deaf Receivers</a></div>
+      <div class="Short_Description"><a name="3_7_14_2">Receiver deafness is a general term that means receivers are not getting messages. This could be due to messages not being sent or simply not received. Awareness of this condition can come from many sources, such as business people complaining that they are not receiving expected data or from your own monitoring of statistics, application logs or the liveness of processes.</a></div>
+      <div class="Body"><a name="3_7_14_4_2">Use the following table to help detect topic or receiver deafness.</a></div>
+      <table class="Default" border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_4_2_8_2_2">Symptom</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_4_2_8_2_4">Cause</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_4_2_8_2_6">Resolution</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_2_2">All transport monitoring statistics stop "ticking".</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_2_4">When statistics for the affected transports stop increasing, it indicates an application has stopped publishing data for some reason. As a result the receivers of that data will go deaf.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_2_6">Restart the sending applications or contact Informatica Support</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_4_2">LBT-RM or LBT-RU source monitoring statistics, </a><span class="Keyword">msgs_sent</span> and <span class="Keyword">bytes_sent</span> stop increasing</div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_4_4">Indicates a source or sources has gone offline, resulting in receiver deafness.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_4_6">Restart the sending applications or contact Informatica Support</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_6_2">LBT-RM or LBT-RU receiver monitoring statistics, </a><span class="Keyword">msgs_rcvd</span> and <span class="Keyword">bytes_rcvd</span> stop increasing</div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_6_4">Indicates a receiver or receivers have gone offline.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_6_6">Restart the receiving applications or contact Informatica Support</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_8_2">LBT-RU or TCP source monitoring statistics, </a><span class="Keyword"> num_clients</span> change in unusual ways.</div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_8_4">LBT-RU and TCP sources are able to track the number of connected clients. Unusual changes to the number of connected LBT-RU or TCP clients can indicate a problem. For example, clients dropping off during trading hours, or rapid changes in the number of clients.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_8_6">Restart the sending and/or receiving applications or contact Informatica Support</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_10_2">End of Session (EOS) messages appear in applications logs.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_10_4">When activity intervals expire, UM issues EOS messages to receiving applications. These appear in the application logs.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_10_6">Restart the receiving applications or contact Informatica Support</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_12_2">The lbmrd Process ID (PID) disappears on either a sending or receiving machine(s).</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_12_4">Topic resolution has stopped. May not result in immediate topic deafness if topic resolution has already been completed, but may result in deafness if a new source or receiver comes up.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_4_2_10_12_6">If the receiving context's monitoring statistic </a><span class="Keyword">tr_rcv_unresolved_topics</span> is zero, all topics are resolved and this may not be a problem. Either restart the receiving applications or contact Informatica Support</div>
+          </td>
+        </tr>
+      </table>
+      <div class="Section_Title"><a name="3_7_14_4_6_2">Deaf Receivers with the UM Gateway</a></div>
+      <div class="Body"><a name="3_7_14_4_6_4">After a receiver-side gateway is shutdown and restarted, receivers will be deaf to any forwarded traffic until EOS is triggered.</a></div>
+      <div class="Section_Title"><a name="3_7_14_4_8_2">Deaf Wildcard Receivers</a></div>
+      <table class="Default" border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_8_4_2_8_2_2">Symptom</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_8_4_2_8_2_4">Cause</a></div>
+          </td>
+          <td style="background-color: #6699CC; border-bottom-color: Black; border-bottom-style: solid; border-bottom-width: 1pt; border-left-color: Black; border-left-style: solid; border-left-width: 1px; border-right-color: Black; border-right-style: solid; border-right-width: 1px; border-top-color: Black; border-top-style: solid; border-top-width: 1px; vertical-align: top; width: NaNpt;">
+            <div class="Table_Cell_Head"><a name="3_7_14_4_8_4_2_8_2_6">Resolution</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_8_4_2_10_2_2">Wildcard receivers are not receiving messages.</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="Table_Cell"><a name="3_7_14_4_8_4_2_10_2_4">---</a></div>
+          </td>
+          <td style="border-bottom-color: Black; border-bottom-width: 1px; border-left-color: Black; border-left-width: 1px; border-right-color: Black; border-right-width: 1px; border-top-color: Black; border-top-width: 1px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top;">
+            <div class="List_1_in_Table_outer" style="margin-left: 0pt;">
+              <table border="0" cellspacing="0" cellpadding="0" summary="">
+                <tr style="vertical-align: baseline;">
+                  <td>
+                    <div class="List_1_in_Table_inner" style="width: 18pt; white-space: nowrap;">- </div>
+                  </td>
+                  <td width="100%">
+                    <div class="List_1_in_Table_inner"><a name="3_7_14_4_8_4_2_10_2_6_2_2">Be sure the </a><span class="Keyword">resolver_cache</span> is enabled (set to 1, which is the default.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="List_1_in_Table_outer" style="margin-left: 0pt;">
+              <table border="0" cellspacing="0" cellpadding="0" summary="">
+                <tr style="vertical-align: baseline;">
+                  <td>
+                    <div class="List_1_in_Table_inner" style="width: 18pt; white-space: nowrap;">- </div>
+                  </td>
+                  <td width="100%">
+                    <div class="List_1_in_Table_inner"><a name="3_7_14_4_8_4_2_10_2_6_2_4">Be sure wildcard queries are enabled by setting </a><span class="Keyword">resolver_query_minimum_interval</span> is set to the default of 50 ms.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <br />
+    <hr align="left" />
+    <table align="right" summary="" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <div style="text-align: right; font-size: 12px;font-weight: bold;font-family:Verdana, Arial, Helvetica, sans-serif;color:#000066;">Informatica Corporation</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="right" style="line-height:1.4em;text-align: right;font-size: 10px;font-family:Verdana, Arial, Helvetica, sans-serif">
+            <a href="http://mysupport.informatica.com" target="_blank">http://mysupport.informatica.com</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+<script type="text/javascript">highlight();</script>
+</html>

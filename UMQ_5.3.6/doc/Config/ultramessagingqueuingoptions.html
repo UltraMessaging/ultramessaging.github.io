@@ -1,0 +1,2821 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Ultra Messaging Queuing Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Ultra Messaging Persistence Options"
+href="ultramessagingpersistenceoptions.html" />
+<link rel="NEXT" title="Ultra Messaging JMS Options"
+href="ultramessagingjmsoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a
+href="ultramessagingpersistenceoptions.html" accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a href="ultramessagingjmsoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="ULTRAMESSAGINGQUEUINGOPTIONS"
+name="ULTRAMESSAGINGQUEUINGOPTIONS">4.30. Ultra Messaging Queuing Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQCOMMANDINTERVAL"
+name="CONTEXTUMQCOMMANDINTERVAL">4.30.1. <span class="lbm-option-name"><span
+class="PHRASE">umq_command_interval (context)</span></span></a></h2>
+
+<p>The interval at which all currently outstanding UMQ commands (registrations,
+de-registrations, message list commands, indexed queueing commands, etc.) are re-sent if
+they have not yet been acknowledged by the queue.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17315" name="AEN17315"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQCOMMANDOUTSTANDINGMAXIMUM"
+name="CONTEXTUMQCOMMANDOUTSTANDINGMAXIMUM">4.30.2. <span class="lbm-option-name"><span
+class="PHRASE">umq_command_outstanding_maximum (context)</span></span></a></h2>
+
+<p>The maximum number of <b class="APPLICATION">UMQ</b> commands (registrations,
+de-registrations, message list commands, indexed queueing commands, etc.) that may be
+outstanding at one time for each configured queue. This option value must be greater than
+0. Reducing this value may help alleviate some load on the <b class="APPLICATION">UMQ</b>
+queue daemon, but may potentially cause registrations and other commands to take longer
+to complete.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17358" name="AEN17358"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint32_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of outstanding commands</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.3.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQDELAYEDCONSUMPTIONREPORTINTERVAL"
+name="RECEIVERUMQDELAYEDCONSUMPTIONREPORTINTERVAL">4.30.3. <span
+class="lbm-option-name"><span class="PHRASE">umq_delayed_consumption_report_interval
+(receiver)</span></span></a></h2>
+
+<p>The maximum interval to delay sending consumption reports on the receiver. Delaying
+consumption reports allows them to be batched together for efficiency but at the expense
+of delaying the consumption reports themselves individually. The value of 0 indicates the
+consumption reports should not be delayed.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17402" name="AEN17402"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQFLIGHTSIZE" name="CONTEXTUMQFLIGHTSIZE">4.30.4.
+<span class="lbm-option-name"><span class="PHRASE">umq_flight_size
+(context)</span></span></a></h2>
+
+<p>Specifies the number of Multicast Immediate Messages allowed to be in flight
+(unstabilized at a queue) before a new message send either blocks or triggers a
+notification (source event).</p>
+
+<div class="INFORMALTABLE"><a id="AEN17443" name="AEN17443"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQFLIGHTSIZE" name="SOURCEUMQFLIGHTSIZE">4.30.5. <span
+class="lbm-option-name"><span class="PHRASE">umq_flight_size
+(source)</span></span></a></h2>
+
+<p>Specifies the number of messages allowed to be in flight (unstabilized at a queue)
+before a new message send either blocks or triggers a notification (source event).</p>
+
+<div class="INFORMALTABLE"><a id="AEN17484" name="AEN17484"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQFLIGHTSIZEBEHAVIOR"
+name="CONTEXTUMQFLIGHTSIZEBEHAVIOR">4.30.6. <span class="lbm-option-name"><span
+class="PHRASE">umq_flight_size_behavior (context)</span></span></a></h2>
+
+<p>The behavior that <b class="APPLICATION">UMQ</b> follows when a Multicast Immediate
+Message send exceeds the context's <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZE">umq_flight_size</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17527" name="AEN17527"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17550" name="AEN17550"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Block</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_BLOCK</code></td>
+<td>The send call blocks when a MIM send exceeds the context's flight size. If the MIM
+send is a non-blocking send, the send returns an LBM_EWOULD_BLOCK. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Notify</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_NOTIFY</code></td>
+<td>A message send that exceeds the configured flight size does not block but triggers a
+flight size notification (context event), indicating that the flight size has been
+surpassed. <b class="APPLICATION">UMQ</b> also sends a context event notification if the
+number of in-flight messages falls below the configured flight size.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQFLIGHTSIZEBEHAVIOR"
+name="SOURCEUMQFLIGHTSIZEBEHAVIOR">4.30.7. <span class="lbm-option-name"><span
+class="PHRASE">umq_flight_size_behavior (source)</span></span></a></h2>
+
+<p>The behavior that <b class="APPLICATION">UMQ</b> follows when a message send exceeds
+the source's <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQFLIGHTSIZE">umq_flight_size</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17586" name="AEN17586"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17609" name="AEN17609"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Block</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_BLOCK</code></td>
+<td>The send call blocks when a source sends a message that exceeds it's flight size. If
+the source uses a non-blocking send, the send returns an LBM_EWOULD_BLOCK. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Notify</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_NOTIFY</code></td>
+<td>A message send that exceeds the configured flight size does not block but triggers a
+flight size notification (source event), indicating that the flight size has been
+surpassed. <b class="APPLICATION">UMQ</b> also sends a source event notification if the
+number of in-flight messages falls below the configured flight size.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQHOLDINTERVAL"
+name="RECEIVERUMQHOLDINTERVAL">4.30.8. <span class="lbm-option-name"><span
+class="PHRASE">umq_hold_interval (receiver)</span></span></a></h2>
+
+<p>The maximum interval to hold control and data information within the <b
+class="APPLICATION">UM</b> queue delivery controller.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17647" name="AEN17647"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQINDEXASSIGNMENTELIGIBILITYDEFAULT"
+name="RECEIVERUMQINDEXASSIGNMENTELIGIBILITYDEFAULT">4.30.9. <span
+class="lbm-option-name"><span class="PHRASE">umq_index_assignment_eligibility_default
+(receiver)</span></span></a></h2>
+
+<p>Controls whether new receivers are immediately eligible for index assignment upon
+registration with a queue (the default) or whether they are ineligible upon registration
+and must be explicitly made eligible via a call to <code
+class="FUNCTION">lbm_rcv_umq_index_start_assignment()</code>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17689" name="AEN17689"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2/UME 3.2/UMQ 1.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17712" name="AEN17712"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Eligible</code></td>
+<td><code
+class="CONSTANT">LBM_RCV_TOPIC_ATTR_UMQ_INDEX_ASSIGN_ELIGIBILITY_ELIGIBLE</code></td>
+<td>The receiver may be assigned indices as soon as it registers with a queue. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Ineligible</code></td>
+<td><code
+class="CONSTANT">LBM_RCV_TOPIC_ATTR_UMQ_INDEX_ASSIGN_ELIGIBILITY_INELIGIBLE</code></td>
+<td>The receiver must first call <code
+class="FUNCTION">lbm_rcv_umq_index_start_assignment()</code> before it can be assigned
+any indices.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQMESSAGERETRANSMISSIONINTERVAL"
+name="CONTEXTUMQMESSAGERETRANSMISSIONINTERVAL">4.30.10. <span
+class="lbm-option-name"><span class="PHRASE">umq_message_retransmission_interval
+(context)</span></span></a></h2>
+
+<p>The interval between retransmissions of data messages when submitting to a Queue.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17749" name="AEN17749"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQMESSAGESTABILITYNOTIFICATION"
+name="CONTEXTUMQMESSAGESTABILITYNOTIFICATION">4.30.11. <span
+class="lbm-option-name"><span class="PHRASE">umq_message_stability_notification
+(context)</span></span></a></h2>
+
+<p>Flag indicating the context is interested in receiving notifications of message
+stability from Queues via the context event mechanism. Even when turned off, Queues will
+continue to send message stability notifications to the context for retention purposes.
+However, no notification will be delivered to the application.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17790" name="AEN17790"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17813" name="AEN17813"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The context wishes to receive message stability notification. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The context does not wish to receive message stability notifications.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQMESSAGESTABILITYNOTIFICATION"
+name="SOURCEUMQMESSAGESTABILITYNOTIFICATION">4.30.12. <span class="lbm-option-name"><span
+class="PHRASE">umq_message_stability_notification (source)</span></span></a></h2>
+
+<p>Flag indicating the source is interested in receiving notifications of message
+stability from <b class="APPLICATION">UMQ</b> via the source event mechanism. Even when
+turned off, <b class="APPLICATION">UMQ</b> continues to send message stability
+notifications to the source for retention purposes. However, <b
+class="APPLICATION">UMQ</b> delivers no notification to the application.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17841" name="AEN17841"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN17864" name="AEN17864"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The source wishes to receive message stability notification. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The source does not wish to receive message stability notifications.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQMSGTOTALLIFETIME"
+name="CONTEXTUMQMSGTOTALLIFETIME">4.30.13. <span class="lbm-option-name"><span
+class="PHRASE">umq_msg_total_lifetime (context)</span></span></a></h2>
+
+<p>Establishes the period of time from when a queue enqueues a Multicast Immediate
+Message (MIM) until the time the message cannot be assigned or reassigned to a receiver.
+The default value of 0 (zero) disables this option. See also <a
+href="../UME/designing-queuing-applications.html#MESSAGE-LIFETIMES-REASSIGN"
+target="_top">Message Lifetimes and Reassignment</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17893" name="AEN17893"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2 / UME 3.2 / UMQ 2.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQMSGTOTALLIFETIME"
+name="SOURCEUMQMSGTOTALLIFETIME">4.30.14. <span class="lbm-option-name"><span
+class="PHRASE">umq_msg_total_lifetime (source)</span></span></a></h2>
+
+<p>Establishes the period of time from when a queue enqueues a message until the time the
+message cannot be assigned or reassigned to a receiver. The queue deletes the message
+upon expiration of the lifetime. You can also configure a <tt
+class="LITERAL">message-total-lifetime</tt> for the source's topic on the queue. The
+queue uses whichever is shorter. The default value of 0 (zero) disables this option. See
+also <a href="../UME/designing-queuing-applications.html#MESSAGE-LIFETIMES-REASSIGN"
+target="_top">Message Lifetimes and Reassignment</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17939" name="AEN17939"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2 / UME 3.2 / UMQ 2.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQQUEUEACTIVITYTIMEOUT"
+name="CONTEXTUMQQUEUEACTIVITYTIMEOUT">4.30.15. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_activity_timeout (context)</span></span></a></h2>
+
+<p>The timeout value used to indicate when a queue is marked inactive. The queue must be
+active within this interval to be marked inactive. This value must be much larger than
+the check interval.</p>
+
+<div class="INFORMALTABLE"><a id="AEN17983" name="AEN17983"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">3000 (3.0
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQQUEUECHECKINTERVAL"
+name="CONTEXTUMQQUEUECHECKINTERVAL">4.30.16. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_check_interval (context)</span></span></a></h2>
+
+<p>The interval between activity checks of the individual <b class="APPLICATION">UMQ</b>
+queues.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18028" name="AEN18028"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQQUEUENAME" name="SOURCEUMQQUEUENAME">4.30.17. <span
+class="lbm-option-name"><span class="PHRASE">umq_queue_name
+(source)</span></span></a></h2>
+
+<p>The queue to submit messages to when sending.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18069" name="AEN18069"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQQUEUEPARTICIPANTSONLY"
+name="SOURCEUMQQUEUEPARTICIPANTSONLY">4.30.18. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_participants_only (source)</span></span></a></h2>
+
+<p>Flag indicating the source only desires queue participants to listen to the topic.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18101" name="AEN18101"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18124" name="AEN18124"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>The source desires that only queue participants listen to the topic.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>The source desires anyone to listen to the topic without regard to queue
+participation. <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQQUEUEPARTICIPATION"
+name="RECEIVERUMQQUEUEPARTICIPATION">4.30.19. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_participation (receiver)</span></span></a></h2>
+
+<p>Flag indicating if the receiver desires to participate in Queuing operations or
+not.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18149" name="AEN18149"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0. Value "2" was added in UMQ
+5.2.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18172" name="AEN18172"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">"1" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">1</code></td>
+<td>The receiver desires to participate in Queuing operations. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"0" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">0</code></td>
+<td>The receiver does not wish to participate in Queuing operations.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">"2" (Integer value as a string.)</code></td>
+<td><code class="CONSTANT">2</code></td>
+<td>The receiver desires to participate in Queuing operations as an observer receiver
+only. Observer receivers cannot be assigned nor consume queue messages, but can retrieve
+information about currently enqueued messages.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQQUEUEQUERYINTERVAL"
+name="CONTEXTUMQQUEUEQUERYINTERVAL">4.30.20. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_query_interval (context)</span></span></a></h2>
+
+<p>The interval between queries sent for resolving Queues.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18214" name="AEN18214"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">200 (0.2
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQQUEUEREGISTRATIONID"
+name="CONTEXTUMQQUEUEREGISTRATIONID">4.30.21. <span class="lbm-option-name"><span
+class="PHRASE">umq_queue_registration_id (context)</span></span></a></h2>
+
+<p>This 64-bit string value assigns a registration ID to a context and associates it with
+a queue, using the format "qname:RegID". The RegID must be unique for each queue-context
+pair, however, a context can register with more than one queue (using its same RegID or a
+different RegID). A NULL value erases all RegIDs created via this option (required before
+you reassign a new RegID value to a context). NOTE: We no longer recommend setting this
+option, because a) if not set, UM automatically generates a unique registration ID when
+registering with the queue, and b) the umq_session_id option provides a more efficient
+way to manage UMQ context registration IDs.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18255" name="AEN18255"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_queue_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQRECEIVERTYPEID"
+name="RECEIVERUMQRECEIVERTYPEID">4.30.22. <span class="lbm-option-name"><span
+class="PHRASE">umq_receiver_type_id (receiver)</span></span></a></h2>
+
+<p>32-bit value that is used as an identifier to instruct the queue as to the type of
+receiver the receiver should be.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18287" name="AEN18287"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>identifier</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQREQUIREQUEUEAUTHENTICATION"
+name="CONTEXTUMQREQUIREQUEUEAUTHENTICATION">4.30.23. <span class="lbm-option-name"><span
+class="PHRASE">umq_require_queue_authentication (context)</span></span></a></h2>
+
+<p>Indicates if an application requires a queue to authenticate itself before accepting
+the queue's responses to Queue Browser commands. See also <a
+href="../UME/ume-ops-operational-view.html#QUEUEBROWSER" target="_top">Queue
+Browser</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18329" name="AEN18329"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.2.2.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18352" name="AEN18352"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>An application requires the queue to successfully authenticate before using browsing
+command responses from the queue. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>An application does not require queue authentication.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"
+name="CONTEXTUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR">4.30.24. <span
+class="lbm-option-name"><span class="PHRASE">umq_retention_intergroup_stability_behavior
+(context)</span></span></a></h2>
+
+<p>The behavior that the context will follow when determining the stability of a message
+from an inter-group perspective. This has a direct impact on the release policy for the
+context in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18377" name="AEN18377"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18400" name="AEN18400"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">any</code>, <code class="CONSTANT">any-group</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ANY</code></td>
+<td>Message is considered stable once it is stable in any group. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">majority</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_MAJORITY</code></td>
+<td>Message is considered stable once it is stable in a majority of groups.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-groups</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message is considered stable once it is stable in all groups.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message is considered stable once it is stable in all active groups. A group is
+considered active if it has at least a quorum of active or registered queues. Intergroup
+stability requires at least one stable group.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR"
+name="SOURCEUMQRETENTIONINTERGROUPSTABILITYBEHAVIOR">4.30.25. <span
+class="lbm-option-name"><span class="PHRASE">umq_retention_intergroup_stability_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow when determining the stability of a message
+from an inter-group perspective. This has a direct impact on the release policy for the
+context in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18447" name="AEN18447"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18470" name="AEN18470"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">any</code>, <code class="CONSTANT">any-group</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ANY</code></td>
+<td>Message will be considered stable once any group has reached intra-group stability
+for the message. <span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">majority</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_MAJORITY</code></td>
+<td>Message will be considered stable once a majority of groups have reached intra-group
+stability for the message.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-groups</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message will be considered stable once all groups have reached intra-group stability
+for the message.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message will be considered stable once all active groups have reached intra-group
+stability for the message.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+name="CONTEXTUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR">4.30.26. <span
+class="lbm-option-name"><span class="PHRASE">umq_retention_intragroup_stability_behavior
+(context)</span></span></a></h2>
+
+<p>The behavior that the context will follow when determining the stability of a message
+from an intra-group perspective. This has a direct impact on the release policy for the
+context in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18517" name="AEN18517"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18540" name="AEN18540"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">quorum</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_QUORUM</code></td>
+<td>Message is considered stable within the group once a quorum (or majority) of the
+queues have acknowledged the message as stable. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-stores</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message is considered stable with the group once all queues have acknowledged the
+message as stable.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message is considered stable with the group once all active queues have acknowledged
+the message as stable.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR"
+name="SOURCEUMQRETENTIONINTRAGROUPSTABILITYBEHAVIOR">4.30.27. <span
+class="lbm-option-name"><span class="PHRASE">umq_retention_intragroup_stability_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior that the source will follow when determining the stability of a message
+from an intra-group perspective. This has a direct impact on the release policy for the
+context in that a message must be stable before it may be released. To be stable, a
+message must first be stable within the group and then stable between groups.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18580" name="AEN18580"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18603" name="AEN18603"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">quorum</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_QUORUM</code></td>
+<td>Message will be considered stable within the group once a quorum (or majority) of the
+queues have acknowledged the message as stable. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all</code>, <code class="CONSTANT">all-stores</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL</code></td>
+<td>Message will be considered stable with the group once all queues have acknowledged
+the message as stable.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">all-active</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_STABLE_BEHAVIOR_ALL_ACTIVE</code></td>
+<td>Message will be considered stable with the group once all active queues have
+acknowledged the message as stable.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQRETRANSMITREQUESTINTERVAL"
+name="RECEIVERUMQRETRANSMITREQUESTINTERVAL">4.30.28. <span class="lbm-option-name"><span
+class="PHRASE">umq_retransmit_request_interval (receiver)</span></span></a></h2>
+
+<p>The interval between retransmission request messages to the queue.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18646" name="AEN18646"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">500 (0.5
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQRETRANSMITREQUESTOUTSTANDINGMAXIMUM"
+name="RECEIVERUMQRETRANSMITREQUESTOUTSTANDINGMAXIMUM">4.30.29. <span
+class="lbm-option-name"><span class="PHRASE">umq_retransmit_request_outstanding_maximum
+(receiver)</span></span></a></h2>
+
+<p>The maximum number of messages to request at a single time from the queue. A value of
+0 indicates no maximum.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18687" name="AEN18687"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">100</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 3.0/UMQ 1.0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTUMQSESSIONID" name="CONTEXTUMQSESSIONID">4.30.30. <span
+class="lbm-option-name"><span class="PHRASE">umq_session_id
+(context)</span></span></a></h2>
+
+<p>Specifies the Session ID to use for managing sources and receivers within a context. A
+value of 0 (zero) indicates no Session ID is to be set. See also <a
+href="../UME/designing-queuing-applications.html#QUEUE-SES-IDS" target="_top">Queue
+Session IDs</a>. Valid formats for session IDs are as follows: A hexadecimal string with
+a maximum value of FFFFFFFFFFFFFFFE, prefixed with '0x'. An octal string with a maximum
+value of 1777777777777777777776 prefixed with '0'. A decimal string with a maximum value
+of 18446744073709551614.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18729" name="AEN18729"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint64_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (zero)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in UMQ 5.3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSET"
+name="SOURCEUMQULBAPPLICATIONSET">4.30.31. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set (source)</span></span></a></h2>
+
+<p>Application set specifications to be used by a source when using <b
+class="APPLICATION">UMQ</b> Ultra Load Balancing. Specifications use the format,
+"Index1:ID1,ID2,...;Index2:ID3,ID4,...", where "Index1" and "Index2" are the indices of
+the application sets and "ID1", "ID2" are receiver type IDs that belong in application
+set "Index1" and "ID3" and "ID4" are receiver type IDs that belong in application set
+"Index2". The index values used for application sets may be specified in any order,
+however, they must be contiguous starting with 0 when the topic is allocated. This
+specification format applies to the string version of this setting as well. At least one
+application set specification means the source will use <b class="APPLICATION">UMQ</b>
+Ultra Load Balancing. If no application sets are specified, the source will not use <b
+class="APPLICATION">UMQ</b> Ultra Load Balancing.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18769" name="AEN18769"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_receiver_type_entry_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETASSIGNMENTFUNCTION"
+name="SOURCEUMQULBAPPLICATIONSETASSIGNMENTFUNCTION">4.30.32. <span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_assignment_function
+(source)</span></span></a></h2>
+
+<p>The assignment function for one or more application sets specified as a list of
+entries in the format, "Index1:value1;Index2:value2;..." where application set "Index1"
+uses "value1" and application set "Index2" uses "value2". <b class="APPLICATION">UMQ</b>
+uses the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18802" name="AEN18802"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18825" name="AEN18825"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">default</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_ASSIGNMENT_DEFAULT</code></td>
+<td>The default assignment function. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">random</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_ASSIGNMENT_RANDOM</code></td>
+<td>Randomized assignment function.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETEVENTS"
+name="SOURCEUMQULBAPPLICATIONSETEVENTS">4.30.33. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_events (source)</span></span></a></h2>
+
+<p>The events mask of one or more application sets specified as a list of entries in the
+format, "Index1:value1;Index2:value2;..." where application set "Index1" uses a mask of
+"value1" and application set "Index2" uses a mask of "value2". The values may follow the
+same format as described in <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBEVENTS">umq_ulb_events</a>.
+Application sets use the value of 0 as the default event mask. <b
+class="APPLICATION">UMQ</b> uses the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18860" name="AEN18860"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETLOADFACTORBEHAVIOR"
+name="SOURCEUMQULBAPPLICATIONSETLOADFACTORBEHAVIOR">4.30.34. <span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_load_factor_behavior
+(source)</span></span></a></h2>
+
+<p>The behavior for the load factor for one or more application sets specified as a list
+of entries in the format, "Index1:value1;Index2:value2;..." where application set
+"Index1" uses "value1" and application set "Index2" uses "value2". <b
+class="APPLICATION">UMQ</b> uses the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18893" name="AEN18893"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN18916" name="AEN18916"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">ignored</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_LF_BEHAVIOR_IGNORED</code></td>
+<td>Load Factor information not sent and not processed or taken into assignment
+consideration. <span class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">provisioned</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_LF_BEHAVIOR_PROVISIONED</code></td>
+<td>Load Factor information on number of sources sent and processed as well as taken into
+consideration to reduce the active portion size for each receiver.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">dynamic</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_LF_BEHAVIOR_DYNAMIC</code></td>
+<td>Load Factor information sent and processed as well as taken into consideration during
+assignment to weight receiver choice.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETMESSAGELIFETIME"
+name="SOURCEUMQULBAPPLICATIONSETMESSAGELIFETIME">4.30.35. <span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_message_lifetime
+(source)</span></span></a></h2>
+
+<p>The message lifetime in milliseconds of one or more application sets specified as a
+list of entries in the format, "Index1:value1;Index2:value2;..." where application set
+"Index1" uses "value1" and application set "Index2" uses "value2". A message lifetime of
+0 means <b class="APPLICATION">UMQ</b> never discards the message. Application sets use
+the value of 0 as the default message lifetime. <b class="APPLICATION">UMQ</b> uses the
+unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18957" name="AEN18957"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETMESSAGEMAXREASSIGNMENTS"
+name="SOURCEUMQULBAPPLICATIONSETMESSAGEMAXREASSIGNMENTS">4.30.36. <span
+class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_message_max_reassignments
+(source)</span></span></a></h2>
+
+<p>The maximum number of message reassignments before <b class="APPLICATION">UMQ</b>
+discards a message for one or more application sets specified as a list of entries in the
+format, "Index1:value1;Index2:value2;..." where application set "Index1" uses "value1"
+and application set "Index2" uses "value2". <b class="APPLICATION">UMQ</b> applies the
+initial assignment to this maximum. Setting this option to 1 means that the message will
+never be reassigned. The default value of 0 means <b class="APPLICATION">UMQ</b> never
+discards the message due to too many reassignments. Application sets use the value of 0
+as the default. <b class="APPLICATION">UMQ</b> uses the unsigned long int value of the
+entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN18993" name="AEN18993"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETMESSAGEREASSIGNMENTTIMEOUT"
+name="SOURCEUMQULBAPPLICATIONSETMESSAGEREASSIGNMENTTIMEOUT">4.30.37. <span
+class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_message_reassignment_timeout
+(source)</span></span></a></h2>
+
+<p>The message reassignment timeout (in milliseconds) of one or more application sets
+specified as a list of entries in the format, "Index1:value1;Index2:value2;..." where
+application set "Index1" uses "value1" and application set "Index2" uses "value2". A
+message reassignment timeout of 0 means <b class="APPLICATION">UMQ</b> never reassigns
+the message. Application sets use the value of 10000 (10 seconds) as the default. <b
+class="APPLICATION">UMQ</b> uses the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19027" name="AEN19027"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETRECEIVERACTIVITYTIMEOUT"
+name="SOURCEUMQULBAPPLICATIONSETRECEIVERACTIVITYTIMEOUT">4.30.38. <span
+class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_receiver_activity_timeout
+(source)</span></span></a></h2>
+
+<p>The receiver activity timeout (in milliseconds) of one or more application sets
+specified as a list of entries in the format, "Index1:value1;Index2:value2;..." where
+application set "Index1" uses "value1" and application set "Index2" uses "value2".
+Application sets use the value of 10000 (10 seconds) as the default. <b
+class="APPLICATION">UMQ</b> uses the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19060" name="AEN19060"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETRECEIVERKEEPALIVEINTERVAL"
+name="SOURCEUMQULBAPPLICATIONSETRECEIVERKEEPALIVEINTERVAL">4.30.39. <span
+class="lbm-option-name"><span
+class="PHRASE">umq_ulb_application_set_receiver_keepalive_interval
+(source)</span></span></a></h2>
+
+<p>The interval (in milliseconds) between keepalive messages to receivers for one or more
+application sets specified as a list of entries in the format,
+"Index1:value1;Index2:value2;..." where application set "Index1" uses "value1" and
+application set "Index2" uses "value2". Application sets use the value of 1000 (1
+seconds) as the default. <b class="APPLICATION">UMQ</b> uses the unsigned long int value
+of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19093" name="AEN19093"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBAPPLICATIONSETROUNDROBINBIAS"
+name="SOURCEUMQULBAPPLICATIONSETROUNDROBINBIAS">4.30.40. <span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_application_set_round_robin_bias
+(source)</span></span></a></h2>
+
+<p>The bias assignment towards unassigned receivers for one or more application sets
+specified as a list of entries in the format, "Index1:value1;Index2:value2;..." where
+application set "Index1" uses "value1" and application set "Index2" uses "value2". Large
+values increase the bias toward unassigned receivers. Zero (0) disables the bias.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19125" name="AEN19125"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_application_set_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBCHECKINTERVAL"
+name="SOURCEUMQULBCHECKINTERVAL">4.30.41. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_check_interval (source)</span></span></a></h2>
+
+<p>The interval upon which <b class="APPLICATION">UMQ</b> Ultra Load Balancing sources
+check for message reassignment, message discards, and receiver liveness.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19166" name="AEN19166"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned long int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBEVENTS" name="SOURCEUMQULBEVENTS">4.30.42. <span
+class="lbm-option-name"><span class="PHRASE">umq_ulb_events
+(source)</span></span></a></h2>
+
+<p>A mask indicating what <b class="APPLICATION">UMQ</b> Ultra Load Balancing events
+should be delivered to the source event callback. Applies to all application sets and
+receiver types for the source. For the configuration file as well as string versions of
+this option, the string value may be formatted as hexadecimal value or a list of
+enumerated values separated by a '|' or ','.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19208" name="AEN19208"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">string</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>mask</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19240" name="AEN19240"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">MSG_CONSUME</code>, <code
+class="CONSTANT">MsgConsume</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_MSG_CONSUME</code></td>
+<td>Deliver message consumption events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">MSG_TIMEOUT</code>, <code
+class="CONSTANT">MsgTimeout</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_MSG_TIMEOUT</code></td>
+<td>Deliver message timeout/discard events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">MSG_ASSIGNMENT</code>, <code
+class="CONSTANT">MsgAssignment</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_MSG_ASSIGNMENT</code></td>
+<td>Deliver message assignment events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">MSG_REASSIGNMENT</code>, <code
+class="CONSTANT">MsgReassignment</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_MSG_REASSIGNMENT</code> </td>
+<td>Deliver message reassignment events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">MSG_COMPLETE</code>, <code
+class="CONSTANT">MsgComplete</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_MSG_COMPLETE</code></td>
+<td>Deliver message completion events. Messages are complete once they are consumed or
+discarded from all application sets.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">RCV_TIMEOUT</code>, <code
+class="CONSTANT">RcvTimeout</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_RCV_TIMEOUT</code></td>
+<td>Deliver receiver timeout events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">RCV_REGISTRATION</code>, <code
+class="CONSTANT">RcvRegistration</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_RCV_REGISTRATION</code> </td>
+<td>Deliver receiver registration events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">RCV_DEREGISTRATION</code>, <code
+class="CONSTANT">RcvDeregistration</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_RCV_DEREGISTRATION</code>
+</td>
+<td>Deliver receiver deregistration events.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">RCV_READY</code>, <code class="CONSTANT">RcvReady</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_UMQ_ULB_EVENT_RCV_READY</code></td>
+<td>Deliver receiver ready events.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBFLIGHTSIZE" name="SOURCEUMQULBFLIGHTSIZE">4.30.43.
+<span class="lbm-option-name"><span class="PHRASE">umq_ulb_flight_size
+(source)</span></span></a></h2>
+
+<p>Specifies the number of messages allowed to be in flight (unconsumed) before a new
+message send either blocks or triggers a notification (source event).</p>
+
+<div class="INFORMALTABLE"><a id="AEN19323" name="AEN19323"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">unsigned int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBFLIGHTSIZEBEHAVIOR"
+name="SOURCEUMQULBFLIGHTSIZEBEHAVIOR">4.30.44. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_flight_size_behavior (source)</span></span></a></h2>
+
+<p>The behavior that <b class="APPLICATION">UMQ</b> follows when a message send exceeds
+the source's <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBFLIGHTSIZE">ulb_flight_size</a>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19366" name="AEN19366"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1.1/UME 3.1.1/UMQ 1.1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN19389" name="AEN19389"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">Block</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_BLOCK</code></td>
+<td>The send call blocks when a message send exceeds the source's flight size. If the
+message send is a non-blocking send, the send returns an LBM_EWOULD_BLOCK. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">Notify</code></td>
+<td><code class="CONSTANT">LBM_FLIGHT_SIZE_BEHAVIOR_NOTIFY</code></td>
+<td>A message send that exceeds the configured flight size does not block but triggers a
+flight size notification (source event), indicating that the flight size has been
+surpassed. <b class="APPLICATION">UMQ</b> also sends a source event notification if the
+number of in-flight messages falls below the configured flight size.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBRECEIVEREVENTS"
+name="SOURCEUMQULBRECEIVEREVENTS">4.30.45. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_receiver_events (source)</span></span></a></h2>
+
+<p>Set the events mask of one or more receiver types specified as a list of entries in
+the format, "ID1:value1;ID2:value2;..." where receiver type "ID1" uses a mask of "value1"
+and receiver type "ID2" uses a mask of "value2". The values may follow the same format as
+described in <a
+href="ultramessagingqueuingoptions.html#SOURCEUMQULBEVENTS">umq_ulb_events</a>. Receiver
+types use the value of 0 as the default event mask. <b class="APPLICATION">UMQ</b> uses
+the unsigned long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19425" name="AEN19425"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_receiver_type_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBRECEIVERPORTION"
+name="SOURCEUMQULBRECEIVERPORTION">4.30.46. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_receiver_portion (source)</span></span></a></h2>
+
+<p>The portion size of one or more receiver types specified as a list of entries in the
+format, "ID1:value1;ID2:value2;..." where receiver type "ID1" uses a portion size of
+"value1" and receiver type ID2 uses a portion size of "value2". Receiver types use the
+value of 1 as the default portion size. <b class="APPLICATION">UMQ</b> uses the unsigned
+long int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19458" name="AEN19458"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_receiver_type_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCEUMQULBRECEIVERPRIORITY"
+name="SOURCEUMQULBRECEIVERPRIORITY">4.30.47. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_receiver_priority (source)</span></span></a></h2>
+
+<p>The priority of one or more receiver types specified as a list of entries in the
+format, "ID1:value1;ID2:value2;..." where receiver type "ID1" uses a priority of "value1"
+and receiver type "ID2" uses a priority of "value2". Receiver types use the value of 0 as
+the default priority. <b class="APPLICATION">UMQ</b> uses the int value of the entry.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19491" name="AEN19491"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_umq_ulb_receiver_type_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQULBSOURCEACTIVITYTIMEOUT"
+name="RECEIVERUMQULBSOURCEACTIVITYTIMEOUT">4.30.48. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_source_activity_timeout (receiver)</span></span></a></h2>
+
+<p>The timeout value used to indicate when a ULB source is unresponsive. The ULB source
+must not be active within this interval to be considered unresponsive. This value must be
+much larger than the source check interval.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19526" name="AEN19526"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">10000 (10
+seconds)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2 / UME 3.2 / UMQ 2.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERUMQULBSOURCECHECKINTERVAL"
+name="RECEIVERUMQULBSOURCECHECKINTERVAL">4.30.49. <span class="lbm-option-name"><span
+class="PHRASE">umq_ulb_source_check_interval (receiver)</span></span></a></h2>
+
+<p>The interval between activity checks of a ULB source. Allow a ULB receiver to
+proactively attempt re-registration with a ULB source if the receiver has not seen any
+activity (including keepalives) from that source in a specified amount of time, provided
+the source's transport session is still alive and valid.</p>
+
+<div class="INFORMALTABLE"><a id="AEN19570" name="AEN19570"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1000 (1
+second)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.2 / UME 3.2 / UMQ 2.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="ultramessagingpersistenceoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="ultramessagingjmsoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Ultra Messaging Persistence Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Ultra Messaging JMS Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

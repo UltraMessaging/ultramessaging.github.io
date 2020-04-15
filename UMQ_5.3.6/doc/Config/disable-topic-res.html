@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Disabling Aspects of Topic Resolution</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Example Configuration Scenarios" href="examples.html" />
+<link rel="PREVIOUS" title="Creating Multicast Sources" href="multicastsource.html" />
+<link rel="NEXT" title="Unicast Resolver" href="unicastresolver.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="multicastsource.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 2. Example Configuration
+Scenarios</td>
+<td width="10%" align="right" valign="bottom"><a href="unicastresolver.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="DISABLE-TOPIC-RES" name="DISABLE-TOPIC-RES">2.4. Disabling
+Aspects of Topic Resolution</a></h1>
+
+<p>If you need to reduce the amount of Topic Resolution traffic on your network, use the
+following Configuration options and values in a <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span>&reg;</b> Configuration file.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+does not recommend disabling both advertisements and queries because topics may not
+resolve at all.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DISABLE-TOPIC-ADS" name="DISABLE-TOPIC-ADS">2.4.1. Disabling
+Topic Advertisements</a></h2>
+
+<p>You can disable topic advertisements in the Initial Phase, Sustaining Phase or both
+phases of topic resolution.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DISABLE-TOPIC-ADS-INIT" name="DISABLE-TOPIC-ADS-INIT">2.4.1.1.
+Disabling Initial Phase Advertisements</a></h3>
+
+<p>Use one or both of the following options to disable topic advertisements in only the
+Initial Phase.</p>
+
+<pre class="SCREEN">
+source resolver_advertisement_minimum_initial_interval 0
+source resolver_advertisement_maximum_initial_interval 0
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DISABLE-TOPIC-ADS-SUSTAIN"
+name="DISABLE-TOPIC-ADS-SUSTAIN">2.4.1.2. Disabling Sustaining Phase
+Advertisements</a></h3>
+
+<p>Use the following option to disable topic advertisements in only the Sustaining
+Phase.</p>
+
+<pre class="SCREEN">
+source resolver_advertisement_sustain_interval 0
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DISABLE-TOPIC-QUERIES" name="DISABLE-TOPIC-QUERIES">2.4.2.
+Disabling Receiver Topic Queries</a></h2>
+
+<p>You can disable the querying of topics by receivers in the Initial Phase, Sustaining
+Phase or both phases of topic resolution.</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DISABLE-TOPIC-QUERIES-INIT"
+name="DISABLE-TOPIC-QUERIES-INIT">2.4.2.1. Disabling Initial Phase Queries</a></h3>
+
+<p>Use one or both of the following options to disable topic queries in only the Initial
+Phase.</p>
+
+<pre class="SCREEN">
+receiver resolver_query_minimum_initial_interval 0
+receiver resolver_query_maximum_initial_interval 0
+</pre>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DISABLE-TOPIC-QUERIES-SUSTAIN"
+name="DISABLE-TOPIC-QUERIES-SUSTAIN">2.4.2.2. Disabling Sustaining Phase Queries</a></h3>
+
+<p>Use one or both of the following options to disable topic queries in only the
+Sustaining Phase.</p>
+
+<pre class="SCREEN">
+receiver resolver_query_sustain_interval 0
+receiver resolution_number_of_sources_query_threshold 0
+</pre>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="DISABLE-WRCV-QUERIES" name="DISABLE-WRCV-QUERIES">2.4.3.
+Disabling Wildcard Topic Queries</a></h2>
+
+<p>Use one or both of the following options to disable topic queries by wildcard
+receivers.</p>
+
+<pre class="SCREEN">
+wildcard_receiver resolver_query_minimum_interval 0
+wildcard_receiver resolver_query_maximum_interval 0
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MINIMUM-TR" name="MINIMUM-TR">2.4.4. Disabling All But the
+Minimum Topic Resolution Traffic</a></h2>
+
+<p>A minimalist approach to topic resolution can take different forms based on you
+requirements. One approach is to disable all traffic except for queries in the sustaining
+phase. Add the following settings to your <b class="APPLICATION"><span
+class="TRADEMARK">Ultra Messaging</span></b> configuration file to implement this
+approach.</p>
+
+<pre class="SCREEN">
+source resolver_advertisement_minimum_initial_interval 0
+source resolver_advertisement_sustain_interval 0
+receiver resolver_query_minimum_initial_interval 0
+receiver resolution_number_of_sources_query_threshold 1
+wildcard_receiver resolver_query_minimum_interval 0
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PRE40-TR" name="PRE40-TR">2.4.5. Re-establish Pre-4.0 Topic
+Resolution</a></h2>
+
+<p><b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b> topic
+resolution prior to <b class="APPLICATION">LBM</b> Version 4.0 did not have resolution
+phases. To implement pre-4.0 topic resolution, include the following configuration option
+changes in your <b class="APPLICATION"><span class="TRADEMARK">Ultra Messaging</span></b>
+configuration file.</p>
+
+<pre class="SCREEN">
+# ----- Disable Advertisements in 4.0 Initial Phase
+source resolver_advertisement_minimum_initial_interval 0
+
+# ----- Re-establish pre-4.0 Advertisement Behavior
+source resolver_advertisement_minimum_sustain_duration 0
+context resolver_sustain_advertisement_bps 0
+
+# ----- Disable Queries in 4.0 Initial Phase
+receiver resolver_query_minimum_initial_interval 0
+
+# ----- Re-establish pre-4.0 Query Behavior
+receiver resolver_query_sustain_interval 100
+receiver resolver_query_minimum_sustain_duration 0
+context resolver_sustain_query_bps 0
+receiver resolution_number_of_sources_query_threshold 1
+
+# ----- Re-establish pre-4.0 Wildcard Query Behavior
+wildcard_receiver resolver_query_minimum_interval 0
+</pre>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="multicastsource.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="unicastresolver.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Creating Multicast Sources</td>
+<td width="34%" align="center" valign="top"><a href="examples.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Unicast Resolver</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+

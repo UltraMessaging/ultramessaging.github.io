@@ -1,0 +1,223 @@
+# Windows specific Makefile for LBM examples.
+#  For UNIX, see the accompanying file `Makefile.unix'.
+
+include <win32.mak>
+
+# IMPORTANT!  Please read the following before trying to use this Makefile
+#  to compile the examples.
+
+# If this `example' directory and/or its contents are not
+#  installed in the default location, the compiler will be unable to
+#  locate the appropriate `include' and `lib' directories.  If this is
+#  the case, modify the following two variables to point to the
+#  correct location(s).
+
+LBM_INCLUDE_DIR=../../Win2k-i386/include
+LBM_LIB_DIR=../../Win2k-i386/lib
+
+
+
+# `LBM_BUILD_TYPE' corresponds to the type of LBM libraries
+# the system has installed.  Allowed values are:
+#
+#               dynamic
+#               dynamic-debug
+
+LBM_BUILD_TYPE=dynamic
+
+
+
+# The following values represent the compiler flags the distributed
+#  tools are compiled with in-house.  Feel free to modify/delete
+#  them at your convenience/peril.
+
+
+OPTIMIZE_CFLAGS = /Ob1 /Oi /Ot /Oy /G6 /O2 /GL
+VC8_OPTIMIZE_CFLAGS = /Ox
+DEBUG_LDFLAGS = /DEBUG
+DEBUG_CFLAGS = /Z7
+
+LDFLAGS = /NOLOGO /INCREMENTAL:no /MACHINE:I386 /LTCG $(DEBUG_LDFLAGS)
+
+# want Visual Studio 2005 to shut up about deprecated calls for now
+VC8_CFLAGS = -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+
+
+
+# Checks to establish the build environment.  Do not modify.
+
+
+!IF "$(LBM_BUILD_TYPE)"=="dynamic"
+CVARS = $(cvars) -DWIN32_LEAN_AND_MEAN -DWIN32_EXTRA_LEAN \
+	-DHAVE_CONFIG_H -I$(LBM_INCLUDE_DIR) -I. $(OPTIMIZE_CFLAGS) \
+	$(DEBUG_CFLAGS) $(VC8_CFLAGS)
+LBMLIB=$(LBM_LIB_DIR)/lbm.lib
+SDMLIB=$(LBM_LIB_DIR)/lbmsdm.lib
+UTLLIB=$(LBM_LIB_DIR)/lbmutl.lib
+
+!ELSEIF "$(LBM_BUILD_TYPE)"=="dynamic-debug"
+CVARS = $(cvars) -DWIN32_LEAN_AND_MEAN -DWIN32_EXTRA_LEAN \
+	-DHAVE_CONFIG_H -I$(LBM_INCLUDE_DIR) -I. $(OPTIMIZE_CFLAGS) \
+	$(DEBUG_CFLAGS) $(VC8_CFLAGS)
+LBMLIB=$(LBM_LIB_DIR)/lbm_mdd.lib
+SDMLIB=$(LBM_LIB_DIR)/lbmsdm_mdd.lib
+UTLLIB=$(LBM_LIB_DIR)/lbmutl_mdd.lib
+
+!ELSE
+!ERROR LBM_BUILD_TYPE not defined properly.
+!ENDIF
+
+
+# General definitions.  Do not modify.
+
+
+ADDL_LIBS=$(LBMLIB) $(SDMLIB) $(UTLLIB)
+
+.c.obj:
+	$(cc) $(CVARS) $(CFLAGS) -Fd.\ -c $<
+
+EXES=lbmsrc.exe lbmrcv.exe lbmreq.exe lbmresp.exe lbmrcvq.exe lbmpong.exe \
+	lbmmsrc.exe lbmmrcv.exe lbmmreq.exe lbmrespq.exe lbmmrcvq.exe lbmstrm.exe \
+	lbmimsg.exe lbmireq.exe lbmwrcv.exe lbmwrcvq.exe lbmspike.exe lbmhfsrc.exe lbmtrreq.exe \
+	lbmhfrcv.exe lbmhfrcvq.exe lbmhtrcv.exe lbmprice.exe lbmmon.exe lbmmoncache.c lbmmonudp.exe \
+	umesrc.exe umeblock.exe umercv.exe umqrcv.exe umqsrc.exe lbmhfxrcv.exe
+
+
+
+all: $(EXES)
+
+
+LBMSRC_OBJS = lbmsrc.obj verifymsg.obj getopt.obj
+lbmsrc.exe:	$(LBMSRC_OBJS)
+	$(link) /OUT:lbmsrc.exe $(conflags) $(conlibsmt)  $(LDFLAGS) /SUBSYSTEM:console $(LBMSRC_OBJS)  $(ADDL_LIBS)
+
+LBMRCV_OBJS = lbmrcv.obj verifymsg.obj getopt.obj
+lbmrcv.exe:	$(LBMRCV_OBJS)
+	$(link) /OUT:lbmrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMRCV_OBJS) $(ADDL_LIBS)
+
+LBMREQ_OBJS = lbmreq.obj getopt.obj
+lbmreq.exe:	$(LBMREQ_OBJS)
+	$(link) /OUT:lbmreq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMREQ_OBJS) $(ADDL_LIBS)
+
+LBMRESP_OBJS = lbmresp.obj getopt.obj
+lbmresp.exe:	$(LBMRESP_OBJS)
+	$(link) /OUT:lbmresp.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMRESP_OBJS) $(ADDL_LIBS)
+
+LBMRCVQ_OBJS = lbmrcvq.obj verifymsg.obj getopt.obj
+lbmrcvq.exe:	$(LBMRCVQ_OBJS)
+	$(link) /OUT:lbmrcvq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMRCVQ_OBJS) $(ADDL_LIBS)
+
+LBMPONG_OBJS = lbmpong.obj getopt.obj
+lbmpong.exe:	$(LBMPONG_OBJS)
+	$(link) /OUT:lbmpong.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMPONG_OBJS) $(ADDL_LIBS)
+
+LBMMSRC_OBJS = lbmmsrc.obj getopt.obj
+lbmmsrc.exe:	$(LBMMSRC_OBJS)
+	$(link) /OUT:lbmmsrc.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMSRC_OBJS) $(ADDL_LIBS)
+
+LBMMRCV_OBJS = lbmmrcv.obj getopt.obj
+lbmmrcv.exe:	$(LBMMRCV_OBJS)
+	$(link) /OUT:lbmmrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMRCV_OBJS) $(ADDL_LIBS)
+
+LBMMREQ_OBJS = lbmmreq.obj getopt.obj
+lbmmreq.exe:	$(LBMMREQ_OBJS)
+	$(link) /OUT:lbmmreq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMREQ_OBJS) $(ADDL_LIBS)
+
+LBMRESPQ_OBJS = lbmrespq.obj getopt.obj
+lbmrespq.exe:	$(LBMRESPQ_OBJS)
+	$(link) /OUT:lbmrespq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMRESPQ_OBJS) $(ADDL_LIBS)
+
+LBMMRCVQ_OBJS = lbmmrcvq.obj getopt.obj
+lbmmrcvq.exe:	$(LBMMRCVQ_OBJS)
+	$(link) /OUT:lbmmrcvq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMRCVQ_OBJS) $(ADDL_LIBS)
+
+LBMSTRM_OBJS = lbmstrm.obj getopt.obj
+lbmstrm.exe:	$(LBMSTRM_OBJS)
+	$(link) /OUT:lbmstrm.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMSTRM_OBJS) $(ADDL_LIBS)
+
+LBMIMSG_OBJS = lbmimsg.obj getopt.obj
+lbmimsg.exe:	$(LBMIMSG_OBJS)
+	$(link) /OUT:lbmimsg.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMIMSG_OBJS) $(ADDL_LIBS)
+
+LBMIREQ_OBJS = lbmireq.obj getopt.obj
+lbmireq.exe:	$(LBMIREQ_OBJS)
+	$(link) /OUT:lbmireq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMIREQ_OBJS) $(ADDL_LIBS)
+
+LBMWRCV_OBJS = lbmwrcv.obj getopt.obj
+lbmwrcv.exe:	$(LBMWRCV_OBJS)
+	$(link) /OUT:lbmwrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMWRCV_OBJS) $(ADDL_LIBS)
+
+LBMWRCVQ_OBJS = lbmwrcvq.obj getopt.obj
+lbmwrcvq.exe:	$(LBMWRCVQ_OBJS)
+	$(link) /OUT:lbmwrcvq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMWRCVQ_OBJS) $(ADDL_LIBS)
+
+LBMSPIKE_OBJS = lbmspike.obj getopt.obj
+lbmspike.exe:	$(LBMSPIKE_OBJS)
+	$(link) /OUT:lbmspike.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMSPIKE_OBJS) $(ADDL_LIBS)
+
+LBMHFSRC_OBJS = lbmhfsrc.obj verifymsg.obj getopt.obj
+lbmhfsrc.exe:	$(LBMHFSRC_OBJS)
+	$(link) /OUT:lbmhfsrc.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHFSRC_OBJS) $(ADDL_LIBS)
+
+LBMHFRCV_OBJS = lbmhfrcv.obj verifymsg.obj getopt.obj
+lbmhfrcv.exe:	$(LBMHFRCV_OBJS)
+	$(link) /OUT:lbmhfrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHFRCV_OBJS) $(ADDL_LIBS)
+
+LBMHFRCVQ_OBJS = lbmhfrcvq.obj verifymsg.obj getopt.obj
+lbmhfrcvq.exe:	$(LBMHFRCVQ_OBJS)
+	$(link) /OUT:lbmhfrcvq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHFRCVQ_OBJS) $(ADDL_LIBS)
+
+LBMHFSRC_OBJS = lbmtrreq.obj getopt.obj
+lbmtrreq.exe:	$(LBMHFSRC_OBJS)
+	$(link) /OUT:lbmtrreq.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHFSRC_OBJS) $(ADDL_LIBS)
+
+LBMHTRCV_OBJS = lbmhtrcv.obj getopt.obj
+lbmhtrcv.exe:	$(LBMHTRCV_OBJS)
+	$(link) /OUT:lbmhtrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHTRCV_OBJS) $(ADDL_LIBS)
+
+LBMPRICE_OBJS = lbmprice.obj getopt.obj
+lbmprice.exe:	$(LBMPRICE_OBJS)
+	$(link) /OUT:lbmprice.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMPRICE_OBJS) $(ADDL_LIBS)
+
+LBMMON_OBJS = lbmmon.obj getopt.obj
+lbmmon.exe:	$(LBMMON_OBJS)
+	$(link) /OUT:lbmmon.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMON_OBJS) $(LBMLIB)
+
+LBMMONCACHE_OBJS = lbmmon.obj getopt.obj
+lbmmon.exe:	$(LBMMONCACHE_OBJS)
+	$(link) /OUT:lbmmoncache.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMONCACHE_OBJS) $(LBMLIB)
+
+LBMMONUDP_OBJS = lbmmonudp.obj getopt.obj
+lbmmonudp.exe:	$(LBMMONUDP_OBJS)
+	$(link) /OUT:lbmmonudp.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMMONUDP_OBJS) $(LBMLIB)
+
+UMESRC_OBJS = umesrc.obj verifymsg.obj getopt.obj
+umesrc.exe: $(UMESRC_OBJS)
+	$(link) /OUT:umesrc.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(UMESRC_OBJS) $(ADDL_LIBS)
+
+UMEBLOCK_OBJS = umeblock.obj umeblocksrc.obj verifymsg.obj getopt.obj
+umeblock.exe: $(UMEBLOCK_OBJS)
+	$(link) /OUT:umeblock.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(UMEBLOCK_OBJS) $(ADDL_LIBS)
+
+UMERCV_OBJS = umercv.obj verifymsg.obj getopt.obj
+umercv.exe: $(UMERCV_OBJS)
+	$(link) /OUT:umercv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(UMERCV_OBJS) $(ADDL_LIBS)
+
+UMQRCV_OBJS = umqrcv.obj verifymsg.obj getopt.obj
+umqrcv.exe: $(UMQRCV_OBJS)
+	$(link) /OUT:umqrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(UMQRCV_OBJS) $(ADDL_LIBS)
+
+UMQSRC_OBJS = umqsrc.obj verifymsg.obj getopt.obj
+umqsrc.exe: $(UMQSRC_OBJS)
+	$(link) /OUT:umqsrc.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(UMQSRC_OBJS) $(ADDL_LIBS)
+
+LBMHFXRCV_OBJS = lbmhfxrcv.obj verifymsg.obj getopt.obj
+lbmhfxrcv.exe:	$(LBMHFXRCV_OBJS)
+	$(link) /OUT:lbmhfxrcv.exe $(conflags) $(conlibsmt) $(LDFLAGS) /SUBSYSTEM:console $(LBMHFXRCV_OBJS) $(ADDL_LIBS)
+
+clean:
+	-erase *.obj *.pdb
+
+clobber:	clean
+	-erase $(EXES)
+

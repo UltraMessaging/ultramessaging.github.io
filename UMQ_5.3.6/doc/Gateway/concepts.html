@@ -1,0 +1,892 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Conceptual View</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="The UM Gateway" href="index.html" />
+<link rel="PREVIOUS" title="The UM Gateway" href="index.html" />
+<link rel="NEXT" title="Running the UM Gateway" href="runningthegateway.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">The UM Gateway</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="runningthegateway.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="CONCEPTS" name="CONCEPTS">2. Conceptual View</a></h1>
+
+<p>The UM Gateway bridges disjoint topic resolution domains by effectively forwarding
+multicast and/or unicast topic resolution traffic, such as topic advertisements and
+queries (TIR/TQR), across gateways.</p>
+
+<p>This section discusses the following topics.</p>
+
+<ul>
+<li>
+<p><a href="concepts.html#PORTALS"><i>UM Gateway Portals</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#TR-DOMAIN"><i>Topic Resolution Domains</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#BASIC-TOPOLOGY"><i>Basic Gateway Topology and
+Operation</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#FORWARDING-COSTS"><i>Forwarding Costs</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#ACL"><i>Access Control Lists (ACL)</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#RESPONSE-FORWARDING"><i>Response Forwarding</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#WRCV"><i>Wildcard Receivers</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#TCP-TUNNELING"><i>TCP Connections for Tunneling</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#RESILIENCE"><i>Gateway Resilience</i></a></p>
+</li>
+
+<li>
+<p><a href="concepts.html#MONITORING"><i>Gateway Monitoring</i></a></p>
+</li>
+</ul>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="PORTALS" name="PORTALS">2.1. UM Gateway Portals</a></h2>
+
+<p>A UM Gateway consists of two or more bidirectional portals that may be one of two
+types:</p>
+
+<ul>
+<li>
+<p>An <b class="APPLICATION">endpoint</b> portal that communicates directly to a <b
+class="APPLICATION">UM</b> topic resolution domain.</p>
+</li>
+
+<li>
+<p>A <b class="APPLICATION">peer</b> portal that communicates only with another peer
+portal (of another gateway), allowing tunneling behavior between gateways or other
+portals.</p>
+</li>
+</ul>
+
+<p>You configure portals in the gateway's XML configuration file, specifying the portal's
+name, cost, <b class="APPLICATION">UM</b> Configuration, Access Control Lists and other
+attributes. See <a href="configuration.html"><i>UM Gateway Configuration</i></a> for
+more.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TR-DOMAIN" name="TR-DOMAIN">2.2. Topic Resolution
+Domains</a></h2>
+
+<p><b class="APPLICATION">UM</b> contexts must satisfy the following two requirements to
+belong to the same topic resolution domain.</p>
+
+<ul>
+<li>
+<p>The contexts must use the same topic resolution <b class="APPLICATION">UM</b>
+configuration (i.e., <tt class="LITERAL">resolver_*</tt> options are the same).</p>
+</li>
+
+<li>
+<p>Contexts can communicate using the protocols required for both message transport and
+topic resolution traffic.</p>
+</li>
+</ul>
+
+<p>For example, two contexts on separate machines in the same LAN are not in the same
+topic resolution domain if they use different resolver addresses. See <a
+href="../Config/multicastresolvernetworkoptions.html" target="doccontent"><tt
+class="LITERAL">Multicast Resolver Network Options</tt></a>. A topic resolution domain
+can span a WAN if the <b class="APPLICATION">UM</b> contexts on each side of a firewall
+use the same <b class="APPLICATION">UM</b> configuration and the firewall allows UDP
+traffic (multicast or unicast) to pass.</p>
+
+<p>Each endpoint portal must identify its associated topic resolution domain with a <tt
+class="LITERAL">domain-id</tt> in the gateway's XML configuration file, as in the example
+below. All portals in the same topic resolution domain must have the same <tt
+class="LITERAL">domain-id</tt>.</p>
+
+<pre class="SCREEN">
+  &lt;portals&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN100&lt;/name&#62;
+      &lt;domain-id&#62;100&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan100.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN200&lt;/name&#62;
+      &lt;domain-id&#62;200&lt;/domain-id&#62;
+      &lt;lbm-config&#62;lan200.cfg&lt;/lbm-config&#62;
+    &lt;/endpoint&#62;
+  &lt;/portals&#62;
+     
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="BASIC-TOPOLOGY" name="BASIC-TOPOLOGY">2.3. Basic Gateway
+Topology and Operation</a></h2>
+
+<p>The diagram, <a href="concepts.html#TNW-GATEWAY"><i>UM Gateway</i></a>, shows a UM
+Gateway bridging topic resolution domain 1 and topic resolution domain 2, for topic AAA.
+Endpoint E1 contains a proxy receiver for topic AAA and endpoint E2 has a proxy source
+for topic AAA.</p>
+
+<div class="FIGURE"><a id="TNW-GATEWAY" name="TNW-GATEWAY"></a>
+<p><b>Figure 1. UM Gateway</b></p>
+
+<p><img src="29W_Gateway.png" align="CENTER" /></p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="TOPIC-RESOLUTION-ACROSS-GATEWAY"
+name="TOPIC-RESOLUTION-ACROSS-GATEWAY">2.3.1. Topic Resolution Across the
+Gateway</a></h3>
+
+<p>To establish topic resolution in an already-running UM Gateway, the following
+typically occurs in an example like the above figure.</p>
+
+<ol type="1">
+<li>
+<p>A receiver in topic resolution domain 2 issues a TQR for topic AAA.</p>
+</li>
+
+<li>
+<p>Portal E2 receives the TQR and requests that portal E1 find a TIR for AAA on topic
+resolution domain 1. At this point, we can say that <i class="FIRSTTERM">interest</i> for
+topic AAA has been discovered within the gateway.</p>
+</li>
+
+<li>
+<p>E1 immediately responds with three actions: a) create a proxy receiver for topic AAA,
+which b) sends a TQR for AAA on domain 1, and c) issues a Topic Interest message for the
+benefit of any other portals that may exist in this gateway.</p>
+</li>
+
+<li>
+<p>A source for topic AAA in domain 1 issues a TIR.</p>
+</li>
+
+<li>
+<p>E1's AAA proxy receiver requests that E2 (and any other portals in the gateway) create
+a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>E2 creates proxy source AAA and issues a TIR to domain 2, thus completing topic
+resolution.</p>
+</li>
+</ol>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="INTEREST-AND-USE-QUERIES"
+name="INTEREST-AND-USE-QUERIES">2.3.2. Interest and Use Queries</a></h3>
+
+<p>When a UM Gateway first starts, its endpoint portals issue a brief series of Topic
+Resolution Request messages to their respective topic resolution domains. This provokes
+quiescent receivers (and wildcard receivers) into sending TQRs, indicating interest in
+the various topics. Each portal then records this interest. The gateway uses a periodic
+purge cycle to detect when there is no longer any interest in the topic (i.e. all
+receivers for a topic have been deleted), and removes it from the portals.</p>
+
+<p>After a gateway has been running, endpoint portals issue periodic Topic Use Queries
+and Pattern Use Queries (collectively referred to as simply Use Queries). Use Query
+Responses from UM contexts confirm that the receivers for these topics indeed still
+exist, thus maintaining these topics on the interest list. Autonomous TQRs also refresh
+interest and have the effect of suppressing the generation of Use Queries.</p>
+
+<div class="FIGURE"><a id="USE-QUERIES" name="USE-QUERIES"></a>
+<p><b>Figure 2. Use Queries and Interest</b></p>
+
+<p><img src="Use-Queries.png" align="CENTER" /></p>
+</div>
+
+<p>In the case of multi-hop gateway configurations, gateways cannot detect interest for
+remote contexts via Use Queries or TQRs. They do this instead via Interest Messages. A
+portal generates periodic interest messages, which are picked up by adjacent gateways
+(i.e., the next hop over), at which time interest is refreshed.</p>
+
+<div class="FIGURE"><a id="INTEREST-MESSAGES" name="INTEREST-MESSAGES"></a>
+<p><b>Figure 3. Interest Messages</b></p>
+
+<p><img src="Interest-Messages.png" align="CENTER" /></p>
+</div>
+
+<p>Intervals, limits, and durations for these topic resolution and interest mechanisms
+can be adjusted via gateway configuration options (see <a href="configuration.html"><i>UM
+Gateway Configuration</i></a>).</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="GATEWAY-KEEPALIVE" name="GATEWAY-KEEPALIVE">2.3.3. Gateway
+Keepalive</a></h3>
+
+<p>To maintain a reliable connection, gateways exchange <i class="FIRSTTERM">Gateway
+Keepalive</i> signals when connected via peer portals. Keepalive intervals and connection
+timeouts are configurable, and you can also set the gateway to send keepalives only when
+traffic is idle (default). See <a href="tnwgd-dtd-doc/tnwgd.dtd.html#gateway-keepalive"
+target="doccontent"><tt class="LITERAL">&lt;gateway-keepalive&#62;</tt></a>.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="PROXY-SOURCES-AND-RECEIVERS"
+name="PROXY-SOURCES-AND-RECEIVERS">2.3.4. Proxy Sources and Receivers</a></h3>
+
+<p>The <tt class="LITERAL">domain-id</tt> is used by Interest Messages and other internal
+and gateway-to-gateway traffic to ensure forwarding of all messages (payload and topic
+resolution) to the correct recipients. This also has the effect of not creating proxy
+sources/receivers where they are not needed. Thus, gateways create proxy sources and
+receivers based solely on receiver interest.</p>
+
+<p>If more than one source sends on a given topic, the receiving portal's single proxy
+receiver for that topic receives all messages sent on that topic. The sending portal,
+however creates a proxy source for every source sending on the topic. The UM Gateway
+maintains a table of proxy sources, each keyed by an Originating Transport ID (OTID).
+This enables proxy receiver to forward each message to the correct proxy source.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> <b class="APPLICATION">UM</b> sources create a unique OTID that describes
+their transport sessions and include this OTID in their topic advertisements. For more on
+multiple sources, see <a href="concepts.html#DUPLICATE-PREVENTION"><i>Resolver Cache's
+Stored Cost Values Prevents Duplicates</i></a></p>
+</blockquote>
+</div>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> It is important to keep maximum datagram sizes exactly the same across
+all topic resolution domains and transports. For example, if the topic resolution domain
+on one side of a gateway uses LBT-RM message transport and the topic resolution domain on
+the other side uses LBT-RDMA, fragments from domain 1 will be too large for domain 2. See
+<tt class="LITERAL">transport_*_datagram_max_size</tt> in the <a
+href="../Config/index.html" target="doccontent">UM Configuration Guide</a>.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="MULTI-HOP-FORWARDING" name="MULTI-HOP-FORWARDING">2.3.5.
+Multi-Hop Forwarding</a></h3>
+
+<p>Consider a simple example UM Gateway deployment, as shown in <a
+href="concepts.html#GATEWAY-NET"><i>Multi-Hop Network Example</i></a>.</p>
+
+<div class="FIGURE"><a id="GATEWAY-NET" name="GATEWAY-NET"></a>
+<p><b>Figure 4. Multi-Hop Network Example</b></p>
+
+<p><img src="Gateway_Net.png" align="CENTER" /></p>
+</div>
+
+<p>In this diagram, gateway A has two endpoint portals, connected to topic resolution
+domains 1 and 2. gateway B also has two endpoint portals that bridge domains 2 and 3.
+(Endpoint portal names reflect the topic resolution domain to which they connect. For
+example, gateway A endpoint E2 interfaces topic resolution domain 2.)</p>
+
+<p>Topic resolution domain 1 has a source for topic AAA, and domain 3, an AAA receiver.
+The following sequence of events enables the forwarding of topic messages from source AAA
+to receiver AAA.</p>
+
+<ol type="1">
+<li>
+<p>Receiver AAA queries (issues a TQR) for a source.</p>
+</li>
+
+<li>
+<p>Gateway B, endpoint E3 (B-E3) receives the TQR and requests that any other portals in
+the gateway forward any AAA advertisements.</p>
+</li>
+
+<li>
+<p>In response, B-E2 creates a proxy receiver for AAA and sends a Topic Interest message
+for AAA to topic resolution domain 2. (The proxy receiver also issues a TQR.)</p>
+</li>
+
+<li>
+<p>Gateway A, endpoint E2 (A-E2) receives this Topic Interest message and requests that
+any other portals in the gateway forward any AAA advertisements.</p>
+</li>
+
+<li>
+<p>In response, A-E1 creates a proxy receiver for AAA and sends a Topic Interest message
+(and TQR) for AAA to domain 1.</p>
+</li>
+
+<li>
+<p>Source AAA responds to the TQR by sending a TIR for topic AAA.</p>
+</li>
+
+<li>
+<p>The AAA proxy receiver created by A-E1 receives this TIR and requests that all gateway
+A portals with an interest in topic AAA create a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>In response, A-E2 creates a proxy source which sends a TIR for topic AAA via domain
+2.</p>
+</li>
+
+<li>
+<p>The AAA proxy receiver created by B-E2 receives this TIR and requests that all gateway
+B portals with an interest in topic AAA create a proxy source for AAA.</p>
+</li>
+
+<li>
+<p>In response, B-E3 creates a proxy source, which sends a TIR for topic AAA via domain
+3.</p>
+</li>
+
+<li>
+<p>Topic AAA has now been resolved across both gateways, which forward all topic messages
+sent by source AAA to receiver AAA.</p>
+</li>
+</ol>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Access Control Lists can alter this sequence by, for example, accepting
+only certain transport types or forwarding only certain topics. For more, see <a
+href="concepts.html#ACL"><i>Access Control Lists (ACL)</i></a>.</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="FORWARDING-COSTS" name="FORWARDING-COSTS">2.4. Forwarding
+Costs</a></h2>
+
+<p>Forwarding a message through a gateway incurs a cost in terms of latency, network
+bandwidth, and CPU utilization on the gateway machine, which may in turn affect the
+latency of other forwarded messages. Transiting multiple gateways adds even more
+cumulative latency to a message. Other gateway-related factors such as network bandwidth,
+switches, etc., can also add latency.</p>
+
+<p>Factors other than latency contribute to the cost of forwarding a message. Consider a
+message that can be sent from one domain to its destination domain over one of two paths.
+A three-hop path over 1000Mbps links may be faster than a single-hop path over a 100Mbps
+link. Further, it may be the case that the 100Mbps link is more expensive or less
+reliable. These could all be reasons for favoring the longer path.</p>
+
+<p>To account for these cost factors, topic advertisements (TIR) contain the following
+two fields.</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">hop count</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">cost</tt></p>
+</li>
+</ul>
+
+<p>These fields appear as topic options within the TIR. When you call <tt
+class="LITERAL">lbm_src_create()</tt>, <b class="APPLICATION">UM</b> sets both to 0
+(zero) for use by the UM Gateway. You cannot set these fields; they are populated
+automatically by the gateway(s).</p>
+
+<p>&#13;</p>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="HOP-COUNT" name="HOP-COUNT">2.4.1. Hop Count</a></h3>
+
+<p>When the egress portal of a gateway creates a proxy source to forward, in effect, the
+original source's topic advertisement, it increments the <tt class="LITERAL">hop
+count</tt> by one. In the Multi-hop example presented earlier, gateway A, endpoint E2
+(A-E2) and gateway B, endpoint E3 (B-E3) would each increment the <tt class="LITERAL">hop
+count</tt>, resulting in receiver AAA receiving a TIR with a <tt class="LITERAL">hop
+count</tt> = 2.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="PORTAL-COSTS" name="PORTAL-COSTS">2.4.2. Portal Costs</a></h3>
+
+<p>The UM Gateway lets you assign a cost to a portal. As with the <tt class="LITERAL">hop
+count</tt>, when a portal creates a proxy source, it adds the portal's configured cost to
+the topic cost in the TIR. By default, the cost associated with a portal is 0. Using the
+Multi-hop example again, setting portal A-E2's cost to 3 increases the topic's cost by
+that much. If portal B-E3's cost is 2, the topic's <tt class="LITERAL">cost</tt> (and TIR
+cost), as received by receiver AAA, is now 5. The UM Gateway uses the cost to ensure that
+proxy receivers connect via the most efficient path to/from their source.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> After paths are established, if a new lower-cost source becomes
+available, receivers do not switch to it.</p>
+</blockquote>
+</div>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="DUPLICATE-PREVENTION" name="DUPLICATE-PREVENTION">2.4.3.
+Resolver Cache's Stored Cost Values Prevents Duplicates</a></h3>
+
+<p>The <b class="APPLICATION">UM</b> Resolver Cache stores TIRs to help receivers find
+sources. In addition to transport session information, the stored TIR contains the OTID,
+hop count and cost values. This information can be used by receivers to select the lowest
+cost source if a source sends over multiple network paths.</p>
+
+<p>In more complex network topologies, messages from the same source may traverse
+multiple paths and therefore, arrive from different proxy sources and different transport
+sessions. If a receiver looks up a topic in the cache and finds two TIRs with the same
+OTID but different transport sessions, it chooses the OTID with the lowest cost and joins
+that transport to receive messages. This prevents receiving duplicate messages from the
+same source.</p>
+
+<p>A <b class="APPLICATION">UM</b> receiver always treats advertisements for the same
+topic with the same OTID as equivalent transport sessions, and joins only one of them. In
+the event that the receiver detects an EOS on the joined transport session, one of any
+remaining equivalent transport sessions can be joined.</p>
+
+<p>For Multicast Immediate Messages (MIM) traffic, <b class="APPLICATION">UM</b>
+receivers keep a sequence number map for every OTID they have received messages from and
+reject any messages that have already been received.</p>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="APPS-SET-TOPIC-COST" name="APPS-SET-TOPIC-COST">2.4.4.
+Applications Can Also Set the Topic Cost</a></h3>
+
+<p>Your application can change the cost of a topic in the receiving application's context
+using a callback ( <a
+href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION" target="doccontent"><tt
+class="LITERAL">source_cost_evaluation_function</tt></a>) that the UM Gateway uses in <tt
+class="LITERAL">lbm_src_cost_function_cb()</tt>. The gateway invokes this function
+whenever it receives an advertisement containing cost information. With a multiple-path
+topology, the gateway always forwards advertisements and messages via the least costly
+path, using <tt class="LITERAL">lbm_src_cost_function_cb()</tt> to determine the
+cost.</p>
+
+<p>You can supply a callback with <a
+href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION" target="doccontent"><tt
+class="LITERAL">source_cost_evaluation_function</tt></a> to affect this cost
+determination, increasing the cost of less desirable paths or completing filtering out
+certain paths. The gateway passes the topic name, hop count, and cost to the configured
+callback, which returns an integral cost value the gateway assigns to the topic. If you
+do not set <a href="../Config/majoroptions.html#CONTEXTSOURCECOSTEVALUATIONFUNCTION"
+target="doccontent"><tt class="LITERAL">source_cost_evaluation_function</tt></a>, a default
+function returns the cost as passed to it.</p>
+
+<div class="NOTE">
+<blockquote class="NOTE">
+<p><b>Note:</b> Your gateway application cannot directly configure the cost in a TIR;
+this is done by only the gateway itself.</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="ACL" name="ACL">2.5. Access Control Lists (ACL)</a></h2>
+
+<p>You can apply Access Control Lists (ACL) to a gateway's portals to filter or load
+balance traffic by certain topics, transports, topic patterns, multicast groups, etc. You
+configure ACLs in a gateway's XML configuration file, as children of an <tt
+class="LITERAL">&lt;endpoint&#62;</tt> or <tt class="LITERAL">&lt;peer&#62;</tt> portal.
+As traffic arrives at the portal, the portal either forwards it or rejects it per ACL
+criteria.</p>
+
+<p>Inbound ACLs determine what information to forward to other portals in the gateway,
+while Outbound ACLs determine (by topic) what information from other portals that this
+portal can forward out the gateway. Each portal (endpoint or peer) can have up to one
+inbound ACL and one outbound ACL.</p>
+
+<p>An ACL can contain one or more Access Control Entries (ACEs). ACEs let you match (and
+accept or reject based on), criteria elements called Access Control Conditions (ACCs).
+Possible ACCs are:</p>
+
+<ul>
+<li>
+<p><tt class="LITERAL">&lt;multicast-group/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;pcre-pattern&#62;</tt> (PCRE wildcard patterns)</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;regex-pattern&#62;</tt> (Regex wildcard patterns)</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;source-ip/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;tcp-source-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;topic&#62;</tt></p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;transport/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;udp-destination-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;udp-source-port/&#62;</tt> *</p>
+</li>
+
+<li>
+<p><tt class="LITERAL">&lt;xport-id/&#62;</tt> * (for LBT-IPC traffic)</p>
+</li>
+</ul>
+
+<p>* These items apply to only inbound ACLs, and are ignored if used with an outbound
+ACL.</p>
+
+<p>The above elements are all children of the <tt class="LITERAL">&lt;ace&#62;</tt>
+element. When an ACL has multiple ACE entries, the UM Gateway goes down the list until it
+finds a match. It then accepts (forwards) or rejects, and is done with that ACL. An
+implicit "reject all" is at the end of every ACL, so the UM Gateway rejects any topic not
+matched. If you place multiple ACCs within an ACE, the gateway performs an "and"
+operation with them.</p>
+
+<p>Note that the portal ignores an ACC if a) it is inbound-only and used in an outbound
+ACL, or b) it simply does not apply (such as a <tt
+class="LITERAL">&lt;udp-source-port/&#62;</tt> if the transport is TCP).</p>
+
+<p>Consider the following example, where we configure a portal to forward on specific
+topics. This example also illustrates the parent/child hierarchy for ACLs, ACEs, and
+ACCs.</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;ABC&lt;/topic&#62;
+            &lt;/ace&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;DEF&lt;/topic&#62;
+              &lt;transport value=lbt-rm comparison=eq/&#62;
+            &lt;/ace&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;GHI&lt;/topic&#62;
+            &lt;/ace&#62;       
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+
+<p>The above example shows each topic match in a separate ACE. When topic "GHI" arrives,
+the portal finds a match in the third ACE and forwards the topic. (Placing all three <tt
+class="LITERAL">&lt;topic&#62;</tt>s in a single ACE would never match anything.) Also
+note that "DEF" is forwarded only if it uses an LBT-RM transport.</p>
+
+<p>Since the behavior for multiple ACEs is "first match, then done", list ACEs in a
+specific-to-general order. For the example below, to forward topic "ABC123" but reject
+similar topics such as "ABCD123" or "ABCE123", list the ACE for "ABC123" first (as done
+below). If the ACE to reject "ABC.*123" was listed first, it would also (undesirably)
+match and reject "ABC123".</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;topic&#62;ABC123&lt;/topic&#62;
+            &lt;/ace&#62;
+            &lt;ace match="reject"&#62;
+              &lt;pcre-pattern&#62;ABC.*123&lt;/pcre-pattern&#62;
+            &lt;/ace&#62;
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+
+<p>You could also filter on certain transport types to accept multicast traffic but
+reject tcp traffic, as shown below.</p>
+
+<pre class="SCREEN">
+    &lt;endpoint&#62;
+      &lt;name&#62;LAN1&lt;/name&#62;
+      &lt;lbm-config&#62;lan1.cfg&lt;/lbm-config&#62;
+      &lt;domain-id&#62;1&lt;/domain-id&#62;
+        &lt;acl&#62;
+          &lt;inbound&#62;
+            &lt;ace match="accept"&#62;
+              &lt;transport comparison="equal" value="lbtrm"/&#62;
+            &lt;/ace&#62;
+            &lt;ace match="reject"&#62;
+              &lt;transport comparison="equal" value="tcp"/&#62;
+            &lt;/ace&#62;
+          &lt;/inbound&#62;
+        &lt;/acl&#62;
+    &lt;/endpoint&#62;
+   
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RESPONSE-FORWARDING" name="RESPONSE-FORWARDING">2.6. Response
+Forwarding</a></h2>
+
+<p>For request/response, the gateway appears as the responder from the perspective of the
+requester, and as the requester from the perspective of the responder. The UM Gateway
+supports request/response directly by maintaining a map between the original requester
+and the proxy request object it creates. The UM Gateway modifies requests and responses
+to appear as if they originated from the gateway.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MIM-CONSIDERATIONS" name="MIM-CONSIDERATIONS">2.7. Multicast
+Immediate Messaging Considerations</a></h2>
+
+<p>Multicast Immediate Messages (MIM) flood through the UM Gateway. You cannot filter MIM
+with <a href="concepts.html#ACL"><i>Access Control Lists (ACL)</i></a>. Receivers on the
+other side of the gateway can easily receive duplicate messages. Informatica does not
+recommend using MIM for messaging traffic across the UM Gateway. MIM is intended for
+short-lived topics and applications that cannot tolerate a delay between source creation
+and the sending of the first message. See also <a
+href="../Design/lbm-features.html#MULTICAST-IMMEDIATE-MESSAGING" target="doccontent">Multicast
+Immediate Messaging</a>.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="WRCV" name="WRCV">2.8. Wildcard Receivers</a></h2>
+
+<p>The UM Gateway supports wildcard receivers, provided wildcard topic querying is not
+disabled. The gateway processes wildcard queries, replicating the functionality in the <b
+class="APPLICATION">UM</b> topic resolution wildcard processing. The UM Gateway creates a
+single proxy receiver for each topic, including topics that match one or more wildcard
+patterns.</p>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="TCP-TUNNELING" name="TCP-TUNNELING">2.9. TCP Connections for
+Tunneling</a></h2>
+
+<p>A UM Gateway peer portal communicates with exactly one peer portal on another gateway.
+Peer portals utilize TCP connections for all data and control traffic. (UDP is not
+supported for this.) Between the peer portals, you can configure either a single TCP
+connection, or dual TCP, with one connection serving each direction. The UM Gateway
+supports one tunnel per peer portal pair, and multiple peer portals.</p>
+
+<p>Below is an example of a two companion peer portals (on different gateways) configured
+(via gateway XML configuration file) for dual TCP connections. The companion peer portal
+(at the other end of the tunnel) would have its sockets defined inversely.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN2&lt;/name&#62;
+    &lt;tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;listen-port&#62;26123&lt;/listen-port&#62;
+      &lt;companion&#62;
+        &lt;address&#62;10.30.3.88&lt;/address&#62;
+        &lt;port&#62;26124&lt;/port&#62;
+      &lt;/companion&#62;
+    &lt;/tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN1&lt;/name&#62;
+    &lt;tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;listen-port&#62;26124&lt;/listen-port&#62;
+      &lt;companion&#62;
+        &lt;address&#62;10.30.3.89&lt;/address&#62;
+        &lt;port&#62;26123&lt;/port&#62;
+      &lt;/companion&#62;
+    &lt;/tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+     
+</pre>
+
+<p>For an example of a single TCP setup, see below.</p>
+
+<pre class="SCREEN">
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN2&lt;/name&#62;
+    &lt;single-tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;initiator&#62;
+        &lt;address&#62;10.30.3.88&lt;/address&#62;
+        &lt;port&#62;26123&lt;/port&#62;
+      &lt;/initiator&#62;
+    &lt;/single-tcp&#62;
+  &lt;/peer&#62;
+&lt;/portals&#62;
+
+&lt;portals&#62;
+  &lt;peer&#62;
+    &lt;name&#62;TUNNEL_TO_LAN1&lt;/name&#62;
+    &lt;single-tcp&#62;
+      &lt;interface&#62;10.30.3.0/24&lt;/interface&#62;
+      &lt;acceptor&#62;
+        &lt;listen-port&#62;26123&lt;/listen-port&#62;
+      &lt;/acceptor&#62;
+    &lt;/single-tcp&#62;
+  &lt;/peer&#62;
+     
+</pre>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RESILIENCE" name="RESILIENCE">2.10. Gateway
+Resilience</a></h2>
+
+<p>The UM Gateway supports resilience by way of parallel paths between topic resolution
+domains. This technique is referred to as Replication. Each gateway forwards traffic in a
+normal manner, and receivers are responsible for discarding duplicate messages. A similar
+approach can be taken for peer portals, in which case two gateways are required for each
+path, for a total of four gateways.</p>
+
+<div class="CAUTION">
+<blockquote class="CAUTION">
+<p><b>Important:</b> Although it is possible to configure multiple paths between topic
+resolution domains, configurations that result in loops or meshes are not supported.
+Please contact Informatica Ultra Messaging Support.</p>
+</blockquote>
+</div>
+
+<div class="SECTION">
+<h3 class="SECTION"><a id="CONSEQUENCES" name="CONSEQUENCES">2.10.1. Resilience
+Considerations</a></h3>
+
+<p>You should consider the following issues when developing your approach to gateway
+resilience.</p>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="TRAFFIC" name="TRAFFIC">2.10.1.1. Traffic Volume</a></h4>
+
+<p>Any time there exists more than one path a message can take from one point to another,
+the possibility exists that the message will take more than one path. Due to duplicate
+detection, an individual receiver will only receive each message once. However, depending
+on the type of transport, the message may still appear on the network multiple times.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="DATA-SESSION" name="DATA-SESSION">2.10.1.2. Data Session
+Re-establishment</a></h4>
+
+<p>When multiple paths exist from a source to a receiver, multiple proxy sources may be
+created adjacent to the receiver domain, appearing to the receiver as distinct but
+equivalent sources for the same topic. Topic resolution establishes a receiver for one
+such source. If one of the gateways fails, upon an EOS for the affected transport
+sessions, the receiver joins an equivalent transport session and continues to receive
+data from the remaining proxy sources, subject to EOS timeouts.</p>
+</div>
+
+<div class="SECTION">
+<h4 class="SECTION"><a id="UNICAST-CONTROL-SESSION"
+name="UNICAST-CONTROL-SESSION">2.10.1.3. Unicast Control Session
+Re-establishment</a></h4>
+
+<p>While a receiver can participate in multiple channels for the same topic, this is not
+possible with unicast control sessions. For example, even if two adjacent gateways both
+proxy the same store via different paths, a receiver can only connect to one proxy at a
+time. This means that, regardless of whether you chose replication or redundancy, the
+loss of one adjacent gateway may cause a brief pause while unicast control sessions
+re-establish.</p>
+</div>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="MONITORING" name="MONITORING">2.11. Gateway
+Monitoring</a></h2>
+
+<p>The UM Gateway provides the following monitoring facilities.</p>
+
+<ul>
+<li>
+<p>Gateway-specific statistics which include the number of topics and topic patterns in
+the topic map, along with activity statistics about all the portals configured for the
+gateway. See <a href="../Gateway/web-monitor.html" target="doccontent">UM Gateway Web
+Monitor</a>.</p>
+</li>
+
+<li>
+<p>Standard <b class="APPLICATION">UM</b> transport statistics for the transport sessions
+the gateway has joined. See <a href="../Gateway/use-cases.html#TWO-LANS"
+target="doccontent">Spanning Two LANs</a> for an example.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="index.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="runningthegateway.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">The UM Gateway</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Running the UM Gateway</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

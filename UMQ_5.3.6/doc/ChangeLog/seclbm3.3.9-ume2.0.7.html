@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Release LBM 3.3.9 / UME 2.0.7 - December 2008</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="UMS / UMP / UMQ Change Log" href="index.html" />
+<link rel="PREVIOUS" title="Release LBM 3.4 / UME 2.1 - February 2009"
+href="seclbm3.4-ume2.1.html" />
+<link rel="NEXT" title="Release LBM 3.3.8 / UME 2.0.6 - October 2008"
+href="seclbm3.3.8-ume2.0.6.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript" src="../Search/highlight.js"></script>
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center">UMS / UMP / UMQ Change Log: <span
+class="TRADEMARK">Informatica</span>&reg; Corporation</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="seclbm3.4-ume2.1.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom"></td>
+<td width="10%" align="right" valign="bottom"><a href="seclbm3.3.8-ume2.0.6.html"
+accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="SECLBM3.3.9-UME2.0.7" name="SECLBM3.3.9-UME2.0.7">52. Release
+LBM 3.3.9 / UME 2.0.7 - December 2008</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="LBM3.3.9" name="LBM3.3.9">52.1. LBM 3.3.9</a></h2>
+
+<ul>
+<li>
+<p><b class="APPLICATION">Known Issue:</b> When using Event Queues with the Java API on
+Mac OS X kernel 9.4, core dumps have occurred. Mac OS X kernel versions prior to 9.4 have
+not produced this behavior. 29West is investigating this issue.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">Feature Resumption:</b> String caching for the Java and .NET
+APIs has been re-enabled. Rather than creating a new string for the topic and source when
+each message is delivered, <b class="APPLICATION">LBM</b> uses a reference to a cached
+string which improves performance. In addition, the previously disabled per-source client
+object has been reintroduced. The object returned from the per-source creation callback
+is now available in the receiver and per-source deletion callbacks.</p>
+</li>
+
+<li>
+<p>Added support in Java and .NET for changing the callbacks associated with an <tt
+class="LITERAL">LBMRecieverAttributes</tt> object during the
+WildcardReceiverCreateCallback.</p>
+</li>
+
+<li>
+<p>Added performance enhancements to Self Describing Messaging (SDM) which included a new
+attribute option, <tt class="LITERAL">integer_fieldname</tt> which allows you to
+substitute a non-negative integer for a field name, which enhances field array indexing.
+In addition, added a new function, <tt class="LITERAL">lbmsdm_msg_parse_reuse()</tt>,
+which allows parsing a message into an existing <tt class="LITERAL">lbmsdm_msg_t</tt>
+structure. SDM clears the message before parsing, removing all existing fields from the
+message. See the API documentation for more information ( <a href="../API/index.html"
+target="doccontent">C API</a>, <a href="../JavaAPI/html/index.html" target="doccontent">Java API</a>
+or <a href="../DotNetAPI/doc/Index.html" target="doccontent">.NET API</a>).</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now only supports 64-bit systems on MAC OS X. <b
+class="APPLICATION">LBM</b> no longer supports 32-bit MAC OS X systems.</p>
+</li>
+
+<li>
+<p>Added a log warning for <span class="TRADEMARK">Microsoft</span>&reg; <span
+class="TRADEMARK">Windows</span>&reg; users to advise on possible loss from the
+combination of high settings for the rate limiter and low source side buffer settings
+used with LBT-RM or LBT-RU.</p>
+</li>
+
+<li>
+<p>Introduced code to properly avoid allowing callback objects from being garbage
+collected prematurely. New code also aids in the implementation of string caching. For
+Java and .NET only.</p>
+</li>
+
+<li>
+<p>Fixed a case where an internal reference count could become negative when using
+wildcard receivers. This resulted in the wrong receiver attributes being used in cases
+where multiple receivers for the same topic were being used by a wildcard receiver whose
+pattern matched the topic in question.</p>
+</li>
+
+<li>
+<p>Fixed a problem that caused the <tt
+class="LITERAL">WildcardReceiverCreateCallback</tt> to not be called in instances where a
+previous receiver for that topic already existed.</p>
+</li>
+
+<li>
+<p>Added a <tt class="LITERAL">WildcardReceiverDeleteCallback</tt>. This callback is
+symmetric with the <tt class="LITERAL">WildcardReceiverCreateCallback</tt>, and provides
+notification when one of the underlying receivers created by a wildcard receiver is
+deleted.</p>
+</li>
+
+<li>
+<p>Resolved an issue in .NET with a <tt class="LITERAL">NullReferenceException</tt> that
+was generated when statistics were received by an <tt
+class="LITERAL">LBMMonitorReceiver</tt>. <tt class="LITERAL">LBMStatistics</tt> now
+correctly handles the timestamp received from <tt class="LITERAL">lbmmon</tt>.</p>
+</li>
+
+<li>
+<p><b class="APPLICATION">LBM</b> now prints a warning message every time a source or
+receiver joins a transport session that has settings for certain attributes different
+from what the source or receiver has configured. As always, the source or receiver must
+use the existing transport session's attributes.</p>
+</li>
+
+<li>
+<p>Resolved an issue with calling <tt class="LITERAL">lbm_rcv_topic_lookup</tt> without a
+corresponding <tt class="LITERAL">lbm_rcv_create</tt> that caused a double free upon
+context deletion. <b class="APPLICATION">LBM</b> now correctly disposes of the topic upon
+context deletion.</p>
+</li>
+
+<li>
+<p>Fixed a deadlock issue on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span> caused by creating attribute objects on multiple threads
+simultaneously.</p>
+</li>
+
+<li>
+<p>Corrected a utility queue removal function (<tt
+class="LITERAL">utl_queue_remove_timedwait()</tt>). The function held the queue lock too
+long, causing one thread to monopolize the lock, preventing another thread from accessing
+the queue. This problem only occurred on <span class="TRADEMARK">Microsoft</span> <span
+class="TRADEMARK">Windows</span>.</p>
+</li>
+
+<li>
+<p>Reverted the <tt class="LITERAL">LBMTimer.cancel()</tt> method in the Java API to not
+take arguments. This corrects an inadvertent change in <b class="APPLICATION">LBM</b>
+3.3.7 that required developers to change their applications to call <tt
+class="LITERAL">LBMTimer.cancel(false)</tt> instead of <tt
+class="LITERAL">LBMTimer.cancel()</tt>.</p>
+</li>
+
+<li>
+<p>Fixed an issue when using the <span class="emphasis"><i
+class="EMPHASIS">devpoll</i></span> <tt class="LITERAL">fd_management_type</tt> on
+Solaris which could cause a fatal assertion if the application was interrupted with a
+signal.</p>
+</li>
+</ul>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="UME2.0.7" name="UME2.0.7">52.2. UME 2.0.7</a></h2>
+
+<ul>
+<li>
+<p>Fixed an issue regarding an unexpected interaction between the
+WildcardReceiverCreateCallback and the recovery sequence number callback that resulted in
+a segfault in Java. This error occurred when using <b class="APPLICATION">UME</b> and
+registering for the WildcardReceiverCreateCallback.</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="seclbm3.4-ume2.1.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="seclbm3.3.8-ume2.0.6.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Release LBM 3.4 / UME 2.1 - February 2009</td>
+<td width="34%" align="center" valign="top">&nbsp;</td>
+<td width="33%" align="right" valign="top">Release LBM 3.3.8 / UME 2.0.6 - October
+2008</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+<script type="text/javascript">highlight();</script>
+</html>
+

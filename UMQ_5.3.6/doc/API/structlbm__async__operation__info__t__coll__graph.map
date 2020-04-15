@@ -1,0 +1,11 @@
+<area shape="rect" href="$structlbm__rcv__umq__queue__msg__list__info__t.html" title="Struct containing an array of UMQ messages listed via lbm_rcv_umq_queue_msg_list..." alt="" coords="44,277,287,304">
+<area shape="rect" href="$structlbm__umq__queue__msg__status__t.html" title="Struct containing extended asynchronous operation status information about a single..." alt="" coords="220,187,428,213">
+<area shape="rect" href="$structlbm__rcv__umq__queue__msg__retrieve__info__t.html" title="Struct containing an array of UMQ messages retrieved via lbm_rcv_umq_queue_msg_retrieve..." alt="" coords="311,277,580,304">
+<area shape="rect" href="$structlbm__msg__t__stct.html" title="Structure that stores information about a received message." alt="" coords="236,96,351,123">
+<area shape="rect" href="$structlbm__msg__channel__info__t__stct.html" title="Structure that represents UMS Spectrum channel information." alt="" coords="5,5,203,32">
+<area shape="rect" href="$structlbm__timeval__t__stct.html" title="Structure that holds seconds and microseconds since midnight, Jan 1, 1970 UTC." alt="" coords="227,5,360,32">
+<area shape="rect" href="$unionlbm__hf__sequence__number__t__stct.html" title="Structure to hold a hot failover sequence number." alt="" coords="384,5,603,32">
+<area shape="rect" href="$structlbm__umq__msgid__t__stct.html" title="Structure that holds information for UMQ messages that allows the message to be identified..." alt="" coords="375,96,535,123">
+<area shape="rect" href="$structlbm__ctx__umq__queue__topic__list__info__t.html" title="Struct containing an array of queue topics retrieved via lbm_umq_queue_topic_list..." alt="" coords="604,277,849,304">
+<area shape="rect" href="$structlbm__umq__queue__topic__status__t.html" title="Struct containing extended asynchronous operation status information about a single..." alt="" coords="621,187,832,213">
+<area shape="rect" href="$structlbm__umq__queue__topic__t__stct.html" title="Structure that holds queue topic information and can be used as a handle to a queue..." alt="" coords="629,96,824,123">

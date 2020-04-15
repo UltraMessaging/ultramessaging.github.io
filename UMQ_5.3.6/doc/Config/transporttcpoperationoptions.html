@@ -1,0 +1,805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Transport TCP Operation Options</title>
+<meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.79" />
+<link rel="HOME" title="Ultra Messaging Configuration Guide" href="index.html" />
+<link rel="UP" title="Reference" href="reference.html" />
+<link rel="PREVIOUS" title="Transport TCP Network Options"
+href="transporttcpnetworkoptions.html" />
+<link rel="NEXT" title="Transport LBT-RM Network Options"
+href="transportlbt-rmnetworkoptions.html" />
+<link rel="STYLESHEET" type="text/css" href="docbook.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body class="SECTION" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+<div class="NAVHEADER">
+<table summary="Header navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<th colspan="3" align="center"><b class="APPLICATION"><span class="TRADEMARK">Ultra
+Messaging</span>&reg;</b> Configuration Guide</th>
+</tr>
+
+<tr>
+<td width="10%" align="left" valign="bottom"><a href="transporttcpnetworkoptions.html"
+accesskey="P">Prev</a></td>
+<td width="80%" align="center" valign="bottom">Chapter 4. Reference</td>
+<td width="10%" align="right" valign="bottom"><a
+href="transportlbt-rmnetworkoptions.html" accesskey="N">Next</a></td>
+</tr>
+</table>
+
+<hr align="LEFT" width="100%" />
+</div>
+
+<div class="SECTION">
+<h1 class="SECTION"><a id="TRANSPORTTCPOPERATIONOPTIONS"
+name="TRANSPORTTCPOPERATIONOPTIONS">4.7. Transport TCP Operation Options</a></h1>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTSESSIONMAXIMUMBUFFER"
+name="SOURCETRANSPORTSESSIONMAXIMUMBUFFER">4.7.1. <span class="lbm-option-name"><span
+class="PHRASE">transport_session_maximum_buffer (source)</span></span></a></h2>
+
+<p>Value used to control the maximum amount of data buffered in <b
+class="APPLICATION">UM</b> for the transport session used for the topic. For the normal
+multiple receiver behavior, this value represents the total buffered by all TCP
+receivers. For the bounded_latency and source_paced multiple receiver behavior, this
+value represents the individual receiver buffered amount. This option affects the
+transport session underlying the source rather than the source itself. The transport
+session uses the value from the first source created on the session and ignores
+subsequent sources. Refer to <a href="../Design/lbm-objects.html#SOURCE-OBJECT"
+target="_top">Source Configuration and Transport Sessions</a> for additional
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6305" name="AEN6305"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">65536</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTTCPACTIVITYMETHOD"
+name="RECEIVERTRANSPORTTCPACTIVITYMETHOD">4.7.2. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_activity_method (receiver)</span></span></a></h2>
+
+<p>For TCP sessions only. The type of timeout method to use for TCP receivers.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6342" name="AEN6342"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.3.8/UME 2.0.6.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6365" name="AEN6365"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">timer</code></td>
+<td><code class="CONSTANT">LBM_RCV_TOPIC_ATTR_TCP_ACTIVITY_TIMEOUT_TIMER</code></td>
+<td>Timer method that requires new TCP session data to be sent to determine if the
+connection is alive. <span class="bold"><b class="EMPHASIS">Default for all.</b></span>
+</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">SO_KEEPALIVE</code></td>
+<td><code
+class="CONSTANT">LBM_RCV_TOPIC_ATTR_TCP_ACTIVITY_TIMEOUT_SO_KEEPALIVE</code></td>
+<td>Set SO_KEEPALIVE on the TCP connection which uses the TCP keepalive support in the
+operating system to determine if the connection is alive. When you use the SO_KEEPALIVE
+method, <b class="APPLICATION">UM</b> uses transport_tcp_activity_timeout value to set
+the idle and probe times for SO_KEEPALIVE. The idle time is 90% of the timeout value at
+most. The probe time is 10% with 10 seconds as the minimum.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="RECEIVERTRANSPORTTCPACTIVITYTIMEOUT"
+name="RECEIVERTRANSPORTTCPACTIVITYTIMEOUT">4.7.3. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_activity_timeout (receiver)</span></span></a></h2>
+
+<p>For TCP sessions only. The maximum time that a TCP session may be quiescent before it
+is deleted and an EOS event is delivered for all topics using this transport session. A
+value greater than zero turns the timer on.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6402" name="AEN6402"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">receiver</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>milliseconds</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPCOALESCETHRESHOLD"
+name="SOURCETRANSPORTTCPCOALESCETHRESHOLD">4.7.4. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_coalesce_threshold (source)</span></span></a></h2>
+
+<p>The threshold of the maximum number of individual messages that are copied into a
+single buffer before being sent to the TCP source internals. When used with small
+messages, this allows TCP to use less memory at the expense of an additional copy
+operation of the data before being sent. The default values are also the maximum
+allowable values.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6439" name="AEN6439"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of individual messages</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">1024 for Linux,</span></span>
+<span class="lbm-option-default"><span class="PHRASE"><span
+class="TRADEMARK">Microsoft</span>&reg;</span></span><span
+class="lbm-option-default"><span class="PHRASE"></span></span><span
+class="lbm-option-default"><span class="PHRASE"><span
+class="TRADEMARK">Windows</span>&reg;</span></span><span class="lbm-option-default"><span
+class="PHRASE">; 16 for Solaris, AIX</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 3.6/UME 2.3.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTTCPDATAGRAMMAXSIZE"
+name="CONTEXTTRANSPORTTCPDATAGRAMMAXSIZE">4.7.5. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_datagram_max_size (context)</span></span></a></h2>
+
+<p>The maximum datagram size that can be generated for a TCP transport session. The
+default value is 65535, the minimum is 500 bytes, and the maximum is 65535.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6486" name="AEN6486"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_uint_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">65535</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Version:</i></span></td>
+<td>This option was implemented in LBM 4.1/UME 3.1/UMQ 1.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPEXCLUSIVEADDR"
+name="SOURCETRANSPORTTCPEXCLUSIVEADDR">4.7.6. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_exclusiveaddr (source)</span></span></a></h2>
+
+<p>Applicable only to Windows. Indicate whether the TCP session should set <code
+class="CONSTANT">SO_EXCLUSIVEADDRUSE</code> or not before it binds. The default setting
+in Windows allows multiple binds to the same port. By default, <b
+class="APPLICATION">UM</b> will set <code class="CONSTANT">SO_EXCLUSIVEADDRUSE</code> to
+minimize port sharing. Refer to Microsoft's web site for more information on <code
+class="CONSTANT">SO_EXCLUSIVEADDRUSE</code>.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6531" name="AEN6531"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6550" name="AEN6550"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Set <code class="CONSTANT">SO_EXCLUSIVEADDRUSE</code>. <span class="bold"><b
+class="EMPHASIS">Default for Windows.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Do not set <code class="CONSTANT">SO_EXCLUSIVEADDRUSE</code>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPLISTENBACKLOG"
+name="SOURCETRANSPORTTCPLISTENBACKLOG">4.7.7. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_listen_backlog (source)</span></span></a></h2>
+
+<p>The backlog used in the TCP <code class="FUNCTION">listen()</code> call to set the
+queue length for incoming connections.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6578" name="AEN6578"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>number of queued connections</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">5</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPMULTIPLERECEIVERBEHAVIOR"
+name="SOURCETRANSPORTTCPMULTIPLERECEIVERBEHAVIOR">4.7.8. <span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_multiple_receiver_behavior
+(source)</span></span></a></h2>
+
+<p>The flow control behavior desired when multiple TCP clients are receiving for a TCP
+session. If an application is only allowed to send as fast as all receivers can consume
+data, markedly slower receivers will lose data (have unrecoverably lost <b
+class="APPLICATION">UM</b> messages) if they can not keep up with the other faster
+receivers for the TCP session. Note that at high rates and with receivers that can
+consume data at fairly similar rates, all receivers may experience some loss at times.
+This option affects the transport session underlying the source rather than the source
+itself. The transport session uses the value from the first source created on the session
+and ignores subsequent sources. Refer to <a
+href="../Design/lbm-objects.html#SOURCE-OBJECT" target="_top">Source Configuration and
+Transport Sessions</a> for additional information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6617" name="AEN6617"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6636" name="AEN6636"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">normal</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TCP_MULTI_RECV_NORMAL</code></td>
+<td>The application sends as fast as the slowest receiver consumes data. This slows down
+all receivers on that TCP session. <span class="bold"><b class="EMPHASIS">Default for
+all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">bounded_latency</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TCP_MULTI_RECV_BOUNDED_LATENCY</code> </td>
+<td>The application sends as fast as the fastest receiver can consume data even if recent
+data headed for slower receivers must be discarded.</td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">source_paced</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TCP_MULTI_RECV_SOURCE_PACED</code></td>
+<td>The application sends as fast as it can even if recent data headed for any or all
+receivers must be discarded.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPMULTIPLERECEIVERSENDORDER"
+name="SOURCETRANSPORTTCPMULTIPLERECEIVERSENDORDER">4.7.9. <span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_multiple_receiver_send_order
+(source)</span></span></a></h2>
+
+<p>In the case of multiple receivers, this option determines whether datagrams are sent
+to each receiver in the established order of receivers, or if receivers are selected in
+random order for each datagram transmission.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6675" name="AEN6675"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_src_topic_attr_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6694" name="AEN6694"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="3*" title="COL1" />
+<col width="8*" title="COL2" />
+<col width="288" title="COL3" />
+<thead>
+<tr>
+<th>String value</th>
+<th>Integer value</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td><code class="CONSTANT">serial</code></td>
+<td><code
+class="CONSTANT">LBM_SRC_TOPIC_ATTR_TCP_MULTI_RECV_SEND_ORDER_SERIAL</code></td>
+<td>Select receivers to receive a datagram based on current established order. <span
+class="bold"><b class="EMPHASIS">Default for all.</b></span> </td>
+</tr>
+
+<tr>
+<td><code class="CONSTANT">random</code></td>
+<td><code class="CONSTANT">LBM_SRC_TOPIC_ATTR_TCP_MULTI_RECV_SEND_ORDER_RANDOM</code>
+</td>
+<td>For each datagram sent, select receivers in random order, for the sake of "fairness".
+Note that this option adds a small amount of CPU overhead.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPNODELAY"
+name="SOURCETRANSPORTTCPNODELAY">4.7.10. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_nodelay (source)</span></span></a></h2>
+
+<p>Whether the TCP sockets used for the transport session should set <code
+class="CONSTANT">TCP_NODELAY</code> or not. (Setting TCP_NODELAY disables Nagle's
+algorithm.)</p>
+
+<div class="INFORMALTABLE"><a id="AEN6731" name="AEN6731"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6750" name="AEN6750"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>TCP transport sockets should set <code class="CONSTANT">TCP_NODELAY</code> (disable
+Nagle). <span class="bold"><b class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>TCP transport sockets should not set <code class="CONSTANT">TCP_NODELAY</code> (leave
+Nagle enabled).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="CONTEXTTRANSPORTTCPRECEIVERSOCKETBUFFER"
+name="CONTEXTTRANSPORTTCPRECEIVERSOCKETBUFFER">4.7.11. <span
+class="lbm-option-name"><span class="PHRASE">transport_tcp_receiver_socket_buffer
+(context)</span></span></a></h2>
+
+<p>Value used to set <code class="CONSTANT">SO_RCVBUF</code> value of the TCP receivers
+for topics. In some cases the OS will not allow all of this value to be used. A value of
+0 instructs <b class="APPLICATION">UM</b> to use the default OS values. See the section
+on <a href="reference.html#SOCKETBUFFERSIZE">socket buffer sizes</a> for
+platform-dependent information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6789" name="AEN6789"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">context</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS
+default)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPREUSEADDR"
+name="SOURCETRANSPORTTCPREUSEADDR">4.7.12. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_reuseaddr (source)</span></span></a></h2>
+
+<p>Whether the TCP session should set <code class="CONSTANT">SO_REUSEADDR</code> or not
+before it binds. WARNING: This option is not recommended for <span
+class="TRADEMARK">Microsoft</span> <span class="TRADEMARK">Windows</span> users because
+the <code class="CONSTANT">SO_REUSEADDR</code> socket option in Windows allows a socket
+to forcibly bind to a port in use by another socket. Multiple sockets using the same port
+results in indeterminate behavior.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6830" name="AEN6830"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">int</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="INFORMALTABLE"><a id="AEN6849" name="AEN6849"></a>
+<table border="1" frame="border" class="CALSTABLE">
+<col width="1*" align="CENTER" />
+<col width="288" />
+<thead>
+<tr>
+<th>Value</th>
+<th align="CENTER">Description</th>
+</tr>
+</thead>
+
+<tbody valign="TOP">
+<tr>
+<td align="CENTER">1</td>
+<td>Set <code class="CONSTANT">SO_REUSEADDR</code>.</td>
+</tr>
+
+<tr>
+<td align="CENTER">0</td>
+<td>Do not set <code class="CONSTANT">SO_REUSEADDR</code>. <span class="bold"><b
+class="EMPHASIS">Default for all.</b></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="SECTION">
+<h2 class="SECTION"><a id="SOURCETRANSPORTTCPSENDERSOCKETBUFFER"
+name="SOURCETRANSPORTTCPSENDERSOCKETBUFFER">4.7.13. <span class="lbm-option-name"><span
+class="PHRASE">transport_tcp_sender_socket_buffer (source)</span></span></a></h2>
+
+<p>Value used to set the <code class="CONSTANT">SO_SNDBUF</code> value of the TCP
+session. In some cases the OS will not allow all of this value to be used. A value of 0
+instructs <b class="APPLICATION">UM</b> to use the OS defaults. See the section on <a
+href="reference.html#SOCKETBUFFERSIZE">socket buffer sizes</a> for platform-dependent
+information.</p>
+
+<div class="INFORMALTABLE"><a id="AEN6888" name="AEN6888"></a>
+<table border="0" frame="void" class="CALSTABLE">
+<col width="96" />
+<col width="384" />
+<tbody valign="TOP">
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Scope:</i></span></td>
+<td><span class="lbm-option-scope"><span class="PHRASE">source</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Type:</i></span></td>
+<td><span class="TYPE">lbm_ulong_t</span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Units:</i></span></td>
+<td>bytes</td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">Default value:</i></span></td>
+<td><span class="lbm-option-default"><span class="PHRASE">0 (use OS
+default)</span></span></td>
+</tr>
+
+<tr>
+<td><span class="emphasis"><i class="EMPHASIS">When to Set:</i></span></td>
+<td>Can only be set during object initialization.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div class="NAVFOOTER">
+<hr align="LEFT" width="100%" />
+<table summary="Footer navigation table" width="100%" border="0" cellpadding="0"
+cellspacing="0">
+<tr>
+<td width="33%" align="left" valign="top"><a href="transporttcpnetworkoptions.html"
+accesskey="P">Prev</a></td>
+<td width="34%" align="center" valign="top"><a href="index.html"
+accesskey="H">Home</a></td>
+<td width="33%" align="right" valign="top"><a href="transportlbt-rmnetworkoptions.html"
+accesskey="N">Next</a></td>
+</tr>
+
+<tr>
+<td width="33%" align="left" valign="top">Transport TCP Network Options</td>
+<td width="34%" align="center" valign="top"><a href="reference.html"
+accesskey="U">Up</a></td>
+<td width="33%" align="right" valign="top">Transport LBT-RM Network Options</td>
+</tr>
+</table>
+</div>
+
+<p align="center">Copyright (c) 2004 - 2014 Informatica Corporation. All rights
+reserved.</p>
+</body>
+</html>
+
