@@ -43,10 +43,13 @@ According to the original design of UM Persistence,
 a restarting publisher is responsible for any messages
 that were in flight when the previous instance exited.
 In most cases, all messages sent will be successfully received
-by subscribers and Stores.
-However, packet loss is always a possibility, and if the
-previous instance of the publisher exits, UM cannot retransmit
-those lost packets.
+by subscribers and Stores,
+and when the publisher restarts,
+it can simply resume sending new messages.
+However, packet loss is always a possibility.
+If the Stores experience packet loss at the
+same time that the publisher restarts,
+UM cannot retransmit those lost packets.
 </p>
 
 <p>
