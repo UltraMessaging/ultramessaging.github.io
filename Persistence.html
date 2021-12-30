@@ -1,0 +1,292 @@
+<html><head><title>Ultra Messaging Persistence Best Practices</title>
+<link href="doxygen_manual.css" rel="stylesheet" type="text/css" />
+</head>
+<body bgcolor="#ffffff">
+<div id="doc-content">
+<div class="contents">
+<div class="textblock">
+<img src="infa_logo.png" width="400" height="138" alt="Informatica"/><br/><br/>
+<center class="mytitle">Ultra Messaging Persistence Best Practices</center>
+<br/><br/>
+
+<p><b>&copy; Copyright Informatica LLC 2004-2021.</b></p>
+
+<br><hr></br>
+
+<h3>Introduction</h3>
+
+<p>
+This is the start of a Best Practices document for the
+Ultra Messaging Persistence product.
+</p>
+
+<ul>
+<li><a href="#publisher_restart">Publisher Restart</a>.
+
+<li><a href="#subscriber_reregister">Subscriber Re-register</a>.
+</ul>
+
+
+<a id="publisher_restart"></a>
+<h3>Publisher Restart</h3>
+
+<p>
+By publisher restart, we mean that a publishing application
+exits (perhaps abnormally, as with a crash) and then restarts
+with the same session ID to continue where
+the previous instance left off.
+Subscribers should see a continuous series of messages.
+</p>
+
+<p>
+According to the original design of UM Persistence,
+a restarting publisher is responsible for any messages
+that were in flight when the previous instance exited.
+In most cases, all messages sent will be successfully received
+by subscribers and Stores.
+However, packet loss is always a possibility, and if the
+previous instance of the publisher exits, UM cannot retransmit
+those lost packets.
+</p>
+
+<p>
+Even without packet loss, it is possible for a publisher to
+crash after it has decided to send the message but
+before the UM send function can get the packet on the
+network.
+I.e., a message should be thought of as "in-flight" even before UM's send
+function is invoked.
+Once a publisher has decided to send a message, it is in flight.
+</p>
+
+<h4>Loss at Stores</h4>
+
+<p>
+This case assumes that one or more of the final messages sent by the
+pre-crash publisher were not successfully received by any Store.
+In the worst case, an entire flight size worth of messages might
+have been lost.
+</p>
+
+<p>
+When the publisher restarts and registers with the Stores,
+the Stores will tell the publisher which message sequence
+number to start at (see
+<a href="https://ultramessaging.github.io/currdoc/doc/Config/grpultramessagingpersistence.html#umeconsensussequencenumberbehaviorsource">ume_consensus_sequence_number_behavior (source)</a>).
+According to the original design of UM Persistence,
+the publisher has a responsibility to detect when that sequence number has
+already been sent, and if so, to re-send the previously-sent messages starting
+at that sequence number.
+In the worst case, an entire flight size worth of messages might need to be
+re-sent.
+(But see <a href="#publisher_cant_resend">Publisher Can't Resend</a>.)
+</p>
+
+<p>
+For example, suppose a publisher sends 50 messages, with sequence numbers
+0-49, and then crashes.
+Let's further suppose that the last ten messages (40-49) were lost to all
+Stores, but the subscribers successfully received them.
+In this case, when the publisher restarts and re-registers,
+it will be told to start at sequence number 40.
+The publisher should re-send the same ten messages it previously sent for
+sequence numbers 40-49.
+Then the publisher can start sending new messages.
+</p>
+
+<p>
+See <a href="#publisher_design">Publisher Design</a> for suggestions on
+how to satisfy this publisher requirement.
+</p>
+
+<p>
+When this case happens, subscribers that successfully received the
+messages that the Stores lost can see one of two behaviors
+while the publisher re-sends the previously sent messages:
+<ol>
+<li>
+For UM versions prior to 6.13, the re-sent messages are <b>not</b> delivered
+to the subscribing application. They are dropped by the UM receiver as
+duplicates.
+</li>
+<li>
+For UM versions 6.13 and beyond, the re-sent messages <b>are</b> delivered
+to the subscribing application.
+The subscriber must be able to detect that they were previously processed,
+and act accordingly.
+See <a href="receiver_duplicates">Receiver Duplicates</a>.
+</li>
+</ol>
+</p>
+
+<a id="publisher_cant_resend"></a>
+<h4>Publisher Can't Resend</h4>
+
+<p>
+Over the years, Informatica has come to know that many of our users have
+not designed their publishers to be able to re-send previously-sent messages.
+When their publishers re-register,
+they start sending new messages without regard to the starting
+sequence number.
+</p>
+
+<p>
+Most of the time, this publisher design does not have any problem.
+It is rare for packet loss to happen at the exact time that a publisher
+crashes.
+However, it has occasionally happened,
+and depending on the version of UM,
+can lead to temporary subscriber deafness to those new messages.
+</p>
+
+<p>
+For example, suppose a publisher sends 50 messages,
+with sequence numbers 0-49, and then crashes.
+Let's further suppose that the last ten messages
+(40-49) were lost to all Stores,
+but the subscribers successfully received them.
+In this case, when the publisher restarts and re-registers,
+it will be told to start at sequence number 40.
+The publisher is <i>supposed</i> to re-send the same ten
+messages it previously sent for sequence numbers 40-49.
+But in this scenario, the publisher is not designed for that,
+so it sends new messages for sequence numbers 40-49.
+Note that the message sequence numbers 40-49 no longer
+represent single, unique messages.
+</p>
+
+<p>
+For subscribers running UM versions prior to 6.13,
+those ten new messages with old sequence numbers will
+be dropped by the UM receiver.
+That is, the subscribing application will be "deaf" to them.
+This is not desired since those messages are new.
+</p>
+
+<p>
+For UM versions 6.13 and beyond,
+the new messages with old sequence numbers
+<b>are</b> delivered to the subscribing application.
+The subscriber must be able to detect if they were previously processed,
+and act accordingly.
+See <a href="receiver_duplicates">Receiver Duplicates</a>.
+</p>
+
+<p>
+Although the 6.13 change works around this temporary deafness problem,
+there are other failure cases that result in bad behavior.
+For example,
+if a subscriber has been down during this period and then
+comes back up and requests recovery,
+it can only get messages that are on the Stores.
+It will recover 40-49 as the new messages,
+with the pre-crash messages permanently lost.
+There will be no indication that it missed the last ten messages
+from the publisher's pre-crash execution.
+</p>
+
+<p>
+Informatica recommends designing publishing applications to re-send
+previously-sent messages if requested to do so by the Store.
+See <a href="#publisher_design">Publisher Design</a> for suggestions on
+how to satisfy this publisher requirement.
+</p>
+
+<a id="subscriber_reregister"></a>
+<h3>Subscriber Re-register</h3>
+
+<p>
+A registered subscriber sometimes has to register with the Stores again.
+Perhaps this is because the publisher restarted.
+Or maybe the Stores restarted.
+Or the subscriber application itself had to restart
+(perhaps abnormally, as with a crash).
+</p>
+
+<p>
+According to the original design of UM Persistence,
+a re-registering subscriber is responsible for detecting
+"duplicate messages".
+That is, messages that it had already received and processed from
+before the re-registration.
+</p>
+
+<p>
+In typical use,
+the Store remembers the last message the subscriber processed.
+It keeps track of this by the "consumption acknowledgments" that
+the subscribing application sends.
+When a subscriber re-registers with the Store,
+the Store will (by default) deliver all messages after the last
+successfully-acknowledged message.
+</p>
+
+<p>
+However,
+the Stores cannot have perfect knowledge of a subscriber's state.
+For example,
+a subscriber might have just processed message 49 and is in the process
+of sending a consumption acknowledgment to the Store,
+when the subscriber application suddenly crashes.
+When the subscriber restarts and re-registers,
+message 49 will (by default) be re-delivered to the application.
+The subscriber has a responsibility to detect this duplicate message,
+and act accordingly.
+</p>
+
+<p>
+For high-throughput applications,
+the subscriber is typically designed to batch many consumption
+acknowledgments together.
+This increases the chances that a crashed subscriber will
+get multiple duplicates.
+</p>
+
+<p>
+See <a href="#subscriber_design">Subscriber Design</a> for suggestions on
+how to satisfy this subscriber requirement.
+</p>
+
+<p>
+This requirement becomes more complicated if the publishing
+application restarts and is unable to re-send previously-sent messages
+(see <a href="#publisher_cant_resend">Publisher Can't Resend</a>).
+In that case, a message sequence number might not represent a single
+unique application message.
+The subscriber might use message content to detect duplicates.
+</p>
+
+<br><hr><br>
+
+<a id="notices"></a>
+<h3>Notices</h3>
+<p>This software and documentation are provided only under a separate license
+agreement containing restrictions on use and disclosure.
+No part of this document may be reproduced or transmitted in any form,
+by any means (electronic, photocopying, recording or otherwise)
+without prior consent of Informatica LLC.</p>
+
+<p>A current list of Informatica trademarks is available on the web at
+<a href="https://www.informatica.com/trademarks.html">https://www.informatica.com/trademarks.html</a></p>
+
+<p>Portions of this software and/or documentation are subject to copyright
+held by third parties.
+Required third-party notices are included with the product.</p>
+
+<p>This software is protected by patents as detailed at<br>
+<a href="https://www.informatica.com/legal/patents.html">https://www.informatica.com/legal/patents.html</a></p>
+
+<p>The information in this documentation is subject to change without notice.
+If you find any problems in this documentation, please report them to us in
+writing at Informatica LLC 2100 Seaport Blvd. Redwood City, CA 94063.</p>
+
+<p>Informatica products are warranted according to the terms and conditions
+of the agreements under which they are provided.
+<br>INFORMATICA LLC PROVIDES THE INFORMATION IN THIS DOCUMENT "AS IS" WITHOUT
+WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WITHOUT ANY WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND ANY WARRANTY OR
+CONDITION OF NON-INFRINGEMENT.</p>
+</body>
+</html>
+</div></div></div>
+</body></html>
