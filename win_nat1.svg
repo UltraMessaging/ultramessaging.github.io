@@ -9,9 +9,9 @@
   <line x1="50" y1="300" x2="750" y2="300" stroke="#4caf50" stroke-width="10"/>
   <text x="400" y="330" font-family="Arial, sans-serif" font-size="16" fill="#333" text-anchor="middle">External 192 Network</text>
 
-  <!-- Windows Host -->
+  <!-- Windows Process -->
   <rect x="100" y="150" width="150" height="80" fill="#0078d4" rx="10"/>
-  <text x="175" y="195" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Windows Host</text>
+  <text x="175" y="195" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Windows Process</text>
   <line x1="175" y1="150" x2="175" y2="100" stroke="#666" stroke-width="3"/>
   <text x="185" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">172.x.x.1</text>
   <line x1="175" y1="230" x2="175" y2="300" stroke="#666" stroke-width="3"/>
@@ -31,7 +31,7 @@
   <line x1="625" y1="150" x2="625" y2="100" stroke="#666" stroke-width="3"/>
   <text x="635" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">172.x.x.2</text>
 
-  <!-- Dashed line enclosing Windows Host and NAT -->
+  <!-- Dashed line enclosing Windows Process and NAT -->
   <rect x="85" y="125" width="405" height="130" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
 </svg>
 
