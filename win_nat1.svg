@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#f0f0f0"/>
+  
+  <!-- Internal 172 Network -->
+  <line x1="50" y1="100" x2="750" y2="100" stroke="#0078d4" stroke-width="10"/>
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="16" fill="#333" text-anchor="middle">Internal 172 Network</text>
+
+  <!-- External 192 Network -->
+  <line x1="50" y1="300" x2="750" y2="300" stroke="#4caf50" stroke-width="10"/>
+  <text x="400" y="330" font-family="Arial, sans-serif" font-size="16" fill="#333" text-anchor="middle">External 192 Network</text>
+
+  <!-- Windows Host -->
+  <rect x="100" y="150" width="150" height="80" fill="#0078d4" rx="10"/>
+  <text x="175" y="195" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Windows Host</text>
+  <line x1="175" y1="150" x2="175" y2="100" stroke="#666" stroke-width="3"/>
+  <text x="185" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">172.x.x.1</text>
+  <line x1="175" y1="230" x2="175" y2="300" stroke="#666" stroke-width="3"/>
+  <text x="185" y="250" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">192.168.x.5</text>
+
+  <!-- NAT -->
+  <rect x="325" y="150" width="150" height="80" fill="#ff9800" rx="10"/>
+  <text x="400" y="195" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">NAT</text>
+  <line x1="400" y1="150" x2="400" y2="100" stroke="#666" stroke-width="3"/>
+  <text x="410" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">172.x.x.1</text>
+  <line x1="400" y1="230" x2="400" y2="300" stroke="#666" stroke-width="3"/>
+  <text x="410" y="250" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">192.168.x.5</text>
+
+  <!-- WSL2 LINUX -->
+  <rect x="550" y="150" width="150" height="80" fill="#9c27b0" rx="10"/>
+  <text x="625" y="195" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">WSL2 LINUX</text>
+  <line x1="625" y1="150" x2="625" y2="100" stroke="#666" stroke-width="3"/>
+  <text x="635" y="140" font-family="Arial, sans-serif" font-size="12" fill="#333" text-anchor="start">172.x.x.2</text>
+
+  <!-- Dashed line enclosing Windows Host and NAT -->
+  <rect x="85" y="125" width="405" height="130" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
+</svg>
+
